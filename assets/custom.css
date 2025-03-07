@@ -20,6 +20,8 @@ button {
 .nav-container {
     background-color: white;
     height: 5.625rem;
+    display: flex;
+    align-items: center;
 }
 
 .nav-flex-wrapper {
@@ -30,6 +32,7 @@ button {
     padding-right: 3.75rem;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .navbar-links {
@@ -94,4 +97,67 @@ button {
 .nav-icons a:hover svg path,
 .search-button:hover svg path {
     stroke: #FFA38B;
+}
+
+/* Account Button */
+.account-button {
+    all: unset;
+    /* Removes default button styles */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Hover Effect */
+.account-button svg path {
+    stroke: #373736;
+    transition: stroke 0.3s ease-in-out;
+}
+
+.account-button:hover svg path {
+    stroke: #FFA38B;
+}
+
+/* Dropdown Wrapper */
+.account-dropdown-wrapper {
+    position: relative;
+}
+
+/* Dropdown Menu (Hidden by Default) */
+.account-dropdown {
+    position: absolute;
+    top: 100%;
+    /* Position below the button */
+    right: 0;
+    background: white;
+    border: 1px solid #D0CECD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05%);
+    /* padding: 0.75rem 0; */
+    display: none;
+    /* Initially hidden */
+    flex-direction: column;
+    min-width: 120px;
+}
+
+/* Dropdown Links */
+.account-dropdown a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #373736;
+    font-size: 0.75rem;
+    transition: background 0.2s;
+}
+
+.account-dropdown a:hover {
+    background: rgba(255, 163, 139, 0.2);
+}
+
+/* Show Dropdown When Active */
+.account-dropdown-wrapper.active .account-dropdown {
+    display: flex;
+}
+
+.account-dropdown-wrapper a {
+    transition: background-color 0.3s ease;
 }

@@ -18,9 +18,13 @@
     <!-- SEARCH, ACCOUNT AND CART -->
         <div class="nav-icons">
             <button type="button" class="search-button">{% render 'icon-search' %}</button>
-            {% render 'icon-account' %}
-            {% comment %} <a href="{{ routes.account_login_url }}">Login</a>
-            <a href="{{ routes.account_register_url }}">Register</a> {% endcomment %}
+            <div class="account-dropdown-wrapper">
+                <button type="button" class="account-button">{% render 'icon-account' %}</button>
+                <div class="account-dropdown">
+                    <a href="{{ routes.account_login_url }}">Login</a>
+                    <a href="{{ routes.account_register_url }}">Register</a>        
+                </div>
+            </div>
             <a href="{{ routes.cart_url }}">{% render 'icon-shopping-bag' %}</a>
         </div>
     </div>
