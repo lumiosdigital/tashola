@@ -18,13 +18,15 @@
     {% endif %}
 
     {% render 'meta-tags' %}
-    
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
     {{ content_for_header }}
+    
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
   </head>
 
   <body>
-    <main role="main" tabindex="-1">
       {{ content_for_layout }}
+      {% section 'header' %}
     </main>
   </body>
 </html>

@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+nav {
+    display: flex;
+    gap: 1.25rem;
+}
+
+nav a:hover {
+    color: #FFA38B;
+}
+
+button {
+    all: unset;
+}
+
+.nav-container {
+    background-color: white;
+    height: 5.625rem;
+}
+
+.nav-flex-wrapper {
+    display: flex;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-links {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #373736;
+}
+
+.logo-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.logo-wrapper svg {
+    width: 100%;
+    height: auto;
+}
+
+.logo-wrapper svg path {
+    fill: #373736;
+    transition: fill 0.3s ease-in-out;
+}
+
+.logo-wrapper:hover svg path {
+    fill: #FFA38B;
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.875rem;
+}
+
+.nav-icons a {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.search-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.nav-icons a svg path,
+.search-button svg path {
+    stroke: #373736;
+    transition: stroke 0.3s ease-in-out;
+}
+
+.nav-icons a:hover svg path,
+.search-button:hover svg path {
+    stroke: #FFA38B;
+}

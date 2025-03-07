@@ -1,0 +1,27 @@
+<div class="nav-container"> 
+    <div class="nav-flex-wrapper">
+
+    <!-- NAVIGATION MENU -->
+        <nav>
+            {% for link in linklists.main-menu.links %}
+                <div>
+                    <a href="{{ link.url }}" class="navbar-links">{{ link.title }}</a>
+                </div>
+            {% endfor %}
+        </nav>
+
+    <!-- LOGO/STORE NAME -->
+        <div class="logo-wrapper">
+        <a href="{{ routes.root_url }}">{% render 'main-logo' %}</a>
+        </div>
+
+    <!-- SEARCH, ACCOUNT AND CART -->
+        <div class="nav-icons">
+            <button type="button" class="search-button">{% render 'icon-search' %}</button>
+            {% render 'icon-account' %}
+            {% comment %} <a href="{{ routes.account_login_url }}">Login</a>
+            <a href="{{ routes.account_register_url }}">Register</a> {% endcomment %}
+            <a href="{{ routes.cart_url }}">{% render 'icon-shopping-bag' %}</a>
+        </div>
+    </div>
+</div>
