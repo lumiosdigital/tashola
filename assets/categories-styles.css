@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://use.typekit.net/ckq2tij.css");
+
+a {
+    text-decoration: none;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 50vw);
+    grid-template-rows: repeat(4, 114.3vh);
+    width: 100vw;
+}
+
+.category-block,
+.collection-banner {
+    position: relative;
+    width: 50vw;
+    height: 114.3vh;
+    overflow: hidden;
+}
+
+.category-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.category-title {
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 67px;
+    font-family: adobe-caslon-pro, serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.collection-dynamic-title {
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 67px;
+    font-family: adobe-caslon-pro, serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.collection-title {
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 67px;
+    font-family: adobe-caslon-pro, serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.empty {
+    /* Empty block for the product display (left side of collection banner) */
+    background: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+        /* 1 column layout for mobile */
+        grid-template-rows: repeat(8, 800px);
+        /* Stack rows on top of each other */
+    }
+}

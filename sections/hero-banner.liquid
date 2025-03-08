@@ -1,52 +1,124 @@
-<!-- Hero Banner Section -->
-<div class="hero-banner"
-    style="background-image: url({{ settings.hero_image | img_url: 'original' }}); height: 43.75rem;">
-    <div class="hero-content">
-        <h1>{{ settings.main_tagline }}</h1>
-        <h2>{{ settings.subheading }}</h2>
-        <a href="{{ settings.button_url }}" class="btn">{{ settings.button_text }}</a>
+<!-- HERO BANNER -->
+<section class="hero-banner">
+    <div class="hero-banner__content">
+        <h1>{{ section.settings.heading }}</h1>
+        <h2>{{ section.settings.subheading }}</h2>
+        <a href="{{ section.settings.button_link }}" class="hero-banner__button">
+            {{ section.settings.button_text }}
+        </a>
     </div>
-</div>
+</section>
 
+<!-- STYLES FOR HERO BANNER -->
+{% style %}
+    .hero-banner {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        width: 100vw; 
+        max-width: 100%;
+        height: 90.4vh;
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        margin-top: 5.625rem;
+    }
+
+    .hero-banner {
+        background-image: url({{ section.settings.image | img_url: 'original' }});
+    }
+
+    .hero-banner__content {
+        position: absolute;
+        left: 10.56rem; 
+        /* top: 13.31rem;  */
+        max-width: 27rem;
+        text-align: left;
+        color: white;
+    }
+
+    .hero-banner__content h1 {
+        font-size: 4.375rem; 
+        font-weight: 600;
+        line-height: 110%;
+        letter-spacing: -1%;
+        margin-bottom: 2.5rem;
+        font-family: "adobe-caslon-pro", serif;
+        font-weight: 600;
+        font-style: normal;
+    }
+
+    .hero-banner__content h2 {
+        font-size: 1.25rem;
+        font-weight: 300;
+        line-height: 140%;
+        letter-spacing: -1%;
+        margin-bottom: 2.5rem;
+        font-family: adobe-caslon-pro, serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .hero-banner__content .hero-banner__button {
+        display: inline-block;
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-weight: 300;
+        text-decoration: none;
+        background-color: none;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .hero-banner__button:hover {
+        color: #D0CECD;
+    }
+{% endstyle %}
+
+
+
+<!-- SCHEMA FOR BANNER TEMPLATE -->
 {% schema %}
 {
-"name": "Hero Banner",
-"settings": [
-{
-"type": "image_picker",
-"id": "hero_image",
-"label": "Hero Image"
-},
-{
-"type": "text",
-"id": "main_tagline",
-"label": "Main Tagline",
-"default": "Jewelry that speaks for you"
-},
-{
-"type": "textarea",
-"id": "subheading",
-"label": "Subheading",
-"default": "Create bold accents with exquisite pieces that highlight your individuality."
-},
-{
-"type": "text",
-"id": "button_text",
-"label": "Button Text",
-"default": "SHOP NOW"
-},
-{
-"type": "url",
-"id": "button_url",
-"label": "Button URL",
-"default": "/shop"
-}
-],
-"presets": [
-{
-"name": "Default",
-"category": "Custom"
-}
-]
+    "name": "Hero Banner",
+    "limit": 1,
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Hero Image"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Main Heading",
+            "default": "Jewelry that speaks for you"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "Create bold accents with exquisite pieces that highlight your individuality."
+        },
+        {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default": "SHOP NOW"
+        },
+        {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Hero Banner"
+        }
+    ]
 }
 {% endschema %}

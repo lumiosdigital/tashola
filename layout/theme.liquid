@@ -19,14 +19,15 @@
 
     {% render 'meta-tags' %}
     {{ 'custom.css' | asset_url | stylesheet_tag }}
+    {{ 'categories-styles.css' | asset_url | stylesheet_tag }}
     {{ content_for_header }}
     
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
   </head>
 
   <body>
-    {% section 'header' %} 
-    {{ content_for_layout }}
+      {% section 'header' %} 
+      {{ content_for_layout }}
       <script src="{{ 'account-dropdown.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

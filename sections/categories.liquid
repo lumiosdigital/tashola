@@ -1,0 +1,129 @@
+<div class="category-grid">
+
+    <!-- Row 1 -->
+    <div class="category-block">
+        <a href="{{ routes.collections_url }}/earrings">
+            <div class="category-image" style="background-image: url('{% if section.settings.earrings_image %}{{ section.settings.earrings_image | img_url: 'large' }}{% else %}{{ 'earrings-category.png' | asset_url }}{% endif %}');">
+                <h3 class="category-title">Earrings</h3>
+            </div>    
+        </a>
+    </div>
+    <div class="category-block">
+        <a href="{{ routes.collections_url }}/rings">
+            <div class="category-image" style="background-image: url('{% if section.settings.rings_image %}{{ section.settings.rings_image | img_url: 'large' }}{% else %}{{ 'rings-category.png' | asset_url }}{% endif %}');">
+                <h3 class="category-title">Rings</h3>
+            </div>    
+        </a>
+
+    </div>
+
+    <!-- Row 2 -->
+    <div class="category-block">
+        <a href="{{ routes.collections_url }}/necklaces">
+            <div class="category-image" style="background-image: url('{% if section.settings.necklaces_image %}{{ section.settings.necklaces_image | img_url: 'large' }}{% else %}{{ 'necklaces-category.png' | asset_url }}{% endif %}');">
+                <h3 class="category-title">Necklaces</h3>
+            </div>            
+        </a>
+
+    </div>
+    <div class="category-block">
+        <a href="{{ routes.collections_url }}/bracelets">
+            <div class="category-image" style="background-image: url('{% if section.settings.bracelets_image %}{{ section.settings.bracelets_image | img_url: 'large' }}{% else %}{{ 'bracelets-category.png' | asset_url }}{% endif %}');">
+                <h3 class="category-title">Bracelets</h3>
+            </div>            
+        </a>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="category-block empty">
+        <!-- Placeholder for the product cards on the left side of the collection banner -->
+    </div>
+    <div class="collection-banner">
+        <a href="{{ section.settings.selected_collection.url }}" class="collection-banner-link">
+            <div class="category-image"
+                style="background-image: url('{% if section.settings.collection_banner_image %}{{ section.settings.collection_banner_image | img_url: 'large' }}{% elsif section.settings.selected_collection.featured_image %}{{ section.settings.selected_collection.featured_image | img_url: 'large' }}{% endif %}');">
+                <h3 class="collection-dynamic-title">{{ section.settings.selected_collection.title }} <span class="collection-title">Collection</span></h3>
+            </div>
+        </a>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="category-block">
+        <a href="{{ routes.collections_url }}/personalization">
+            <div class="category-image" style="background-image: url('{% if section.settings.personalization_image %}{{ section.settings.personalization_image | img_url: 'large' }}{% else %}{{ 'personalization-category.png' | asset_url }}{% endif %}');">
+                <h3 class="category-title">Personalization</h3>
+            </div>            
+        </a>
+    </div>
+    <div class="category-block">
+        <a href="{{ routes.collections_url }}/charms">
+            <div class="category-image" style="background-image: url('{% if section.settings.charms_image %}{{ section.settings.charms_image | img_url: 'large' }}{% else %}{{ 'charms-category.png' | asset_url }}{% endif %}');">
+                <h3 class="category-title">Charms</h3>
+            </div>            
+        </a>
+
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Category Section",
+    "limit": 1,
+    "settings": [
+        {
+            "type": "collection",
+            "id": "selected_collection",
+            "label": "Select Collection",
+            "info": "Choose a collection to display on this block."
+        },
+        {
+            "type": "image_picker",
+            "id": "collection_banner_image",
+            "label": "Collection Banner Image",
+            "info": "Upload a custom image for the collection banner. If left blank, the collection's featured image will be used."
+        },
+        {
+            "type": "image_picker",
+            "id": "earrings_image",
+            "label": "Earrings Image",
+            "info": "Upload an image for the Earrings category."
+        },
+        {
+            "type": "image_picker",
+            "id": "rings_image",
+            "label": "Rings Image",
+            "info": "Upload an image for the Rings category."
+        },
+        {
+            "type": "image_picker",
+            "id": "necklaces_image",
+            "label": "Necklaces Image",
+            "info": "Upload an image for the Necklaces category."
+        },
+        {
+            "type": "image_picker",
+            "id": "bracelets_image",
+            "label": "Bracelets Image",
+            "info": "Upload an image for the Bracelets category."
+        },
+        {
+            "type": "image_picker",
+            "id": "personalization_image",
+            "label": "Personalization Image",
+            "info": "Upload an image for the Personalization category."
+        },
+        {
+            "type": "image_picker",
+            "id": "charms_image",
+            "label": "Charms Image",
+            "info": "Upload an image for the Charms category."
+        }
+    ],
+    "presets": [
+        {
+            "name": "Default",
+            "category": "Custom"
+        }
+    ]
+}
+{% endschema %}
