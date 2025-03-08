@@ -1,0 +1,52 @@
+<!-- Hero Banner Section -->
+<div class="hero-banner"
+    style="background-image: url({{ settings.hero_image | img_url: 'original' }}); height: 43.75rem;">
+    <div class="hero-content">
+        <h1>{{ settings.main_tagline }}</h1>
+        <h2>{{ settings.subheading }}</h2>
+        <a href="{{ settings.button_url }}" class="btn">{{ settings.button_text }}</a>
+    </div>
+</div>
+
+{% schema %}
+{
+"name": "Hero Banner",
+"settings": [
+{
+"type": "image_picker",
+"id": "hero_image",
+"label": "Hero Image"
+},
+{
+"type": "text",
+"id": "main_tagline",
+"label": "Main Tagline",
+"default": "Jewelry that speaks for you"
+},
+{
+"type": "textarea",
+"id": "subheading",
+"label": "Subheading",
+"default": "Create bold accents with exquisite pieces that highlight your individuality."
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Button Text",
+"default": "SHOP NOW"
+},
+{
+"type": "url",
+"id": "button_url",
+"label": "Button URL",
+"default": "/shop"
+}
+],
+"presets": [
+{
+"name": "Default",
+"category": "Custom"
+}
+]
+}
+{% endschema %}

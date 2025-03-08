@@ -1,10 +1,15 @@
 {
   "sections": {
-    "main": {
-      "type": "index-section"
+    "hero-banner": {
+      "type": "hero-banner",
+      "settings": {
+        "hero_image": "shopify://shop_images/default-hero.jpg",
+        "main_tagline": "Jewelry that speaks for you",
+        "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
+        "button_text": "SHOP NOW",
+        "button_url": "/shop"
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero-banner"]
 }
