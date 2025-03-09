@@ -83,7 +83,7 @@ button {
 
 .logo-wrapper svg path {
     fill: #373736;
-    transition: fill 0.3s ease-in-out;
+    transition: fill 0.1s ease-in-out;
 }
 
 .logo-wrapper:hover svg path {
@@ -112,7 +112,7 @@ button {
 .nav-icons a svg path,
 .search-button svg path {
     stroke: #373736;
-    transition: stroke 0.3s ease-in-out;
+    transition: stroke 0.1s ease-in-out;
 }
 
 .nav-icons a:hover svg path,
@@ -129,7 +129,7 @@ button {
 
 .account-button svg path {
     stroke: #373736;
-    transition: stroke 0.3s ease-in-out;
+    transition: stroke 0.1s ease-in-out;
 }
 
 .account-button:hover svg path {
