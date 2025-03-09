@@ -22,7 +22,8 @@
       "type": "categories",
       "settings": {
         "selected_collection": "neptune",
-        "collection_banner_image": "shopify://shop_images/Group_41_upscayl_2x_remacri-4x.png"
+        "featured_collection": "",
+        "collection_banner_image": "shopify://shop_images/Group_41.webp"
       }
     }
   },
