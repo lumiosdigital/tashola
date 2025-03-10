@@ -12,6 +12,7 @@
     "hero-banner": {
       "type": "hero-banner",
       "settings": {
+        "image": "shopify://shop_images/Group_48_upscayl_2x_remacri-4x.webp",
         "heading": "Jewelry that speaks for you",
         "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
         "button_text": "SHOP NOW",
@@ -22,7 +23,14 @@
       "type": "categories",
       "settings": {
         "selected_collection": "neptune",
-        "collection_banner_image": "shopify://shop_images/Group_41_upscayl_2x_remacri-4x.png"
+        "featured_collection": "",
+        "collection_banner_image": "shopify://shop_images/Group_41.webp",
+        "earrings_image": "shopify://shop_images/Group_16_upscayl_2x_high-fidelity-4x.webp",
+        "rings_image": "shopify://shop_images/Group_26_upscayl_2x_high-fidelity-4x.webp",
+        "necklaces_image": "shopify://shop_images/necklaces-category.png",
+        "bracelets_image": "shopify://shop_images/Group_34_upscayl_2x_remacri-4x.webp",
+        "personalization_image": "shopify://shop_images/Group_35_upscayl_2x_remacri-4x.webp",
+        "charms_image": "shopify://shop_images/Group_36_upscayl_2x_remacri-4x.webp"
       }
     }
   },
