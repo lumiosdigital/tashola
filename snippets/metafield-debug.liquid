@@ -1,0 +1,11 @@
+<div style="padding: 20px; background: #f5f5f5; border: 1px solid #ddd;">
+    <h3>Metafield Debugging</h3>
+    <ul>
+        {% for collection in collections %}
+        <li>
+            {{ collection.title }} -
+            Metafield value: {{ collection.metafields.collection.collection_type }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -28,10 +28,19 @@
 </head>
 
 <body class="{% if customer %}customer-logged-in{% endif %}">
+  {% if request.path == '/collections' %}
+  {% render 'metafield-debug' %}
+  {% endif %}
+  
   {% section 'header' %}
   {{ content_for_layout }}
   <script src="{{ 'account-dropdown.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'mobile-nav.js' | asset_url }}" defer="defer"></script>
+
+  <!-- Collection data for mobile menu -->
+  <div id="collection-data" style="display: none;">
+    {% render 'collections-mobile-menu' %}
+  </div>
 </body>
 
 </html>

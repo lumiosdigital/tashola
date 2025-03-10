@@ -1,0 +1,61 @@
+<!-- snippets/collections-mobile-menu.liquid -->
+
+<!-- Categories section (Jewelry) -->
+<div id="smart-collections-data">
+    <!-- First, display "New In" category if it exists -->
+    {% for collection in collections %}
+    {% assign metafield_value = collection.metafields.collection.collection_type | strip %}
+    {% if metafield_value contains '"category"' and collection.title == 'New In' %}
+    <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+    {% endif %}
+    {% endfor %}
+
+    <!-- Then display other categories, except personalization -->
+    {% for collection in collections %}
+    {% assign metafield_value = collection.metafields.collection.collection_type | strip %}
+    {% if metafield_value contains '"category"' and collection.title != 'New In' and collection.title !=
+    'Personalization' %}
+    <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Collections section -->
+    <div id="manual-collections-data">
+        {% assign collection_count = 0 %}
+        {% assign total_collections = 0 %}
+
+        {% for collection in collections %}
+        {% assign metafield_value = collection.metafields.collection.collection_type | strip %}
+        {% if metafield_value contains '"collection"' %}
+        {% assign total_collections = total_collections | plus: 1 %}
+        {% if collection_count < 8 %} <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+            {% assign collection_count = collection_count | plus: 1 %}
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+            {% if total_collections > 8 %}
+            <a href="/collections" class="mobile-menu-link mobile-menu-link-all">See All Collections</a>
+            {% endif %}
+    </div>
+
+<!-- Personalization section -->
+{% comment %} <div id="personalization-data">
+    {% assign has_personalization = false %}
+    {% for collection in collections %}
+    {% assign metafield_value = collection.metafields.collection.collection_type | strip %}
+    {% if metafield_value contains '"personalization"' or collection.title == 'Personalization' %}
+    <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+    {% assign has_personalization = true %}
+    {% endif %}
+    {% endfor %}
+
+    {% unless has_personalization %}
+    <style>
+        #mobile-menu-personalization {
+            display: none;
+        }
+    </style>
+    {% endunless %}
+</div> {% endcomment %}
