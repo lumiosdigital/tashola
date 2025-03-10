@@ -1,39 +1,74 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url("https://use.typekit.net/ckq2tij.css");
 
+:root {
+    /* Color variables */
+    --primary-color: #373736;
+    --secondary-color: #FFA38B;
+    --light-gray: #D0CECD;
+    --white: #ffffff;
+
+    /* Typography */
+    --font-heading: "adobe-caslon-pro", serif;
+    --font-body: "Inter", sans-serif;
+
+    /* Spacing variables */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3.75rem;
+
+    /* Fixed heights */
+    --header-height: 5.625rem;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
 body {
+    font-family: var(--font-body);
+    color: var(--primary-color);
     width: 100%;
     height: 100%;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
+/* Global responsive image fixes */
+img {
+    max-width: 100%;
+    height: auto;
 }
 
+/* Navigation styles */
 nav {
     display: flex;
-    gap: 1.25rem;
+    gap: var(--spacing-md);
 }
 
 nav a:hover {
-    color: #FFA38B;
+    color: var(--secondary-color);
 }
 
 button {
     all: unset;
+    cursor: pointer;
 }
 
 .nav-container {
-    background-color: white;
-    height: 5.625rem;
+    background-color: var(--white);
+    height: var(--header-height);
     display: flex;
     align-items: center;
     position: fixed;
@@ -41,16 +76,14 @@ button {
     left: 0;
     right: 0;
     z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); */
     width: 100%;
+    
 }
 
 .nav-flex-wrapper {
     display: flex;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    padding-left: 3.75rem;
-    padding-right: 3.75rem;
+    padding: var(--spacing-lg) var(--spacing-xxl);
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -60,16 +93,13 @@ button {
     font-size: 0.75rem;
     text-transform: uppercase;
     text-decoration: none;
-    color: #373736;
+    color: var(--primary-color);
 }
 
 .logo-wrapper {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-}
-
-.logo-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,12 +112,12 @@ button {
 }
 
 .logo-wrapper svg path {
-    fill: #373736;
+    fill: var(--primary-color);
     transition: fill 0.1s ease-in-out;
 }
 
 .logo-wrapper:hover svg path {
-    fill: #FFA38B;
+    fill: var(--secondary-color);
 }
 
 .nav-icons {
@@ -111,13 +141,13 @@ button {
 
 .nav-icons a svg path,
 .search-button svg path {
-    stroke: #373736;
+    stroke: var(--primary-color);
     transition: stroke 0.1s ease-in-out;
 }
 
 .nav-icons a:hover svg path,
 .search-button:hover svg path {
-    stroke: #FFA38B;
+    stroke: var(--secondary-color);
 }
 
 .account-button {
@@ -128,12 +158,12 @@ button {
 }
 
 .account-button svg path {
-    stroke: #373736;
+    stroke: var(--primary-color);
     transition: stroke 0.1s ease-in-out;
 }
 
 .account-button:hover svg path {
-    stroke: #FFA38B;
+    stroke: var(--secondary-color);
 }
 
 .account-dropdown-wrapper {
@@ -144,20 +174,20 @@ button {
     position: absolute;
     top: calc(100% + 5px);
     right: 0;
-    background: white;
-    border: 1px solid #D0CECD;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05%);
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.05%);
     display: none;
     flex-direction: column;
-    min-width: 120px;
+    min-width: 7.5rem;
     z-index: 9999;
 }
 
 .account-dropdown a {
     display: block;
-    padding: 0.5rem 1rem;
+    padding: var(--spacing-xs) var(--spacing-md);
     text-decoration: none;
-    color: #373736;
+    color: var(--primary-color);
     font-size: 0.75rem;
     transition: background 0.2s;
 }
@@ -172,4 +202,321 @@ button {
 
 .account-dropdown-wrapper a {
     transition: background-color 0.3s ease;
+}
+
+/* Mobile menu styles */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--white);
+    z-index: 999;
+    padding: 90px 10px 30px;
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu a {
+    display: block;
+    font-size: 1rem;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.mobile-menu a:hover {
+    color: var(--secondary-color);
+}
+
+/* Form elements */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 0;
+    font-family: var(--font-body);
+}
+
+button,
+.button {
+    display: inline-block;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Accessibility */
+a:focus,
+button:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+/* Loading indicator */
+.lazy-load-container {
+    position: relative;
+    min-height: 200px;
+}
+
+.lazy-load-container::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 4px solid var(--light-gray);
+    border-top-color: var(--secondary-color);
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Navbar bottom line */
+.nav-container::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 3.5rem;
+    right: 3.5rem;
+    height: 1px;
+    background-color: #373736;
+    opacity: 20%;
+    margin-bottom: 1px;
+}
+
+/* Mobile menu close button */
+.mobile-menu-close {
+    position: fixed;
+    top: 0.8rem;
+    left: 1.5rem;
+    z-index: 1001;
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.mobile-menu-close.active {
+    display: block;
+}
+
+/* Mobile menu inner structure */
+.mobile-menu-inner {
+    display: flex;
+    height: 100%;
+}
+
+.mobile-menu-left,
+.mobile-menu-right {
+    width: 50%;
+    padding: 0 1.5rem;
+}
+
+.mobile-menu-divider {
+    width: 1px;
+    background-color: #373736;
+    opacity: 20%;
+}
+
+.mobile-menu-heading {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.mobile-menu-link,
+.mobile-account-link,
+.mobile-menu-main-links a {
+    display: block;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.mobile-menu-main-links a {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 1rem;
+}
+
+.mobile-account-link {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 1rem;
+}
+
+.mobile-menu-categories,
+.mobile-menu-collections,
+.mobile-menu-personalization {
+    margin-bottom: 1.5rem;
+}
+
+/* Body lock when menu is open */
+body.mobile-menu-active {
+    overflow: hidden;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .nav-flex-wrapper {
+        padding: var(--spacing-lg) var(--spacing-xl);
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-flex-wrapper {
+        padding: var(--spacing-lg) var(--spacing-lg);
+    }
+
+    .nav-icons {
+        gap: var(--spacing-lg);
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .nav-container {
+        height: 70px;
+        /* Exact 70px height on mobile */
+    }
+
+    /* Bottom line positioning */
+    .nav-container::after {
+        left: 16px;
+        right: 16px;
+        opacity: 20%;
+        margin-bottom: 1px;
+        /* Make line fully visible */
+    }
+
+    /* Spacing for menu toggle, search and cart */
+    .nav-flex-wrapper {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .nav-icons {
+        gap: 16px;
+        /* Reduce gap between icons */
+        margin-left: auto;
+        margin-right: 16px;
+    }
+
+    /* Reset min dimensions that were causing issues */
+    button,
+    .button,
+    a.button,
+    .nav-icons a,
+    .account-button,
+    .search-button {
+        min-width: unset;
+        min-height: unset;
+    }
+
+    /* Resize both SVG and container */
+    .nav-icons a,
+    .search-button {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Make sure SVGs inside are also properly sized */
+    .nav-icons a svg,
+    .search-button svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    /* Preserve hamburger menu size */
+    .mobile-menu-toggle {
+        width: 20px;
+        height: 12px;
+        margin-right: auto;
+        display: block;
+    }
+
+    .mobile-menu-toggle svg {
+        width: 20px !important;
+        height: 12px !important;
+    }
+
+    /* Reposition close button */
+    .mobile-menu-close {
+        top: 16px;
+        /* Center in 70px height navbar */
+        left: 20px;
+        /* Match navbar padding */
+    }
+
+    /* Hide desktop nav and account dropdown */
+    nav {
+        display: none;
+    }
+
+    .account-dropdown-wrapper {
+        display: none;
+    }
+
+    /* Logo sizing */
+    .logo-wrapper svg {
+        height: 2rem;
+        width: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-flex-wrapper {
+        padding: var(--spacing-md) var(--spacing-md);
+    }
+
+    .logo-wrapper svg {
+        height: 1.75rem;
+    }
+
+    .account-dropdown {
+        right: -3rem;
+    }
 }

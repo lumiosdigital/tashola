@@ -59,49 +59,50 @@
                     <a href="{{ product.url }}">
                         <div class="product-image-container">
                             {% if product.featured_image != blank %}
-                                <img class="product-image"
-                                src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
-                                alt="{{ product.title | escape }}">
-                                {% else %}
-                                {{ 'product-1' | placeholder_svg_tag: 'product-image' }}
+                            <img class="product-image"
+                                src="{{ product.featured_image | img_url: '100x100', crop: 'center' }}"
+                                data-src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                                alt="{{ product.title | escape }}" loading="lazy" width="600" height="600">
+                            {% else %}
+                            {{ 'product-1' | placeholder_svg_tag: 'product-image' }}
                             {% endif %}
                         </div>
                     </a>
-                        <div class="product-info">
-                            <a href="{{ product.url }}">
-                                <h3 class="product-title">{{ product.title }}</h3>
-                                <div class="product-price">
-                                    {% if product.compare_at_price > product.price %}
-                                        <span class="sale-price">{{ product.price | money }}</span>
-                                        <s>{{ product.compare_at_price | money }}</s>
-                                        {% else %}
-                                        <span>{{ product.price | money }}</span>
-                                    {% endif %}
-                                </div>
-                            </a>
-                                    
-                            {% if product.variants.size > 1 and product.options_by_name['Metal'] != blank %}
-                            <div class="product-variants">
-                                {% assign metal_option = product.options_by_name['Metal'] %}
-                                {% for value in metal_option.values limit: 4 %}
-                                {% assign color_code = "" %}
-                                {% if value contains 'Gold' %}
-                                {% assign color_code = "#E5D295" %}
-                                {% elsif value contains 'Silver' %}
-                                {% assign color_code = "#CDCCCC" %}
-                                {% elsif value contains 'Rosegold' %}
-                                {% assign color_code = "#B76E79" %}
-                                {% elsif value contains 'Platinum' %}
-                                {% assign color_code = "#E5E4E2" %}
+                    <div class="product-info">
+                        <a href="{{ product.url }}">
+                            <h3 class="product-title">{{ product.title }}</h3>
+                            <div class="product-price">
+                                {% if product.compare_at_price > product.price %}
+                                <span class="sale-price">{{ product.price | money }}</span>
+                                <s>{{ product.compare_at_price | money }}</s>
+                                {% else %}
+                                <span>{{ product.price | money }}</span>
                                 {% endif %}
-                                {% if color_code != "" %}
-                                <div class="variant-color" style="background-color: {{ color_code }};" title="{{ value }}">
-                                </div>
-                                {% endif %}
-                                {% endfor %}
+                            </div>
+                        </a>
+
+                        {% if product.variants.size > 1 and product.options_by_name['Metal'] != blank %}
+                        <div class="product-variants">
+                            {% assign metal_option = product.options_by_name['Metal'] %}
+                            {% for value in metal_option.values limit: 4 %}
+                            {% assign color_code = "" %}
+                            {% if value contains 'Gold' %}
+                            {% assign color_code = "#E5D295" %}
+                            {% elsif value contains 'Silver' %}
+                            {% assign color_code = "#CDCCCC" %}
+                            {% elsif value contains 'Rosegold' %}
+                            {% assign color_code = "#B76E79" %}
+                            {% elsif value contains 'Platinum' %}
+                            {% assign color_code = "#E5E4E2" %}
+                            {% endif %}
+                            {% if color_code != "" %}
+                            <div class="variant-color" style="background-color: {{ color_code }};" title="{{ value }}">
                             </div>
                             {% endif %}
+                            {% endfor %}
                         </div>
+                        {% endif %}
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -110,19 +111,20 @@
             <div class="pagination" id="pagination-container">
                 {% if paginate.previous %}
                 <a href="{{ paginate.previous.url }}" class="prev pagination-link"
-                    data-page="{{ paginate.previous.page }}">
+                    data-page="{{ paginate.previous.page }}" aria-label="Previous page">
                     {% render 'icon-arrow-left' %}
                 </a>
                 {% else %}
-                <div class="prev grayed-out">{% render 'icon-arrow-left-gray' %}</div>
+                <div class="prev grayed-out" aria-disabled="true">{% render 'icon-arrow-left-gray' %}</div>
                 {% endif %}
 
                 {% if paginate.next %}
-                <a href="{{ paginate.next.url }}" class="next pagination-link" data-page="{{ paginate.next.page }}">
+                <a href="{{ paginate.next.url }}" class="next pagination-link" data-page="{{ paginate.next.page }}"
+                    aria-label="Next page">
                     {% render 'icon-arrow-right' %}
                 </a>
                 {% else %}
-                <div class="next grayed-out">{% render 'icon-arrow-right-gray' %}</div>
+                <div class="next grayed-out" aria-disabled="true">{% render 'icon-arrow-right-gray' %}</div>
                 {% endif %}
             </div>
             {% endif %}
@@ -226,6 +228,33 @@
 
                         // Re-initialize product variants for the new content
                         initProductVariants();
+
+                        // Ensure any lazy load images are processed
+                        const lazyImages = productGrid.querySelectorAll('img.lazy-load');
+                        if ('IntersectionObserver' in window) {
+                            const imageObserver = new IntersectionObserver((entries, observer) => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        const image = entry.target;
+                                        if (image.dataset.src) {
+                                            image.src = image.dataset.src;
+                                            image.classList.add('loaded');
+                                            imageObserver.unobserve(image);
+                                        }
+                                    }
+                                });
+                            });
+
+                            lazyImages.forEach(image => {
+                                imageObserver.observe(image);
+                            });
+                        } else {
+                            lazyImages.forEach(image => {
+                                if (image.dataset.src) {
+                                    image.src = image.dataset.src;
+                                }
+                            });
+                        }
                     }
 
                     // Replace the pagination
@@ -254,6 +283,27 @@
                 loadPage(window.location.href);
             }
         });
+
+        // Add responsive handling for window resize
+        window.addEventListener('resize', function () {
+            // Handle any specific layout adjustments needed on resize
+            adjustLayoutForScreenSize();
+        });
+
+        // Initial layout adjustment
+        adjustLayoutForScreenSize();
+
+        function adjustLayoutForScreenSize() {
+            // Example of adjusting layout based on screen size
+            // This can be customized based on specific needs
+            const isMobile = window.innerWidth <= 768;
+            const productGrid = document.getElementById('product-grid');
+
+            if (productGrid) {
+                // Apply any specific adjustments needed
+                // For example, you might want to change the number of visible products
+            }
+        }
 
         // Extract this functionality into its own function that can be called after each page load
         function initProductVariants() {
@@ -356,6 +406,7 @@
                             radio.className = 'variant-radio';
                             radio.style.display = 'none';
                             radio.setAttribute('data-variant-id', variantId);
+                            radio.setAttribute('aria-label', metal);
 
                             // Check the Gold option by default, or the first option if Gold isn't available
                             if ((metal.toLowerCase().includes('gold') && !metal.toLowerCase().includes('rose')) ||

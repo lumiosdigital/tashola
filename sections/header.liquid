@@ -1,31 +1,32 @@
-<div class="nav-container"> 
+<div class="nav-container" data-mobile-nav-container>
     <div class="nav-flex-wrapper">
 
-    <!-- NAVIGATION MENU -->
+        <!-- NAVIGATION MENU -->
         <nav>
             {% for link in linklists.main-menu.links %}
-                <div>
-                    <a href="{{ link.url }}" class="navbar-links">{{ link.title }}</a>
-                </div>
+            <div>
+                <a href="{{ link.url }}" class="navbar-links">{{ link.title }}</a>
+            </div>
             {% endfor %}
         </nav>
 
-    <!-- LOGO/STORE NAME -->
+        <!-- LOGO/STORE NAME -->
         <div class="logo-wrapper">
-        <a href="{{ routes.root_url }}">{% render 'main-logo' %}</a>
+            <a href="{{ routes.root_url }}">{% render 'main-logo' %}</a>
         </div>
 
-    <!-- SEARCH, ACCOUNT AND CART -->
+        <!-- SEARCH, ACCOUNT AND CART -->
         <div class="nav-icons">
-            <button type="button" class="search-button">{% render 'icon-search' %}</button>
+            <button type="button" class="search-button" aria-label="Search">{% render 'icon-search' %}</button>
             <div class="account-dropdown-wrapper">
-                <button type="button" class="account-button">{% render 'icon-account' %}</button>
-                <div class="account-dropdown">
+                <button type="button" class="account-button" aria-label="Account" aria-expanded="false"
+                    aria-controls="account-dropdown">{% render 'icon-account' %}</button>
+                <div class="account-dropdown" id="account-dropdown" aria-hidden="true">
                     <a href="{{ routes.account_login_url }}">Login</a>
-                    <a href="{{ routes.account_register_url }}">Register</a>        
+                    <a href="{{ routes.account_register_url }}">Register</a>
                 </div>
             </div>
-            <a href="{{ routes.cart_url }}">{% render 'icon-shopping-bag' %}</a>
+            <a href="{{ routes.cart_url }}" aria-label="Cart">{% render 'icon-shopping-bag' %}</a>
         </div>
     </div>
 </div>
