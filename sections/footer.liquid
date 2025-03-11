@@ -1,0 +1,355 @@
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "© 2025 Tashola. All rights reserved."
+    },
+    {
+      "type": "url",
+      "id": "facebook_link",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_link",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "pinterest_link",
+      "label": "Pinterest URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "payment_icons",
+      "name": "Payment Icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_payment_icons",
+          "label": "Show payment icons",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "payment_icons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-container">
+    <!-- Logo and Copyright Section -->
+    <div class="footer-branding">
+      <a href="{{ routes.root_url }}" class="footer-logo-link">
+        {% if section.settings.logo %}
+          {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'footer-logo', loading: 'lazy' }}
+        {% else %}
+          <h2 class="h2 footer-logo-text">{{ shop.name }}</h2>
+        {% endif %}
+      </a>
+      <p class="copyright-text">{{ section.settings.copyright_text }}</p>
+    </div>
+
+    <!-- Navigation Menus (Hardcoded) -->
+    <div class="footer-links-wrapper">
+      <!-- Catalog Menu -->
+      <div class="footer-link-column">
+        <h3 class="footer-title">Catalog</h3>
+        <ul class="footer-menu" role="list">
+          <li><a href="{{ routes.collections_url }}/new-in" class="footer-menu-link">New In</a></li>
+          <li><a href="{{ routes.collections_url }}/earrings" class="footer-menu-link">Earrings</a></li>
+          <li><a href="{{ routes.collections_url }}/rings" class="footer-menu-link">Rings</a></li>
+          <li><a href="{{ routes.collections_url }}/necklaces" class="footer-menu-link">Necklaces</a></li>
+          <li><a href="{{ routes.collections_url }}/bracelets" class="footer-menu-link">Bracelets</a></li>
+          <li><a href="{{ routes.collections_url }}/charms" class="footer-menu-link">Charms</a></li>
+          <li><a href="{{ routes.collections_url }}/personalization" class="footer-menu-link">Personalization</a></li>
+          <li><a href="{{ routes.collections_url }}" class="footer-menu-link">Collections</a></li>
+          <li><a href="{{ routes.collections_url }}/gifting" class="footer-menu-link">Gifting</a></li>
+        </ul>
+      </div>
+
+      <!-- Information Menu -->
+      <div class="footer-link-column">
+        <h3 class="footer-title">Information</h3>
+        <ul class="footer-menu" role="list">
+          <li><a href="{{ routes.pages_url }}/about-us" class="footer-menu-link">About Us</a></li>
+          <li><a href="{{ routes.pages_url }}/size-guide" class="footer-menu-link">Size Guide</a></li>
+          <li><a href="{{ routes.pages_url }}/delivery-returns" class="footer-menu-link">Delivery & Returns</a></li>
+          <li><a href="{{ routes.pages_url }}/terms-conditions" class="footer-menu-link">Terms & Conditions</a></li>
+          <li><a href="{{ routes.pages_url }}/privacy-policy" class="footer-menu-link">Privacy Policy</a></li>
+          <li><a href="{{ routes.pages_url }}/payment-faqs" class="footer-menu-link">Payment & FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Showrooms Menu -->
+      <div class="footer-link-column">
+        <h3 class="footer-title">Showrooms</h3>
+        <ul class="footer-menu" role="list">
+          <li><a href="{{ routes.pages_url }}/store-addresses" class="footer-menu-link">Store Addresses</a></li>
+          <li><a href="{{ routes.pages_url }}/contact-us" class="footer-menu-link">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Social and Payment Icons -->
+    <div class="footer-utilities">
+      <!-- Social Icons -->
+      <div class="social-icons">
+        {%- if section.settings.facebook_link != blank -%}
+          <a href="{{ section.settings.facebook_link }}" class="social-icon-link" target="_blank" rel="noopener">
+            {% render 'icon-facebook' %}
+            <span class="visually-hidden">Facebook</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.instagram_link != blank -%}
+          <a href="{{ section.settings.instagram_link }}" class="social-icon-link" target="_blank" rel="noopener">
+            {% render 'icon-instagram' %}
+            <span class="visually-hidden">Instagram</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.pinterest_link != blank -%}
+          <a href="{{ section.settings.pinterest_link }}" class="social-icon-link" target="_blank" rel="noopener">
+            {% render 'icon-pinterest' %}
+            <span class="visually-hidden">Pinterest</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  
+  <!-- Payment Icons - Positioned below the menu section but aligned with "Information" column -->
+  {% for block in section.blocks %}
+    {% if block.type == 'payment_icons' and block.settings.show_payment_icons %}
+      <div class="payment-methods-container">
+        <div class="payment-methods" {{ block.shopify_attributes }}>
+          <ul class="payment-icons-list" role="list">
+            {% for type in shop.enabled_payment_types %}
+              <li class="payment-icon">
+                {{ type | payment_type_svg_tag: class: 'payment-icon-svg' }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</footer>
+
+<style>
+  .footer {
+    background-color: #f9f9f9;
+    padding: 2rem 0;
+    border-top: 1px solid #e0e0e0;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    position: relative;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .footer-branding {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+
+  .copyright-text {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    margin-top: 1rem;
+  }
+
+  .footer-links-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .footer-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+  }
+
+  .footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-menu li {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-menu-link {
+    font-size: 0.875rem;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-menu-link:hover {
+    color: #000;
+  }
+
+  .footer-utilities {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    /* background-color: #f8d4c8; */
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+
+  .social-icon-link:hover {
+    transform: scale(1.1);
+  }
+
+  /* .social-icon-link:hover {
+    background-color: #f0b09b;
+  } */
+
+  .social-icon-link svg {
+    width: 2rem;
+    height: 2rem;
+    fill: currentColor;
+  }
+
+  /* Payment Methods Section - Repositioned */
+  .payment-methods-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+  }
+
+  .payment-methods {
+    /* Position aligned with Information column */
+    margin-left: calc(33.33% + 0.66rem); /* Aligns with Information column */
+    margin-top: 1.5rem; /* Space from bottom of menu items */
+  }
+
+  .payment-icons-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    justify-content: flex-start; /* Left aligned */
+  }
+
+  .payment-icon {
+    display: inline-flex;
+  }
+
+  .payment-icon-svg {
+    width: 2.5rem;
+    height: auto;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  @media screen and (max-width: 990px) {
+    .footer-container {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-branding {
+      grid-column: 1 / -1;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links-wrapper {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-utilities {
+      grid-column: 1 / -1;
+      align-items: center;
+      margin-top: 2rem;
+    }
+    
+    .payment-methods {
+      margin-left: 0;
+      text-align: center;
+      width: 100%;
+    }
+    
+    .payment-icons-list {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .footer-links-wrapper {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

@@ -239,7 +239,8 @@ h3.collection-dynamic-title {
     width: 1.125rem;
     height: 1.125rem;
     border-radius: 50%;
-    border: 1px solid var(--color-light-gray);
+    border: 1px solid #e0e0e0 !important;
+    /* Force this color */
     transition: transform 0.2s ease;
     cursor: pointer;
 }
@@ -259,9 +260,8 @@ h3.collection-dynamic-title {
     width: 0;
     height: 0;
 }
-
 .variant-radio:checked+.variant-color {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px var(--color-text);
+    box-shadow: 0 0 0 2px white, 0 0 0 3px var(--primary-color) !important;
     transform: scale(1.1);
 }
 
@@ -457,4 +457,117 @@ button:focus {
     .product-title {
         font-size: 1rem;
     }
+}
+
+/* Add to your custom.css file */
+
+.product-display {
+    width: 100%;
+    padding: 42px 0 75px;
+    background-color: var(--white);
+}
+
+.product-display-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.product-display-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.product-display-description {
+    font-family: var(--font-body);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.featured-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    padding: 0 3.75rem;
+    transition: opacity 0.3s ease;
+}
+
+.featured-products-grid.loading {
+    opacity: 0.6;
+    position: relative;
+}
+
+.featured-products-grid.loading::after {
+    content: "Loading...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--primary-color);
+}
+
+.featured-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.no-collection-selected {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .featured-products-grid {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 0 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .featured-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 1.5rem;
+    }
+
+    .product-display-title {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .featured-products-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+    }
+
+    .product-display {
+        padding: 30px 0 50px;
+    }
+}
+
+/* Reserve space for variant buttons */
+.product-variants {
+    min-height: 1.75rem;
+    /* Height of variant buttons plus margin */
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+/* Ensure consistent card height */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }

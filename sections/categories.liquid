@@ -60,9 +60,8 @@
                         <div class="product-image-container">
                             {% if product.featured_image != blank %}
                             <img class="product-image"
-                                src="{{ product.featured_image | img_url: '100x100', crop: 'center' }}"
-                                data-src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
-                                alt="{{ product.title | escape }}" loading="lazy" width="600" height="600">
+                                src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                                alt="{{ product.title | escape }}" width="600" height="600">
                             {% else %}
                             {{ 'product-1' | placeholder_svg_tag: 'product-image' }}
                             {% endif %}
@@ -90,7 +89,7 @@
                             {% assign color_code = "#E5D295" %}
                             {% elsif value contains 'Silver' %}
                             {% assign color_code = "#CDCCCC" %}
-                            {% elsif value contains 'Rosegold' %}
+                            {% elsif value contains 'Rose Gold' %}
                             {% assign color_code = "#B76E79" %}
                             {% elsif value contains 'Platinum' %}
                             {% assign color_code = "#E5E4E2" %}
@@ -175,6 +174,22 @@
     </div>
 </div>
 
+<style>
+    /* Ensure variant colors have the right border in category section */
+    .category-block .product-variants .variant-color {
+        border: 1px solid #e0e0e0 !important;
+    }
+
+    .category-block .variant-radio-container .variant-color {
+        border: 1px solid #e0e0e0 !important;
+    }
+
+    /* Maintain consistent styling for variant selection */
+    .category-block .variant-radio:checked+.variant-color {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px var(--color-light-gray) !important;
+    }
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Initialize the pagination functionality
@@ -228,33 +243,6 @@
 
                         // Re-initialize product variants for the new content
                         initProductVariants();
-
-                        // Ensure any lazy load images are processed
-                        const lazyImages = productGrid.querySelectorAll('img.lazy-load');
-                        if ('IntersectionObserver' in window) {
-                            const imageObserver = new IntersectionObserver((entries, observer) => {
-                                entries.forEach(entry => {
-                                    if (entry.isIntersecting) {
-                                        const image = entry.target;
-                                        if (image.dataset.src) {
-                                            image.src = image.dataset.src;
-                                            image.classList.add('loaded');
-                                            imageObserver.unobserve(image);
-                                        }
-                                    }
-                                });
-                            });
-
-                            lazyImages.forEach(image => {
-                                imageObserver.observe(image);
-                            });
-                        } else {
-                            lazyImages.forEach(image => {
-                                if (image.dataset.src) {
-                                    image.src = image.dataset.src;
-                                }
-                            });
-                        }
                     }
 
                     // Replace the pagination
@@ -359,9 +347,6 @@
                 // Store original image
                 const originalSrc = productImage.src;
                 productImage.setAttribute('data-original-src', originalSrc);
-
-                // Generate placeholder image URL for this product
-                const placeholderSrc = `/products/${productHandle}/placeholder?size=600x600`;
 
                 // Fetch product data using Shopify's product JSON endpoint
                 fetch(`/products/${productHandle}.js`)
