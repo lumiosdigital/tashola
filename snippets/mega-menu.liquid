@@ -39,7 +39,6 @@
                     {% endif %}
                     {% endif %}
                     {% endfor %}
-
                     {% if total_collections > 8 %}
                     <li><a href="/collections" class="mega-menu-link mega-menu-link-all">See All Collections</a></li>
                     {% endif %}
@@ -65,11 +64,11 @@
                 <li><a href="{{ routes.collections_url }}/jewelry-gift-sets" class="mega-menu-link">Jewelry Gift
                         Sets</a></li>
                 <li><a href="{{ routes.collections_url }}/personalization-gifting"
-                        class="mega-menu-link">PersonalizationGifting</a></li>
+                        class="mega-menu-link">Personalization Gifting</a></li>
                 <li><a href="{{ routes.collections_url }}/charm-gifting" class="mega-menu-link">Charm Gifting</a></li>
                 <li><a href="{{ routes.collections_url }}/premium-gifting" class="mega-menu-link">Premium Gifting</a>
                 </li>
-                <li><a href="{{ routes.collections_url }}/gifting-under-20-pounds" class="mega-menu-link">Gifting under
+                <li><a href="{{ routes.collections_url }}/gifting-under-20-pounds" class="mega-menu-link">Gifts under
                         20 Pounds</a></li>
             </ul>
         </div>
@@ -79,6 +78,7 @@
             <img src="{{ section.settings.mega_menu_image | img_url: 'master' }}" alt="Featured collection"
                 class="mega-menu-featured-image" loading="lazy">
             {% else %}
+
             <!-- Default image if none is uploaded -->
             <div class="mega-menu-placeholder">
                 <span>Featured Collection</span>
