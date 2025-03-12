@@ -53,6 +53,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // Add accessibility for keyboard navigation
     const catalogLink = catalogContainer.querySelector('.navbar-links');
     
+    // Prevent the Catalog link from navigating when clicked
+    catalogLink.addEventListener('click', function(e) {
+      e.preventDefault();
+    });
+    
     catalogLink.addEventListener('focus', function() {
       megaMenu.classList.add('active');
     });
