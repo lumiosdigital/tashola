@@ -1,3 +1,61 @@
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "© 2025 Tashola. All rights reserved."
+    },
+    {
+      "type": "url",
+      "id": "facebook_link",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_link",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "pinterest_link",
+      "label": "Pinterest URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "payment_icons",
+      "name": "Payment Icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_payment_icons",
+          "label": "Show payment icons",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "payment_icons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
 
 <footer class="footer" role="contentinfo">
   <div class="footer-container">
@@ -298,70 +356,3 @@
     }
   }
 </style>
-
-
-{% schema %}
-  {
-    "name": "Footer",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "logo",
-        "label": "Logo"
-      },
-      {
-        "type": "text",
-        "id": "copyright_text",
-        "label": "Copyright Text",
-        "default": "© 2025 Tashola. All rights reserved."
-      },
-      {
-        "type": "url",
-        "id": "facebook_link",
-        "label": "Facebook URL"
-      },
-      {
-        "type": "url",
-        "id": "instagram_link",
-        "label": "Instagram URL"
-      },
-      {
-        "type": "url",
-        "id": "pinterest_link",
-        "label": "Pinterest URL"
-      }
-    ],
-    "blocks": [
-      {
-        "type": "payment_icons",
-        "name": "Payment Icons",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "show_payment_icons",
-            "label": "Show payment icons",
-            "default": true
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Footer",
-        "limit": 1,
-        "blocks": [
-          {
-            "type": "payment_icons",
-            "settings": {
-              "show_payment_icons": true
-            },
-            "default": {
-              "show_payment_icons": true
-            }
-          }
-        ]
-      }
-    ]
-  }
-{% endschema %}

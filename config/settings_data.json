@@ -12,7 +12,9 @@
     "sections": {
       "header": {
         "type": "header",
-        "settings": {}
+        "settings": {
+          "mega_menu_image": "shopify://shop_images/navbar-image.png"
+        }
       },
       "footer": {
         "type": "footer",
