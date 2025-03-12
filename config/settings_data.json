@@ -1,8 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "current": "Default",
+  "current": {
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "logo": "shopify://shop_images/tashola-logo.svg",
+          "copyright_text": "© 2025 Tashola. All rights reserved.",
+          "facebook_link": "https://facebook.com",
+          "instagram_link": "https://instagram.com",
+          "pinterest_link": "https://Pinterest.com"
+        }
+      }
+    },
+    "content_for_index": []
+  },
   "presets": {
-    "Default": {
-      "sections": {}
-    }
+    "Default": {}
   }
 }
