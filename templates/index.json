@@ -1,4 +1,12 @@
-
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-banner": {
@@ -15,7 +23,7 @@
       "type": "categories",
       "settings": {
         "selected_collection": "neptune",
-        "featured_collection": "Neptune",
+        "featured_collection": "neptune",
         "collection_banner_image": "shopify://shop_images/Group_41.webp",
         "earrings_image": "shopify://shop_images/Group_16_upscayl_2x_high-fidelity-4x.webp",
         "rings_image": "shopify://shop_images/Group_26_upscayl_2x_high-fidelity-4x.webp",
@@ -28,11 +36,9 @@
     "product-display": {
       "type": "product-display",
       "settings": {
-        "selected_collection": "Neptune",
-        "show_description": false
+        "selected_collection": "neptune"
       }
     }
-    
   },
   "order": [
     "hero-banner",
