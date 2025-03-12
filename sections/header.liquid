@@ -4,8 +4,11 @@
         <!-- NAVIGATION MENU -->
         <nav>
             {% for link in linklists.main-menu.links %}
-            <div>
+            <div class="nav-link-container">
                 <a href="{{ link.url }}" class="navbar-links">{{ link.title }}</a>
+                {% if link.title == 'Catalog' %}
+                {% render 'mega-menu' %}
+                {% endif %}
             </div>
             {% endfor %}
         </nav>
@@ -30,3 +33,17 @@
         </div>
     </div>
 </div>
+
+{% schema %}
+{
+"name": "Header",
+"settings": [
+{
+"type": "image_picker",
+"id": "mega_menu_image",
+"label": "Mega Menu Image",
+"info": "Featured image displayed in the mega menu dropdown"
+}
+]
+}
+{% endschema %}

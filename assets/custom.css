@@ -94,6 +94,7 @@ button {
     text-transform: uppercase;
     text-decoration: none;
     color: var(--primary-color);
+    font-weight: 400;
 }
 
 .logo-wrapper {
@@ -316,7 +317,7 @@ button:focus {
     height: 1px;
     background-color: #373736;
     opacity: 20%;
-    margin-bottom: 1px;
+    /* margin-bottom: 1px; */
 }
 
 /* Mobile menu close button */

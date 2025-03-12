@@ -22,6 +22,7 @@
   {{ 'custom.css' | asset_url | stylesheet_tag }}
   {{ 'categories-styles.css' | asset_url | stylesheet_tag }}
   {{ 'product-card.css' | asset_url | stylesheet_tag }}
+  {{ 'mega-menu.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}
 
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
@@ -31,12 +32,13 @@
   {% if request.path == '/collections' %}
   {% render 'metafield-debug' %}
   {% endif %}
-  
+
   {% section 'header' %}
   {{ content_for_layout }}
   {% section 'footer' %}
   <script src="{{ 'account-dropdown.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'mobile-nav.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'mega-menu.js' | asset_url }}" defer="defer"></script>
 
   <!-- Collection data for mobile menu -->
   <div id="collection-data" style="display: none;">

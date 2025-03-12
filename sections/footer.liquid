@@ -167,13 +167,14 @@
   }
 
   .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    /* max-width: 1200px; */
+    /* margin: 0 auto; */
     padding: 0 1rem;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     gap: 2rem;
     align-items: flex-start;
+    justify-items: center;
   }
 
   .footer-branding {
@@ -198,7 +199,8 @@
   .footer-links-wrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 6rem;
+    justify-items: center;
   }
 
   .footer-title {
@@ -227,13 +229,13 @@
   }
 
   .footer-menu-link:hover {
-    color: #000;
+    color: var(--secondary-color);
   }
 
   .footer-utilities {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
   }
 
   .social-icons {
@@ -263,8 +265,8 @@
   } */
 
   .social-icon-link svg {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     fill: currentColor;
   }
 
@@ -280,6 +282,7 @@
     /* Position aligned with Information column */
     margin-left: calc(33.33% + 0.66rem); /* Aligns with Information column */
     margin-top: 1.5rem; /* Space from bottom of menu items */
+    margin-right: calc(33.33% + 0.66rem);
   }
 
   .payment-icons-list {
@@ -289,7 +292,7 @@
     padding: 0;
     margin: 0;
     list-style: none;
-    justify-content: flex-start; /* Left aligned */
+    justify-content: center; /* Left aligned */
   }
 
   .payment-icon {
