@@ -108,7 +108,7 @@ h3.collection-dynamic-title {
 }
 
 .empty {
-    background: var(--color-white);
+    background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -155,7 +155,7 @@ h3.collection-dynamic-title {
     width: 100%;
     max-width: 18.75rem;
     height: auto;
-    background-color: var(--color-white);
+    background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
     display: flex;
     flex-direction: column;
     /* margin-bottom: 1.5rem; */
