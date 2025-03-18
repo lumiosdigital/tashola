@@ -8,6 +8,7 @@
     --color-accent: #FFA38B;
     --color-white: #ffffff;
     --color-light-gray: #e0e0e0;
+    --color-background: #F6F4F3;
 }
 
 a {
@@ -18,18 +19,26 @@ a {
 .category-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 114.3vh);
-    /* Change back to your original value */
+    /* Specific row heights - Row 3 (the third row) is taller */
+    grid-template-rows: 114.3vh 114.3vh 128vh 114.3vh;
     width: 100%;
+    background-color: var(--color-background);
 }
 
 .category-block,
 .collection-banner {
     position: relative;
     width: 100%;
-    height: 114.3vh;
-    /* Explicitly set to your original value */
+    height: 100%;
+    /* Changed to 100% to respect grid container's row sizing */
     overflow: hidden;
+}
+
+/* Special height for row 3 blocks */
+.category-block.empty,
+.category-block.collection-block {
+    height: 128vh;
+    background-color: var(--color-background);
 }
 
 .collection-banner.link {
@@ -108,12 +117,12 @@ h3.collection-dynamic-title {
 }
 
 .empty {
-    background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
+    background: var(--color-white);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 3.75rem 1.0625rem 8.75rem 3.75rem;
+    padding: 2rem 1.75rem 1rem 1.75rem;
 }
 
 /* Product display styles */
@@ -155,7 +164,7 @@ h3.collection-dynamic-title {
     width: 100%;
     max-width: 18.75rem;
     height: auto;
-    background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
+    background-color: var(--color-background);
     display: flex;
     flex-direction: column;
     /* margin-bottom: 1.5rem; */
@@ -216,7 +225,6 @@ h3.collection-dynamic-title {
 
 .product-price {
     font-weight: 400;
-    font-size: 1.25rem;
     margin-bottom: 0.5rem;
     text-align: left;
     font-family: var(--font-heading);
@@ -261,6 +269,7 @@ h3.collection-dynamic-title {
     width: 0;
     height: 0;
 }
+
 .variant-radio:checked+.variant-color {
     box-shadow: 0 0 0 2px white, 0 0 0 3px var(--primary-color) !important;
     transform: scale(1.1);
@@ -270,7 +279,7 @@ h3.collection-dynamic-title {
 .pagination {
     display: flex;
     justify-content: flex-end;
-    margin-right: 6rem;
+    margin-right: 3.3rem;
     margin-top: 1.5rem;
 }
 
@@ -419,7 +428,7 @@ button:focus {
 
     button,
     .button,
-    a.button, 
+    a.button,
     .grayed-out,
     .pagination a {
         min-width: 44px;
@@ -465,7 +474,7 @@ button:focus {
 .product-display {
     width: 100%;
     padding: 42px 0 75px;
-    background-color: var(--white);
+    background-color: var(--color-background);
 }
 
 .product-display-header {
