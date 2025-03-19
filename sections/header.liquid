@@ -34,6 +34,37 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const header = document.querySelector('.nav-container');
+        let lastScrollTop = 0;
+        const scrollThreshold = 10; // Minimum amount of pixels to scroll before showing/hiding
+
+        // Add transition CSS class to header for smooth animations
+        header.classList.add('nav-scrollable');
+
+        window.addEventListener('scroll', function () {
+            const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+
+            // Determine scroll direction and distance
+            if (Math.abs(lastScrollTop - currentScrollTop) <= scrollThreshold) {
+                return; // Skip if the scroll distance is too small
+            }
+
+            // Scrolling down & not at the top
+            if (currentScrollTop > lastScrollTop && currentScrollTop > header.offsetHeight) {
+                header.classList.add('nav-hidden');
+            }
+            // Scrolling up or at the top
+            else {
+                header.classList.remove('nav-hidden');
+            }
+
+            lastScrollTop = currentScrollTop;
+        });
+    });
+</script>
+
 {% schema %}
 {
 "name": "Header",

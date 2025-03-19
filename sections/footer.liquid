@@ -154,6 +154,7 @@
       </div>
     {% endif %}
   {% endfor %}
+  <div class="lumios-tag">Designed and developed by<a href="https://lumiosdigital.com">Lumios Digital</a></div>
 </footer>
 
 <style>
@@ -164,6 +165,26 @@
     color: var(--color-text);
     font-family: var(--font-body);
     position: relative;
+  }
+
+  .lumios-tag {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    font-size: small;
+    color: #bdbab9;
+    margin-right: 10.5rem;
+    gap: 3px;
+  }
+
+  .lumios-tag a {
+    font-size: small;
+    color: #bdbab9;
+    text-decoration: none;
+  }
+
+  .lumios-tag a:hover {
+    color: var(--secondary-color);
   }
 
   .footer-container {
@@ -181,6 +202,7 @@
     display: flex;
     flex-direction: column;
   }
+ 
 
   .footer-logo-text {
     font-family: var(--font-heading);
@@ -189,6 +211,7 @@
     color: var(--color-text);
     margin-bottom: 1rem;
   }
+  
 
   .copyright-text {
     font-size: 0.875rem;
