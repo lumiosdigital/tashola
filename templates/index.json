@@ -37,7 +37,7 @@
         "title": "Our Showroom",
         "showroom_name": "Tashola Showroom",
         "address": "123 Oxford Street, London, W1D 1LT, United Kingdom",
-        "image_picker": ""
+        "image_picker": "showroom-image"
       }
     }
   },
