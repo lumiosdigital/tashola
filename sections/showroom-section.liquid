@@ -1,0 +1,214 @@
+
+    <div class="showroom-grid">
+        <div class="showroom-block showroom-text-block">
+            <div class="showroom-content">
+                <h2 class="showroom-title">{{ section.settings.title }}</h2>
+                <div class="showroom-address-container">
+                    <div class="showroom-icon">
+                        {% render 'icon-location' %}
+                    </div>
+                    <div class="showroom-address">
+                        <p class="showroom-name">{{ section.settings.showroom_name }}</p>
+                        <p class="showroom-location">{{ section.settings.address }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="showroom-block showroom-image-block">
+            <div class="showroom-image-container">
+                {% if section.settings.showroom_image %}
+                <img src="{{ section.settings.showroom_image | img_url: 'master' }}"
+                    alt="{{ section.settings.showroom_name }}" class="showroom-image" loading="lazy">
+                {% else %}
+                <div class="showroom-placeholder">No image selected</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>    
+
+
+
+<style>
+
+    
+    .showroom-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+    }
+
+    .showroom-block {
+        position: relative;
+        width: 100%;
+        height: 114.3vh;
+        /* Same as category blocks */
+        overflow: hidden;
+    }
+
+    .showroom-text-block {
+        background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .showroom-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 3.75rem;
+    }
+
+    .showroom-title {
+        font-family: var(--font-heading);
+        font-size: 2.25rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .showroom-address-container {
+        position: absolute;
+        bottom: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.7rem;
+        width: 100%;
+    }
+
+    .showroom-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-top: 0.25rem;
+    }
+
+    .showroom-icon svg path {
+        stroke: var(--secondary-color);
+    }
+
+    .showroom-address {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+    }
+
+    .showroom-name {
+        font-family: var(--font-heading);
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: var(--primary-color);
+        margin: 0;
+    }
+
+    .showroom-location {
+        font-family: var(--font-heading);
+        font-size: 1.125rem;
+        color: var(--primary-color);
+        margin: 0;
+        font-weight: 500;
+        /* max-width: 20rem; */
+    }
+
+    .showroom-image-block {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .showroom-image-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .showroom-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .showroom-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f5f5;
+        color: #999;
+        font-family: var(--font-body);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .showroom-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .showroom-block {
+            height: auto;
+            min-height: 30rem;
+        }
+
+        .showroom-title {
+            font-size: 2.5rem;
+        }
+
+        .showroom-address-container {
+            position: relative;
+            bottom: auto;
+            margin-top: 5rem;
+        }
+    }
+</style>
+
+{% schema %}
+{
+"name": "Showroom Section",
+"tag": "section",
+"class": "showroom-section",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Section Title",
+"default": "Our Showroom"
+},
+{
+"type": "text",
+"id": "showroom_name",
+"label": "Showroom Name",
+"default": "Tashola Showroom"
+},
+{
+"type": "textarea",
+"id": "address",
+"label": "Address",
+"default": "123 Oxford Street, London, W1D 1LT, United Kingdom"
+},
+{
+"type": "image_picker",
+"id": "showroom_image",
+"label": "Showroom Image"
+}
+],
+"presets": [
+{
+"name": "Showroom Section",
+"category": "Custom Content"
+}
+]
+}
+{% endschema %}
