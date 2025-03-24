@@ -1,0 +1,445 @@
+{% schema %}
+{
+"name": "About Us Content",
+"settings": [
+{
+"type": "text",
+"id": "main_heading",
+"label": "Main Heading",
+"default": "About Us"
+},
+{
+"type": "richtext",
+"id": "main_description",
+"label": "Main Description",
+"default": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>"
+},
+{
+"type": "richtext",
+"id": "additional_content",
+"label": "Additional Content (optional)",
+"default": ""
+},
+{
+"type": "image_picker",
+"id": "bottom_image",
+"label": "Bottom Image"
+}
+],
+"blocks": [
+{
+"type": "text_image",
+"name": "Text and Image",
+"settings": [
+{
+"type": "text",
+"id": "section_label",
+"label": "Section Label",
+"default": "OUR STORY"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Timeless Craftsmanship, Modern Elegance"
+},
+{
+"type": "richtext",
+"id": "content",
+"label": "Content",
+"default": "<p>At Tashola, we believe that jewelry is more than just an accessory—it's a reflection of your story. With
+    a focus on refined design and exceptional quality, we create timeless pieces that blend classic elegance with
+    contemporary style.</p>"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+},
+{
+"type": "select",
+"id": "layout",
+"label": "Layout",
+"options": [
+{
+"value": "image_right",
+"label": "Text left, Image right"
+},
+{
+"value": "image_left",
+"label": "Image left, Text right"
+}
+],
+"default": "image_right"
+}
+]
+},
+{
+"type": "quote",
+"name": "Quote Block",
+"limit": 1,
+"settings": [
+{
+"type": "text",
+"id": "heading",
+"label": "Quote Heading",
+"default": "Our Sustainability Principles"
+},
+{
+"type": "richtext",
+"id": "quote_text",
+"label": "Quote Content",
+"default": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn't exist. Instead of making empty
+    claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon isn't
+    enough for us. We're committed to building a brand with true environmental understanding and actively reducing our
+    impact at every step.</p>"
+}
+]
+}
+],
+"presets": [
+{
+"name": "About Us Content"
+}
+]
+}
+{% endschema %}
+
+<div class="breadcrumbs-container">
+    {% render 'breadcrumbs' %}
+</div>
+
+<div class="about-us-container">
+    <!-- Main Heading Section -->
+    <div class="about-us-header">
+        <h1 class="about-us-main-heading">{{ section.settings.main_heading }}</h1>
+        <div class="about-us-main-description">
+            {{ section.settings.main_description }}
+        </div>
+    </div>
+
+    <!-- Grid Content Blocks -->
+    <div class="about-us-grid">
+        {% for block in section.blocks %}
+        {% case block.type %}
+        {% when 'text_image' %}
+        <div class="about-us-grid-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}"
+            {{ block.shopify_attributes }}>
+            <div class="grid-text-content">
+                <div class="section-label">{{ block.settings.section_label }}</div>
+                <h2 class="section-heading">{{ block.settings.heading }}</h2>
+                <div class="section-content">
+                    {{ block.settings.content }}
+                </div>
+            </div>
+            <div class="grid-image-container">
+                {% if block.settings.image %}
+                <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.heading }}"
+                    class="grid-image">
+                {% else %}
+                <div class="grid-image-placeholder">
+                    <span>Image</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% when 'quote' %}
+        <div class="about-us-quote-container" {{ block.shopify_attributes }}>
+            <div class="quote-inner">
+                <div class="quote-mark">"</div>
+                <h3 class="quote-heading">{{ block.settings.heading }}</h3>
+                <div class="quote-content">
+                    {{ block.settings.quote_text }}
+                </div>
+            </div>
+        </div>
+        {% endcase %}
+        {% endfor %}
+    </div>
+
+    <!-- Additional Content Section (Optional) -->
+    {% if section.settings.additional_content != blank %}
+    <div class="about-us-additional-content">
+        {{ section.settings.additional_content }}
+    </div>
+    {% endif %}
+
+    <!-- Bottom Image -->
+    {% if section.settings.bottom_image %}
+    <div class="about-us-bottom-image">
+        <img src="{{ section.settings.bottom_image | img_url: 'master' }}" alt="Tashola Jewelry" class="bottom-image">
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .breadcrumbs-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 3.75rem;
+        margin-top: var(--header-height);
+        background-color: #F6F4F3;
+    }
+
+    .about-us-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 3.75rem 5rem;
+        background-color: #F6F4F3;
+    }
+
+    /* Header Section */
+    .about-us-header {
+        margin-bottom: 4.5rem;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .about-us-main-heading {
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        color: var(--color-text);
+        margin: 0 0 1.5rem;
+        font-weight: 600;
+    }
+
+    .about-us-main-description {
+        font-family: var(--font-body);
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: var(--color-text);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* Grid Layout */
+    .about-us-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 5rem;
+    }
+
+    .about-us-grid-item {
+        display: flex;
+        gap: 4rem;
+        align-items: center;
+    }
+
+    .image-right {
+        flex-direction: row;
+    }
+
+    .image-left {
+        flex-direction: row-reverse;
+    }
+
+    .grid-text-content,
+    .grid-image-container {
+        flex: 1;
+        width: 50%;
+    }
+
+    .section-label {
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--color-text);
+        margin-bottom: 0.75rem;
+    }
+
+    .section-heading {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        color: var(--color-text);
+        margin: 0 0 1.25rem;
+        font-weight: 600;
+    }
+
+    .section-content {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--color-text);
+    }
+
+    .grid-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .grid-image-placeholder {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        background-color: #E0E0E0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-heading);
+        color: #666;
+    }
+
+    /* Quote Section */
+    .about-us-quote-container {
+        margin: 2rem 0;
+        text-align: center;
+        padding: 3rem 0;
+        border-top: 1px solid rgba(55, 55, 54, 0.1);
+        border-bottom: 1px solid rgba(55, 55, 54, 0.1);
+    }
+
+    .quote-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .quote-mark {
+        font-family: var(--font-heading);
+        font-size: 6rem;
+        color: #F6F4F3;
+        text-shadow: 1px 1px 0 rgba(55, 55, 54, 0.1);
+        position: absolute;
+        top: -3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 0;
+        opacity: 0.5;
+    }
+
+    .quote-heading {
+        font-family: var(--font-heading);
+        font-size: 1.75rem;
+        color: var(--color-text);
+        margin: 0 0 1.5rem;
+        font-weight: 600;
+        position: relative;
+        z-index: 1;
+    }
+
+    .quote-content {
+        font-family: var(--font-body);
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: var(--color-text);
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Additional Content */
+    .about-us-additional-content {
+        margin: 4rem 0;
+        font-family: var(--font-body);
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: var(--color-text);
+    }
+
+    /* Bottom Image */
+    .about-us-bottom-image {
+        margin-top: 3rem;
+        width: 100%;
+    }
+
+    .bottom-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Responsive Styles */
+    @media screen and (max-width: 992px) {
+        .breadcrumbs-container {
+            padding: 0 2rem;
+        }
+
+        .about-us-container {
+            padding: 2rem 2rem 4rem;
+        }
+
+        .about-us-grid-item {
+            gap: 3rem;
+        }
+
+        .about-us-main-heading {
+            font-size: 2.25rem;
+        }
+
+        .section-heading {
+            font-size: 1.75rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .breadcrumbs-container {
+            padding: 0 1.5rem;
+        }
+
+        .about-us-container {
+            padding: 1.5rem 1.5rem 3rem;
+        }
+
+        .about-us-grid-item {
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .grid-text-content,
+        .grid-image-container {
+            width: 100%;
+        }
+
+        .about-us-main-heading {
+            font-size: 2rem;
+        }
+
+        .about-us-main-description {
+            font-size: 1rem;
+        }
+
+        .quote-heading {
+            font-size: 1.5rem;
+        }
+
+        .quote-content {
+            font-size: 1rem;
+        }
+
+        .section-heading {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .breadcrumbs-container {
+            padding: 0 1rem;
+        }
+
+        .about-us-container {
+            padding: 1rem 1rem 2rem;
+        }
+
+        .about-us-main-heading {
+            font-size: 1.75rem;
+        }
+
+        .section-heading {
+            font-size: 1.375rem;
+        }
+
+        .about-us-header {
+            margin-bottom: 3rem;
+        }
+
+        .about-us-grid {
+            gap: 3rem;
+        }
+
+        .about-us-quote-container {
+            padding: 2rem 0;
+        }
+    }
+</style>
