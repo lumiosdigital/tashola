@@ -2,7 +2,9 @@
   "sections": {
     "main": {
       "type": "showroom-content",
-      "settings": {}
+      "settings": {
+        "breadcrumbs": true
+      }
     }
   },
   "order": [
