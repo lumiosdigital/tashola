@@ -18,7 +18,7 @@
 "type": "richtext",
 "id": "additional_content",
 "label": "Additional Content (optional)",
-"default": "<p>Example additional content.</p>"
+"default": ""
 },
 {
 "type": "image_picker",
@@ -47,7 +47,52 @@
 "type": "richtext",
 "id": "content",
 "label": "Content",
-"default": "<p>Example text.</p>"
+"default": "<p>At Tashola, we believe that jewelry is more than just an accessory—it's a reflection of your story. With a focus on refined design and exceptional quality, we create timeless pieces that blend classic elegance with contemporary style.</p>"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+},
+{
+"type": "select",
+"id": "layout",
+"label": "Layout",
+"options": [
+{
+"value": "image_right",
+"label": "Text left, Image right"
+},
+{
+"value": "image_left",
+"label": "Image left, Text right"
+}
+],
+"default": "image_right"
+}
+]
+},
+{
+"type": "large_text_image",
+"name": "Large Text and Image",
+"settings": [
+{
+"type": "text",
+"id": "section_label",
+"label": "Section Label",
+"default": "OUR PHILOSOPHY"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Jewelry That Speaks to You"
+},
+{
+"type": "richtext",
+"id": "content",
+"label": "Content",
+"default": "<p>We design with intention, creating pieces that inspire confidence and self-expression. Whether for everyday wear or life's special moments, Tashola jewelry is meant to be a part of your journey, elevating every look with effortless sophistication.</p>"
 },
 {
 "type": "image_picker",
@@ -87,7 +132,7 @@
 "type": "richtext",
 "id": "quote_text",
 "label": "Quote Content",
-"default": "<p>Example quote.</p>"
+"default": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn't exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon isn't enough for us. We're committed to building a brand with true environmental understanding and actively reducing our impact at every step.</p>"
 }
 ]
 }
@@ -133,6 +178,28 @@
                     class="grid-image">
                 {% else %}
                 <div class="grid-image-placeholder">
+                    <span>Image</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% when 'large_text_image' %}
+        <div class="about-us-grid-item large-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}"
+            {{ block.shopify_attributes }}>
+            <div class="grid-text-content">
+                <div class="section-label">{{ block.settings.section_label }}</div>
+                <h2 class="section-heading">{{ block.settings.heading }}</h2>
+                <div class="section-content">
+                    {{ block.settings.content }}
+                </div>
+            </div>
+            <div class="grid-image-container">
+                {% if block.settings.image %}
+                <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.heading }}"
+                    class="grid-image">
+                {% else %}
+                <div class="grid-image-placeholder large-placeholder">
                     <span>Image</span>
                 </div>
                 {% endif %}
@@ -212,13 +279,21 @@
     .about-us-grid {
         display: flex;
         flex-direction: column;
-        gap: 5rem;
+        /* Removed gap here to eliminate space between grid items */
     }
 
     .about-us-grid-item {
         display: flex;
         gap: 4rem;
         align-items: center;
+        padding: 3rem 0;
+        /* Added padding instead of margin to maintain spacing but eliminate gaps */
+    }
+
+    /* Large grid item - taller than regular items */
+    .about-us-grid-item.large-item {
+        padding: 5rem 0;
+        /* Increased padding for more height */
     }
 
     .image-right {
@@ -233,6 +308,19 @@
     .grid-image-container {
         flex: 1;
         width: 50%;
+    }
+
+    /* Adjust the image container for the large grid item */
+    .large-item .grid-image-container {
+        /* More height for larger images */
+        min-height: 450px;
+        display: flex;
+        align-items: center;
+    }
+
+    .large-placeholder {
+        padding-bottom: 150% !important;
+        /* Make placeholder taller for large items */
     }
 
     .section-label {
@@ -380,11 +468,23 @@
         .about-us-grid-item {
             flex-direction: column;
             gap: 2rem;
+            padding: 2.5rem 0;
+            /* Reduced padding on mobile */
+        }
+
+        .about-us-grid-item.large-item {
+            padding: 3.5rem 0;
+            /* Still larger than regular items but reduced for mobile */
         }
 
         .grid-text-content,
         .grid-image-container {
             width: 100%;
+        }
+
+        .large-item .grid-image-container {
+            min-height: 350px;
+            /* Slightly smaller on mobile but still larger than regular items */
         }
 
         .about-us-main-heading {
