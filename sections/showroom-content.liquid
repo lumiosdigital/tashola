@@ -5,7 +5,8 @@
 {
 "type": "image_picker",
 "id": "showroom_image",
-"label": "Showroom Image"
+"label": "Showroom Image",
+"default": "showroom-page-image.png"
 },
 {
 "type": "text",
@@ -82,7 +83,7 @@
         </div>
 
         <div class="showroom-location">
-            {% render 'icon-location' %}
+            {% render 'icon-location-pink' %}
             <div class="showroom-location-text">
                 <p class="showroom-name">{{ section.settings.location_name }}</p>
                 <p class="showroom-address">{{ section.settings.address }}</p>
