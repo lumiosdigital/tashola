@@ -166,11 +166,14 @@
         <div class="about-us-grid-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}"
             {{ block.shopify_attributes }}>
             <div class="grid-text-content">
-                <div class="section-label">{{ block.settings.section_label }}</div>
-                <h2 class="section-heading">{{ block.settings.heading }}</h2>
-                <div class="section-content">
-                    {{ block.settings.content }}
+                <div class="section-organizer">
+                    <div class="section-label">{{ block.settings.section_label }}</div>
+                    <h2 class="section-heading">{{ block.settings.heading }}</h2>
+                    <div class="section-content">
+                        {{ block.settings.content }}
+                    </div>                    
                 </div>
+
             </div>
             <div class="grid-image-container">
                 {% if block.settings.image %}
@@ -188,11 +191,14 @@
         <div class="about-us-grid-item large-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}"
             {{ block.shopify_attributes }}>
             <div class="grid-text-content">
-                <div class="section-label">{{ block.settings.section_label }}</div>
-                <h2 class="section-heading">{{ block.settings.heading }}</h2>
-                <div class="section-content">
-                    {{ block.settings.content }}
+                <div class="section-organizer">
+                    <div class="section-label">{{ block.settings.section_label }}</div>
+                    <h2 class="section-heading">{{ block.settings.heading }}</h2>
+                    <div class="section-content">
+                        {{ block.settings.content }}
+                    </div>                    
                 </div>
+
             </div>
             <div class="grid-image-container">
                 {% if block.settings.image %}
@@ -209,7 +215,6 @@
         {% when 'quote' %}
         <div class="about-us-quote-container" {{ block.shopify_attributes }}>
             <div class="quote-inner">
-                <div class="quote-mark">"</div>
                 <h3 class="quote-heading">{{ block.settings.heading }}</h3>
                 <div class="quote-content">
                     {{ block.settings.quote_text }}
@@ -237,17 +242,17 @@
 
 <style>
     .breadcrumbs-container {
-        max-width: 1200px;
+        /* max-width: 1200px; */
         margin: 0 auto;
-        padding: 0 3.75rem;
+        padding: 2.5rem 3.75rem 0;
         margin-top: var(--header-height);
         background-color: #F6F4F3;
     }
 
     .about-us-container {
-        max-width: 1200px;
+        /* max-width: 1200px; */
         margin: 0 auto;
-        padding: 2rem 3.75rem 5rem;
+        padding: 2.5rem 3.75rem 6.5rem;
         background-color: #F6F4F3;
     }
 
@@ -260,14 +265,14 @@
 
     .about-us-main-heading {
         font-family: var(--font-heading);
-        font-size: 2.5rem;
+        font-size: 2.75rem;
         color: var(--color-text);
         margin: 0 0 1.5rem;
         font-weight: 600;
     }
 
     .about-us-main-description {
-        font-family: var(--font-body);
+        font-family: var(--font-heading);
         font-size: 1.125rem;
         line-height: 1.6;
         color: var(--color-text);
@@ -284,15 +289,15 @@
 
     .about-us-grid-item {
         display: flex;
-        gap: 4rem;
+        /* gap: 4rem; */
         align-items: center;
-        padding: 3rem 0;
+        /* padding: 3rem 0; */
         /* Added padding instead of margin to maintain spacing but eliminate gaps */
     }
 
     /* Large grid item - taller than regular items */
     .about-us-grid-item.large-item {
-        padding: 5rem 0;
+        /* padding: 5rem 0; */
         /* Increased padding for more height */
     }
 
@@ -304,9 +309,15 @@
         flex-direction: row-reverse;
     }
 
-    .grid-text-content,
+    .grid-text-content {
+        display: flex;
+        flex-direction: column;
+        /* justify-content: flex-start; */
+        align-items: center;
+        width: 50%; 
+    }
+
     .grid-image-container {
-        flex: 1;
         width: 50%;
     }
 
@@ -323,8 +334,14 @@
         /* Make placeholder taller for large items */
     }
 
+    .section-organizer {
+        display: flex;
+        flex-direction: column;
+    }
+
+
     .section-label {
-        font-family: var(--font-body);
+        font-family: var(--font-heading);
         font-size: 0.875rem;
         letter-spacing: 0.05em;
         text-transform: uppercase;
@@ -341,10 +358,11 @@
     }
 
     .section-content {
-        font-family: var(--font-body);
-        font-size: 1rem;
+        font-family: var(--font-heading);
+        font-size: 1.125rem;
         line-height: 1.6;
         color: var(--color-text);
+        max-width: 528px;
     }
 
     .grid-image {
@@ -367,55 +385,46 @@
 
     /* Quote Section */
     .about-us-quote-container {
-        margin: 2rem 0;
-        text-align: center;
-        padding: 3rem 0;
-        border-top: 1px solid rgba(55, 55, 54, 0.1);
-        border-bottom: 1px solid rgba(55, 55, 54, 0.1);
-    }
+        display: flex;
+        justify-content: center;
+        margin: 4rem 0;
+        /* text-align: center; */
+        }
 
     .quote-inner {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        align-items: center;
         max-width: 900px;
-        margin: 0 auto;
-        position: relative;
-    }
-
-    .quote-mark {
-        font-family: var(--font-heading);
-        font-size: 6rem;
-        color: #F6F4F3;
-        text-shadow: 1px 1px 0 rgba(55, 55, 54, 0.1);
-        position: absolute;
-        top: -3rem;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 0;
-        opacity: 0.5;
+        /* margin: 0 auto; */
+        /* position: relative; */
+        padding: 80px 50px 50px 50px;
+        border-top: 1px solid rgba(55, 55, 54, 0.1);
+        border-bottom: 1px solid rgba(55, 55, 54, 0.1);
+        border-left: 1px solid rgba(55, 55, 54, 0.1);
+        border-right: 1px solid rgba(55, 55, 54, 0.1);
     }
 
     .quote-heading {
         font-family: var(--font-heading);
-        font-size: 1.75rem;
+        font-size: 1.875rem;
         color: var(--color-text);
         margin: 0 0 1.5rem;
         font-weight: 600;
-        position: relative;
-        z-index: 1;
     }
 
     .quote-content {
-        font-family: var(--font-body);
+        font-family: var(--font-heading);
         font-size: 1.125rem;
         line-height: 1.6;
         color: var(--color-text);
-        position: relative;
-        z-index: 1;
     }
 
     /* Additional Content */
     .about-us-additional-content {
         margin: 4rem 0;
-        font-family: var(--font-body);
+        font-family: var(--font-heading);
         font-size: 1.125rem;
         line-height: 1.6;
         color: var(--color-text);
