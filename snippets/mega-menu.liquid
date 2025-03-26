@@ -75,10 +75,17 @@
 
         <div class="mega-menu-image">
             {% if section.settings.mega_menu_image %}
-            <img src="{{ section.settings.mega_menu_image | img_url: 'master' }}" alt="Featured collection"
-                class="mega-menu-featured-image" loading="lazy">
-            {% else %}
+            {% if section.settings.mega_menu_image_link != blank %}
+            <a href="{{ section.settings.mega_menu_image_link }}">
+                {% endif %}
 
+                <img src="{{ section.settings.mega_menu_image | img_url: 'master' }}" alt="Featured collection"
+                    class="mega-menu-featured-image" loading="lazy">
+
+                {% if section.settings.mega_menu_image_link != blank %}
+            </a>
+            {% endif %}
+            {% else %}
             <!-- Default image if none is uploaded -->
             <div class="mega-menu-placeholder">
                 <span>Featured Collection</span>
