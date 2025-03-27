@@ -29,10 +29,16 @@
                     <a href="{{ routes.account_register_url }}">Register</a>
                 </div>
             </div>
-            <a href="{{ routes.cart_url }}" aria-label="Cart">{% render 'icon-shopping-bag' %}</a>
+            <button type="button" class="cart-drawer-trigger" aria-label="Cart with {{ cart.item_count }} items"
+                aria-controls="cart-drawer">
+                {% render 'icon-shopping-bag' %}
+                <span class="cart-count" data-count="{{ cart.item_count }}" aria-hidden="true">{{ cart.item_count }}</span>
+            </button>
         </div>
     </div>
 </div>
+
+{% render 'cart-drawer' %}
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -62,25 +68,52 @@
 
             lastScrollTop = currentScrollTop;
         });
+
+        // Add cart drawer trigger functionality
+        const cartTrigger = document.querySelector('.cart-drawer-trigger');
+        const cartDrawer = document.getElementById('cart-drawer');
+
+        if (cartTrigger && cartDrawer) {
+            cartTrigger.addEventListener('click', function () {
+                cartDrawer.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('drawer-open');
+            });
+        }
     });
 </script>
 
 {% schema %}
 {
-"name": "Header",
-"settings": [
-{
-"type": "image_picker",
-"id": "mega_menu_image",
-"label": "Mega Menu Image",
-"info": "Featured image displayed in the mega menu dropdown"
-},
-{
-"type": "url",
-"id": "mega_menu_image_link",
-"label": "Mega Menu Image Link",
-"info": "Select a link for the featured mega menu image"
-}
-]
+    "name": "Header",
+    "settings": [
+        {
+        "type": "image_picker",
+        "id": "mega_menu_image",
+        "label": "Mega Menu Image",
+        "info": "Featured image displayed in the mega menu dropdown"
+        },
+        {
+        "type": "url",
+        "id": "mega_menu_image_link",
+        "label": "Mega Menu Image Link",
+        "info": "Select a link for the featured mega menu image"
+        },
+        {
+        "type": "header",
+        "content": "Cart Drawer Settings"
+        },
+        {
+        "type": "checkbox",
+        "id": "enable_jewelry_box",
+        "label": "Enable Jewelry Box option",
+        "default": true
+        },
+        {
+        "type": "text",
+        "id": "jewelry_box_price",
+        "label": "Jewelry Box Price",
+        "default": "15.00"
+        }
+    ]
 }
 {% endschema %}

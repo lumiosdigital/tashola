@@ -1,0 +1,85 @@
+<!-- Cart Drawer -->
+<div id="cart-drawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer-inner">
+        <div class="cart-drawer-header">
+            <h2>Shopping Cart</h2>
+            <button type="button" class="cart-drawer-close" aria-label="Close cart">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="cart-drawer-content">
+            {% if cart.item_count > 0 %}
+            <div class="cart-items">
+                {%- for item in cart.items -%}
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        {% if item.image %}
+                        <img src="{{ item.image | img_url: '120x' }}" alt="{{ item.title | escape }}" loading="lazy">
+                        {% else %}
+                        <div class="placeholder-image">{{ 'product-1' | placeholder_svg_tag }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-title">{{ item.product.title }}</h3>
+                        <p class="cart-item-price">{{ item.final_price | money }}</p>
+                        <div class="cart-item-quantity">
+                            <button type="button" class="quantity-button decrease" data-line="{{ forloop.index }}"
+                                aria-label="Decrease quantity">
+                                <span>−</span>
+                            </button>
+                            <input type="number" name="updates[]" id="updates_{{ item.key }}"
+                                value="{{ item.quantity }}" min="0" aria-label="Quantity" readonly>
+                            <button type="button" class="quantity-button increase" data-line="{{ forloop.index }}"
+                                aria-label="Increase quantity">
+                                <span>+</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-item-remove">
+                        <button type="button" class="remove-button" data-line="{{ forloop.index }}"
+                            aria-label="Remove item">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+                {%- endfor -%}
+            </div>
+
+            {% if settings.enable_jewelry_box %}
+            <div class="cart-drawer-checkbox">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="jewelry-box-option">
+                    <span class="checkbox-label">Add a Jewellery Box (+{{ settings.jewelry_box_price | default: 15.00 |
+                        money }})</span>
+                </label>
+            </div>
+            {% endif %}
+
+            <div class="cart-drawer-footer">
+                <div class="cart-drawer-subtotal">
+                    <span>Subtotal</span>
+                    <span class="cart-subtotal-price">{{ cart.total_price | money }}</span>
+                </div>
+
+                <div class="cart-drawer-actions">
+                    <a href="{{ routes.cart_url }}" class="btn btn-secondary btn-view-cart">VIEW SHOPPING CART</a>
+                    <a href="{{ routes.checkout_url }}" class="btn btn-primary btn-checkout">CHECK OUT</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="cart-drawer-empty">
+                <p>Your cart is currently empty.</p>
+                <div class="cart-continue-shopping">
+                    <div class="cart-dividing-line"></div>
+                    <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">CONTINUE SHOPPING</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="cart-drawer-backdrop"></div>
