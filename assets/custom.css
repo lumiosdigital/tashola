@@ -322,8 +322,8 @@ button:focus {
     display: block;
     position: absolute;
     bottom: 0;
-    left: 3.5rem;
-    right: 3.5rem;
+    left: 3.75rem;
+    right: 3.75rem;
     height: 1px;
     background-color: #373736;
     opacity: 20%;
