@@ -12,7 +12,16 @@
         {% elsif template contains 'product' %}
         {% if collection.url %}
         <li class="breadcrumbs-item">
+            <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
+            <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
+        </li>
+        <li class="breadcrumbs-item">
             <a href="{{ collection.url }}" class="breadcrumbs-link">{{ collection.title }}</a>
+            <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
+        </li>
+        {% else %}
+        <li class="breadcrumbs-item">
+            <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
         </li>
         {% endif %}
@@ -20,6 +29,10 @@
             <span class="breadcrumbs-current">{{ product.title }}</span>
         </li>
         {% elsif template contains 'collection' and collection.handle %}
+        <li class="breadcrumbs-item">
+            <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
+            <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
+        </li>
         <li class="breadcrumbs-item">
             <span class="breadcrumbs-current">{{ collection.title }}</span>
         </li>
