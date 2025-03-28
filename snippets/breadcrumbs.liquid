@@ -5,54 +5,32 @@
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
         </li>
 
-        {% if template contains 'page' %}
-        <li class="breadcrumbs-item">
-            <span class="breadcrumbs-current">{{ page.title }}</span>
-        </li>
-        {% elsif template contains 'product' %}
-        {% if collection.url %}
         <li class="breadcrumbs-item">
             <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
         </li>
+
+        {% if product.metafields.custom.primary_category != blank %}
+        {% assign primary_category_handle = product.metafields.custom.primary_category %}
+        {% assign primary_category = collections[primary_category_handle] %}
+
+        {% if primary_category %}
         <li class="breadcrumbs-item">
-            <a href="{{ collection.url }}" class="breadcrumbs-link">{{ collection.title }}</a>
-            <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
-        </li>
-        {% else %}
-        <li class="breadcrumbs-item">
-            <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
+            <a href="{{ primary_category.url }}" class="breadcrumbs-link">{{ primary_category.title }}</a>
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
         </li>
         {% endif %}
+        {% elsif product.collections.first %}
+        <li class="breadcrumbs-item">
+            <a href="{{ product.collections.first.url }}" class="breadcrumbs-link">{{ product.collections.first.title
+                }}</a>
+            <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
+        </li>
+        {% endif %}
+
         <li class="breadcrumbs-item">
             <span class="breadcrumbs-current">{{ product.title }}</span>
         </li>
-        {% elsif template contains 'collection' and collection.handle %}
-        <li class="breadcrumbs-item">
-            <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
-            <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
-        </li>
-        <li class="breadcrumbs-item">
-            <span class="breadcrumbs-current">{{ collection.title }}</span>
-        </li>
-        {% elsif template contains 'blog' %}
-        <li class="breadcrumbs-item">
-            <span class="breadcrumbs-current">{{ blog.title }}</span>
-        </li>
-        {% elsif template contains 'article' %}
-        <li class="breadcrumbs-item">
-            <a href="{{ blog.url }}" class="breadcrumbs-link">{{ blog.title }}</a>
-            <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
-        </li>
-        <li class="breadcrumbs-item">
-            <span class="breadcrumbs-current">{{ article.title }}</span>
-        </li>
-        {% else %}
-        <li class="breadcrumbs-item">
-            <span class="breadcrumbs-current">{{ page_title }}</span>
-        </li>
-        {% endif %}
     </ol>
 </nav>
 

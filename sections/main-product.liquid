@@ -9,31 +9,24 @@ Main product template section for Tashola theme
 
 <div class="product-container" data-product-container>
     <div class="product-grid">
-        <!-- Left column: Product images -->
+        <!-- Left column: Product images 2x2 grid -->
         <div class="product-gallery-column">
             <div class="product-gallery" data-product-gallery>
-                <div class="main-image-container">
-                    {% if product.featured_media != blank %}
-                    <img src="{{ product.featured_media | img_url: 'master' }}"
-                        alt="{{ product.featured_media.alt | escape }}" id="ProductMainImage"
-                        class="product-featured-image" data-main-image {% if product.images.size> 1 %}data-image-id="{{
-                    product.featured_media.id }}"{% endif %}>
-                    {% else %}
-                    {{ 'product-1' | placeholder_svg_tag: 'product-featured-image placeholder-svg' }}
-                    {% endif %}
-                </div>
-
-                {% if product.images.size > 1 %}
-                <div class="product-thumbnails">
-                    {% for media in product.media %}
-                    <div class="thumbnail-item {% if forloop.first %}active{% endif %}" data-thumbnail>
-                        <img src="{{ media | img_url: '150x150', crop: 'center' }}" alt="{{ media.alt | escape }}"
-                            class="thumbnail-image" data-thumbnail-id="{{ media.id }}"
-                            data-full-image-url="{{ media | img_url: 'master' }}">
+                <div class="image-grid">
+                    {% assign image_count = product.images | size %}
+                    {% for i in (1..4) %}
+                    <div class="image-grid-item {% if i > image_count %}empty{% endif %}">
+                        {% assign image_index = i | minus: 1 %}
+                        {% if image_index < image_count %} <img
+                            src="{{ product.images[image_index] | img_url: 'master' }}"
+                            alt="{{ product.images[image_index].alt | escape }}" class="grid-image"
+                            data-image-index="{{ image_index }}"
+                            data-variant-id="{{ product.selected_or_first_available_variant.id }}" {% if forloop.first
+                            %}data-main-image{% endif %}>
+                            {% endif %}
                     </div>
                     {% endfor %}
                 </div>
-                {% endif %}
             </div>
         </div>
 
@@ -48,12 +41,17 @@ Main product template section for Tashola theme
                 </div>
                 {% endif %}
 
+                {% form 'product', product, data-product-form: '', novalidate: 'novalidate' %}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"
+                    id="VariantId">
+
                 {% if product.has_only_default_variant == false %}
                 <div class="product-variants">
                     {% for option in product.options_with_values %}
                     <div class="product-option-wrapper" data-option-index="{{ forloop.index0 }}">
                         {% if option.name == 'Metal' or option.name == 'Color' %}
-                        <div class="metal-label">METAL: {{ option.selected_value }}</div>
+                        <div class="metal-label">METAL: <span class="selected-option-text">{{ option.selected_value
+                                }}</span></div>
                         <div class="color-option-wrapper">
                             {% for value in option.values %}
                             {% assign color_code = "" %}
@@ -71,15 +69,17 @@ Main product template section for Tashola theme
 
                             <div class="color-option {% if option.selected_value == value %}selected{% endif %}"
                                 style="background-color: {{ color_code }};" data-option-value="{{ value }}"
+                                data-option-position="{{ forloop.index0 }}" data-index="{{ forloop.index0 }}"
                                 title="{{ value }}">
                             </div>
                             {% endfor %}
                         </div>
                         {% else %}
-                        <div class="option-label">{{ option.name }}: {{ option.selected_value }}</div>
+                        <div class="option-label">{{ option.name }}: <span class="selected-option-text">{{
+                                option.selected_value }}</span></div>
                         <div class="select-wrapper">
-                            <select class="product-option" id="{{ option.name | handleize }}"
-                                name="options[{{ option.name }}]">
+                            <select class="product-option single-option-selector" id="{{ option.name | handleize }}"
+                                name="options[{{ option.name }}]" data-index="{{ forloop.index0 }}">
                                 {% for value in option.values %}
                                 <option value="{{ value }}" {% if option.selected_value==value %}selected="selected" {%
                                     endif %}>{{ value }}</option>
@@ -103,9 +103,7 @@ Main product template section for Tashola theme
                     {% endif %}
                 </div>
 
-                {% form 'product', product, data-product-form: '', novalidate: 'novalidate' %}
-                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
+                {% if section.settings.show_quantity_selector %}
                 <div class="quantity-add-wrapper">
                     <div class="quantity-selector">
                         <button type="button" class="quantity-adjust quantity-minus"
@@ -120,7 +118,7 @@ Main product template section for Tashola theme
                         </button>
                     </div>
 
-                    <button type="submit" name="add" id="AddToCart"
+                    <button type="button" name="add" id="AddToCart"
                         class="add-to-cart-button {% unless product.available %}disabled{% endunless %}" {% unless
                         product.available %}disabled="disabled" {% endunless %} data-add-to-cart>
                         {% if product.available %}
@@ -130,6 +128,19 @@ Main product template section for Tashola theme
                         {% endif %}
                     </button>
                 </div>
+                {% else %}
+                <div class="add-to-cart-wrapper">
+                    <button type="button" name="add" id="AddToCart"
+                        class="add-to-cart-button wide {% unless product.available %}disabled{% endunless %}" {% unless
+                        product.available %}disabled="disabled" {% endunless %} data-add-to-cart>
+                        {% if product.available %}
+                        ADD TO CART
+                        {% else %}
+                        SOLD OUT
+                        {% endif %}
+                    </button>
+                </div>
+                {% endif %}
 
                 {% if section.settings.show_buy_it_now and product.available %}
                 <button type="submit" name="checkout" class="buy-it-now-button" data-buy-now>
@@ -229,43 +240,29 @@ Main product template section for Tashola theme
 </div>
 {% endif %}
 
+<script type="application/json" id="ProductJson-{{ section.id }}">
+  {{ product | json }}
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Thumbnail gallery
-        initProductGallery();
+        // Get product data
+        const productJson = document.getElementById('ProductJson-{{ section.id }}');
+        if (!productJson) return;
 
-        // Accordions
+        const product = JSON.parse(productJson.textContent);
+
+        // Initialize accordions
         initAccordions();
 
-        // Quantity selector
+        // Initialize quantity selector
         initQuantitySelector();
 
-        // Color/variant selection
-        initVariantSelector();
+        // Initialize variant selection with direct approach
+        initSimpleVariantSelector();
 
-        function initProductGallery() {
-            const thumbnails = document.querySelectorAll('[data-thumbnail]');
-            const mainImage = document.querySelector('[data-main-image]');
-
-            if (!thumbnails.length || !mainImage) return;
-
-            thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', function () {
-                    // Update active state
-                    document.querySelector('.thumbnail-item.active').classList.remove('active');
-                    this.classList.add('active');
-
-                    // Update main image
-                    const fullImageUrl = this.querySelector('img').getAttribute('data-full-image-url');
-                    const imageId = this.querySelector('img').getAttribute('data-thumbnail-id');
-
-                    mainImage.src = fullImageUrl;
-                    if (imageId) {
-                        mainImage.setAttribute('data-image-id', imageId);
-                    }
-                });
-            });
-        }
+        // Initialize cart functionality
+        initCartFunctionality();
 
         function initAccordions() {
             const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -310,56 +307,292 @@ Main product template section for Tashola theme
             });
         }
 
-        function initVariantSelector() {
+        function initSimpleVariantSelector() {
+            // Find out which option is the Metal option
+            let metalOptionIndex = -1;
+            if (product.options) {
+                for (let i = 0; i < product.options.length; i++) {
+                    if (product.options[i] === 'Metal' || product.options[i] === 'Color') {
+                        metalOptionIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            // If no Metal option found, exit this function
+            if (metalOptionIndex === -1) return;
+
+            // Create a map of metal values to their variants and images
+            const metalVariants = {};
+
+            product.variants.forEach(variant => {
+                const metalValue = variant.options[metalOptionIndex];
+
+                // If this is the first time we're seeing this metal value
+                if (!metalVariants[metalValue]) {
+                    metalVariants[metalValue] = {
+                        variantId: variant.id,
+                        price: variant.price,
+                        featured_image: variant.featured_image ? variant.featured_image.src : null
+                    };
+                }
+            });
+
+            // Add click handlers to color options
             const colorOptions = document.querySelectorAll('.color-option');
-            const variantSelects = document.querySelectorAll('.product-option');
-            const addToCartForm = document.querySelector('[data-product-form]');
-
-            if (!addToCartForm) return;
-
-            // Handle color option selection
             colorOptions.forEach(option => {
                 option.addEventListener('click', function () {
-                    const optionWrapper = this.closest('.product-option-wrapper');
-                    const optionIndex = optionWrapper.getAttribute('data-option-index');
-                    const optionValue = this.getAttribute('data-option-value');
+                    // Get the metal value and update the UI
+                    const metalValue = this.getAttribute('data-option-value');
 
-                    // Update UI
-                    optionWrapper.querySelectorAll('.color-option').forEach(opt => {
+                    // Mark this option as selected visually
+                    document.querySelectorAll('.color-option').forEach(opt => {
                         opt.classList.remove('selected');
                     });
                     this.classList.add('selected');
 
-                    // Update the displayed selected value
-                    const metalLabel = optionWrapper.querySelector('.metal-label');
+                    // Update the metal label text
+                    const metalLabel = document.querySelector('.metal-label .selected-option-text');
                     if (metalLabel) {
-                        metalLabel.textContent = 'METAL: ' + optionValue;
+                        metalLabel.textContent = metalValue;
                     }
 
-                    // Update corresponding select if it exists
-                    const selectElement = document.querySelector(`select[name="options[${product.options[optionIndex]}]"]`);
-                    if (selectElement) {
-                        selectElement.value = optionValue;
-                        selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+                    // Get the variant info for this metal
+                    const variantInfo = metalVariants[metalValue];
+                    if (!variantInfo) return;
+
+                    // Update the variant ID in the form
+                    const variantIdInput = document.getElementById('VariantId');
+                    if (variantIdInput) {
+                        variantIdInput.value = variantInfo.variantId;
                     }
-                });
-            });
 
-            // Update selected option text when select changes
-            variantSelects.forEach(select => {
-                select.addEventListener('change', function () {
-                    const selectedOption = this.options[this.selectedIndex].text;
-                    const optionWrapper = this.closest('.product-option-wrapper');
+                    // Update the price
+                    const priceElement = document.querySelector('[data-product-price]');
+                    if (priceElement && variantInfo.price) {
+                        // Format price as currency
+                        const formatter = new Intl.NumberFormat('en-GB', {
+                            style: 'currency',
+                            currency: 'GBP',
+                            minimumFractionDigits: 2
+                        });
+                        priceElement.textContent = formatter.format(variantInfo.price / 100);
+                    }
 
-                    if (optionWrapper) {
-                        const optionLabel = optionWrapper.querySelector('.option-label');
-                        if (optionLabel) {
-                            const labelText = optionLabel.textContent.split(':')[0];
-                            optionLabel.textContent = labelText + ': ' + selectedOption;
+                    // Update the image if this variant has one
+                    if (variantInfo.featured_image) {
+                        const mainImage = document.querySelector('[data-main-image]');
+                        if (mainImage) {
+                            mainImage.src = variantInfo.featured_image;
                         }
                     }
                 });
             });
+
+            // Trigger click on the selected option (or first option if none selected)
+            const selectedOption = document.querySelector('.color-option.selected');
+            if (selectedOption) {
+                selectedOption.click();
+            } else if (colorOptions.length > 0) {
+                colorOptions[0].click();
+            }
+        }
+
+        function initCartFunctionality() {
+            const addToCartButton = document.querySelector('[data-add-to-cart]');
+            if (!addToCartButton) return;
+
+            addToCartButton.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const variantId = document.getElementById('VariantId').value;
+                const quantity = document.querySelector('[data-quantity-input]')?.value || 1;
+
+                // Add loading state to button
+                addToCartButton.classList.add('loading');
+                const originalText = addToCartButton.textContent;
+                addToCartButton.textContent = 'ADDING...';
+
+                // Add to cart via AJAX
+                fetch('/cart/add.js', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: variantId,
+                        quantity: quantity
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Restore button text
+                        addToCartButton.textContent = originalText;
+                        addToCartButton.classList.remove('loading');
+
+                        // Update cart count
+                        updateCartCount();
+
+                        // Fetch the latest cart drawer content and update it
+                        fetchAndUpdateCartDrawer();
+                    })
+                    .catch(error => {
+                        console.error('Error adding to cart:', error);
+                        addToCartButton.textContent = originalText;
+                        addToCartButton.classList.remove('loading');
+                    });
+            });
+        }
+
+        function updateCartCount() {
+            fetch('/cart.js')
+                .then(response => response.json())
+                .then(cart => {
+                    const cartCountElements = document.querySelectorAll('.cart-count');
+                    cartCountElements.forEach(element => {
+                        element.textContent = cart.item_count;
+                        element.setAttribute('data-count', cart.item_count);
+
+                        // Show/hide based on count
+                        if (cart.item_count > 0) {
+                            element.style.display = 'flex';
+                        } else {
+                            element.style.display = 'none';
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching cart:', error);
+                });
+        }
+
+        function fetchAndUpdateCartDrawer() {
+            // Fetch the cart drawer section HTML
+            fetch('/?section_id=cart-drawer')
+                .then(response => response.text())
+                .then(html => {
+                    // Parse the HTML
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newCartDrawer = doc.getElementById('cart-drawer');
+
+                    if (newCartDrawer) {
+                        // Get the current cart drawer
+                        const currentCartDrawer = document.getElementById('cart-drawer');
+                        if (currentCartDrawer) {
+                            // Replace the inner content
+                            currentCartDrawer.innerHTML = newCartDrawer.innerHTML;
+
+                            // Re-attach event listeners to the new content
+                            attachCartDrawerEventListeners();
+
+                            // Open the cart drawer
+                            currentCartDrawer.setAttribute('aria-hidden', 'false');
+                            document.body.classList.add('drawer-open');
+
+                            // Show backdrop
+                            const backdrop = document.querySelector('.cart-drawer-backdrop');
+                            if (backdrop) {
+                                backdrop.classList.add('visible');
+                            }
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating cart drawer:', error);
+                });
+        }
+
+        function attachCartDrawerEventListeners() {
+            // Close button
+            const closeButton = document.querySelector('.cart-drawer-close');
+            if (closeButton) {
+                closeButton.addEventListener('click', function () {
+                    const cartDrawer = document.getElementById('cart-drawer');
+                    if (cartDrawer) {
+                        cartDrawer.setAttribute('aria-hidden', 'true');
+                        document.body.classList.remove('drawer-open');
+
+                        const backdrop = document.querySelector('.cart-drawer-backdrop');
+                        if (backdrop) {
+                            backdrop.classList.remove('visible');
+                        }
+                    }
+                });
+            }
+
+            // Backdrop click to close
+            const backdrop = document.querySelector('.cart-drawer-backdrop');
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    const cartDrawer = document.getElementById('cart-drawer');
+                    if (cartDrawer) {
+                        cartDrawer.setAttribute('aria-hidden', 'true');
+                        document.body.classList.remove('drawer-open');
+                        backdrop.classList.remove('visible');
+                    }
+                });
+            }
+
+            // Quantity adjustments
+            const decreaseButtons = document.querySelectorAll('.quantity-button.decrease');
+            decreaseButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const lineItem = this.getAttribute('data-line');
+                    const input = this.nextElementSibling;
+                    if (!input) return;
+
+                    let quantity = parseInt(input.value) - 1;
+                    if (quantity >= 0) {
+                        updateCartItemQuantity(lineItem, quantity);
+                    }
+                });
+            });
+
+            const increaseButtons = document.querySelectorAll('.quantity-button.increase');
+            increaseButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const lineItem = this.getAttribute('data-line');
+                    const input = this.previousElementSibling;
+                    if (!input) return;
+
+                    let quantity = parseInt(input.value) + 1;
+                    updateCartItemQuantity(lineItem, quantity);
+                });
+            });
+
+            // Remove buttons
+            const removeButtons = document.querySelectorAll('.remove-button');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const lineItem = this.getAttribute('data-line');
+                    updateCartItemQuantity(lineItem, 0);
+                });
+            });
+        }
+
+        function updateCartItemQuantity(lineItem, quantity) {
+            fetch('/cart/change.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    line: parseInt(lineItem),
+                    quantity: quantity
+                })
+            })
+                .then(response => response.json())
+                .then(cart => {
+                    // Update cart count
+                    updateCartCount();
+
+                    // Refresh the cart drawer content
+                    fetchAndUpdateCartDrawer();
+                })
+                .catch(error => {
+                    console.error('Error updating cart item:', error);
+                });
         }
     });
 </script>
@@ -391,49 +624,40 @@ Main product template section for Tashola theme
 
     .product-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 3fr 2fr;
         gap: 4rem;
     }
 
-    /* Product gallery styles */
+    /* Product gallery styles - 2x2 grid */
     .product-gallery-column {
         display: flex;
         flex-direction: column;
+        width: 60%;
     }
 
-    .main-image-container {
-        width: 100%;
-        margin-bottom: 1.5rem;
+    .image-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 8px;
+        aspect-ratio: 1 / 1;
     }
 
-    .product-featured-image {
-        width: 100%;
-        height: auto;
-        display: block;
+    .image-grid-item {
+        position: relative;
+        overflow: hidden;
+        background-color: #f6f4f3;
     }
 
-    .product-thumbnails {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
+    .image-grid-item.empty {
+        background-color: #f0f0f0;
     }
 
-    .thumbnail-item {
-        width: 80px;
-        height: 80px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        transition: border-color 0.2s ease;
-    }
-
-    .thumbnail-item.active {
-        border-color: var(--color-accent);
-    }
-
-    .thumbnail-image {
+    .grid-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
     }
 
     /* Product details styles */
@@ -602,7 +826,16 @@ Main product template section for Tashola theme
         color: white;
         border: none;
         cursor: pointer;
-        transition: background-color 0.2s ease;
+        transition: background-color 0.2s ease, opacity 0.2s ease;
+        position: relative;
+    }
+
+    .add-to-cart-button.wide {
+        width: 100%;
+    }
+
+    .add-to-cart-button.loading {
+        opacity: 0.8;
     }
 
     .add-to-cart-button:hover {
@@ -764,6 +997,10 @@ Main product template section for Tashola theme
             gap: 3rem;
         }
 
+        .product-gallery-column {
+            width: 100%;
+        }
+
         .product-title {
             font-size: 2rem;
         }
@@ -788,6 +1025,10 @@ Main product template section for Tashola theme
         .product-grid {
             grid-template-columns: 1fr;
             gap: 2rem;
+        }
+
+        .product-gallery-column {
+            width: 100%;
         }
 
         .product-title {
