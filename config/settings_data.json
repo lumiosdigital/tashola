@@ -13,7 +13,10 @@
       "header": {
         "type": "header",
         "settings": {
-          "mega_menu_image": "shopify://shop_images/navbar-image.png"
+          "mega_menu_image": "shopify://shop_images/bottom-image.png",
+          "mega_menu_image_link": "",
+          "enable_jewelry_box": true,
+          "jewelry_box_price": "15.00"
         }
       },
       "footer": {
@@ -30,7 +33,6 @@
           "payment_icons_eMMhm7"
         ],
         "settings": {
-          "logo": "shopify://shop_images/tashola-logo.svg",
           "copyright_text": "© 2025 Tashola. All rights reserved.",
           "facebook_link": "https://facebook.com",
           "instagram_link": "https://instagram.com",
