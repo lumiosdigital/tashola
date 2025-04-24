@@ -23,7 +23,14 @@
       "type": "categories",
       "settings": {
         "selected_collection": "neptune",
-        "featured_collection": "neptune"
+        "featured_collection": "neptune",
+        "collection_banner_image": "shopify://shop_images/neptune-collection.png",
+        "earrings_image": "shopify://shop_images/earrings-category.png",
+        "rings_image": "shopify://shop_images/rings-category.png",
+        "necklaces_image": "shopify://shop_images/necklaces-category.png",
+        "bracelets_image": "shopify://shop_images/bracelets-category.png",
+        "personalization_image": "shopify://shop_images/personalization-category.png",
+        "charms_image": "shopify://shop_images/charms-category.png"
       }
     },
     "product-display": {
