@@ -1,15 +1,23 @@
-
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
       "settings": {
         "show_quantity_selector": true,
-        "show_variant_labels": true,
-        "show_buy_it_now": false,
+        "show_buy_it_now": true,
         "shipping_returns_text": "<p>Free domestic shipping on all orders over £75.</p><p>Returns accepted within 14 days of delivery. Items must be unworn with original packaging.</p>",
-        "show_related_products": true,
+        "show_related_products": false,
         "related_products_title": "You May Also Like",
+        "related_products_collection": "neptune",
         "related_products_limit": 4
       }
     }
