@@ -154,12 +154,16 @@
                 <!-- Accordion dropdowns --> 
                 <div class="product-accordions">
                     <div class="accordion-item">
-                        <button type="button" class="accordion-header" aria-expanded="false"
-                            aria-controls="product-details-content">
+                        <button type="button" class="accordion-header" aria-expanded="false" aria-controls="product-details-content">
                             <span>PRODUCT DETAILS</span>
                             <span class="accordion-icon">+</span>
                         </button>
                         <div id="product-details-content" class="accordion-content" hidden>
+                            {% if section.settings.product_details_text != blank %}
+                            <div class="product-details-content">
+                                {{ section.settings.product_details_text }}
+                            </div>
+                            {% else %}
                             {% assign collection_descriptions = "" %}
                             {% for collection in product.collections %}
                             {% if collection.description != blank %}
@@ -176,6 +180,7 @@
                             <div class="collection-description">
                                 {{ product.description }}
                             </div>
+                            {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -1206,6 +1211,17 @@
 "id": "show_buy_it_now",
 "label": "Show 'Buy It Now' button",
 "default": false
+},
+{
+"type": "header",
+"content": "Product Content"
+},
+{
+"type": "richtext",
+"id": "product_details_text",
+"label": "Product Details text",
+"info": "Custom text for the Product Details accordion. If empty, collection descriptions will be used.",
+"default": ""
 },
 {
 "type": "header",
