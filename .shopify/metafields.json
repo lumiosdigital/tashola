@@ -110,6 +110,56 @@
         "name": "list.product_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "personalization_themes",
+      "namespace": "custom",
+      "name": "Personalization Themes",
+      "description": "Assigns a product to a personalization option. Used to dynamically display charms and related items",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "primary_category",
+      "namespace": "custom",
+      "name": "Primary Category",
+      "description": "Stores the primary category of a product. This helps categorize products when filtering.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "age-group",
+      "namespace": "shopify",
+      "name": "Age group",
+      "description": "Defines the target age range for a product, such as adults or kids",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "ring-size",
+      "namespace": "shopify",
+      "name": "Ring size",
+      "description": "Specifies the size of a ring, such as L or 6.5",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "collections",
+      "namespace": "custom",
+      "name": "Collections",
+      "description": "Links a product to a collection.",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [],

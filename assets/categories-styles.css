@@ -117,7 +117,7 @@ h3.collection-dynamic-title {
 }
 
 .empty {
-    background: var(--color-white);
+    background: var(--color-background);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -239,8 +239,13 @@ h3.collection-dynamic-title {
 }
 
 .sale-price {
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-right: 0.5rem;
+}
+
+.product-price s {
+    color: #3737366d;
+    font-size: 0.9rem;
 }
 
 /* Variant styles */
@@ -277,7 +282,7 @@ h3.collection-dynamic-title {
 }
 
 .variant-radio:checked+.variant-color {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px var(--primary-color) !important;
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 3px var(--color-background) !important;
     transform: scale(1.1);
 }
 

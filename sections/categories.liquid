@@ -80,10 +80,10 @@
                             </div>
                         </a>
 
-                        {% if product.variants.size > 1 and product.options_by_name['Metal'] != blank %}
+                        {% if product.variants.size > 1 and product.options_by_name['Material'] != blank %}
                         <div class="product-variants">
-                            {% assign metal_option = product.options_by_name['Metal'] %}
-                            {% for value in metal_option.values limit: 4 %}
+                            {% assign material_option = product.options_by_name['Material'] %}
+                            {% for value in material_option.values limit: 4 %}
                             {% assign color_code = "" %}
                             {% if value contains 'Gold' %}
                             {% assign color_code = "#E5D295" %}
@@ -92,7 +92,9 @@
                             {% elsif value contains 'Rose Gold' %}
                             {% assign color_code = "#B76E79" %}
                             {% elsif value contains 'Platinum' %}
-                            {% assign color_code = "#E5E4E2" %}
+                            {% assign color_code = "#BCBCBC" %}
+                            {% elsif value contains 'Stainless Steel' %}
+                            {% assign color_code = "#E4E4E4" %}
                             {% endif %}
                             {% if color_code != "" %}
                             <div class="variant-color" style="background-color: {{ color_code }};" title="{{ value }}">
@@ -314,7 +316,7 @@
                     border: none; /* Remove default border */
                 }
                 .variant-radio:checked + .variant-color {
-                    box-shadow: 0 0 0 3px white, rgba(55, 55, 54, 0.2);
+                    box-shadow: 0 0 0 3px #F6F4F3), rgba(246, 244, 243, 1);
                 }
                 .variant-radio-container:hover .variant-color {
                     transform: scale(1.1);
@@ -352,34 +354,34 @@
                 fetch(`/products/${productHandle}.js`)
                     .then(response => response.json())
                     .then(product => {
-                        // Get the metal option if it exists
-                        const metalOptionIndex = product.options.findIndex(option =>
-                            option.name.toLowerCase() === 'metal' ||
+                        // Get the material option if it exists
+                        const materialOptionIndex = product.options.findIndex(option =>
+                            option.name.toLowerCase() === 'material' ||
                             option.name.toLowerCase() === 'color'
                         );
 
-                        if (metalOptionIndex === -1) return;
+                        if (materialOptionIndex === -1) return;
 
-                        const metalValues = product.options[metalOptionIndex].values;
+                        const materialValues = product.options[materialOptionIndex].values;
                         const variantImages = {};
 
-                        // Store all variant IDs associated with each metal option
+                        // Store all variant IDs associated with each material option
                         const variantIds = {};
 
                         // Create a mapping of variant values to images
                         product.variants.forEach(variant => {
-                            const optionValue = variant.options[metalOptionIndex];
+                            const optionValue = variant.options[materialOptionIndex];
                             if (variant.featured_image) {
                                 variantImages[optionValue] = variant.featured_image.src;
                             }
-                            // Store the variant ID for each metal option
+                            // Store the variant ID for each material option
                             variantIds[optionValue] = variant.id;
                         });
 
-                        // Create radio buttons for each metal option
-                        metalValues.forEach((metal, index) => {
-                            const colorCode = getColorCodeForMetal(metal);
-                            const variantId = variantIds[metal];
+                        // Create radio buttons for each material option
+                        materialValues.forEach((material, index) => {
+                            const colorCode = getColorCodeForMaterial(material);
+                            const variantId = variantIds[material];
 
                             const radioContainer = document.createElement('label');
                             radioContainer.className = 'variant-radio-container';
@@ -387,26 +389,26 @@
                             const radio = document.createElement('input');
                             radio.type = 'radio';
                             radio.name = `variant-${productHandle}`;
-                            radio.value = metal;
+                            radio.value = material;
                             radio.className = 'variant-radio';
                             radio.style.display = 'none';
                             radio.setAttribute('data-variant-id', variantId);
-                            radio.setAttribute('aria-label', metal);
+                            radio.setAttribute('aria-label', material);
 
                             // Check the Gold option by default, or the first option if Gold isn't available
-                            if ((metal.toLowerCase().includes('gold') && !metal.toLowerCase().includes('rose')) ||
-                                (index === 0 && !metalValues.some(m => m.toLowerCase().includes('gold') && !m.toLowerCase().includes('rose')))) {
+                            if ((material.toLowerCase().includes('gold') && !material.toLowerCase().includes('rose')) ||
+                                (index === 0 && !materialValues.some(m => m.toLowerCase().includes('gold') && !m.toLowerCase().includes('rose')))) {
                                 radio.checked = true;
                                 // Set the initial image to the selected variant
-                                if (variantImages[metal]) {
-                                    productImage.src = variantImages[metal];
+                                if (variantImages[material]) {
+                                    productImage.src = variantImages[material];
                                 }
                             }
 
                             const colorDisplay = document.createElement('span');
                             colorDisplay.className = 'variant-color';
                             colorDisplay.style.backgroundColor = colorCode;
-                            colorDisplay.title = metal;
+                            colorDisplay.title = material;
 
                             radioContainer.appendChild(radio);
                             radioContainer.appendChild(colorDisplay);
@@ -415,9 +417,9 @@
                             // Add event listener to change the image when a radio button is selected
                             radio.addEventListener('change', function () {
                                 if (this.checked) {
-                                    if (variantImages[metal]) {
+                                    if (variantImages[material]) {
                                         // Use variant image if available
-                                        productImage.src = variantImages[metal];
+                                        productImage.src = variantImages[material];
                                     } else if (index === 0) {
                                         // If this is the first option and no image, use original
                                         productImage.src = originalSrc;
@@ -431,7 +433,7 @@
                                                     ${productTitle}
                                                 </text>
                                                 <text x="50%" y="55%" font-family="serif" font-size="20" text-anchor="middle" fill="#999">
-                                                    ${metal}
+                                                    ${material}
                                                 </text>
                                             </svg>`;
 
@@ -449,19 +451,19 @@
             });
         }
 
-        // Helper function to get color code based on metal name
-        function getColorCodeForMetal(metal) {
-            const lowerMetal = metal.toLowerCase();
-            if (lowerMetal.includes('gold') && !lowerMetal.includes('rose')) {
+        // Helper function to get color code based on material name
+        function getColorCodeForMaterial(material) {
+            const lowerMaterial = material.toLowerCase();
+            if (lowerMaterial.includes('gold') && !lowerMaterial.includes('rose')) {
                 return "#E5D295";  // Gold
-            } else if (lowerMetal.includes('silver') || lowerMetal.includes('sterling')) {
+            } else if (lowerMaterial.includes('silver') || lowerMaterial.includes('sterling')) {
                 return "#CDCCCC";  // Silver
-            } else if (lowerMetal.includes('rose') || lowerMetal.includes('rosegold')) {
+            } else if (lowerMaterial.includes('rose') || lowerMaterial.includes('rosegold')) {
                 return "#B76E79";  // Rose Gold
-            } else if (lowerMetal.includes('platinum')) {
+            } else if (lowerMaterial.includes('platinum')) {
                 return "#E5E4E2";  // Platinum
             } else {
-                return "#373736";  // Default dark color
+                  // Default dark color
             }
         }
     });

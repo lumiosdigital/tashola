@@ -49,7 +49,9 @@
                     {% elsif value contains 'Rose Gold' %}
                     {% assign color_code = "#B76E79" %}
                     {% elsif value contains 'Platinum' %}
-                    {% assign color_code = "#E5E4E2" %}
+                    {% assign color_code = "#BCBCBC" %}
+                    {% elsif value contains 'Stainless Steel' %}
+                    {% assign color_code = "#E4E4E4" %}
                     {% endif %}
                     {% if color_code != "" %}
                     <div class="pd-variant-color" style="background-color: {{ color_code }};" title="{{ value }}">
@@ -191,8 +193,13 @@
     }
 
     .pd-sale-price {
-        color: var(--secondary-color);
+        color: var(--primary-color);
         margin-right: 0.5rem;
+    }
+
+    .pd-product-price s {
+        color: #3737366d;
+        font-size: 1rem;
     }
 
     /* Variant colors styling */
@@ -375,7 +382,7 @@
                     border: 1px solid #e0e0e0; /* Explicitly set border */
                 }
                 .pd-variant-radio:checked + .pd-variant-color {
-                    box-shadow: 0 0 0 3px white, 0 0 0 4px rgba(55, 55, 54, 0.2);
+                    box-shadow: 0 0 0 3px rgba(246, 244, 243, 1), 0 0 0 4px rgba(246, 244, 243, 1);
                 }
                 .pd-variant-radio-container:hover .pd-variant-color {
                     transform: scale(1.1);
