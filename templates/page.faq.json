@@ -1,0 +1,84 @@
+{
+  "sections": {
+    "main": {
+      "type": "faq-page",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "description": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>"
+      },
+      "blocks": {
+        "category-delivery": {
+          "type": "faq_category",
+          "settings": {
+            "category_title": "Delivery Information"
+          }
+        },
+        "item-delivery-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "delivery",
+            "question": "How do you return an item?",
+            "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna's vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly installments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!</p>"
+          }
+        },
+        "item-delivery-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "delivery",
+            "question": "What is Pay After Delivery and how does it work?",
+            "answer": "<p>If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.</p><p>Finery also offers the option of paying by Clearpay. Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>"
+          }
+        },
+        "category-payment": {
+          "type": "faq_category",
+          "settings": {
+            "category_title": "Payment Options"
+          }
+        },
+        "item-payment-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "payment",
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept Visa, Mastercard, American Express, PayPal, and Apple Pay. We also offer Pay After Delivery through Klarna and installment payments through Clearpay.</p>"
+          }
+        },
+        "category-returns": {
+          "type": "faq_category",
+          "settings": {
+            "category_title": "Returns & Refunds"
+          }
+        },
+        "item-returns-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "returns",
+            "question": "How do I return an item?",
+            "answer": "<p>To return an item, please follow these steps:</p><p>1. Contact our customer service team within 14 days of receiving your order.</p><p>2. Pack the unworn item in its original packaging with all tags attached.</p><p>3. Include your order number and reason for return.</p><p>4. Ship the package to the address provided by our customer service team.</p>"
+          }
+        },
+        "item-returns-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "returns",
+            "question": "Have you received my return?",
+            "answer": "<p>Once we receive your return, we will process it within 5-7 business days. You will receive an email confirmation when your return has been processed. If you have not received confirmation after 7 business days, please contact our customer service team.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category-delivery",
+        "item-delivery-1",
+        "item-delivery-2",
+        "category-payment",
+        "item-payment-1",
+        "category-returns",
+        "item-returns-1",
+        "item-returns-2"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
