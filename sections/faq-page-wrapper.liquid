@@ -1,0 +1,131 @@
+{% schema %}
+{
+"name": "FAQ Page Wrapper",
+"tag": "section",
+"class": "faq-page-section",
+"settings": [
+{
+"type": "text",
+"id": "active_page",
+"label": "Active Page",
+"info": "Enter the page ID that should be highlighted in the sidebar (delivery, payment, returns, faq, terms, privacy, contact)",
+"default": "delivery"
+}
+],
+"blocks": [
+{
+"type": "heading",
+"name": "Page Heading",
+"limit": 1,
+"settings": [
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Delivery Information"
+}
+]
+},
+{
+"type": "faq_content",
+"name": "FAQ Content",
+"limit": 1,
+"settings": [
+{
+"type": "section",
+"id": "faq_content_section"
+}
+]
+}
+],
+"presets": [
+{
+"name": "FAQ Page Wrapper"
+}
+]
+}
+{% endschema %}
+
+<div class="faq-container">
+    <div class="faq-sidebar-container">
+        {% render 'faq-sidebar', active_page: section.settings.active_page %}
+
+        <main class="faq-content-area">
+            {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'heading' %}
+            <h1 class="faq-main-heading" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h1>
+            {% when 'faq_content' %}
+            {{ block.shopify_attributes }}
+            {% section_content block.settings.faq_content_section %}
+            {% endcase %}
+            {% endfor %}
+        </main>
+    </div>
+</div>
+
+<style>
+    .faq-container {
+        margin: 0 auto;
+        padding: 2.5rem 3.75rem 6.5rem;
+        background-color: #F6F4F3;
+        max-width: 100%;
+    }
+
+    .faq-sidebar-container {
+        display: flex;
+        max-width: 100%;
+    }
+
+    .faq-content-area {
+        flex: 1;
+        max-width: calc(100% - 336px);
+    }
+
+    .faq-main-heading {
+        font-family: var(--font-heading);
+        font-size: 3rem;
+        color: var(--color-text);
+        margin: 0 0 3rem;
+        font-weight: 600;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 992px) {
+        .faq-container {
+            padding: 2rem 2rem 4rem;
+        }
+
+        .faq-main-heading {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .faq-container {
+            padding: 1.5rem 1.5rem 3rem;
+        }
+
+        .faq-sidebar-container {
+            flex-direction: column;
+        }
+
+        .faq-content-area {
+            max-width: 100%;
+        }
+
+        .faq-main-heading {
+            font-size: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .faq-container {
+            padding: 1rem 1rem 2rem;
+        }
+
+        .faq-main-heading {
+            font-size: 1.75rem;
+        }
+    }
+</style>

@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs"
+    },
+    "main": {
+      "type": "faq-page-wrapper",
+      "settings": {
+        "active_page": "privacy"
+      },
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Privacy Policy"
+          }
+        },
+        "faq-content": {
+          "type": "faq_content",
+          "blocks": {
+            "faq1": {
+              "type": "faq_item",
+              "settings": {
+                "question": "WHAT INFORMATION DO WE COLLECT?",
+                "answer": "<p>We collect information from you when you register on our site, place an order, subscribe to our newsletter, respond to a survey or fill out a form. When ordering or registering on our site, as appropriate, you may be asked to enter your name, e-mail address, mailing address, phone number or credit card information.</p>",
+                "expanded_by_default": false
+              }
+            },
+            "faq2": {
+              "type": "faq_item",
+              "settings": {
+                "question": "HOW DO WE USE YOUR INFORMATION?",
+                "answer": "<p>Any of the information we collect from you may be used in one of the following ways: to personalize your experience, to improve our website, to improve customer service, to process transactions, and to send periodic emails.</p>",
+                "expanded_by_default": false
+              }
+            },
+            "faq3": {
+              "type": "faq_item",
+              "settings": {
+                "question": "DO WE USE COOKIES?",
+                "answer": "<p>Yes. Cookies are small files that a site or its service provider transfers to your computer's hard drive through your Web browser (if you allow) that enables the sites or service providers systems to recognize your browser and capture and remember certain information.</p>",
+                "expanded_by_default": false
+              }
+            }
+          },
+          "block_order": ["faq1", "faq2", "faq3"]
+        }
+      },
+      "block_order": ["heading", "faq-content"]
+    }
+  },
+  "order": ["breadcrumbs", "main"]
+}

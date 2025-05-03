@@ -1,0 +1,133 @@
+{% comment %}
+Parameters:
+- active_page: The ID of the currently active page to highlight
+{% endcomment %}
+
+<aside class="faq-sidebar">
+    <a href="{{ pages['delivery'].url }}"
+        class="sidebar-category-btn {% if active_page == 'delivery' %}active{% endif %}">
+        <span class="sidebar-icon">
+            {% render 'icon-delivery' %}
+        </span>
+        <span class="sidebar-text">DELIVERY</span>
+    </a>
+
+    <a href="{{ pages['payment'].url }}"
+        class="sidebar-category-btn {% if active_page == 'payment' %}active{% endif %}">
+        <span class="sidebar-icon">
+            {% render 'icon-payment' %}
+        </span>
+        <span class="sidebar-text">PAYMENT</span>
+    </a>
+
+    <a href="{{ pages['returns'].url }}"
+        class="sidebar-category-btn {% if active_page == 'returns' %}active{% endif %}">
+        <span class="sidebar-icon">
+            {% render 'icon-returns' %}
+        </span>
+        <span class="sidebar-text">RETURNS</span>
+    </a>
+
+    <a href="{{ pages['faq'].url }}" class="sidebar-category-btn {% if active_page == 'faq' %}active{% endif %}">
+        <span class="sidebar-icon">
+            {% render 'icon-faq' %}
+        </span>
+        <span class="sidebar-text">FAQ</span>
+    </a>
+
+    <a href="{{ pages['terms-conditions'].url }}"
+        class="sidebar-category-btn {% if active_page == 'terms' %}active{% endif %}">
+        <span class="sidebar-icon">
+            {% render 'icon-terms' %}
+        </span>
+        <span class="sidebar-text">TERMS & CONDITIONS</span>
+    </a>
+
+    <a href="{{ pages['privacy-policy'].url }}"
+        class="sidebar-category-btn {% if active_page == 'privacy' %}active{% endif %}">
+        <span class="sidebar-icon">
+            {% render 'icon-privacy' %}
+        </span>
+        <span class="sidebar-text">PRIVACY POLICY</span>
+    </a>
+
+    <a href="{{ pages['contact-us'].url }}"
+        class="sidebar-category-btn {% if active_page == 'contact' %}active{% endif %}">
+        <span class="sidebar-icon">
+            {% render 'icon-contact' %}
+        </span>
+        <span class="sidebar-text">CONTACT US</span>
+    </a>
+</aside>
+
+<style>
+    /* Sidebar styles */
+    .faq-sidebar {
+        width: 280px;
+        margin-right: 6rem;
+    }
+
+    .sidebar-category-btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.875rem 1.5rem;
+        margin-bottom: 1rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--color-text);
+        text-align: left;
+        width: 100%;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .sidebar-category-btn:hover {
+        background-color: rgba(255, 163, 139, 0.1);
+    }
+
+    .sidebar-category-btn.active {
+        background-color: rgba(255, 163, 139, 0.2);
+    }
+
+    .sidebar-icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+        .faq-sidebar {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sidebar-category-btn {
+            width: auto;
+            flex: 0 0 calc(50% - 0.25rem);
+            margin-bottom: 0;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .sidebar-category-btn {
+            flex: 0 0 100%;
+        }
+    }
+</style>

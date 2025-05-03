@@ -6,13 +6,13 @@
     "main": {
       "type": "faq-page-wrapper",
       "settings": {
-        "active_page": "faq"
+        "active_page": "payment"
       },
       "blocks": {
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Frequently Asked Questions"
+            "heading": "Payment Options"
           }
         },
         "faq-content": {
@@ -21,24 +21,24 @@
             "faq1": {
               "type": "faq_item",
               "settings": {
-                "question": "I FORGOT TO ENTER THE PROMO CODE YOU SENT ME, WHAT DO I DO?",
-                "answer": "<p>If you forgot to apply a promo code to your order, please contact our customer service team immediately. We can sometimes apply the discount retroactively to orders that haven't been shipped yet.</p>",
+                "question": "WHAT PAYMENT METHODS DO YOU ACCEPT?",
+                "answer": "<p>We accept Visa, Mastercard, American Express, PayPal, and Apple Pay. We also offer Pay After Delivery through Klarna and installment payments through Clearpay.</p>",
                 "expanded_by_default": false
               }
             },
             "faq2": {
               "type": "faq_item",
               "settings": {
-                "question": "HOW DO I CREATE AN ACCOUNT?",
-                "answer": "<p>You can create an account during checkout or by clicking 'Create Account' at the top of our website. An account will help you track orders, save addresses, and enjoy faster checkout.</p>",
+                "question": "IS MY PAYMENT INFORMATION SECURE?",
+                "answer": "<p>Yes, all payment information is processed securely using industry-standard encryption. We do not store your credit card information on our servers.</p>",
                 "expanded_by_default": false
               }
             },
             "faq3": {
               "type": "faq_item",
               "settings": {
-                "question": "HOW DO I RESET MY PASSWORD?",
-                "answer": "<p>Click 'Forgot Password' on the login page and enter your email address. You'll receive an email with instructions to reset your password.</p>",
+                "question": "CAN I USE MULTIPLE PAYMENT METHODS?",
+                "answer": "<p>Currently, we only support one payment method per order. You cannot split payments between different methods.</p>",
                 "expanded_by_default": false
               }
             }
