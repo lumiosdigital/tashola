@@ -13,6 +13,19 @@
 ],
 "blocks": [
 {
+"type": "text_block",
+"name": "Text Block",
+"limit": 1,
+"settings": [
+{
+"type": "richtext",
+"id": "description",
+"label": "Description",
+"default": "<p>Add your description text here.</p>"
+}
+]
+},
+{
 "type": "question",
 "name": "FAQ Question",
 "settings": [
@@ -62,7 +75,13 @@
         <main class="faq-content-area">
             <div class="faq-content-inner">
                 <h1 class="faq-title">{{ section.settings.page_title }}</h1>
-
+                {% for block in section.blocks %}
+                {% if block.type == "text_block" %}
+                <div class="faq-description" {{ block.shopify_attributes }}>
+                    {{ block.settings.description }}
+                </div>
+                {% endif %}
+                {% endfor %}
                 {% for block in section.blocks %}
                 {% if block.type == "question" %}
                 <div class="faq-accordion-item" {{ block.shopify_attributes }}>
