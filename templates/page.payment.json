@@ -15,38 +15,32 @@
             "heading": "Payment Options"
           }
         },
-        "faq-content": {
-          "type": "faq_content",
-          "blocks": {
-            "faq1": {
-              "type": "faq_item",
-              "settings": {
-                "question": "WHAT PAYMENT METHODS DO YOU ACCEPT?",
-                "answer": "<p>We accept Visa, Mastercard, American Express, PayPal, and Apple Pay. We also offer Pay After Delivery through Klarna and installment payments through Clearpay.</p>",
-                "expanded_by_default": false
-              }
-            },
-            "faq2": {
-              "type": "faq_item",
-              "settings": {
-                "question": "IS MY PAYMENT INFORMATION SECURE?",
-                "answer": "<p>Yes, all payment information is processed securely using industry-standard encryption. We do not store your credit card information on our servers.</p>",
-                "expanded_by_default": false
-              }
-            },
-            "faq3": {
-              "type": "faq_item",
-              "settings": {
-                "question": "CAN I USE MULTIPLE PAYMENT METHODS?",
-                "answer": "<p>Currently, we only support one payment method per order. You cannot split payments between different methods.</p>",
-                "expanded_by_default": false
-              }
-            }
-          },
-          "block_order": ["faq1", "faq2", "faq3"]
+        "faq1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "WHAT PAYMENT METHODS DO YOU ACCEPT?",
+            "answer": "<p>We accept Visa, Mastercard, American Express, PayPal, and Apple Pay. We also offer Pay After Delivery through Klarna and installment payments through Clearpay.</p>",
+            "expanded_by_default": false
+          }
+        },
+        "faq2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "IS MY PAYMENT INFORMATION SECURE?",
+            "answer": "<p>Yes, all payment information is processed securely using industry-standard encryption. We do not store your credit card information on our servers.</p>",
+            "expanded_by_default": false
+          }
+        },
+        "faq3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "CAN I USE MULTIPLE PAYMENT METHODS?",
+            "answer": "<p>Currently, we only support one payment method per order. You cannot split payments between different methods.</p>",
+            "expanded_by_default": false
+          }
         }
       },
-      "block_order": ["heading", "faq-content"]
+      "block_order": ["heading", "faq1", "faq2", "faq3"]
     }
   },
   "order": ["breadcrumbs", "main"]

@@ -27,13 +27,26 @@
 ]
 },
 {
-"type": "faq_content",
-"name": "FAQ Content",
-"limit": 1,
+"type": "faq_item",
+"name": "FAQ Item",
 "settings": [
 {
-"type": "section",
-"id": "faq_content_section"
+"type": "text",
+"id": "question",
+"label": "Question",
+"default": "Question goes here"
+},
+{
+"type": "richtext",
+"id": "answer",
+"label": "Answer",
+"default": "<p>Answer goes here</p>"
+},
+{
+"type": "checkbox",
+"id": "expanded_by_default",
+"label": "Expanded by default",
+"default": false
 }
 ]
 }
@@ -51,18 +64,55 @@
         {% render 'faq-sidebar', active_page: section.settings.active_page %}
 
         <main class="faq-content-area">
-            {% for block in section.blocks %}
-            {% case block.type %}
-            {% when 'heading' %}
-            <h1 class="faq-main-heading" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h1>
-            {% when 'faq_content' %}
-            {{ block.shopify_attributes }}
-            {% section_content block.settings.faq_content_section %}
-            {% endcase %}
-            {% endfor %}
+            <div class="faq-content-inner">
+                {% for block in section.blocks %}
+                {% case block.type %}
+                {% when 'heading' %}
+                <h1 class="faq-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h1>
+                {% when 'faq_item' %}
+                <div class="faq-accordion-item" {{ block.shopify_attributes }}>
+                    <button class="faq-question"
+                        aria-expanded="{% if block.settings.expanded_by_default %}true{% else %}false{% endif %}">
+                        <span>{{ block.settings.question }}</span>
+                        <span class="faq-toggle">{% if block.settings.expanded_by_default %}−{% else %}+{% endif
+                            %}</span>
+                    </button>
+                    <div class="faq-answer" {% unless block.settings.expanded_by_default %}style="display: none;" {%
+                        endunless %}>
+                        {{ block.settings.answer }}
+                    </div>
+                </div>
+                {% endcase %}
+                {% endfor %}
+            </div>
         </main>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function () {
+                const answer = this.nextElementSibling;
+                const toggle = this.querySelector('.faq-toggle');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    answer.style.display = 'none';
+                    toggle.textContent = '+';
+                    this.setAttribute('aria-expanded', 'false');
+                } else {
+                    answer.style.display = 'block';
+                    toggle.textContent = '−';
+                    this.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    });
+</script>
 
 <style>
     .faq-container {
@@ -82,12 +132,52 @@
         max-width: calc(100% - 336px);
     }
 
-    .faq-main-heading {
+    .faq-content-inner {
+        max-width: 800px;
+    }
+
+    .faq-title {
         font-family: var(--font-heading);
-        font-size: 3rem;
+        font-size: 2.75rem;
         color: var(--color-text);
-        margin: 0 0 3rem;
+        margin: 0 0 1.5rem;
         font-weight: 600;
+    }
+
+    /* FAQ accordion styles */
+    .faq-accordion-item {
+        border-bottom: 1px solid rgba(55, 55, 54, 0.1);
+    }
+
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: var(--color-text);
+    }
+
+    .faq-toggle {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-left: 2rem;
+    }
+
+    .faq-answer {
+        padding: 0 0 1.5rem;
+        font-family: var(--font-body);
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: var(--color-text);
     }
 
     /* Responsive styles */
@@ -96,8 +186,8 @@
             padding: 2rem 2rem 4rem;
         }
 
-        .faq-main-heading {
-            font-size: 2.5rem;
+        .faq-title {
+            font-size: 2.25rem;
         }
     }
 
@@ -114,7 +204,7 @@
             max-width: 100%;
         }
 
-        .faq-main-heading {
+        .faq-title {
             font-size: 2rem;
         }
     }
@@ -124,8 +214,16 @@
             padding: 1rem 1rem 2rem;
         }
 
-        .faq-main-heading {
+        .faq-title {
             font-size: 1.75rem;
+        }
+
+        .faq-question {
+            font-size: 0.8125rem;
+        }
+
+        .faq-answer {
+            font-size: 0.875rem;
         }
     }
 </style>

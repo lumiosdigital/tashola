@@ -15,38 +15,32 @@
             "heading": "Terms & Conditions"
           }
         },
-        "faq-content": {
-          "type": "faq_content",
-          "blocks": {
-            "faq1": {
-              "type": "faq_item",
-              "settings": {
-                "question": "WEBSITE TERMS OF USE",
-                "answer": "<p>By accessing this website, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.</p>",
-                "expanded_by_default": false
-              }
-            },
-            "faq2": {
-              "type": "faq_item",
-              "settings": {
-                "question": "PRODUCT DESCRIPTIONS",
-                "answer": "<p>Tashola attempts to be as accurate as possible. However, Tashola does not warrant that product descriptions or other content of this site is accurate, complete, reliable, current, or error-free.</p>",
-                "expanded_by_default": false
-              }
-            },
-            "faq3": {
-              "type": "faq_item",
-              "settings": {
-                "question": "INTELLECTUAL PROPERTY",
-                "answer": "<p>All content included on this site, such as text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and software, is the property of Tashola or its content suppliers and protected by copyright laws.</p>",
-                "expanded_by_default": false
-              }
-            }
-          },
-          "block_order": ["faq1", "faq2", "faq3"]
+        "faq1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "WEBSITE TERMS OF USE",
+            "answer": "<p>By accessing this website, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.</p>",
+            "expanded_by_default": false
+          }
+        },
+        "faq2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "PRODUCT DESCRIPTIONS",
+            "answer": "<p>Tashola attempts to be as accurate as possible. However, Tashola does not warrant that product descriptions or other content of this site is accurate, complete, reliable, current, or error-free.</p>",
+            "expanded_by_default": false
+          }
+        },
+        "faq3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "INTELLECTUAL PROPERTY",
+            "answer": "<p>All content included on this site, such as text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and software, is the property of Tashola or its content suppliers and protected by copyright laws.</p>",
+            "expanded_by_default": false
+          }
         }
       },
-      "block_order": ["heading", "faq-content"]
+      "block_order": ["heading", "faq1", "faq2", "faq3"]
     }
   },
   "order": ["breadcrumbs", "main"]

@@ -15,38 +15,32 @@
             "heading": "Returns & Refunds"
           }
         },
-        "faq-content": {
-          "type": "faq_content",
-          "blocks": {
-            "faq1": {
-              "type": "faq_item",
-              "settings": {
-                "question": "HOW DO I RETURN AN ITEM?",
-                "answer": "<p>To return an item, please follow these steps:</p><p>1. Contact our customer service team within 14 days of receiving your order.</p><p>2. Pack the unworn item in its original packaging with all tags attached.</p><p>3. Include your order number and reason for return.</p><p>4. Ship the package to the address provided by our customer service team.</p>",
-                "expanded_by_default": false
-              }
-            },
-            "faq2": {
-              "type": "faq_item",
-              "settings": {
-                "question": "HAVE YOU RECEIVED MY RETURN?",
-                "answer": "<p>Once we receive your return, we will process it within 5-7 business days. You will receive email confirmation at each stage of the returns process.</p>",
-                "expanded_by_default": false
-              }
-            },
-            "faq3": {
-              "type": "faq_item",
-              "settings": {
-                "question": "WHEN WILL I RECEIVE MY REFUND?",
-                "answer": "<p>Refunds are typically processed within 5-7 business days after we receive your returned item. Depending on your payment method, it may take an additional 3-5 business days for the funds to appear in your account.</p>",
-                "expanded_by_default": false
-              }
-            }
-          },
-          "block_order": ["faq1", "faq2", "faq3"]
+        "faq1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "HOW DO I RETURN AN ITEM?",
+            "answer": "<p>To return an item, please follow these steps:</p><p>1. Contact our customer service team within 14 days of receiving your order.</p><p>2. Pack the unworn item in its original packaging with all tags attached.</p><p>3. Include your order number and reason for return.</p><p>4. Ship the package to the address provided by our customer service team.</p>",
+            "expanded_by_default": false
+          }
+        },
+        "faq2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "HAVE YOU RECEIVED MY RETURN?",
+            "answer": "<p>Once we receive your return, we will process it within 5-7 business days. You will receive email confirmation at each stage of the returns process.</p>",
+            "expanded_by_default": false
+          }
+        },
+        "faq3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "WHEN WILL I RECEIVE MY REFUND?",
+            "answer": "<p>Refunds are typically processed within 5-7 business days after we receive your returned item. Depending on your payment method, it may take an additional 3-5 business days for the funds to appear in your account.</p>",
+            "expanded_by_default": false
+          }
         }
       },
-      "block_order": ["heading", "faq-content"]
+      "block_order": ["heading", "faq1", "faq2", "faq3"]
     }
   },
   "order": ["breadcrumbs", "main"]
