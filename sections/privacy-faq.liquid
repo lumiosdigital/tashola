@@ -1,0 +1,237 @@
+{% schema %}
+{
+"name": "Privacy Policy FAQ",
+"tag": "section",
+"class": "faq-page-section",
+"settings": [
+{
+"type": "text",
+"id": "page_title",
+"label": "Page Title",
+"default": "Privacy Policy"
+}
+],
+"blocks": [
+{
+"type": "faq_item",
+"name": "FAQ Item",
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": "Question",
+"default": "Question goes here"
+},
+{
+"type": "richtext",
+"id": "answer",
+"label": "Answer",
+"default": "<p>Answer goes here</p>"
+},
+{
+"type": "checkbox",
+"id": "expanded_by_default",
+"label": "Expanded by default",
+"default": false
+}
+]
+}
+],
+"presets": [
+{
+"name": "Privacy Policy FAQ",
+"blocks": [
+{
+"type": "faq_item",
+"settings": {
+"question": "WHAT INFORMATION DO WE COLLECT?",
+"answer": "<p>We collect information from you when you register on our site, place an order, subscribe to our newsletter, respond to a survey or fill out a form. When ordering or registering on our site, as appropriate, you may be asked to enter your name, e-mail address, mailing address, phone number or credit card information.</p>",
+"expanded_by_default": false
+}
+},
+{
+"type": "faq_item",
+"settings": {
+"question": "HOW DO WE USE YOUR INFORMATION?",
+"answer": "<p>Any of the information we collect from you may be used in one of the following ways: to personalize your experience, to improve our website, to improve customer service, to process transactions, and to send periodic emails.</p>",
+"expanded_by_default": false
+}
+},
+{
+"type": "faq_item",
+"settings": {
+"question": "DO WE USE COOKIES?",
+"answer": "<p>Yes. Cookies are small files that a site or its service provider transfers to your computer's hard drive through your Web browser (if you allow) that enables the sites or service providers systems to recognize your browser and capture and remember certain information.</p>",
+"expanded_by_default": false
+}
+}
+]
+}
+]
+}
+{% endschema %}
+
+<div class="faq-container">
+    <div class="faq-sidebar-container">
+        {% render 'faq-sidebar', active_page: 'privacy' %}
+
+        <main class="faq-content-area">
+            <div class="faq-content-inner">
+                <h1 class="faq-title">{{ section.settings.page_title }}</h1>
+
+                {% for block in section.blocks %}
+                {% if block.type == "faq_item" %}
+                <div class="faq-accordion-item" {{ block.shopify_attributes }}>
+                    <button class="faq-question"
+                        aria-expanded="{% if block.settings.expanded_by_default %}true{% else %}false{% endif %}">
+                        <span>{{ block.settings.question }}</span>
+                        <span class="faq-toggle">{% if block.settings.expanded_by_default %}−{% else %}+{% endif
+                            %}</span>
+                    </button>
+                    <div class="faq-answer" {% unless block.settings.expanded_by_default %}style="display: none;" {%
+                        endunless %}>
+                        {{ block.settings.answer }}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function () {
+                const answer = this.nextElementSibling;
+                const toggle = this.querySelector('.faq-toggle');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    answer.style.display = 'none';
+                    toggle.textContent = '+';
+                    this.setAttribute('aria-expanded', 'false');
+                } else {
+                    answer.style.display = 'block';
+                    toggle.textContent = '−';
+                    this.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .faq-container {
+        margin: 0 auto;
+        padding: 2.5rem 3.75rem 6.5rem;
+        background-color: #F6F4F3;
+        max-width: 100%;
+    }
+
+    .faq-sidebar-container {
+        display: flex;
+        max-width: 100%;
+    }
+
+    .faq-content-area {
+        flex: 1;
+        max-width: calc(100% - 336px);
+    }
+
+    .faq-content-inner {
+        max-width: 800px;
+    }
+
+    .faq-title {
+        font-family: var(--font-heading);
+        font-size: 2.75rem;
+        color: var(--color-text);
+        margin: 0 0 1.5rem;
+        font-weight: 600;
+    }
+
+    .faq-accordion-item {
+        border-bottom: 1px solid rgba(55, 55, 54, 0.1);
+    }
+
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: var(--color-text);
+    }
+
+    .faq-toggle {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-left: 2rem;
+    }
+
+    .faq-answer {
+        padding: 0 0 1.5rem;
+        font-family: var(--font-body);
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: var(--color-text);
+    }
+
+    @media screen and (max-width: 992px) {
+        .faq-container {
+            padding: 2rem 2rem 4rem;
+        }
+
+        .faq-title {
+            font-size: 2.25rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .faq-container {
+            padding: 1.5rem 1.5rem 3rem;
+        }
+
+        .faq-sidebar-container {
+            flex-direction: column;
+        }
+
+        .faq-content-area {
+            max-width: 100%;
+        }
+
+        .faq-title {
+            font-size: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .faq-container {
+            padding: 1rem 1rem 2rem;
+        }
+
+        .faq-title {
+            font-size: 1.75rem;
+        }
+
+        .faq-question {
+            font-size: 0.8125rem;
+        }
+
+        .faq-answer {
+            font-size: 0.875rem;
+        }
+    }
+</style>

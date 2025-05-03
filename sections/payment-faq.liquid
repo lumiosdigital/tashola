@@ -1,0 +1,240 @@
+{% schema %}
+{
+"name": "Payment FAQ",
+"tag": "section",
+"class": "faq-page-section",
+"settings": [
+{
+"type": "text",
+"id": "page_title",
+"label": "Page Title",
+"default": "Payment Options"
+}
+],
+"blocks": [
+{
+"type": "faq_item",
+"name": "FAQ Item",
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": "Question",
+"default": "Question goes here"
+},
+{
+"type": "richtext",
+"id": "answer",
+"label": "Answer",
+"default": "<p>Answer goes here</p>"
+},
+{
+"type": "checkbox",
+"id": "expanded_by_default",
+"label": "Expanded by default",
+"default": false
+}
+]
+}
+],
+"presets": [
+{
+"name": "Payment FAQ",
+"blocks": [
+{
+"type": "faq_item",
+"settings": {
+"question": "WHAT PAYMENT METHODS DO YOU ACCEPT?",
+"answer": "<p>We accept Visa, Mastercard, American Express, PayPal, and Apple Pay. We also offer Pay After Delivery through Klarna and installment payments through Clearpay.</p>",
+"expanded_by_default": false
+}
+},
+{
+"type": "faq_item",
+"settings": {
+"question": "IS MY PAYMENT INFORMATION SECURE?",
+"answer": "<p>Yes, all payment information is processed securely using industry-standard encryption. We do not store your credit card information on our servers.</p>",
+"expanded_by_default": false
+}
+},
+{
+"type": "faq_item",
+"settings": {
+"question": "CAN I USE MULTIPLE PAYMENT METHODS?",
+"answer": "<p>Currently, we only support one payment method per order. You cannot split payments between different methods.</p>",
+"expanded_by_default": false
+}
+}
+]
+}
+]
+}
+{% endschema %}
+
+<div class="faq-container">
+    <div class="faq-sidebar-container">
+        {% render 'faq-sidebar', active_page: 'payment' %}
+
+        <main class="faq-content-area">
+            <div class="faq-content-inner">
+                <h1 class="faq-title">{{ section.settings.page_title }}</h1>
+
+                {% for block in section.blocks %}
+                {% if block.type == "faq_item" %}
+                <div class="faq-accordion-item" {{ block.shopify_attributes }}>
+                    <button class="faq-question"
+                        aria-expanded="{% if block.settings.expanded_by_default %}true{% else %}false{% endif %}">
+                        <span>{{ block.settings.question }}</span>
+                        <span class="faq-toggle">{% if block.settings.expanded_by_default %}−{% else %}+{% endif
+                            %}</span>
+                    </button>
+                    <div class="faq-answer" {% unless block.settings.expanded_by_default %}style="display: none;" {%
+                        endunless %}>
+                        {{ block.settings.answer }}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function () {
+                const answer = this.nextElementSibling;
+                const toggle = this.querySelector('.faq-toggle');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    answer.style.display = 'none';
+                    toggle.textContent = '+';
+                    this.setAttribute('aria-expanded', 'false');
+                } else {
+                    answer.style.display = 'block';
+                    toggle.textContent = '−';
+                    this.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .faq-container {
+        margin: 0 auto;
+        padding: 2.5rem 3.75rem 6.5rem;
+        background-color: #F6F4F3;
+        max-width: 100%;
+    }
+
+    .faq-sidebar-container {
+        display: flex;
+        max-width: 100%;
+    }
+
+    .faq-content-area {
+        flex: 1;
+        max-width: calc(100% - 336px);
+    }
+
+    .faq-content-inner {
+        max-width: 800px;
+    }
+
+    .faq-title {
+        font-family: var(--font-heading);
+        font-size: 2.75rem;
+        color: var(--color-text);
+        margin: 0 0 1.5rem;
+        font-weight: 600;
+    }
+
+    /* FAQ accordion styles */
+    .faq-accordion-item {
+        border-bottom: 1px solid rgba(55, 55, 54, 0.1);
+    }
+
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: var(--color-text);
+    }
+
+    .faq-toggle {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-left: 2rem;
+    }
+
+    .faq-answer {
+        padding: 0 0 1.5rem;
+        font-family: var(--font-body);
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: var(--color-text);
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 992px) {
+        .faq-container {
+            padding: 2rem 2rem 4rem;
+        }
+
+        .faq-title {
+            font-size: 2.25rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .faq-container {
+            padding: 1.5rem 1.5rem 3rem;
+        }
+
+        .faq-sidebar-container {
+            flex-direction: column;
+        }
+
+        .faq-content-area {
+            max-width: 100%;
+        }
+
+        .faq-title {
+            font-size: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .faq-container {
+            padding: 1rem 1rem 2rem;
+        }
+
+        .faq-title {
+            font-size: 1.75rem;
+        }
+
+        .faq-question {
+            font-size: 0.8125rem;
+        }
+
+        .faq-answer {
+            font-size: 0.875rem;
+        }
+    }
+</style>
