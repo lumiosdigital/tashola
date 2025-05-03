@@ -1,6 +1,8 @@
 {
   "sections": {
-
+    "breadcrumbs": {
+      "type": "breadcrumbs"
+    },
     "main": {
       "type": "faq-page-wrapper",
       "settings": {
