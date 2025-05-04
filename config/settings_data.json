@@ -270,30 +270,22 @@
           "text_block_qkFeFW": {
             "type": "text_block",
             "settings": {
-              "description": "<p>Add your description text here.</p>"
+              "description": "<p>Our Frequently Asked Questions (FAQ)<strong> </strong>section is designed to provide quick answers to common customer inquiries. Whether you need help with orders, returns, shipping, payments, or general policies, this resource offers clear and straightforward solutions to save you time. If you don’t find the answer you’re looking for, our customer service team is happy to assist you further.</p>"
             }
           },
           "question_wieRpK": {
             "type": "question",
             "settings": {
-              "question": "Question goes here",
-              "answer": "<p>Answer goes here</p>",
+              "question": "What is pay after delivery and how does it work?",
+              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
               "expanded_by_default": false
             }
           },
           "question_YbWRGU": {
             "type": "question",
             "settings": {
-              "question": "Question goes here",
-              "answer": "<p>Answer goes here</p>",
-              "expanded_by_default": false
-            }
-          },
-          "question_QMiPQT": {
-            "type": "question",
-            "settings": {
-              "question": "Question goes here",
-              "answer": "<p>Answer goes here</p>",
+              "question": "Have you received my return?",
+              "answer": "<p>Once we receive and process your returned item, you’ll receive a confirmation email with the status of your refund or exchange. Processing times may vary depending on the item and shipping method. If you haven’t received an update within [X business days] of sending your return, please contact us at [customer service email/phone] with your order number and return tracking details for assistance.</p>",
               "expanded_by_default": false
             }
           }
@@ -301,8 +293,7 @@
         "block_order": [
           "text_block_qkFeFW",
           "question_wieRpK",
-          "question_YbWRGU",
-          "question_QMiPQT"
+          "question_YbWRGU"
         ],
         "settings": {
           "page_title": "Frequently Asked Questions"
