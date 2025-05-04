@@ -228,6 +228,41 @@
         "settings": {
           "page_title": "Privacy Policy"
         }
+      },
+      "payment-faq": {
+        "type": "payment-faq",
+        "blocks": {
+          "text_block_kWYmaJ": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_MQXVJh": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_f9a76G": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_kWYmaJ",
+          "faq_item_MQXVJh",
+          "faq_item_f9a76G"
+        ],
+        "settings": {
+          "page_title": "Payment Options"
+        }
       }
     },
     "content_for_index": []
