@@ -149,6 +149,41 @@
         "settings": {
           "page_title": "Returns & Refunds"
         }
+      },
+      "terms-faq": {
+        "type": "terms-faq",
+        "blocks": {
+          "text_block_F4d8Ap": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_AiF9jB": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_GXKxqf": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_F4d8Ap",
+          "faq_item_AiF9jB",
+          "faq_item_GXKxqf"
+        ],
+        "settings": {
+          "page_title": "Terms & Conditions"
+        }
       }
     },
     "content_for_index": []
