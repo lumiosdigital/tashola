@@ -184,6 +184,50 @@
         "settings": {
           "page_title": "Terms & Conditions"
         }
+      },
+      "privacy-faq": {
+        "type": "privacy-faq",
+        "blocks": {
+          "text_block_NwzFLi": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_k77HKY": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_Jqree7": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_6HpkXC": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_NwzFLi",
+          "faq_item_k77HKY",
+          "faq_item_Jqree7",
+          "faq_item_6HpkXC"
+        ],
+        "settings": {
+          "page_title": "Privacy Policy"
+        }
       }
     },
     "content_for_index": []
