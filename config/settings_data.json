@@ -105,6 +105,50 @@
           "additional_content": "",
           "bottom_image": "shopify://shop_images/bottom-image.png"
         }
+      },
+      "returns-faq": {
+        "type": "returns-faq",
+        "blocks": {
+          "text_block_YPrjrQ": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_XNjM3G": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_baXBjj": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_rnerNx": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_YPrjrQ",
+          "faq_item_XNjM3G",
+          "faq_item_baXBjj",
+          "faq_item_rnerNx"
+        ],
+        "settings": {
+          "page_title": "Returns & Refunds"
+        }
       }
     },
     "content_for_index": []
