@@ -263,6 +263,50 @@
         "settings": {
           "page_title": "Payment Options"
         }
+      },
+      "general-faq": {
+        "type": "general-faq",
+        "blocks": {
+          "text_block_qkFeFW": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "question_wieRpK": {
+            "type": "question",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "question_YbWRGU": {
+            "type": "question",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "question_QMiPQT": {
+            "type": "question",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_qkFeFW",
+          "question_wieRpK",
+          "question_YbWRGU",
+          "question_QMiPQT"
+        ],
+        "settings": {
+          "page_title": "Frequently Asked Questions"
+        }
       }
     },
     "content_for_index": []
