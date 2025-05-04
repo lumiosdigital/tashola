@@ -105,6 +105,278 @@
           "additional_content": "",
           "bottom_image": "shopify://shop_images/bottom-image.png"
         }
+      },
+      "returns-faq": {
+        "type": "returns-faq",
+        "blocks": {
+          "text_block_YPrjrQ": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_XNjM3G": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_baXBjj": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_rnerNx": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_YPrjrQ",
+          "faq_item_XNjM3G",
+          "faq_item_baXBjj",
+          "faq_item_rnerNx"
+        ],
+        "settings": {
+          "page_title": "Returns & Refunds"
+        }
+      },
+      "terms-faq": {
+        "type": "terms-faq",
+        "blocks": {
+          "text_block_F4d8Ap": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_AiF9jB": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_GXKxqf": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_F4d8Ap",
+          "faq_item_AiF9jB",
+          "faq_item_GXKxqf"
+        ],
+        "settings": {
+          "page_title": "Terms & Conditions"
+        }
+      },
+      "privacy-faq": {
+        "type": "privacy-faq",
+        "blocks": {
+          "text_block_NwzFLi": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_k77HKY": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_Jqree7": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_6HpkXC": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_NwzFLi",
+          "faq_item_k77HKY",
+          "faq_item_Jqree7",
+          "faq_item_6HpkXC"
+        ],
+        "settings": {
+          "page_title": "Privacy Policy"
+        }
+      },
+      "payment-faq": {
+        "type": "payment-faq",
+        "blocks": {
+          "text_block_kWYmaJ": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_MQXVJh": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_f9a76G": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_kWYmaJ",
+          "faq_item_MQXVJh",
+          "faq_item_f9a76G"
+        ],
+        "settings": {
+          "page_title": "Payment Options"
+        }
+      },
+      "general-faq": {
+        "type": "general-faq",
+        "blocks": {
+          "text_block_qkFeFW": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "question_wieRpK": {
+            "type": "question",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "question_YbWRGU": {
+            "type": "question",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "question_QMiPQT": {
+            "type": "question",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_qkFeFW",
+          "question_wieRpK",
+          "question_YbWRGU",
+          "question_QMiPQT"
+        ],
+        "settings": {
+          "page_title": "Frequently Asked Questions"
+        }
+      },
+      "delivery-faq": {
+        "type": "delivery-faq",
+        "blocks": {
+          "text_block_VQpaQQ": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_qBhHba": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_NT7Cer": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_VQpaQQ",
+          "faq_item_qBhHba",
+          "faq_item_NT7Cer"
+        ],
+        "settings": {
+          "page_title": "Delivery Information"
+        }
+      },
+      "contact-faq": {
+        "type": "contact-faq",
+        "blocks": {
+          "text_block_WV9Ern": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_6YD3BX": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_bBVbc7": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_WV9Ern",
+          "faq_item_6YD3BX",
+          "faq_item_bBVbc7"
+        ],
+        "settings": {
+          "page_title": "Contact Us"
+        }
       }
     },
     "content_for_index": []
