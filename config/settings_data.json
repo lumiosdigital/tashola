@@ -307,6 +307,76 @@
         "settings": {
           "page_title": "Frequently Asked Questions"
         }
+      },
+      "delivery-faq": {
+        "type": "delivery-faq",
+        "blocks": {
+          "text_block_VQpaQQ": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_qBhHba": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_NT7Cer": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_VQpaQQ",
+          "faq_item_qBhHba",
+          "faq_item_NT7Cer"
+        ],
+        "settings": {
+          "page_title": "Delivery Information"
+        }
+      },
+      "contact-faq": {
+        "type": "contact-faq",
+        "blocks": {
+          "text_block_WV9Ern": {
+            "type": "text_block",
+            "settings": {
+              "description": "<p>Add your description text here.</p>"
+            }
+          },
+          "faq_item_6YD3BX": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_bBVbc7": {
+            "type": "faq_item",
+            "settings": {
+              "question": "Question goes here",
+              "answer": "<p>Answer goes here</p>",
+              "expanded_by_default": false
+            }
+          }
+        },
+        "block_order": [
+          "text_block_WV9Ern",
+          "faq_item_6YD3BX",
+          "faq_item_bBVbc7"
+        ],
+        "settings": {
+          "page_title": "Contact Us"
+        }
       }
     },
     "content_for_index": []
