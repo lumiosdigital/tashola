@@ -344,14 +344,19 @@
 
   @media screen and (max-width: 990px) {
     .footer-container {
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
     }
 
     .footer-branding {
+      display: none;
       grid-column: 1 / -1;
       align-items: center;
       text-align: center;
       margin-bottom: 2rem;
+      margin-top: 2rem;
     }
 
     .footer-links-wrapper {
@@ -378,8 +383,31 @@
 
   @media screen and (max-width: 767px) {
     .footer-links-wrapper {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: left;
+    }
+
+    .footer-branding {
+      margin-top: 2rem;
     }
   }
+
+  @media screen and (max-width: 576px) {
+    .footer-branding {
+      margin-top: 3rem;
+    }
+
+    .footer-links-wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: left;
+    }
+
+  }
+
 </style>
