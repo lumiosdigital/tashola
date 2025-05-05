@@ -5,6 +5,8 @@
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
         </li>
 
+        {% if template contains 'product' or template contains 'collection' %}
+        <!-- Display catalog link only for product or collection pages -->
         <li class="breadcrumbs-item">
             <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
@@ -26,11 +28,25 @@
                 }}</a>
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
         </li>
+        {% elsif collection %}
+        <!-- When on a collection page -->
+        <li class="breadcrumbs-item">
+            <span class="breadcrumbs-current">{{ collection.title }}</span>
+        </li>
         {% endif %}
 
+        {% if product %}
         <li class="breadcrumbs-item">
             <span class="breadcrumbs-current">{{ product.title }}</span>
         </li>
+        {% endif %}
+
+        {% else %}
+        <!-- For non-product pages (About, FAQ, etc.) -->
+        <li class="breadcrumbs-item">
+            <span class="breadcrumbs-current">{{ page.title }}</span>
+        </li>
+        {% endif %}
     </ol>
 </nav>
 
