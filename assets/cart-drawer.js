@@ -596,4 +596,97 @@ observer.observe(document.body, {
   subtree: true
 });
 
+    // Listen for Swym add to cart events
+  if (window._swat) {
+    document.addEventListener('swym:addtocart', function(event) {
+      // Wait a moment for the cart to update on Shopify's side
+      setTimeout(function() {
+        // Fetch the updated cart
+        fetch('/cart.js')
+          .then(response => response.json())
+          .then(cart => {
+            // Update cart count
+            updateCartCount(cart.item_count);
+            
+            // Refresh cart and open it
+            refreshCart().then(() => {
+              openCart();
+            });
+          })
+          .catch(error => {
+            console.error('Error updating cart after wishlist add:', error);
+          });
+      }, 500); // Short delay to ensure the cart has been updated
+    });
+  }
+  
+  // Attach "Save for Later" button functionality
+  function attachSaveForLaterListeners() {
+    const saveForLaterButtons = document.querySelectorAll('.move-to-wishlist-button');
+    
+    saveForLaterButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        const productId = this.getAttribute('data-product-id');
+        const variantId = this.getAttribute('data-variant-id');
+        const line = this.getAttribute('data-line');
+        
+        // Add to "Save for Later" list using Swym
+        if (window._swat) {
+          window._swat.addToWishList(
+            {
+              "epi": variantId,
+              "du": window.location.href,
+              "empi": productId,
+              "et": 5  // Use event type 5 for Save for Later
+            },
+            function(r) {
+              // After adding to Save for Later, remove from cart
+              fetch('/cart/change.js', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  line: parseInt(line),
+                  quantity: 0
+                })
+              })
+              .then(response => response.json())
+              .then(cart => {
+                // Update cart count
+                updateCartCount(cart.item_count);
+                
+                // Refresh cart drawer
+                refreshCart();
+                
+                // Show success notification
+                alert('Item saved for later!');
+              })
+              .catch(error => {
+                console.error('Error removing item from cart:', error);
+              });
+            }
+          );
+        } else {
+          console.error('Swym wishlist not initialized');
+        }
+      });
+    });
+  }
+  
+  // Call the function during cart drawer setup and refresh
+  attachSaveForLaterListeners();
+  
+  // We also need to attach listeners after any cart refresh
+  const originalRefreshCart = refreshCart;
+  if (typeof originalRefreshCart === 'function') {
+    window.refreshCart = function() {
+      return originalRefreshCart().then(() => {
+        attachSaveForLaterListeners();
+        return Promise.resolve();
+      });
+    };
+  }
 });

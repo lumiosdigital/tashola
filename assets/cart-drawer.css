@@ -195,9 +195,27 @@
     margin: 0;
 }
 
+.move-to-wishlist-button {
+    display: block;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+.move-to-wishlist-button:hover {
+    color: var(--color-accent);
+}
+
 .cart-item-remove {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
+
 }
 
 .remove-button {
