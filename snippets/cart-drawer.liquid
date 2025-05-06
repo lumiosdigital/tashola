@@ -54,11 +54,11 @@
                 {%- endfor -%}
             </div>
 
-            {% if settings.enable_jewelry_box %}
+            {% if section.settings.enable_jewelry_box %}
             <div class="cart-drawer-checkbox">
                 <label class="checkbox-container">
                     <input type="checkbox" id="jewelry-box-option">
-                    <span class="checkbox-label">Add a Jewellery Box (+{{ settings.jewelry_box_price | default: 15.00 |
+                    <span class="checkbox-label">Add a Jewelry Box (+{{ section.settings.jewelry_box_price | default: 15.00 |
                         money }})</span>
                 </label>
             </div>

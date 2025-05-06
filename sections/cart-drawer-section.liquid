@@ -1,21 +1,24 @@
-{% render 'cart-drawer' %}
+{% render 'cart-drawer',
+enable_jewelry_box: section.settings.enable_jewelry_box,
+jewelry_box_price: section.settings.jewelry_box_price
+%}
 
 {% schema %}
 {
-  "name": "Cart Drawer",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "enable_jewelry_box",
-      "label": "Enable Jewelry Box option",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "jewelry_box_price",
-      "label": "Jewelry Box Price",
-      "default": "15.00"
-    }
-  ]
+"name": "Cart Drawer",
+"settings": [
+{
+"type": "checkbox",
+"id": "enable_jewelry_box",
+"label": "Enable Jewelry Box option",
+"default": true
+},
+{
+"type": "text",
+"id": "jewelry_box_price",
+"label": "Jewelry Box Price",
+"default": "15.00"
+}
+]
 }
 {% endschema %}
