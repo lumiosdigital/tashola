@@ -358,9 +358,10 @@ button {
 
 .swym-empty-wishlist-text {
     font-family: var(--font-body) !important;
-    font-size: 1.125rem !important;
+    font-size: 1rem !important;
     color: var(--primary-color) !important;
     font-weight: 400 !important;
+    max-width: 800px !important;
 }
 
 .nav-scrollable {
