@@ -214,6 +214,10 @@ button {
     font-family: var(--font-heading) !important;
     font-size: 2rem !important;
     color: var(--primary-color) !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-align: center !important;
 }
 
 .swym-htc-tabs {
