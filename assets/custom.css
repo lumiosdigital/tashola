@@ -230,6 +230,10 @@ button {
     margin: 12px 15px 0px !important;
 }
 
+.swym-variant-title, .swym-text, .swym-title-2, .swym-variant-title-spacer {
+    display: none !important;
+}
+
 .swym-htc-tab-item {
     font-family: var(--font-body) !important;
     font-size: 1rem !important;
