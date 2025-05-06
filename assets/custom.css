@@ -358,7 +358,7 @@ button {
 
 .swym-empty-wishlist-text {
     font-family: var(--font-body) !important;
-    font-size: 1rem !important;
+    font-size: 1.125rem !important;
     color: var(--primary-color) !important;
 }
 
