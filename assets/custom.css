@@ -206,7 +206,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-.swym-simple-wishlist-page {
+#swym-wishlist-render-container {
     margin: 8rem auto;
 }
 
