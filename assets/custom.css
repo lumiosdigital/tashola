@@ -356,6 +356,7 @@ button {
     background-color: rgba(255, 163, 139, 0.2);
 }
 
+
 .swym-empty-wishlist-text {
     font-family: var(--font-body) !important;
     font-size: 1rem !important;
@@ -400,6 +401,10 @@ button {
 .swym-sfl-list-empty-content, .swym-wishlist-detail-content {
     margin: 0 !important;
     padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .swym-empty-wishlist-container {
