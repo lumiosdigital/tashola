@@ -863,208 +863,230 @@ document.addEventListener('DOMContentLoaded', function() {
       return originalXHRSend.apply(this, arguments);
     };
   })();
-  // Initialize jewelry box option
-function initJewelryBoxOption() {
-  const jewelryBoxCheckbox = document.getElementById('jewelry-box-option');
-  if (!jewelryBoxCheckbox) return;
+
+ // Initialize jewelry box buttons for each cart item
+function initItemJewelryBoxButtons() {
+  log('Setting up jewelry box buttons for individual items');
   
-  log('Setting up jewelry box checkbox');
+  // Find all "Add a Jewelry Box" buttons in the cart
+  const jewelryBoxButtons = document.querySelectorAll('.cart-item-remove .add-jewelry-box-button');
   
-  // Check if we should select the checkbox by default
-  // based on cart attributes if they exist
-  fetch('/cart.js')
-    .then(response => response.json())
-    .then(cart => {
-      if (cart.attributes && cart.attributes['Jewelry Box'] === 'Yes') {
-        jewelryBoxCheckbox.checked = true;
-      }
-    })
-    .catch(error => console.error('Error checking jewelry box status:', error));
-  
-  // Add event listener for checkbox changes
-  jewelryBoxCheckbox.addEventListener('change', function() {
-    // Add loading state
-    document.body.classList.add('cart-loading');
+  jewelryBoxButtons.forEach(button => {
+    // Get the cart item this button belongs to
+    const cartItem = button.closest('.cart-item');
+    if (!cartItem) return;
     
-    // Update cart attributes
-    fetch('/cart/update.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        attributes: {
-          'Jewelry Box': this.checked ? 'Yes' : 'No'
-        }
-      })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Update cart failed: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(cart => {
-      log('Jewelry box option updated:', this.checked);
-      
-      // If the jewelry box is a separate product, add or remove it here
-      if (this.checked) {
-        // Replace JEWELRY_BOX_VARIANT_ID with the actual ID
-        return addJewelryBoxToCart();
-      } else {
-        return removeJewelryBoxFromCart();
-      }
-    })
-    .then(() => {
-      // Refresh cart to update prices and items
-      return refreshCart();
-    })
-    .catch(error => {
-      console.error('Error updating jewelry box option:', error);
-      // Reset checkbox state if error
-      this.checked = !this.checked;
-      return refreshCart();
-    })
-    .finally(() => {
-      document.body.classList.remove('cart-loading');
+    // Get the item key and line number
+    const itemKey = cartItem.getAttribute('data-item-key');
+    const lineNumber = findLineNumber(cartItem);
+    
+    if (!itemKey || !lineNumber) {
+      log('Missing item key or line number for jewelry box button');
+      return;
+    }
+    
+    // Check if this item already has a jewelry box
+    const hasBox = button.classList.contains('has-box');
+    
+    // Set initial button text based on state
+    updateButtonText(button, hasBox);
+    
+    // Add click event listener
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      toggleJewelryBoxForItem(button, itemKey, lineNumber);
     });
   });
 }
 
-  // Add the appropriate jewelry box variant based on cart contents
-  function addJewelryBoxToCart() {
-    // First, fetch the current cart to analyze its contents
-    return fetch('/cart.js')
-      .then(response => response.json())
-      .then(cart => {
-        // Determine the appropriate box type based on items in cart
-        const boxType = determineBoxType(cart.items);
+// Toggle jewelry box for a specific item
+function toggleJewelryBoxForItem(button, itemKey, lineNumber) {
+  // Get current state
+  const hasBox = button.classList.contains('has-box');
+  
+  // Show loading state
+  button.disabled = true;
+  button.textContent = hasBox ? 'Removing...' : 'Adding...';
+  document.body.classList.add('cart-loading');
+  
+  // Get the cart item and its data
+  const cartItem = button.closest('.cart-item');
+  
+  // If no box currently, add one
+  if (!hasBox) {
+    addJewelryBoxForItem(cartItem, itemKey, lineNumber)
+      .then(() => {
+        // Update button state
+        button.classList.add('has-box');
+        updateButtonText(button, true);
+      })
+      .catch(error => {
+        console.error('Error adding jewelry box:', error);
+        alert('There was an error adding the jewelry box. Please try again.');
+      })
+      .finally(() => {
+        button.disabled = false;
+        document.body.classList.remove('cart-loading');
+      });
+  } else {
+    // Remove the box
+    removeJewelryBoxForItem(cartItem, itemKey, lineNumber)
+      .then(() => {
+        // Update button state
+        button.classList.remove('has-box');
+        updateButtonText(button, false);
+      })
+      .catch(error => {
+        console.error('Error removing jewelry box:', error);
+        alert('There was an error removing the jewelry box. Please try again.');
+      })
+      .finally(() => {
+        button.disabled = false;
+        document.body.classList.remove('cart-loading');
+      });
+  }
+}
+
+// Add jewelry box for a specific item
+function addJewelryBoxForItem(cartItem, itemKey, lineNumber) {
+  // Get product category from data attribute or metafield
+  let primaryCategory = cartItem.getAttribute('data-primary-category');
+  
+  // If category not available in DOM, fetch it from the item properties
+  if (!primaryCategory) {
+    // Default to general box if we can't determine category
+    primaryCategory = 'general';
+    
+    // Try to get it from item title as fallback (temporary solution)
+    const itemTitle = cartItem.querySelector('.cart-item-title')?.textContent.toLowerCase() || '';
+    
+    if (itemTitle.includes('ring')) primaryCategory = 'rings';
+    else if (itemTitle.includes('necklace') || itemTitle.includes('pendant')) primaryCategory = 'necklaces';
+    else if (itemTitle.includes('bracelet')) primaryCategory = 'bracelets';
+    else if (itemTitle.includes('earring')) primaryCategory = 'earrings';
+    else if (itemTitle.includes('charm')) primaryCategory = 'charms';
+  }
+  
+  // Map category to box variant ID
+  // Replace these with your actual variant IDs
+  const BOX_VARIANT_IDS = {
+    'rings': 'RING_BOX_VARIANT_ID',
+    'necklaces': 'NECKLACE_BOX_VARIANT_ID', 
+    'bracelets': 'BRACELET_BOX_VARIANT_ID',
+    'earrings': 'EARRINGS_BOX_VARIANT_ID',
+    'charms': 'GENERAL_BOX_VARIANT_ID',
+    'general': 'GENERAL_BOX_VARIANT_ID'
+  };
+  
+  const variantId = BOX_VARIANT_IDS[primaryCategory] || BOX_VARIANT_IDS.general;
+  
+  log('Adding jewelry box for item with category:', primaryCategory);
+  
+  // Add the box to the cart as a new item with a reference to the original item
+  return fetch('/cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      id: variantId,
+      quantity: 1,
+      properties: {
+        '_jewelry_box_for': itemKey,
+        '_original_line': lineNumber,
+        '_box_type': primaryCategory
+      }
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Add jewelry box failed: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    // After adding the box, refresh the cart to show the new item
+    return refreshCart();
+  });
+}
+
+// Remove jewelry box for a specific item
+function removeJewelryBoxForItem(cartItem, itemKey, lineNumber) {
+  // We need to find the jewelry box line item that's associated with this product
+  return fetch('/cart.js')
+    .then(response => response.json())
+    .then(cart => {
+      // Find the jewelry box item for this specific product
+      const boxItem = cart.items.find(
+        item => item.properties && 
+                item.properties['_jewelry_box_for'] === itemKey
+      );
+      
+      if (boxItem) {
+        // Get the line number (1-based index)
+        const boxLineIndex = cart.items.indexOf(boxItem) + 1;
         
-        // Map of box types to their variant IDs - you'll need to fill these in
-        // with the actual variant IDs from your Shopify admin
-        const BOX_VARIANT_IDS = {
-          'ring': '52487391084876',
-          'necklace': '52487391117644',
-          'bracelet': '52487391183180',
-          'earrings': '52487391150412',
-          'default': '52487391215948'  // Fallback option
-        };
-        
-        // Get the appropriate variant ID
-        const variantId = BOX_VARIANT_IDS[boxType] || BOX_VARIANT_IDS.default;
-        
-        log('Adding jewelry box for type:', boxType);
-        
-        // Add the selected box to cart
-        return fetch('/cart/add.js', {
+        // Remove the box
+        return fetch('/cart/change.js', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            id: parseInt(variantId, 10),
-            quantity: 1,
-            properties: {
-              '_special_item': 'jewelry_box',
-              '_box_type': boxType
-            }
+            line: boxLineIndex,
+            quantity: 0
           })
-        });
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Add jewelry box failed: ${response.status}`);
-        }
-        return response.json();
-      });
-  }
-
-  // Analyze cart items to determine appropriate box type
-  function determineBoxType(items) {
-    // Keywords to look for in product titles/tags/etc.
-    const typePatterns = {
-      'ring': ['ring', 'rings', 'band'],
-      'necklace': ['necklace', 'pendant', 'chain'],
-      'bracelet': ['bracelet', 'bangle', 'cuff'],
-      'earrings': ['earring', 'stud', 'hoop', 'drop']
-    };
-    
-    // Count occurrences of each jewelry type
-    const typeCounts = {
-      'ring': 0,
-      'necklace': 0,
-      'bracelet': 0,
-      'earrings': 0
-    };
-    
-    // Examine each item in the cart
-    items.forEach(item => {
-      // Skip the jewelry box itself if it's already in the cart
-      if (item.properties && item.properties['_special_item'] === 'jewelry_box') {
-        return;
-      }
-      
-      const title = item.title.toLowerCase();
-      const productType = item.product_type ? item.product_type.toLowerCase() : '';
-      
-      // Check title and product type against our patterns
-      Object.keys(typePatterns).forEach(type => {
-        typePatterns[type].forEach(keyword => {
-          if (title.includes(keyword) || productType.includes(keyword)) {
-            typeCounts[type] += item.quantity;
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Remove jewelry box failed: ${response.status}`);
           }
+          return response.json();
+        })
+        .then(data => {
+          // Refresh the cart to update the view
+          return refreshCart();
         });
-      });
-    });
-    
-    // Find the type with the highest count
-    let maxCount = 0;
-    let dominantType = 'default';
-    
-    Object.keys(typeCounts).forEach(type => {
-      if (typeCounts[type] > maxCount) {
-        maxCount = typeCounts[type];
-        dominantType = type;
       }
+      
+      // No box found, just resolve
+      return Promise.resolve();
     });
-    
-    return dominantType;
-  }
+}
 
-  // Remove the jewelry box item from cart
-  function removeJewelryBoxFromCart() {
-    return fetch('/cart.js')
-      .then(response => response.json())
-      .then(cart => {
-        // Find the jewelry box item
-        const jewelryBoxItem = cart.items.find(
-          item => item.properties && item.properties['_special_item'] === 'jewelry_box'
-        );
-        
-        if (jewelryBoxItem) {
-          // Get the line number (1-based index)
-          const lineIndex = cart.items.indexOf(jewelryBoxItem) + 1;
-          
-          // Remove the item
-          return fetch('/cart/change.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-              line: lineIndex,
-              quantity: 0
-            })
-          });
-        }
-        
-        return Promise.resolve();
-      });
+// Helper function to find the line number for a cart item
+function findLineNumber(cartItem) {
+  // Try to get it from the quantity buttons
+  const quantityButton = cartItem.querySelector('.quantity-button');
+  if (quantityButton) {
+    return quantityButton.getAttribute('data-line');
   }
+  
+  // Fallback to extracting from the input field
+  const quantityInput = cartItem.querySelector('input[name="updates[]"]');
+  if (quantityInput) {
+    const idParts = quantityInput.id.split('_');
+    if (idParts.length > 1) {
+      // Try to match line based on key
+      const items = document.querySelectorAll('.cart-item');
+      return Array.from(items).indexOf(cartItem) + 1;
+    }
+  }
+  
+  return null;
+}
 
-// Call this in your initCartDrawer function
-initJewelryBoxOption();
+// Update button text based on state
+function updateButtonText(button, hasBox) {
+  if (hasBox) {
+    button.textContent = 'Remove Jewelry Box';
+  } else {
+    button.textContent = 'Add a Jewelry Box';
+  }
+}
+
+// Add this function call in initCartDrawer or directly in document ready
+initItemJewelryBoxButtons();
 });
