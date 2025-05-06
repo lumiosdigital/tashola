@@ -1,0 +1,36 @@
+<!-- snippets/search-overlay.liquid -->
+<div id="search-overlay" class="search-overlay" aria-hidden="true">
+    <div class="search-overlay-inner">
+        <div class="search-header">
+            <h2>Search</h2>
+            <button type="button" class="search-close" aria-label="Close search">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="search-content">
+            <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+                <div class="search-input-wrapper">
+                    <input type="search" name="q" id="search-input" class="search-input"
+                        placeholder="Search for products..." aria-label="Search" autocomplete="off" autofocus>
+                    <button type="submit" class="search-submit" aria-label="Submit search">
+                        <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24.6229 24.125L16.3828 15.8849" stroke="#373736" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M10.158 18.441C15.0087 18.441 18.941 14.5087 18.941 9.65801C18.941 4.80729 15.0087 0.875 10.158 0.875C5.30729 0.875 1.375 4.80729 1.375 9.65801C1.375 14.5087 5.30729 18.441 10.158 18.441Z"
+                                stroke="#373736" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                {% comment %} Add predictive search for Search & Discovery app {% endcomment %}
+                <div id="predictive-search-results" class="predictive-search-results" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="search-overlay-backdrop"></div>
