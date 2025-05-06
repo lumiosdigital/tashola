@@ -944,11 +944,11 @@ function initJewelryBoxOption() {
         // Map of box types to their variant IDs - you'll need to fill these in
         // with the actual variant IDs from your Shopify admin
         const BOX_VARIANT_IDS = {
-          'ring': 'RING_BOX_VARIANT_ID',
-          'necklace': 'NECKLACE_BOX_VARIANT_ID',
-          'bracelet': 'BRACELET_BOX_VARIANT_ID',
-          'earrings': 'EARRINGS_BOX_VARIANT_ID',
-          'default': 'DEFAULT_BOX_VARIANT_ID'  // Fallback option
+          'ring': '52487391084876',
+          'necklace': '52487391117644',
+          'bracelet': '52487391183180',
+          'earrings': '52487391150412',
+          'default': '52487391215948'  // Fallback option
         };
         
         // Get the appropriate variant ID
