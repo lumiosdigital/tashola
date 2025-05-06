@@ -303,6 +303,7 @@ button {
 
 .swym-sfl-add-all-to-cart-btn {
     border: none !important;
+    text-transform: uppercase !important;
 }
 
 .swym-disabled {
