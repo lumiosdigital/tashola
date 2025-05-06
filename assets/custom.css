@@ -317,6 +317,7 @@ button {
     margin: 0px 10px 10px 10px !important;
     width: auto !important;
     line-height: none !important;
+    padding: 6px !important;
 }
 
 .nav-scrollable {
