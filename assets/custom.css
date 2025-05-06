@@ -254,7 +254,7 @@ button {
 .swym-add-to-cart-btn {
     background: var(--secondary-color) !important;
     color: var(--white) !important;
-    /* border-radius: 0 !important; */
+    font-weight: 500 !important;
     font-family: var(--font-body) !important;
     /* font-size: 1rem !important; */
     /* padding: 0.75rem 1.25rem !important; */
