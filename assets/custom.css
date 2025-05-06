@@ -219,6 +219,9 @@ button {
 
 .swym-htc-tab-item {
     font-family: var(--font-body) !important;
+    font-size: 1rem !important;
+    text-transform: uppercase !important;
+
 }
 
 .nav-scrollable {
