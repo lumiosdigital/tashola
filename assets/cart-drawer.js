@@ -562,4 +562,14 @@ document.addEventListener('DOMContentLoaded', function() {
       backdrop.classList.remove('visible');
     }
   }
+
+  // Handle wishlist continue button click to close cart drawer
+  const continueBtn = document.querySelector('.swym-empty-wishlist-continue-btn');
+  if (continueBtn) {
+    continueBtn.addEventListener('click', function () {
+      if (cartDrawer && cartDrawer.classList.contains('open')) {
+        closeCart();
+      }
+    });
+  }
 });
