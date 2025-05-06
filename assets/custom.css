@@ -206,36 +206,8 @@ button {
     transition: background-color 0.3s ease;
 }
 
-/* Custom Wishlist Styles */
-.swym-wishlist-container {
-    margin-top: var(--header-height);
-    /* Add margin to match your header height */
-    padding-top: 2rem;
-    font-family: var(--font-body) !important;
-    /* Override with your theme font */
-}
-
-.swym-wishlist-container h1,
-.swym-wishlist-container h2,
-.swym-wishlist-container h3,
-.swym-wishlist-container .swym-title {
-    font-family: var(--font-heading) !important;
-    /* Override with your heading font */
-}
-
-/* Fix any buttons or interactive elements */
-.swym-wishlist-container button,
-.swym-wishlist-container .swym-button,
-.swym-wishlist-container .swym-add-to-cart {
-    font-family: var(--font-body) !important;
-}
-
-/* Ensure the wishlist appears below the fixed header */
-.swym-modal,
-.swym-plugin {
-    margin-top: var(--header-height);
-    z-index: 990 !important;
-    /* Make sure it's below the header z-index */
+.swym-simple-wishlist-page {
+    margin: 8rem auto;
 }
 
 .nav-scrollable {
