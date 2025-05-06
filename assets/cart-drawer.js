@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function interceptSwymButton() {
     // Use mutation observer for dynamic button insertion
     const observer = new MutationObserver((mutations) => {
-      // Look for the continue shopping button
+      // Look for the continue shopping button in any Swym panel
       const swymButton = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
       if (swymButton && !swymButton.hasAttribute('data-cart-intercept')) {
         log('Swym continue button found - applying override');
@@ -111,36 +111,52 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mark the button as intercepted to prevent duplicate handlers
         swymButton.setAttribute('data-cart-intercept', 'true');
         
+        // IMPORTANT: Completely replace the click handler to prevent redirection
         swymButton.addEventListener('click', function(e) {
-          // Don't prevent default - let Swym do its thing
-          log('Swym continue button clicked - will refresh cart');
+          // Prevent default to stop any redirection
+          e.preventDefault();
+          e.stopPropagation();
           
-          // Wait for Swym's cart add to complete (usually takes 300-500ms)
-          setTimeout(() => {
-            // Now fetch the latest cart data
-            fetch('/cart.js')
-              .then(response => response.json())
-              .then(cart => {
-                log('Cart updated after Swym action:', cart.item_count, 'items');
-                
-                // Update cart count
-                updateCartCount(cart.item_count);
-                
-                // Refresh and open cart
-                refreshCart()
-                  .then(() => {
-                    openCart();
-                  })
-                  .catch(err => {
-                    console.error('Error refreshing cart after Swym action:', err);
-                    openCart();
-                  });
-              })
-              .catch(error => {
-                console.error('Error fetching cart after Swym action:', error);
-                openCart();
-              });
-          }, 500); // 500ms delay to let Swym complete its operations
+          log('Swym continue button clicked - opening cart drawer without redirection');
+          
+          // Check if this is empty wishlist case or regular add-to-cart case
+          const emptyWishlist = !document.querySelector('.swym-item');
+          
+          if (emptyWishlist) {
+            // If the wishlist is empty, just open the cart drawer immediately
+            log('Empty wishlist detected, opening cart drawer directly');
+            openCart();
+          } else {
+            // Regular case where items may have been added to cart
+            log('Items in wishlist, will refresh cart before opening');
+            
+            // Wait for Swym's cart add to complete (usually takes 300-500ms)
+            setTimeout(() => {
+              // Now fetch the latest cart data
+              fetch('/cart.js')
+                .then(response => response.json())
+                .then(cart => {
+                  log('Cart updated after Swym action:', cart.item_count, 'items');
+                  
+                  // Update cart count
+                  updateCartCount(cart.item_count);
+                  
+                  // Refresh and open cart
+                  refreshCart()
+                    .then(() => {
+                      openCart();
+                    })
+                    .catch(err => {
+                      console.error('Error refreshing cart after Swym action:', err);
+                      openCart();
+                    });
+                })
+                .catch(error => {
+                  console.error('Error fetching cart after Swym action:', error);
+                  openCart();
+                });
+            }, 500); // 500ms delay to let Swym complete its operations
+          }
         });
         
         log('Swym button override applied');
