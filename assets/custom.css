@@ -349,10 +349,11 @@ button {
     background-color: #F6F4F3 !important;
     font-weight: 500 !important;
     font-family: var(--font-body) !important;
+    border: 1px solid #e0e0e0 !important;
 }
 
 .swym-sfl-popup-cancel:hover {
-    background: rgba(255, 163, 139, 0.2);
+    background-color: rgba(255, 163, 139, 0.2);
 }
 
 .nav-scrollable {
