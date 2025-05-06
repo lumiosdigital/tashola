@@ -2,6 +2,7 @@
     {% render 'breadcrumbs' %}
 </div>
 
+
 <div class="product-container" data-product-container>
     <div class="single-product-grid">
         <!-- Left column: Product images 2x2 grid -->
@@ -40,53 +41,45 @@
                 <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"
                     id="VariantId">
 
-                {% if product.has_only_default_variant == false %}
-                <div class="product-variants">
-                    {% for option in product.options_with_values %}
-                    <div class="product-option-wrapper" data-option-index="{{ forloop.index0 }}">
-                        {% if option.name == 'Metal' or option.name == 'Color' %}
-                        <div class="metal-label">METAL: <span class="selected-option-text">{{ option.selected_value
-                                }}</span></div>
-                        <div class="color-option-wrapper">
-                            {% for value in option.values %}
-                            {% assign color_code = "" %}
-                            {% if value contains 'Gold' and value != 'Rose Gold' %}
-                            {% assign color_code = "#E5D295" %}
-                            {% elsif value contains 'Silver' %}
-                            {% assign color_code = "#CDCCCC" %}
-                            {% elsif value contains 'Rose Gold' %}
-                            {% assign color_code = "#B76E79" %}
-                            {% elsif value contains 'Platinum' %}
-                            {% assign color_code = "#BCBCBC" %}
-                            {% elsif value contains 'Stainless Steel' %}
-                            {% assign color_code = "#E4E4E4" %}
-                            {% else %}
-                            {% assign color_code = "#373736" %}
-                            {% endif %}
+{% if product.has_only_default_variant == false or product.metafields.custom.color_variants != blank %}
+<div class="product-variants">
+    {% comment %} Display only non-color variant selectors (if needed) {% endcomment %}
+    {% for option in product.options_with_values %}
+    {% if option.name != 'Color' %}
+    {% endif %}
+    {% endfor %}
 
-                            <div class="color-option {% if option.selected_value == value %}selected{% endif %}"
-                                style="background-color: {{ color_code }};" data-option-value="{{ value }}"
-                                data-option-position="{{ forloop.index0 }}" data-index="{{ forloop.index0 }}"
-                                title="{{ value }}">
-                            </div>
-                            {% endfor %}
-                        </div>
-                        {% else %}
-                        <div class="option-label">{{ option.name }}</div>
-                        <div class="select-wrapper">
-                            <select class="product-option single-option-selector" id="{{ option.name | handleize }}"
-                                name="options[{{ option.name }}]" data-index="{{ forloop.index0 }}">
-                                {% for value in option.values %}
-                                <option value="{{ value }}" {% if option.selected_value==value %}selected="selected" {%
-                                    endif %}>{{ value }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
+    {% comment %} Display color options based on linked products - just color swatches {% endcomment %}
+    {% if product.metafields.custom.color_variants != blank %}
+    {% comment %} Get current product's color from standard metafield {% endcomment %}
+    {% assign current_color = product.metafields.standard.color.value | default: product.title %}
+    {% assign current_hex = color_hex_map[current_color] | default: "#CCCCCC" %}
+
+    <div class="color-option-wrapper">
+        {% comment %} Show current product color option {% endcomment %}
+        <div class="color-option selected" style="background: {{ current_hex }};" data-product-url="{{ product.url }}"
+            data-product-handle="{{ product.handle }}" data-color-name="{{ current_color }}"
+            title="{{ current_color }}">
+        </div>
+
+        {% comment %} Show linked product color options {% endcomment %}
+        {% for linked_product in product.metafields.custom.color_variants %}
+        {% if linked_product.handle != product.handle %}
+        {% assign linked_color = linked_product.metafields.standard.color.value | default: linked_product.title %}
+        {% assign linked_hex = color_hex_map[linked_color] | default: "#CCCCCC" %}
+
+        <div class="color-option" style="background: {{ linked_hex }};" data-product-url="{{ linked_product.url }}"
+            data-product-handle="{{ linked_product.handle }}" data-color-name="{{ linked_color }}"
+            title="{{ linked_color }}">
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+                {% comment %} Show price and add to cart button {% endcomment %}
 
                 <div class="product-price-container">
                     <span class="product-price {% if product.compare_at_price > product.price %}on-sale{% endif %}"
@@ -146,9 +139,12 @@
                     {% endform %}
 
                     <!-- Wishlist button -->
-                    <button type="button" class="wishlist-button">
+                    <button type="button" class="wishlist-button swym-button swym-add-to-wishlist" data-with-epi="true"
+                        data-swaction="addToWishlist" data-product-id="{{ product.id }}"
+                        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                        data-product-url="{{ shop.url }}{{ product.url }}">
                         {% render 'icon-favorites' %}
-                    </button>                
+                    </button>
                 </div>
 
                 <!-- Accordion dropdowns --> 
@@ -255,8 +251,8 @@
         // Initialize quantity selector
         initQuantitySelector();
 
-        // Initialize variant selection with direct approach
-        initSimpleVariantSelector();
+        // Initialize the color product selector (new approach)
+        initColorProductSelector();
 
         // Initialize cart functionality
         initCartFunctionality();
@@ -304,95 +300,41 @@
             });
         }
 
-        function initSimpleVariantSelector() {
-            // Find out which option is the Metal option
-            let metalOptionIndex = -1;
-            if (product.options) {
-                for (let i = 0; i < product.options.length; i++) {
-                    if (product.options[i] === 'Metal' || product.options[i] === 'Color') {
-                        metalOptionIndex = i;
-                        break;
-                    }
-                }
-            }
+        function initColorProductSelector() {
+            // Find all color options that represent separate products
+            const colorOptions = document.querySelectorAll('.color-option[data-product-url]');
+            if (!colorOptions.length) return;
 
-            // If no Metal option found, exit this function
-            if (metalOptionIndex === -1) return;
-
-            // Create a map of metal values to their variants and images
-            const metalVariants = {};
-
-            product.variants.forEach(variant => {
-                const metalValue = variant.options[metalOptionIndex];
-
-                // If this is the first time we're seeing this metal value
-                if (!metalVariants[metalValue]) {
-                    metalVariants[metalValue] = {
-                        variantId: variant.id,
-                        price: variant.price,
-                        featured_image: variant.featured_image ? variant.featured_image.src : null
-                    };
-                }
-            });
-
-            // Add click handlers to color options
-            const colorOptions = document.querySelectorAll('.color-option');
+            // Add click handlers to navigate to product pages
             colorOptions.forEach(option => {
                 option.addEventListener('click', function () {
-                    // Get the metal value and update the UI
-                    const metalValue = this.getAttribute('data-option-value');
+                    // Don't navigate if clicking the current product's color
+                    if (this.classList.contains('selected')) return;
 
-                    // Mark this option as selected visually
+                    // Update UI first (for perceived responsiveness)
+                    const colorName = this.getAttribute('data-color-name');
+                    const colorLabel = document.querySelector('.metal-label .selected-option-text');
+                    if (colorLabel && colorName) {
+                        colorLabel.textContent = colorName;
+                    }
+
+                    // Update visual selection 
                     document.querySelectorAll('.color-option').forEach(opt => {
                         opt.classList.remove('selected');
                     });
                     this.classList.add('selected');
 
-                    // Update the metal label text
-                    const metalLabel = document.querySelector('.metal-label .selected-option-text');
-                    if (metalLabel) {
-                        metalLabel.textContent = metalValue;
-                    }
-
-                    // Get the variant info for this metal
-                    const variantInfo = metalVariants[metalValue];
-                    if (!variantInfo) return;
-
-                    // Update the variant ID in the form
-                    const variantIdInput = document.getElementById('VariantId');
-                    if (variantIdInput) {
-                        variantIdInput.value = variantInfo.variantId;
-                    }
-
-                    // Update the price
-                    const priceElement = document.querySelector('[data-product-price]');
-                    if (priceElement && variantInfo.price) {
-                        // Format price as currency
-                        const formatter = new Intl.NumberFormat('en-GB', {
-                            style: 'currency',
-                            currency: 'GBP',
-                            minimumFractionDigits: 2
-                        });
-                        priceElement.textContent = formatter.format(variantInfo.price / 100);
-                    }
-
-                    // Update the image if this variant has one
-                    if (variantInfo.featured_image) {
-                        const mainImage = document.querySelector('[data-main-image]');
-                        if (mainImage) {
-                            mainImage.src = variantInfo.featured_image;
-                        }
+                    // Get product URL from data attribute
+                    const productUrl = this.getAttribute('data-product-url');
+                    if (productUrl) {
+                        // Small delay to show the selection change before navigation
+                        setTimeout(() => {
+                            // Navigate to the other product's page
+                            window.location.href = productUrl;
+                        }, 50);
                     }
                 });
             });
-
-            // Trigger click on the selected option (or first option if none selected)
-            const selectedOption = document.querySelector('.color-option.selected');
-            if (selectedOption) {
-                selectedOption.click();
-            } else if (colorOptions.length > 0) {
-                colorOptions[0].click();
-            }
         }
 
         function initCartFunctionality() {
@@ -604,13 +546,6 @@
         --color-background: #F6F4F3;
         --color-white: #ffffff;
         --color-light-gray: #e0e0e0;
-    }
-
-    .breadcrumbs-container {
-        margin: 0 auto;
-        padding: 2.5rem 3.75rem 0;
-        margin-top: var(--header-height);
-        /* background-color: var(--color-background); */
     }
 
     .product-container {
@@ -910,7 +845,13 @@
     }
 
     .wishlist-button:hover path:nth-child(2) {
-    fill: #FFA38B;
+        fill: #FFA38B;
+    }
+
+    /* Added to wishlist state - filled heart */
+    .wishlist-button.swym-added svg path:nth-child(2),
+    .wishlist-button.swym-adding svg path:nth-child(2) {
+        fill: #FFA38B;
     }
 
     /* Accordion styles */
@@ -1220,8 +1161,7 @@
 "type": "richtext",
 "id": "product_details_text",
 "label": "Product Details text",
-"info": "Custom text for the Product Details accordion. If empty, collection descriptions will be used.",
-"default": ""
+"info": "Custom text for the Product Details accordion. If empty, collection descriptions will be used."
 },
 {
 "type": "header",

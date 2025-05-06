@@ -160,6 +160,26 @@
         "name": "list.single_line_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "color_variants",
+      "namespace": "custom",
+      "name": "Color Variant",
+      "description": "This will be used to link products with \"sibling\" products of different colours.",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "product_content",
+      "namespace": "custom",
+      "name": "Product Content",
+      "description": "Here you can write anything for the product that will be displayed on the product details dropdown.",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [],
