@@ -101,101 +101,70 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Complete replacement of Swym cart buttons with duplication prevention
   function interceptSwymButton() {
-    // Keep track of buttons we've already processed by their position in the DOM
-    const processedButtons = new Set();
+    // Flag to track if we've already processed buttons in this session
+    let hasProcessedInitialButtons = false;
     
-    // Function to handle a single button
-    function processButton(swymButton) {
-      if (!swymButton) return;
-      
-      // Generate a unique identifier for this button based on its DOM position
-      // This helps us track if we've already processed this specific button
-      const buttonId = generateButtonId(swymButton);
-      
-      // Skip if we've already processed this button
-      if (processedButtons.has(buttonId) || swymButton.hasAttribute('data-cart-intercept')) {
-        return;
-      }
-      
-      log('Swym continue button found - applying replacement:', buttonId);
-      
-      // Add our identifier
-      processedButtons.add(buttonId);
-      
-      // Mark the button with our attribute
-      swymButton.setAttribute('data-cart-intercept', buttonId);
-      
-      // We'll use a simpler approach - we'll keep the original button but override all its behaviors
-      // Remove any href or onclick attributes
-      if (swymButton.hasAttribute('href')) {
-        swymButton.removeAttribute('href');
-      }
-      if (swymButton.hasAttribute('onclick')) {
-        swymButton.removeAttribute('onclick');
-      }
-      
-      // Clear all existing event listeners by cloning shallowly
-      // This preserves all children but removes event listeners
-      const parent = swymButton.parentNode;
-      if (!parent) return; // Safety check
-      
-      // Create a shallow clone that preserves children
-      const clone = swymButton.cloneNode(false);
-      
-      // Copy all children from original to clone
-      while (swymButton.firstChild) {
-        clone.appendChild(swymButton.firstChild);
-      }
-      
-      // Make sure our attributes are preserved
-      clone.setAttribute('data-cart-intercept', buttonId);
-      
-      // Replace original with clone
-      parent.replaceChild(clone, swymButton);
-      
-      // Add our event handler to the new button
-      clone.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        log('Swym cart button clicked - opening cart drawer');
-        openCart();
-        
-        return false;
-      }, true); // Use capture phase
-      
-      log('Swym button behavior overridden for:', buttonId);
-    }
-    
-    // Generate a unique ID for a button based on its position in the DOM
-    function generateButtonId(button) {
-      if (!button || !button.parentNode) return 'unknown';
-      
-      // Find the button's position among its siblings
-      const siblings = Array.from(button.parentNode.children);
-      const position = siblings.indexOf(button);
-      
-      // Generate a path-like ID using parent node information
-      const parentInfo = button.parentNode.id || button.parentNode.className || 'noId';
-      return `${parentInfo}-pos${position}`;
-    }
-    
-    // Process any buttons that already exist
-    function processExistingButtons() {
+    // Function to handle all cart buttons
+    function processAllButtons() {
       const buttons = document.querySelectorAll('.swym-sfl-cart-btn.swym-bg-2');
-      buttons.forEach(processButton);
-    }
-    
-    // Process existing buttons immediately
-    processExistingButtons();
-    
-    // Set up mutation observer to catch new buttons
-    const observer = new MutationObserver((mutations) => {
-      // First check if any new Swym cart buttons have appeared
-      const buttons = document.querySelectorAll('.swym-sfl-cart-btn.swym-bg-2');
+      log(`Found ${buttons.length} Swym cart buttons`);
+      
+      // If multiple buttons exist, hide all but the first one
+      if (buttons.length > 1) {
+        log('Multiple buttons detected - hiding duplicates');
+        for (let i = 1; i < buttons.length; i++) {
+          buttons[i].style.display = 'none';
+        }
+      }
+      
+      // Process the visible button (first one)
       if (buttons.length > 0) {
-        buttons.forEach(processButton);
+        const primaryButton = buttons[0];
+        
+        // Only process if not already processed
+        if (!primaryButton.hasAttribute('data-cart-intercept')) {
+          log('Processing primary Swym cart button');
+          
+          // Mark as processed
+          primaryButton.setAttribute('data-cart-intercept', 'true');
+          
+          // Force text to uppercase using CSS
+          primaryButton.style.textTransform = 'uppercase';
+          
+          // Remove any href that might cause navigation
+          if (primaryButton.hasAttribute('href')) {
+            primaryButton.removeAttribute('href');
+          }
+          
+          // Remove any onclick handler
+          primaryButton.onclick = null;
+          
+          // Add our own click handler
+          primaryButton.addEventListener('click', function(e) {
+            // Stop any default behavior or event propagation
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            log('Swym cart button clicked - opening cart drawer');
+            openCart();
+            
+            return false;
+          }, true); // Use capture phase to ensure our handler runs first
+          
+          log('Swym button behavior overridden and styled uppercase');
+        }
       }
+    }
+    
+    // Process buttons immediately
+    processAllButtons();
+    hasProcessedInitialButtons = true;
+    
+    // Set up mutation observer to watch for DOM changes
+    const observer = new MutationObserver((mutations) => {
+      // Process all buttons again when DOM changes
+      processAllButtons();
     });
     
     // Observe the entire document for changes
@@ -204,62 +173,62 @@ document.addEventListener('DOMContentLoaded', function() {
       subtree: true
     });
     
-    // Also add a global click handler as a safety net
+    // Global event handler for any Swym button clicks
     document.addEventListener('click', function(e) {
       // Check if the click target is or is inside a Swym cart button
       let target = e.target;
-      let isSwymCartButton = false;
       
-      // Check if the target or any parent is a Swym cart button
       while (target && target !== document) {
         if (target.classList && 
             target.classList.contains('swym-sfl-cart-btn') && 
             target.classList.contains('swym-bg-2')) {
-          isSwymCartButton = true;
-          break;
+          
+          // Prevent any navigation
+          e.preventDefault();
+          e.stopPropagation();
+          
+          log('Global handler: Intercepted click on Swym cart button');
+          openCart();
+          
+          return false;
         }
         target = target.parentNode;
-      }
-      
-      if (isSwymCartButton) {
-        // This is or contains a Swym cart button - intercept it
-        e.preventDefault();
-        e.stopPropagation();
-        log('Global handler: Intercepted click on Swym cart button or child');
-        openCart();
-        return false;
       }
     }, true); // Use capture phase
     
     // Return a function that can be called to manually process buttons
-    return processExistingButtons;
+    return processAllButtons;
   }
   
   // Store the function so we can call it when needed
   const refreshSwymButtons = interceptSwymButton();
   
-  // Add an event listener for Swym tab changes if possible
+  // Listen for specific Swym events
   if (typeof window.SwymCallbacks !== 'undefined') {
     window.SwymCallbacks.push(function(swat) {
       if (swat.evtLayer) {
-        // Try to listen for tab changes or UI events
-        swat.evtLayer.addEventListener("swym:tab-change", function() {
-          log('Swym tab changed - refreshing button handlers');
-          setTimeout(refreshSwymButtons, 100); // Short delay to let DOM update
-        });
+        // Listen for various Swym events
+        const events = [
+          "swym:tab-change",
+          "swym:modal-open", 
+          "swym:wishlist-loaded",
+          "swym:before-open",
+          "swym:load"
+        ];
         
-        swat.evtLayer.addEventListener("swym:modal-open", function() {
-          log('Swym modal opened - refreshing button handlers');
-          setTimeout(refreshSwymButtons, 100);
-        });
-        
-        swat.evtLayer.addEventListener("swym:wishlist-loaded", function() {
-          log('Swym wishlist loaded - refreshing button handlers');
-          setTimeout(refreshSwymButtons, 100);
+        events.forEach(event => {
+          swat.evtLayer.addEventListener(event, function() {
+            log(`Swym event ${event} - refreshing buttons`);
+            setTimeout(refreshSwymButtons, 100);
+          });
         });
       }
     });
   }
+  
+  // Add a periodic checker to make sure buttons are always processed
+  // This is a fallback in case mutation observer or events miss something
+  setInterval(refreshSwymButtons, 1000);
   
   // FIXED: Re-implement product quantity selectors
   function initProductQuantitySelectors() {
