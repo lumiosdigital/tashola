@@ -866,242 +866,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add this to your cart-drawer.js file just before the final closing brackets
 
-// Check for existing jewelry boxes when cart loads and after refreshes
-function updateJewelryBoxButtons() {
-  // Get all cart items
-  const cartItems = document.querySelectorAll('.cart-item');
-  
-  // Process each cart item
-  cartItems.forEach(cartItem => {
-    const itemKey = cartItem.getAttribute('data-item-key');
-    if (!itemKey) return;
-    
-    // 1. Check if this is a jewelry box product (hide button if it is)
-    const itemTitle = cartItem.querySelector('.cart-item-title')?.textContent.toLowerCase() || '';
-    if (itemTitle.includes('box') || 
-        (cartItem.hasAttribute('data-product-type') && 
-         cartItem.getAttribute('data-product-type').toLowerCase().includes('box'))) {
-      
-      // Hide the "Add a Jewelry Box" button for jewelry boxes
-      const boxButton = cartItem.querySelector('.add-jewelry-box-button');
-      if (boxButton) {
-        boxButton.style.display = 'none';
-      }
-      
-      // Update the jewelry box title to show the specific variant
-      updateJewelryBoxTitle(cartItem);
-      
-      return; // Skip the rest for jewelry boxes
-    }
-    
-    // 2. Check if this item already has a jewelry box associated with it
-    const hasAssociatedBox = checkForAssociatedBox(itemKey);
-    if (hasAssociatedBox) {
-      // Set the button to "Added" state
-      const boxButton = cartItem.querySelector('.add-jewelry-box-button');
-      if (boxButton) {
-        boxButton.textContent = 'Added';
-        boxButton.classList.add('added');
-        boxButton.disabled = true; // Prevent clicking again
-      }
-    }
-  });
-}
+// Add this code at the end of your cart-drawer.js file, just before the final closing brackets
 
-// Check if an item has an associated jewelry box
-function checkForAssociatedBox(itemKey) {
-  // Look for any jewelry box with the matching property
-  const jewelryBoxes = document.querySelectorAll('.cart-item');
-  
-  for (let i = 0; i < jewelryBoxes.length; i++) {
-    const boxItem = jewelryBoxes[i];
-    
-    // Check if this is a jewelry box item
-    const boxTitle = boxItem.querySelector('.cart-item-title')?.textContent.toLowerCase() || '';
-    if (!boxTitle.includes('box')) continue;
-    
-    // Check for hidden property in the box's attributes
-    const boxProperties = boxItem.querySelectorAll('.cart-item-properties li');
-    for (let j = 0; j < boxProperties.length; j++) {
-      const property = boxProperties[j].textContent;
-      if (property.includes(itemKey)) {
-        return true;
-      }
-    }
-    
-    // If no visible properties, check data attribute as fallback
-    if (boxItem.getAttribute('data-jewelry-box-for') === itemKey) {
-      return true;
-    }
-  }
-  
-  return false;
-}
-
-// Update jewelry box title to show the specific variant
-function updateJewelryBoxTitle(boxItem) {
-  const titleElement = boxItem.querySelector('.cart-item-title');
-  if (!titleElement) return;
-  
-  // Get the current title
-  const currentTitle = titleElement.textContent;
-  
-  // Extract the type from box properties or title
-  let boxType = '';
-  
-  // Try to get from properties first
-  const boxProperties = boxItem.querySelectorAll('.cart-item-properties li');
-  for (let i = 0; i < boxProperties.length; i++) {
-    const property = boxProperties[i].textContent;
-    if (property.includes('_box_type')) {
-      boxType = property.split(':')[1].trim();
-      break;
-    }
-  }
-  
-  // If not found in properties, extract from title
-  if (!boxType) {
-    if (currentTitle.toLowerCase().includes('ring')) boxType = 'rings';
-    else if (currentTitle.toLowerCase().includes('necklace')) boxType = 'necklaces';
-    else if (currentTitle.toLowerCase().includes('bracelet')) boxType = 'bracelets';
-    else if (currentTitle.toLowerCase().includes('earring')) boxType = 'earrings';
-    else boxType = 'charms';
-  }
-  
-  // Map type to display name
-  const boxTypeNames = {
-    'rings': 'Ring Box',
-    'necklaces': 'Necklace Box',
-    'bracelets': 'Bracelet Box',
-    'earrings': 'Earrings Box',
-    'charms': 'Jewelry Box'
-  };
-  
-  // Update title with specific variant name
-  const displayName = boxTypeNames[boxType] || 'Jewelry Box';
-  titleElement.textContent = displayName;
-}
-
-// Set up event delegation for the "Add a Jewelry Box" buttons
+// Simple event handler for jewelry box buttons
 document.addEventListener('click', function(e) {
   const button = e.target.closest('.add-jewelry-box-button');
-  if (!button) return; // Not our button, exit
-  
-  // If button is already in "Added" state, ignore click
-  if (button.classList.contains('added')) return;
+  if (!button) return;
   
   e.preventDefault();
   
-  // Prevent double-clicks
-  if (button.disabled) return;
+  // Ignore if already processed
+  if (button.classList.contains('added-box')) return;
   
   // Get the cart item
   const cartItem = button.closest('.cart-item');
   if (!cartItem) return;
   
-  // Disable button and show loading state
-  button.disabled = true;
-  button.textContent = 'Adding...';
-  
-  // Get data needed for adding the box
-  const itemKey = cartItem.getAttribute('data-item-key');
-  const lineElement = cartItem.querySelector('.quantity-button');
-  const lineNumber = lineElement ? lineElement.getAttribute('data-line') : null;
-  
-  if (!itemKey || !lineNumber) {
-    console.error('Missing item key or line number');
-    button.disabled = false;
-    button.textContent = 'Add a Jewelry Box';
+  // Get item title to check if it's a jewelry box
+  const itemTitle = cartItem.querySelector('.cart-item-title')?.textContent || '';
+  if (itemTitle.toLowerCase().includes('box')) {
+    // Hide button on jewelry boxes
+    button.style.display = 'none';
     return;
   }
   
-  // Determine jewelry type
-  let primaryCategory = button.getAttribute('data-primary-category');
+  // Get required data
+  const itemKey = cartItem.getAttribute('data-item-key');
+  const quantityBtn = cartItem.querySelector('.quantity-button');
+  const lineNumber = quantityBtn ? quantityBtn.getAttribute('data-line') : null;
   
-  // Fallback to checking item title if attribute not available
-  if (!primaryCategory) {
-    const itemTitle = cartItem.querySelector('.cart-item-title')?.textContent.toLowerCase() || '';
-    
-    if (itemTitle.includes('ring')) primaryCategory = 'rings';
-    else if (itemTitle.includes('necklace') || itemTitle.includes('pendant')) primaryCategory = 'necklaces';
-    else if (itemTitle.includes('bracelet')) primaryCategory = 'bracelets';
-    else if (itemTitle.includes('earring')) primaryCategory = 'earrings';
-    else primaryCategory = 'charms'; // Default fallback
+  if (!itemKey || !lineNumber) return;
+  
+  // Show adding state
+  button.textContent = 'Adding...';
+  button.disabled = true;
+  
+  // Determine jewelry type from title or attribute
+  let type = button.getAttribute('data-primary-category');
+  if (!type) {
+    if (itemTitle.toLowerCase().includes('ring')) type = 'rings';
+    else if (itemTitle.toLowerCase().includes('necklace')) type = 'necklaces';
+    else if (itemTitle.toLowerCase().includes('bracelet')) type = 'bracelets';
+    else if (itemTitle.toLowerCase().includes('earring')) type = 'earrings';
+    else type = 'charms';
   }
   
-  // Map category to box variant ID
-  const BOX_VARIANT_IDS = {
+  // Variant IDs
+  const boxVariants = {
     'rings': '52487391084876',
-    'necklaces': '52487391150412', 
+    'necklaces': '52487391150412',
     'bracelets': '52487391183180',
     'earrings': '52487391117644',
     'charms': '52487391215948'
   };
   
-  const variantId = BOX_VARIANT_IDS[primaryCategory] || BOX_VARIANT_IDS.charms;
-  
-  // Add the jewelry box to cart
+  // Add to cart
   fetch('/cart/add.js', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      id: variantId,
+      id: boxVariants[type] || boxVariants.charms,
       quantity: 1,
       properties: {
         '_jewelry_box_for': itemKey,
-        '_original_line': lineNumber,
-        '_box_type': primaryCategory
+        '_box_type': type
       }
     })
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`Add jewelry box failed: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Update button state permanently
+  .then(response => response.json())
+  .then(() => {
+    // Mark as added
     button.textContent = 'Added';
-    button.classList.add('added');
-    button.disabled = true; // Keep it disabled
+    button.classList.add('added-box');
     
-    // Refresh the cart drawer
-    return fetch('/cart.js')
+    // Refresh cart
+    fetch('/cart.js')
       .then(response => response.json())
       .then(cart => {
-        // Update cart count
-        updateCartCount(cart.item_count);
-        
-        // Refresh cart drawer content
-        return refreshCart();
+        if (typeof updateCartCount === 'function') {
+          updateCartCount(cart.item_count);
+        }
+        if (typeof refreshCart === 'function') {
+          refreshCart();
+        }
       });
   })
-  .catch(error => {
-    console.error('Error adding jewelry box:', error);
-    // Reset button state without alerts
-    button.textContent = 'Add a Jewelry Box';
+  .catch(() => {
+    // Reset on error
     button.disabled = false;
+    button.textContent = 'Add a Jewelry Box';
   });
-});
-
-// Override refreshCart to update jewelry box buttons after refresh
-const originalRefreshCart = refreshCart;
-refreshCart = function() {
-  return originalRefreshCart().then(() => {
-    // Update jewelry box buttons after cart refresh
-    setTimeout(updateJewelryBoxButtons, 100);
-    return Promise.resolve();
-  });
-};
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-  // Initial update of jewelry box buttons
-  setTimeout(updateJewelryBoxButtons, 300);
 });
   
 });
