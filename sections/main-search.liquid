@@ -290,58 +290,6 @@
         gap: 1.5rem;
     }
 
-    .search-collection-card {
-        text-decoration: none;
-        color: var(--color-text);
-        transition: transform 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .search-collection-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .search-collection-image-container {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        overflow: hidden;
-        margin-bottom: 1rem;
-        border-radius: 4px;
-    }
-
-    .search-collection-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 1s ease;
-    }
-
-    .search-collection-card:hover .search-collection-image {
-        transform: scale(1.05);
-    }
-
-    .search-collection-image-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #e0e0e0;
-        font-family: var(--font-heading);
-        font-size: 2rem;
-        color: var(--color-text);
-    }
-
-    .search-collection-title {
-        font-family: var(--font-heading);
-        font-size: 1rem;
-        color: var(--color-text);
-        margin: 0;
-        text-align: center;
-    }
-
     /* Search results grid */
     .search-results-grid {
         display: grid;
@@ -349,11 +297,10 @@
         gap: 2rem;
     }
 
-    /* Product card styles */
+    /* Product card styles - Updated */
     .search-product-card {
         text-decoration: none;
         color: var(--color-text);
-        transition: transform 0.2s ease;
     }
 
     .search-product-card a {
@@ -363,13 +310,10 @@
         color: var(--color-text);
     }
 
-    .search-product-card:hover {
-        transform: translateY(-5px);
-    }
-
     .search-product-image-container {
         width: 100%;
-        aspect-ratio: 1 / 1;
+        /* Modified aspect ratio to make images taller */
+        aspect-ratio: 1 / 1.3;
         overflow: hidden;
         margin-bottom: 1rem;
     }
@@ -381,6 +325,7 @@
         transition: transform 1s ease;
     }
 
+    /* Apply the scale effect only to the image, not the card */
     .search-product-card:hover .search-product-image {
         transform: scale(1.05);
     }
@@ -426,11 +371,59 @@
         font-size: 0.875rem;
     }
 
-    /* Article card styles */
+    /* Collection card styles - Updated */
+    .search-collection-card {
+        text-decoration: none;
+        color: var(--color-text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-collection-image-container {
+        width: 100%;
+        /* Modified aspect ratio to make images taller */
+        aspect-ratio: 1 / 1.3;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    }
+
+    .search-collection-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1s ease;
+    }
+
+    .search-collection-card:hover .search-collection-image {
+        transform: scale(1.05);
+    }
+
+    .search-collection-image-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e0e0e0;
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        color: var(--color-text);
+    }
+
+    .search-collection-title {
+        font-family: var(--font-heading);
+        font-size: 1rem;
+        color: var(--color-text);
+        margin: 0;
+        text-align: center;
+    }
+
+    /* Article card styles - Updated */
     .search-article-card {
         text-decoration: none;
         color: var(--color-text);
-        transition: transform 0.2s ease;
     }
 
     .search-article-card a {
@@ -440,13 +433,10 @@
         color: var(--color-text);
     }
 
-    .search-article-card:hover {
-        transform: translateY(-5px);
-    }
-
     .search-article-image-container {
         width: 100%;
-        aspect-ratio: 16 / 9;
+        /* Modified aspect ratio to make images taller */
+        aspect-ratio: 16 / 12;
         overflow: hidden;
         margin-bottom: 1rem;
     }
@@ -499,11 +489,11 @@
     .search-page-card {
         text-decoration: none;
         color: var(--color-text);
-        transition: transform 0.2s ease;
         padding: 1.5rem;
         border: 1px solid #e0e0e0;
         border-radius: 4px;
         background-color: white;
+        transition: box-shadow 0.2s ease;
     }
 
     .search-page-card a {
@@ -515,7 +505,6 @@
     }
 
     .search-page-card:hover {
-        transform: translateY(-5px);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     }
 
