@@ -229,7 +229,14 @@ button {
     font-family: var(--font-body) !important;
     font-size: 1rem !important;
     text-transform: uppercase !important;
+}
 
+.swym-share-btn {
+    border: 1px solid var(--light-gray) !important;
+}
+
+.swym-wishlist-detail-separator {
+    color: var(--light-gray) !important;
 }
 
 .nav-scrollable {
