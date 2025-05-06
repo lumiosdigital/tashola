@@ -208,8 +208,19 @@ button {
 
 .swym-simple-wishlist-container {
     margin: 8rem auto !important;
-    font-family: var(--font-heading) !important;
 }
+
+.swym-wishlist-main-title .swym-heading .swym-heading-1 {
+    font-family: var(--font-heading) !important;
+    font-size: 2rem !important;
+    color: var(--primary-color) !important;
+}
+
+.swym-htc-tabs {
+    font-family: var(--font-heading) !important;
+    color: var(--primary-color) !important;
+}
+
 
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
