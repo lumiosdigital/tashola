@@ -157,7 +157,7 @@
                         <div id="product-details-content" class="accordion-content" hidden>
                             {% if product.metafields.custom.product_content != blank %}
                             <div class="product-details-content">
-                                {{ product.metafields.custom.product_content }}
+                                {{ product.metafields.custom.product_content | metafield_tag }}
                             </div>
                             {% elsif section.settings.product_details_text != blank %}
                             <div class="product-details-content">
