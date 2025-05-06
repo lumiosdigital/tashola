@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Handle wishlist continue button click to close cart drawer
-  const continueBtn = document.querySelector('.swym-empty-wishlist-continue-btn');
+  const continueBtn = document.querySelector('.swym-sfl-cart-btn swym-bg-2');
   if (continueBtn) {
     continueBtn.addEventListener('click', function () {
       if (cartDrawer && cartDrawer.classList.contains('open')) {
