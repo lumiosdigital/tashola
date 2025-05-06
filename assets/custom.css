@@ -248,7 +248,7 @@ button {
 .swym-title, .swym-title-1 {
     font-family: var(--font-heading) !important;
     font-weight: 400 !important;
-    font-size: 1.5rem !important;
+    font-size: 1rem !important;
     color: var(--primary-color) !important;
 }
 
