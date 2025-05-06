@@ -260,6 +260,13 @@ button {
     /* padding: 0.75rem 1.25rem !important; */
 }
 
+.swym-user-text {
+    font-family: var(--font-body) !important;
+    font-size: 1rem !important;
+    color: var(--primary-color) !important;
+}
+
+
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
