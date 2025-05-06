@@ -1,0 +1,141 @@
+<!-- snippets/pagination.liquid -->
+{%- if paginate.pages > 1 -%}
+<nav class="pagination" role="navigation" aria-label="Pagination">
+    <ul class="pagination-list">
+        {%- if paginate.previous -%}
+        <li class="pagination-item">
+            <a href="{{ paginate.previous.url }}" class="pagination-link pagination-prev" aria-label="Previous page">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12H3M3 12L12 3M3 12L12 21" stroke="#373736" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </a>
+        </li>
+        {%- else -%}
+        <li class="pagination-item">
+            <span class="pagination-link pagination-prev disabled">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12H3M3 12L12 3M3 12L12 21" stroke="#D0CECD" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </span>
+        </li>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}
+        <li class="pagination-item">
+            <a href="{{ part.url }}" class="pagination-link pagination-number" aria-label="Page {{ part.title }}">{{
+                part.title }}</a>
+        </li>
+        {%- else -%}
+        <li class="pagination-item">
+            {%- if part.title == paginate.current_page -%}
+            <span class="pagination-link pagination-number current" aria-current="page">{{ part.title }}</span>
+            {%- else -%}
+            <span class="pagination-link pagination-number">{{ part.title }}</span>
+            {%- endif -%}
+        </li>
+        {%- endif -%}
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+        <li class="pagination-item">
+            <a href="{{ paginate.next.url }}" class="pagination-link pagination-next" aria-label="Next page">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12H21M21 12L12 3M21 12L12 21" stroke="#373736" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </a>
+        </li>
+        {%- else -%}
+        <li class="pagination-item">
+            <span class="pagination-link pagination-next disabled">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12H21M21 12L12 3M21 12L12 21" stroke="#D0CECD" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </span>
+        </li>
+        {%- endif -%}
+    </ul>
+</nav>
+
+<style>
+    .pagination {
+        margin-top: 3rem;
+    }
+
+    .pagination-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .pagination-item {
+        display: inline-block;
+    }
+
+    .pagination-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        padding: 0 0.75rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        color: var(--color-text);
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .pagination-link:hover:not(.disabled):not(.current) {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+    }
+
+    .pagination-link.current {
+        background-color: var(--color-accent);
+        border-color: var(--color-accent);
+        color: white;
+    }
+
+    .pagination-link.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .pagination-prev svg,
+    .pagination-next svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .pagination-prev:hover:not(.disabled) svg path,
+    .pagination-next:hover:not(.disabled) svg path {
+        stroke: var(--color-accent);
+    }
+
+    @media screen and (max-width: 576px) {
+        .pagination-link {
+            min-width: 2rem;
+            height: 2rem;
+            padding: 0 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .pagination-prev svg,
+        .pagination-next svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+</style>
+{%- endif -%}
