@@ -255,6 +255,7 @@ button {
 
 .swym-wishlist-detail-separator {
     background: #e0e0e0 !important;
+    display: none !important;
 }
 
 .swym-title, .swym-title-1 {
@@ -294,13 +295,6 @@ button {
 .swym-sfl-detail-separator {
     border-bottom: px1 solid #e0e0e0 !important;
     color: #e0e0e0 !important;
-}
-
-#swym-modal-wishlist-title {
-    font-family: var(--font-heading) !important;
-    font-size: 20px !important;
-    font-weight: 500 !important;
-    letter-spacing: .1em !important;
 }
 
 .swym-sfl-add-all-to-cart-btn {
