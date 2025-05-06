@@ -221,6 +221,7 @@ button {
 .swym-wishlist-main-title, .swym-heading, .swym-heading-1 {
     font-family: var(--font-heading) !important;
     font-size: 2rem !important;
+    font-weight: 700 !important;
     color: var(--primary-color) !important;
     /* margin-bottom: 1.5rem !important; */
 }
@@ -247,6 +248,7 @@ button {
 .swym-title, .swym-title-1 {
     font-family: var(--font-heading) !important;
     font-weight: 400 !important;
+    font-size: 1.5rem !important;
     color: var(--primary-color) !important;
 }
 
