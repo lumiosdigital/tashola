@@ -236,7 +236,7 @@ button {
 }
 
 .swym-wishlist-detail-separator {
-    color: var(--light-gray) !important;
+    background: var(--light-gray) !important;
 }
 
 .nav-scrollable {
