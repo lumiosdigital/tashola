@@ -240,7 +240,7 @@ button {
 }
 
 .swym-title, .swym-title-1 {
-    font-family: var(--font-body) !important;
+    font-family: var(--font-family) !important;
 }
 
 .nav-scrollable {
