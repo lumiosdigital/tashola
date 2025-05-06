@@ -239,7 +239,7 @@ button {
     background: var(--light-gray) !important;
 }
 
-.swym-title, .swym-title-1 {
+.swym-is-button h2 {
     font-family: var(--font-family) !important;
 }
 
