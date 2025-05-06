@@ -364,6 +364,14 @@ button {
     max-width: 800px !important;
 }
 
+.swym-sfl-list-empty-text2 {
+    font-family: var(--font-body) !important;
+    font-size: 1rem !important;
+    color: var(--primary-color) !important;
+    font-weight: 400 !important;
+    max-width: 800px !important;
+}
+
 .swym-empty-wishlist-continue-btn {
     background: var(--secondary-color) !important;
     color: var(--white) !important;
