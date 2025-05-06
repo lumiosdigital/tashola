@@ -391,6 +391,7 @@ button {
 
 .swym-sfl-list-empty-content, .swym-wishlist-detail-content {
     margin: 0 !important;
+    padding: 0 !important;
 }
 
 .swym-empty-wishlist-container {
