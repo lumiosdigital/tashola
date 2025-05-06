@@ -866,97 +866,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add this to your cart-drawer.js file, just before the final closing brackets
 
-// Initialize jewelry box buttons for each cart item
-function initItemJewelryBoxButtons() {
-  log('Setting up jewelry box buttons for individual items');
-  
-  // Find all "Add a Jewelry Box" buttons in the cart
-  const jewelryBoxButtons = document.querySelectorAll('.cart-item-remove .add-jewelry-box-button');
-  
-  jewelryBoxButtons.forEach(button => {
-    // Get the cart item this button belongs to
-    const cartItem = button.closest('.cart-item');
-    if (!cartItem) return;
-    
-    // Get the item key and line number
-    const itemKey = cartItem.getAttribute('data-item-key');
-    const lineNumber = findLineNumber(cartItem);
-    
-    if (!itemKey || !lineNumber) {
-      log('Missing item key or line number for jewelry box button');
-      return;
-    }
-    
-    // Check if this item already has a jewelry box
-    const hasBox = button.classList.contains('has-box');
-    
-    // Set initial button text based on state
-    updateButtonText(button, hasBox);
-    
-    // Add click event listener
-    button.addEventListener('click', function(e) {
-      e.preventDefault();
-      toggleJewelryBoxForItem(button, itemKey, lineNumber);
-    });
-  });
-}
+// Add this to your cart-drawer.js file just before the final closing brackets
 
-// Toggle jewelry box for a specific item
-function toggleJewelryBoxForItem(button, itemKey, lineNumber) {
-  // Get current state
-  const hasBox = button.classList.contains('has-box');
+// Set up event delegation for the "Add a Jewelry Box" buttons
+document.addEventListener('click', function(e) {
+  const button = e.target.closest('.add-jewelry-box-button');
+  if (!button) return; // Not our button, exit
   
-  // Show loading state
+  e.preventDefault();
+  
+  // Prevent double-clicks
+  if (button.disabled) return;
+  
+  // Get the cart item
+  const cartItem = button.closest('.cart-item');
+  if (!cartItem) return;
+  
+  // Disable button and show loading state
   button.disabled = true;
   button.textContent = 'Adding...';
-  document.body.classList.add('cart-loading');
   
-  // Get the cart item and its data
-  const cartItem = button.closest('.cart-item');
+  // Get data needed for adding the box
+  const itemKey = cartItem.getAttribute('data-item-key');
+  const lineElement = cartItem.querySelector('.quantity-button');
+  const lineNumber = lineElement ? lineElement.getAttribute('data-line') : null;
   
-  // If no box currently, add one
-  if (!hasBox) {
-    addJewelryBoxForItem(cartItem, itemKey, lineNumber)
-      .then(() => {
-        // Update button state
-        button.classList.add('has-box');
-        button.textContent = 'Added';
-      })
-      .catch(error => {
-        console.error('Error adding jewelry box:', error);
-        // Reset button state without alert
-        button.textContent = 'Add a Jewelry Box';
-      })
-      .finally(() => {
-        button.disabled = false;
-        document.body.classList.remove('cart-loading');
-        // Re-initialize all jewelry box buttons
-        setTimeout(initItemJewelryBoxButtons, 100);
-      });
+  if (!itemKey || !lineNumber) {
+    console.error('Missing item key or line number');
+    button.disabled = false;
+    button.textContent = 'Add a Jewelry Box';
+    return;
   }
-}
-
-// Add jewelry box for a specific item
-function addJewelryBoxForItem(cartItem, itemKey, lineNumber) {
-  // Get product category from data attribute or metafield
-  let primaryCategory = cartItem.getAttribute('data-primary-category');
   
-  // If category not available in DOM, fetch it from the item properties
+  // Determine jewelry type
+  let primaryCategory = button.getAttribute('data-primary-category');
+  
+  // Fallback to checking item title if attribute not available
   if (!primaryCategory) {
-    // Default to general box if we can't determine category
-    primaryCategory = 'general';
-    
-    // Try to get it from item title as fallback (temporary solution)
     const itemTitle = cartItem.querySelector('.cart-item-title')?.textContent.toLowerCase() || '';
     
     if (itemTitle.includes('ring')) primaryCategory = 'rings';
     else if (itemTitle.includes('necklace') || itemTitle.includes('pendant')) primaryCategory = 'necklaces';
     else if (itemTitle.includes('bracelet')) primaryCategory = 'bracelets';
     else if (itemTitle.includes('earring')) primaryCategory = 'earrings';
-    else if (itemTitle.includes('charm')) primaryCategory = 'charms';
+    else primaryCategory = 'charms'; // Default fallback
   }
   
-  // Map category to box variant ID with actual variant IDs
+  // Map category to box variant ID
   const BOX_VARIANT_IDS = {
     'rings': '52487391084876',
     'necklaces': '52487391150412', 
@@ -965,12 +921,10 @@ function addJewelryBoxForItem(cartItem, itemKey, lineNumber) {
     'charms': '52487391215948'
   };
   
-  const variantId = BOX_VARIANT_IDS[primaryCategory] || BOX_VARIANT_IDS.general;
+  const variantId = BOX_VARIANT_IDS[primaryCategory] || BOX_VARIANT_IDS.charms;
   
-  log('Adding jewelry box for item with category:', primaryCategory);
-  
-  // Add the box to the cart as a new item with a reference to the original item
-  return fetch('/cart/add.js', {
+  // Add the jewelry box to cart
+  fetch('/cart/add.js', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -993,88 +947,29 @@ function addJewelryBoxForItem(cartItem, itemKey, lineNumber) {
     return response.json();
   })
   .then(data => {
-    // After adding the box, refresh the cart to show the new item
-    return refreshCart();
-  });
-}
-
-// Remove jewelry box for a specific item
-function removeJewelryBoxForItem(cartItem, itemKey, lineNumber) {
-  // We need to find the jewelry box line item that's associated with this product
-  return fetch('/cart.js')
-    .then(response => response.json())
-    .then(cart => {
-      // Find the jewelry box item for this specific product
-      const boxItem = cart.items.find(
-        item => item.properties && 
-                item.properties['_jewelry_box_for'] === itemKey
-      );
-      
-      if (boxItem) {
-        // Get the line number (1-based index)
-        const boxLineIndex = cart.items.indexOf(boxItem) + 1;
+    // Update button state
+    button.textContent = 'Added';
+    button.classList.add('added');
+    
+    // Refresh the cart drawer
+    return fetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        // Update cart count
+        updateCartCount(cart.item_count);
         
-        // Remove the box
-        return fetch('/cart/change.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            line: boxLineIndex,
-            quantity: 0
-          })
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`Remove jewelry box failed: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Refresh the cart to update the view
-          return refreshCart();
-        });
-      }
-      
-      // No box found, just resolve
-      return Promise.resolve();
-    });
-}
-
-// Helper function to find the line number for a cart item
-function findLineNumber(cartItem) {
-  // Try to get it from the quantity buttons
-  const quantityButton = cartItem.querySelector('.quantity-button');
-  if (quantityButton) {
-    return quantityButton.getAttribute('data-line');
-  }
-  
-  // Fallback to extracting from the input field
-  const quantityInput = cartItem.querySelector('input[name="updates[]"]');
-  if (quantityInput) {
-    const idParts = quantityInput.id.split('_');
-    if (idParts.length > 1) {
-      // Try to match line based on key
-      const items = document.querySelectorAll('.cart-item');
-      return Array.from(items).indexOf(cartItem) + 1;
-    }
-  }
-  
-  return null;
-}
-
-// Update the refreshCart function to re-initialize buttons
-const originalRefreshCart = refreshCart;
-refreshCart = function() {
-  return originalRefreshCart().then(() => {
-    // Re-initialize jewelry box buttons after cart is refreshed
-    setTimeout(initItemJewelryBoxButtons, 100);
-    return Promise.resolve();
+        // Refresh cart drawer content
+        return refreshCart();
+      });
+  })
+  .catch(error => {
+    console.error('Error adding jewelry box:', error);
+    // Reset button state without alerts
+    button.textContent = 'Add a Jewelry Box';
+  })
+  .finally(() => {
+    button.disabled = false;
   });
-}
-
-// Add this function call in initCartDrawer or directly in document ready
-initItemJewelryBoxButtons();
+});
+  
 });
