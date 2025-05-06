@@ -383,7 +383,7 @@ button {
 }
 
 .swym-empty-wishlist-title, .swym-sfl-list-empty-text {
-    font-size: 1.5rem !important;
+    font-size: 2rem !important;
     font-weight: 700 !important;
     color: var(--primary-color) !important;
     font-family: var(--font-heading) !important;
