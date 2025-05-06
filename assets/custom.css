@@ -372,14 +372,6 @@ button {
     text-transform: uppercase !important;
 }
 
-.swym-sfl-cart-btn {
-    background: var(--secondary-color) !important;
-    color: var(--white) !important;
-    font-weight: 500 !important;
-    font-family: var(--font-body) !important;
-    text-transform: uppercase !important;
-}
-
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
