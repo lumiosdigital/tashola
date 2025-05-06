@@ -266,6 +266,14 @@ button {
     color: var(--primary-color) !important;
 }
 
+.swym-sfl-title {
+    font-family: var(--font-heading) !important;
+    color: var(--primary-color) !important;
+}
+
+.swym-sfl-detail-separator {
+    border-bottom: px1 solid var(--light-gray) !important;
+}
 
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
