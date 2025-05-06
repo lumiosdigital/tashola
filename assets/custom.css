@@ -211,10 +211,10 @@ button {
 }
 
 .swym-heading-1 {
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
+    font-family: var(--font-heading) !important;
+    font-size: 2rem !important;
+    color: var(--primary-color) !important;
+    margin-bottom: 1.5rem !important;
 }
 
 .nav-scrollable {
