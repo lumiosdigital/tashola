@@ -341,6 +341,10 @@ button {
     /* padding: 0.75rem 1.25rem !important; */
 }
 
+.swym-sfl-popup-save-btn:hover {
+    background: #e88871 !important;
+}
+
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
