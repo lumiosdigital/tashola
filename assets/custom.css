@@ -299,6 +299,10 @@ button {
     margin-bottom: 0 !important;
 }
 
+.swym-sfl-add-to-cart-btn {
+    margin: 0px 10px 10px 10px !important;
+}
+
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
