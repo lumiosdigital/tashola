@@ -596,28 +596,91 @@ observer.observe(document.body, {
   subtree: true
 });
 
-  // Listen for Swym add to cart events
-if (window._swat) {
-  document.addEventListener('swym:addtocart', function(event) {
-    // Wait a moment for the cart to update on Shopify's side
-    setTimeout(function() {
-      // Fetch the updated cart
-      fetch('/cart.js')
-        .then(response => response.json())
-        .then(cart => {
-          // Update cart count
-          updateCartCount(cart.item_count);
-          
-          // Refresh cart and open it
-          refreshCart().then(() => {
-            openCart();
-          });
-        })
-        .catch(error => {
-          console.error('Error updating cart after wishlist add:', error);
-        });
-    }, 500); // Short delay to ensure the cart has been updated
-  });
+// Add this to your cart-drawer.js file
+// Improved Wishlist Cart Integration
+
+// Function to update cart after wishlist actions
+function setupWishlistCartIntegration() {
+  log('Setting up wishlist integration');
+  
+  // Wait for Swym to be fully initialized
+  if (typeof window._swat !== 'undefined') {
+    // Method 1: Listen for Swym add to cart events
+    document.addEventListener('swym:addtocart', function(event) {
+      log('Swym add to cart event detected');
+      handleSwymCartUpdate();
+    });
+    
+    // Method 2: Override Swym's addToCart method to ensure we catch all add to cart events
+    if (window._swat && window._swat.addToCart) {
+      const originalAddToCart = window._swat.addToCart;
+      window._swat.addToCart = function() {
+        const result = originalAddToCart.apply(this, arguments);
+        log('Swym addToCart method called');
+        
+        // Wait for Shopify to process the cart update
+        setTimeout(function() {
+          handleSwymCartUpdate();
+        }, 1000);
+        
+        return result;
+      };
+    }
+    
+    log('Wishlist integration setup complete');
+  } else {
+    // Retry if Swym isn't loaded yet
+    log('Swym not loaded yet, retrying in 1 second');
+    setTimeout(setupWishlistCartIntegration, 1000);
+  }
 }
+
+// Function to handle cart updates from Swym
+function handleSwymCartUpdate() {
+  log('Handling cart update from Swym');
+  
+  // Fetch the latest cart data
+  fetch('/cart.js')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(cart => {
+      log('Cart data fetched successfully', cart.item_count);
+      
+      // Update cart count
+      updateCartCount(cart.item_count);
+      
+      // Refresh cart drawer contents
+      if (typeof refreshCart === 'function') {
+        refreshCart().then(() => {
+          // Open the cart drawer
+          if (typeof openCart === 'function') {
+            openCart();
+            log('Cart drawer opened');
+          } else {
+            log('openCart function not available');
+          }
+        }).catch(error => {
+          console.error('Error refreshing cart:', error);
+        });
+      } else {
+        log('refreshCart function not available');
+        // Fallback: reload the page if refreshCart isn't available
+        window.location.reload();
+      }
+    })
+    .catch(error => {
+      console.error('Error updating cart after wishlist action:', error);
+    });
+}
+
+// Initialize the wishlist integration
+document.addEventListener('DOMContentLoaded', function() {
+  // Set up wishlist integration when the page loads
+  setupWishlistCartIntegration();
+});
 
 });
