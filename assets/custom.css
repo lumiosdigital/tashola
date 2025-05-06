@@ -231,7 +231,7 @@ button {
     text-transform: uppercase !important;
 }
 
-.swym-share-btn {
+.swym-share-btn, .swym-share-sfl-btn {
     border: 1px solid var(--light-gray) !important;
 }
 
