@@ -291,7 +291,7 @@ button {
     color: var(--primary-color) !important;
 }
 
-.swym-ui-component.swym-wishlist-page, .swym-sfl-tab-container, .swym-sfl-list-view, .swym-sfl-detail-separator {
+.swym-sfl-detail-separator {
     border-bottom: px1 solid #e0e0e0 !important;
     color: #e0e0e0 !important;
 }
