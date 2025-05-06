@@ -864,14 +864,131 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   })();
 
-// Add this to your cart-drawer.js file, just before the final closing brackets
-
 // Add this to your cart-drawer.js file just before the final closing brackets
+
+// Check for existing jewelry boxes when cart loads and after refreshes
+function updateJewelryBoxButtons() {
+  // Get all cart items
+  const cartItems = document.querySelectorAll('.cart-item');
+  
+  // Process each cart item
+  cartItems.forEach(cartItem => {
+    const itemKey = cartItem.getAttribute('data-item-key');
+    if (!itemKey) return;
+    
+    // 1. Check if this is a jewelry box product (hide button if it is)
+    const itemTitle = cartItem.querySelector('.cart-item-title')?.textContent.toLowerCase() || '';
+    if (itemTitle.includes('box') || 
+        (cartItem.hasAttribute('data-product-type') && 
+         cartItem.getAttribute('data-product-type').toLowerCase().includes('box'))) {
+      
+      // Hide the "Add a Jewelry Box" button for jewelry boxes
+      const boxButton = cartItem.querySelector('.add-jewelry-box-button');
+      if (boxButton) {
+        boxButton.style.display = 'none';
+      }
+      
+      // Update the jewelry box title to show the specific variant
+      updateJewelryBoxTitle(cartItem);
+      
+      return; // Skip the rest for jewelry boxes
+    }
+    
+    // 2. Check if this item already has a jewelry box associated with it
+    const hasAssociatedBox = checkForAssociatedBox(itemKey);
+    if (hasAssociatedBox) {
+      // Set the button to "Added" state
+      const boxButton = cartItem.querySelector('.add-jewelry-box-button');
+      if (boxButton) {
+        boxButton.textContent = 'Added';
+        boxButton.classList.add('added');
+        boxButton.disabled = true; // Prevent clicking again
+      }
+    }
+  });
+}
+
+// Check if an item has an associated jewelry box
+function checkForAssociatedBox(itemKey) {
+  // Look for any jewelry box with the matching property
+  const jewelryBoxes = document.querySelectorAll('.cart-item');
+  
+  for (let i = 0; i < jewelryBoxes.length; i++) {
+    const boxItem = jewelryBoxes[i];
+    
+    // Check if this is a jewelry box item
+    const boxTitle = boxItem.querySelector('.cart-item-title')?.textContent.toLowerCase() || '';
+    if (!boxTitle.includes('box')) continue;
+    
+    // Check for hidden property in the box's attributes
+    const boxProperties = boxItem.querySelectorAll('.cart-item-properties li');
+    for (let j = 0; j < boxProperties.length; j++) {
+      const property = boxProperties[j].textContent;
+      if (property.includes(itemKey)) {
+        return true;
+      }
+    }
+    
+    // If no visible properties, check data attribute as fallback
+    if (boxItem.getAttribute('data-jewelry-box-for') === itemKey) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+// Update jewelry box title to show the specific variant
+function updateJewelryBoxTitle(boxItem) {
+  const titleElement = boxItem.querySelector('.cart-item-title');
+  if (!titleElement) return;
+  
+  // Get the current title
+  const currentTitle = titleElement.textContent;
+  
+  // Extract the type from box properties or title
+  let boxType = '';
+  
+  // Try to get from properties first
+  const boxProperties = boxItem.querySelectorAll('.cart-item-properties li');
+  for (let i = 0; i < boxProperties.length; i++) {
+    const property = boxProperties[i].textContent;
+    if (property.includes('_box_type')) {
+      boxType = property.split(':')[1].trim();
+      break;
+    }
+  }
+  
+  // If not found in properties, extract from title
+  if (!boxType) {
+    if (currentTitle.toLowerCase().includes('ring')) boxType = 'rings';
+    else if (currentTitle.toLowerCase().includes('necklace')) boxType = 'necklaces';
+    else if (currentTitle.toLowerCase().includes('bracelet')) boxType = 'bracelets';
+    else if (currentTitle.toLowerCase().includes('earring')) boxType = 'earrings';
+    else boxType = 'charms';
+  }
+  
+  // Map type to display name
+  const boxTypeNames = {
+    'rings': 'Ring Box',
+    'necklaces': 'Necklace Box',
+    'bracelets': 'Bracelet Box',
+    'earrings': 'Earrings Box',
+    'charms': 'Jewelry Box'
+  };
+  
+  // Update title with specific variant name
+  const displayName = boxTypeNames[boxType] || 'Jewelry Box';
+  titleElement.textContent = displayName;
+}
 
 // Set up event delegation for the "Add a Jewelry Box" buttons
 document.addEventListener('click', function(e) {
   const button = e.target.closest('.add-jewelry-box-button');
   if (!button) return; // Not our button, exit
+  
+  // If button is already in "Added" state, ignore click
+  if (button.classList.contains('added')) return;
   
   e.preventDefault();
   
@@ -947,9 +1064,10 @@ document.addEventListener('click', function(e) {
     return response.json();
   })
   .then(data => {
-    // Update button state
+    // Update button state permanently
     button.textContent = 'Added';
     button.classList.add('added');
+    button.disabled = true; // Keep it disabled
     
     // Refresh the cart drawer
     return fetch('/cart.js')
@@ -966,10 +1084,24 @@ document.addEventListener('click', function(e) {
     console.error('Error adding jewelry box:', error);
     // Reset button state without alerts
     button.textContent = 'Add a Jewelry Box';
-  })
-  .finally(() => {
     button.disabled = false;
   });
+});
+
+// Override refreshCart to update jewelry box buttons after refresh
+const originalRefreshCart = refreshCart;
+refreshCart = function() {
+  return originalRefreshCart().then(() => {
+    // Update jewelry box buttons after cart refresh
+    setTimeout(updateJewelryBoxButtons, 100);
+    return Promise.resolve();
+  });
+};
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Initial update of jewelry box buttons
+  setTimeout(updateJewelryBoxButtons, 300);
 });
   
 });
