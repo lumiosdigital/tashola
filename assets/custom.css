@@ -256,7 +256,9 @@ button {
     font-family: var(--font-heading) !important;
     font-weight: 400 !important;
     color: var(--primary-color) !important;
+    font-size: inherit !important;
 }
+
 
 .swym-add-to-cart-btn {
     background: var(--secondary-color) !important;
@@ -303,7 +305,6 @@ button {
     margin: 0px 10px 10px 10px !important;
     width: auto !important;
     line-height: none !important;
-    font-size: inherit !important;
 }
 
 .nav-scrollable {
