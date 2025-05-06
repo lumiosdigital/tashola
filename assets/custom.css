@@ -214,7 +214,11 @@ button {
     font-family: var(--font-heading) !important;
     font-size: 2rem !important;
     color: var(--primary-color) !important;
-    margin-bottom: 1.5rem !important;
+    /* margin-bottom: 1.5rem !important; */
+}
+
+.swym-htc-tab-item {
+    font-family: var(--font-body) !important;
 }
 
 .nav-scrollable {
