@@ -389,6 +389,10 @@ button {
     font-family: var(--font-heading) !important;
 }
 
+.swym-sfl-list-empty-content {
+    margin: 0 !important;
+}
+
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
