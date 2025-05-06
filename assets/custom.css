@@ -229,7 +229,7 @@ button {
     text-align: center !important;
 }
 
-.swym-htc-tab-item, .swym-tab-wishlist, .swym-bg-2, .swym-selected {
+.swym-selected {
     color: var(--white) !important;
 }
 
