@@ -128,8 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
           // Mark as processed
           primaryButton.setAttribute('data-cart-intercept', 'true');
           
-          // Force text to uppercase using CSS
+          // Force text to uppercase and set the correct text
+          primaryButton.textContent = "VIEW CART";
           primaryButton.style.textTransform = 'uppercase';
+          
+          // Apply additional styling from the user's CSS
+          primaryButton.classList.add('swym-empty-wishlist-continue-btn');
           
           // Remove any href that might cause navigation
           if (primaryButton.hasAttribute('href')) {
@@ -152,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
           }, true); // Use capture phase to ensure our handler runs first
           
-          log('Swym button behavior overridden and styled uppercase');
+          log('Swym button behavior overridden and text set to VIEW CART');
         }
       }
     }
@@ -186,6 +190,11 @@ document.addEventListener('DOMContentLoaded', function() {
           // Prevent any navigation
           e.preventDefault();
           e.stopPropagation();
+          
+          // If we somehow missed updating the text, do it now
+          if (target.textContent.trim().toLowerCase() !== "view cart") {
+            target.textContent = "VIEW CART";
+          }
           
           log('Global handler: Intercepted click on Swym cart button');
           openCart();
@@ -227,8 +236,19 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Add a periodic checker to make sure buttons are always processed
-  // This is a fallback in case mutation observer or events miss something
-  setInterval(refreshSwymButtons, 1000);
+  // This handles cases where Swym reinitializes buttons
+  setInterval(function() {
+    const buttons = document.querySelectorAll('.swym-sfl-cart-btn.swym-bg-2');
+    
+    buttons.forEach(button => {
+      // Fix any button text that might have been changed by Swym
+      if (button.textContent.trim().toLowerCase() !== "view cart") {
+        button.textContent = "VIEW CART";
+      }
+    });
+    
+    refreshSwymButtons();
+  }, 1000);
   
   // FIXED: Re-implement product quantity selectors
   function initProductQuantitySelectors() {
