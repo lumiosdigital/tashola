@@ -302,6 +302,7 @@ button {
 .swym-sfl-add-to-cart-btn {
     margin: 0px 10px 10px 10px !important;
     width: auto !important;
+    line-height: none !important;
 }
 
 .nav-scrollable {
