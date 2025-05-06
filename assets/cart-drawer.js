@@ -864,7 +864,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   })();
 
- // Initialize jewelry box buttons for each cart item
+// Add this to your cart-drawer.js file, just before the final closing brackets
+
+// Initialize jewelry box buttons for each cart item
 function initItemJewelryBoxButtons() {
   log('Setting up jewelry box buttons for individual items');
   
@@ -906,7 +908,7 @@ function toggleJewelryBoxForItem(button, itemKey, lineNumber) {
   
   // Show loading state
   button.disabled = true;
-  button.textContent = hasBox ? 'Removing...' : 'Adding...';
+  button.textContent = 'Adding...';
   document.body.classList.add('cart-loading');
   
   // Get the cart item and its data
@@ -918,31 +920,18 @@ function toggleJewelryBoxForItem(button, itemKey, lineNumber) {
       .then(() => {
         // Update button state
         button.classList.add('has-box');
-        updateButtonText(button, true);
+        button.textContent = 'Added';
       })
       .catch(error => {
         console.error('Error adding jewelry box:', error);
-        alert('There was an error adding the jewelry box. Please try again.');
+        // Reset button state without alert
+        button.textContent = 'Add a Jewelry Box';
       })
       .finally(() => {
         button.disabled = false;
         document.body.classList.remove('cart-loading');
-      });
-  } else {
-    // Remove the box
-    removeJewelryBoxForItem(cartItem, itemKey, lineNumber)
-      .then(() => {
-        // Update button state
-        button.classList.remove('has-box');
-        updateButtonText(button, false);
-      })
-      .catch(error => {
-        console.error('Error removing jewelry box:', error);
-        alert('There was an error removing the jewelry box. Please try again.');
-      })
-      .finally(() => {
-        button.disabled = false;
-        document.body.classList.remove('cart-loading');
+        // Re-initialize all jewelry box buttons
+        setTimeout(initItemJewelryBoxButtons, 100);
       });
   }
 }
@@ -967,15 +956,13 @@ function addJewelryBoxForItem(cartItem, itemKey, lineNumber) {
     else if (itemTitle.includes('charm')) primaryCategory = 'charms';
   }
   
-  // Map category to box variant ID
-  // Replace these with your actual variant IDs
+  // Map category to box variant ID with actual variant IDs
   const BOX_VARIANT_IDS = {
     'rings': '52487391084876',
     'necklaces': '52487391150412', 
     'bracelets': '52487391183180',
     'earrings': '52487391117644',
-    'charms': '52487391215948',
-    'general': '52487520682316'
+    'charms': '52487391215948'
   };
   
   const variantId = BOX_VARIANT_IDS[primaryCategory] || BOX_VARIANT_IDS.general;
@@ -1078,13 +1065,14 @@ function findLineNumber(cartItem) {
   return null;
 }
 
-// Update button text based on state
-function updateButtonText(button, hasBox) {
-  if (hasBox) {
-    button.textContent = 'Remove Jewelry Box';
-  } else {
-    button.textContent = 'Add a Jewelry Box';
-  }
+// Update the refreshCart function to re-initialize buttons
+const originalRefreshCart = refreshCart;
+refreshCart = function() {
+  return originalRefreshCart().then(() => {
+    // Re-initialize jewelry box buttons after cart is refreshed
+    setTimeout(initItemJewelryBoxButtons, 100);
+    return Promise.resolve();
+  });
 }
 
 // Add this function call in initCartDrawer or directly in document ready
