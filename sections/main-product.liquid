@@ -146,8 +146,8 @@
                         {% render 'icon-favorites' %}
                     </button>
                 </div>
-
-                <!-- Accordion dropdowns --> 
+ 
+                <!-- Accordion dropdowns -->
                 <div class="product-accordions">
                     <div class="accordion-item">
                         <button type="button" class="accordion-header" aria-expanded="false" aria-controls="product-details-content">
@@ -155,7 +155,11 @@
                             <span class="accordion-icon">+</span>
                         </button>
                         <div id="product-details-content" class="accordion-content" hidden>
-                            {% if section.settings.product_details_text != blank %}
+                            {% if product.metafields.custom.product_content != blank %}
+                            <div class="product-details-content">
+                                {{ product.metafields.custom.product_content }}
+                            </div>
+                            {% elsif section.settings.product_details_text != blank %}
                             <div class="product-details-content">
                                 {{ section.settings.product_details_text }}
                             </div>
@@ -182,8 +186,7 @@
                     </div>
 
                     <div class="accordion-item">
-                        <button type="button" class="accordion-header" aria-expanded="false"
-                            aria-controls="shipping-returns-content">
+                        <button type="button" class="accordion-header" aria-expanded="false" aria-controls="shipping-returns-content">
                             <span>SHIPPING AND RETURNS</span>
                             <span class="accordion-icon">+</span>
                         </button>
@@ -193,7 +196,7 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
