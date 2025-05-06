@@ -214,13 +214,12 @@ button {
     font-family: var(--font-heading) !important;
     font-size: 2rem !important;
     color: var(--primary-color) !important;
-    text-transform: uppercase !important;
     font-weight: 600 !important;
     letter-spacing: 0.5px !important;
     text-align: center !important;
 }
 
-.swym-htc-tabs {
+.swym-htc-tab-item, .swym-tab-wishlist, .swym-bg-2 {
     font-family: var(--font-heading) !important;
     color: var(--primary-color) !important;
     font-size: 1.5rem !important;
