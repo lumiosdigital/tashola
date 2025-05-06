@@ -240,7 +240,7 @@ button {
 }
 
 .swym-is-button h2 {
-    font-family: var(--font-family) !important;
+    font-family: var(--font-heading) !important;
 }
 
 .nav-scrollable {
