@@ -223,7 +223,7 @@ button {
     font-size: 2rem !important;
     font-weight: 700 !important;
     color: var(--primary-color) !important;
-    letter-spacing: -1%;
+    letter-spacing: -1% !important;
     /* margin-bottom: 1.5rem !important; */
 }
 
