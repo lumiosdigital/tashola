@@ -564,12 +564,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Handle wishlist continue button click to close cart drawer
-  const continueBtn = document.querySelector('.swym-sfl-cart-btn swym-bg-2');
-  if (continueBtn) {
-    continueBtn.addEventListener('click', function () {
-      if (cartDrawer && cartDrawer.classList.contains('open')) {
-        closeCart();
-      }
-    });
-  }
+  document.querySelectorAll('.swym-sfl-cart-btn.swym-bg-2').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault(); // Stop default redirect
+      e.stopPropagation(); // Prevent bubbling
+      log('Swym continue to cart button clicked – opening cart drawer');
+      openCart();
+      });
+  });
 });
