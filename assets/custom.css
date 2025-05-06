@@ -211,11 +211,11 @@ button {
 }
 
 .swym-wishlist-container-title-bar {
-    border-bottom: 1px solid var(--light-gray) !important;
+    border-bottom: 1px solid #e0e0e0 !important;
 }
 
 .swym-htc-tabs {
-    border-bottom: 1px solid var(--light-gray) !important;
+    border-bottom: 1px solid #e0e0e0 !important;
 }
 
 .swym-wishlist-main-title, .swym-heading, .swym-heading-1 {
@@ -245,8 +245,8 @@ button {
 }
 
 .swym-share-btn, .swym-share-sfl-btn {
-    border: 1px solid var(--light-gray) !important;
-    color: var(--light-gray) !important;
+    border: 1px solid #e0e0e0 !important;
+    color: #e0e0e0 !important;
 }
 
 .swym-icon {
@@ -293,7 +293,7 @@ button {
 }
 
 .swym-sfl-detail-separator {
-    border-bottom: px1 solid var(--light-gray) !important;
+    border-bottom: px1 solid #e0e0e0 !important;
 }
 
 .swym-sfl-add-all-to-cart-btn {
