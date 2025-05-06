@@ -564,12 +564,36 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Handle wishlist continue button click to close cart drawer
-  document.querySelectorAll('.swym-sfl-cart-btn.swym-bg-2').forEach(button => {
-    button.addEventListener('click', function(e) {
-      e.preventDefault(); // Stop default redirect
-      e.stopPropagation(); // Prevent bubbling
-      log('Swym continue to cart button clicked – opening cart drawer');
-      openCart();
-      });
+  function interceptSwymButton() {
+  const swymButton = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
+  if (!swymButton) return;
+
+  // Clone to remove existing handlers
+  const newButton = swymButton.cloneNode(true);
+  swymButton.parentNode.replaceChild(newButton, swymButton);
+
+  newButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    log('Swym continue button intercepted – opening cart drawer');
+    openCart();
   });
+
+  log('Swym button override applied');
+}
+
+// Observe DOM changes to catch when Swym loads the button
+const observer = new MutationObserver(() => {
+  const btn = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
+  if (btn) {
+    interceptSwymButton();
+    observer.disconnect(); // Stop observing once handled
+  }
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true
+});
+
 });
