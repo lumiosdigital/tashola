@@ -389,8 +389,12 @@ button {
     font-family: var(--font-heading) !important;
 }
 
-.swym-sfl-list-empty-content {
+.swym-sfl-list-empty-content, .swym-wishlist-detail-content {
     margin: 0 !important;
+}
+
+.swym-empty-wishlist-container {
+    padding: 0 !important; 
 }
 
 .nav-scrollable {
