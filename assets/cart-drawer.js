@@ -864,9 +864,6 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   })();
 
-// Add this to your cart-drawer.js file just before the final closing brackets
-
-// Add this code at the end of your cart-drawer.js file, just before the final closing brackets
 
 // Simple event handler for jewelry box buttons
 document.addEventListener('click', function(e) {
