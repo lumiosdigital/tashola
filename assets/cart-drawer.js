@@ -99,25 +99,42 @@ document.addEventListener('DOMContentLoaded', function() {
     interceptSwymButton();
   }
   
-  // Improved function to intercept Swym buttons
+  // Complete replacement of Swym cart buttons
   function interceptSwymButton() {
     // Use mutation observer for dynamic button insertion
     const observer = new MutationObserver((mutations) => {
       // Look for the continue shopping button in any Swym panel
       const swymButton = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
       if (swymButton && !swymButton.hasAttribute('data-cart-intercept')) {
-        log('Swym continue button found - applying override');
+        log('Swym continue button found - applying complete override');
         
-        // Mark the button as intercepted to prevent duplicate handlers
-        swymButton.setAttribute('data-cart-intercept', 'true');
+        // AGGRESSIVE APPROACH: Replace the button completely
+        const originalButton = swymButton;
+        const newButton = document.createElement('button');
         
-        // IMPORTANT: Completely replace the click handler to prevent redirection
-        swymButton.addEventListener('click', function(e) {
-          // Prevent default to stop any redirection
+        // Copy all attributes except href and onclick
+        Array.from(originalButton.attributes).forEach(attr => {
+          if (attr.name !== 'href' && attr.name !== 'onclick') {
+            newButton.setAttribute(attr.name, attr.value);
+          }
+        });
+        
+        // Add our data attribute
+        newButton.setAttribute('data-cart-intercept', 'true');
+        // Ensure it looks identical
+        newButton.className = originalButton.className;
+        newButton.innerHTML = originalButton.innerHTML;
+        // Ensure it acts like a button
+        newButton.setAttribute('type', 'button');
+        
+        // Add our custom click handler with capture phase
+        newButton.addEventListener('click', function(e) {
+          // Stop all propagation and prevent default
           e.preventDefault();
           e.stopPropagation();
+          e.stopImmediatePropagation();
           
-          log('Swym continue button clicked - opening cart drawer without redirection');
+          log('Swym cart button clicked - opening cart drawer only');
           
           // Check if this is empty wishlist case or regular add-to-cart case
           const emptyWishlist = !document.querySelector('.swym-item');
@@ -155,11 +172,38 @@ document.addEventListener('DOMContentLoaded', function() {
                   console.error('Error fetching cart after Swym action:', error);
                   openCart();
                 });
-            }, 500); // 500ms delay to let Swym complete its operations
+            }, 500);
           }
+          
+          // Extra safety - ensure no navigation
+          return false;
+        }, true); // true = use capture phase
+        
+        // Also prevent any click events on child elements
+        newButton.querySelectorAll('*').forEach(child => {
+          child.style.pointerEvents = 'none';
         });
         
-        log('Swym button override applied');
+        // Replace the original button
+        originalButton.parentNode.replaceChild(newButton, originalButton);
+        
+        // Also add a global click handler to intercept any clicks in case Swym
+        // re-adds event handlers after our replacement
+        document.addEventListener('click', function(e) {
+          if (e.target && (
+              (e.target.classList && e.target.classList.contains('swym-sfl-cart-btn')) ||
+              (e.target.parentElement && e.target.parentElement.classList && e.target.parentElement.classList.contains('swym-sfl-cart-btn'))
+          )) {
+            // This is a Swym cart button or child, prevent default
+            e.preventDefault();
+            e.stopPropagation();
+            log('Intercepted click on Swym cart button or its child');
+            openCart();
+            return false;
+          }
+        }, true); // true = use capture phase
+        
+        log('Swym button completely replaced with custom implementation');
       }
     });
     
@@ -167,6 +211,21 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(document.body, {
       childList: true,
       subtree: true
+    });
+    
+    // Also disable any existing buttons right away
+    const existingButtons = document.querySelectorAll('.swym-sfl-cart-btn.swym-bg-2');
+    existingButtons.forEach(button => {
+      if (!button.hasAttribute('data-cart-intercept')) {
+        button.setAttribute('data-cart-intercept', 'true');
+        // Disable default behavior
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openCart();
+          return false;
+        }, true);
+      }
     });
   }
   
