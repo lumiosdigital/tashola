@@ -41,10 +41,9 @@
                     </div>
                     
                     <div class="cart-item-remove">
-                       {% comment %} <button type="button" class="move-to-wishlist-button" data-product-id="{{ item.product_id }}"
-                            data-variant-id="{{ item.variant_id }}" data-line="{{ forloop.index }}" aria-label="Save for later">
-                            Save for later
-                        </button>  {% endcomment %}
+                       <button type="button">
+                            Add a Jewelry Box
+                        </button>
                         <button type="button" class="remove-button" data-line="{{ forloop.index }}"
                             aria-label="Remove item">
                             Remove
@@ -54,14 +53,14 @@
                 {%- endfor -%}
             </div>
 
-            {% if section.settings.enable_jewelry_box %}
+            {% comment %} {% if section.settings.enable_jewelry_box %}
             <div class="cart-drawer-checkbox">
                 <label class="checkbox-container">
                     <input type="checkbox" id="jewelry-box-option">
                     <span class="checkbox-label">Add a Jewelry Box</span>
                 </label>
             </div>
-            {% endif %}
+            {% endif %} {% endcomment %}
 
             <div class="cart-drawer-footer">
                 <div class="cart-drawer-subtotal">
