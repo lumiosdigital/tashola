@@ -275,7 +275,11 @@ button {
     border-bottom: px1 solid var(--light-gray) !important;
 }
 
-.swym-sfl-add-all-to-cart-btn, .swym-disabled {
+.swym-sfl-add-all-to-cart-btn {
+    
+}
+
+.swym-disabled {
     background: var(--light-gray) !important;
     color: var(--white) !important;
     font-weight: 500 !important;
