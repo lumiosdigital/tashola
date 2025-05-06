@@ -210,6 +210,13 @@ button {
     margin: 8rem auto !important;
 }
 
+.swym-heading-1 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
