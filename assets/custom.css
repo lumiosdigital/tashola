@@ -236,6 +236,10 @@ button {
     color: var(--light-gray) !important;
 }
 
+.swym-icon {
+    color: var(--primary-color) !important;
+}
+
 .swym-wishlist-detail-separator {
     background: var(--light-gray) !important;
 }
