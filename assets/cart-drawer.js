@@ -970,12 +970,12 @@ function addJewelryBoxForItem(cartItem, itemKey, lineNumber) {
   // Map category to box variant ID
   // Replace these with your actual variant IDs
   const BOX_VARIANT_IDS = {
-    'rings': 'RING_BOX_VARIANT_ID',
-    'necklaces': 'NECKLACE_BOX_VARIANT_ID', 
-    'bracelets': 'BRACELET_BOX_VARIANT_ID',
-    'earrings': 'EARRINGS_BOX_VARIANT_ID',
-    'charms': 'GENERAL_BOX_VARIANT_ID',
-    'general': 'GENERAL_BOX_VARIANT_ID'
+    'rings': '52487391084876',
+    'necklaces': '52487391150412', 
+    'bracelets': '52487391183180',
+    'earrings': '52487391117644',
+    'charms': '52487391215948',
+    'general': '52487520682316'
   };
   
   const variantId = BOX_VARIANT_IDS[primaryCategory] || BOX_VARIANT_IDS.general;
