@@ -208,6 +208,7 @@ button {
 
 .swym-simple-wishlist-container {
     margin: 8rem auto !important;
+    font-family: var(--font-heading) !important;
 }
 
 .nav-scrollable {
