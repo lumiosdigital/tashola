@@ -210,8 +210,11 @@ button {
     margin: 8rem auto !important;
 }
 
+.swym-wishlist-container-title-bar {
+    border-bottom: 1px solid var(--light-gray) !important;
+}
+
 .swym-htc-tabs {
-    border-top: 1px solid var(--light-gray) !important;
     border-bottom: 1px solid var(--light-gray) !important;
 }
 
