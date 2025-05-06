@@ -5,7 +5,13 @@
             <span class="breadcrumbs-separator">{% render 'icon-chevron-right' %}</span>
         </li>
 
-        {% if template contains 'product' or template contains 'collection' %}
+        {% if template contains 'search' %}
+        <!-- Handle search page breadcrumbs -->
+        <li class="breadcrumbs-item">
+            <span class="breadcrumbs-current">Search</span>
+        </li>
+
+        {% elsif template contains 'product' or template contains 'collection' %}
         <!-- Display catalog link only for product or collection pages -->
         <li class="breadcrumbs-item">
             <a href="{{ routes.collections_url }}" class="breadcrumbs-link">Catalog</a>
