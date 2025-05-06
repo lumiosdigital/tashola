@@ -276,7 +276,7 @@ button {
 }
 
 .swym-sfl-add-all-to-cart-btn {
-    
+    border: none !important;
 }
 
 .swym-disabled {
