@@ -210,6 +210,10 @@ button {
     margin: 8rem auto !important;
 }
 
+.swym-htc-tabs {
+    border-bottom: 1px solid var(--light-gray) !important;
+}
+
 .swym-wishlist-main-title, .swym-heading, .swym-heading-1 {
     font-family: var(--font-heading) !important;
     font-size: 2rem !important;
