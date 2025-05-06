@@ -41,10 +41,10 @@
                     </div>
                     
                     <div class="cart-item-remove">
-                        <button type="button" class="add-jewelry-box-button"
+                        {% comment %} <button type="button" class="add-jewelry-box-button"
                             data-primary-category="{{ item.product.metafields.custom.primary_category }}">
                             Add a Jewelry Box
-                        </button>
+                        </button> {% endcomment %}
                         <button type="button" class="remove-button" data-line="{{ forloop.index }}"
                             aria-label="Remove item">
                             Remove
