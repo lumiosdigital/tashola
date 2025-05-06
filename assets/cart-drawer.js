@@ -508,11 +508,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Update cart count badges
+  // function updateCartCountBadges(count) {
+  //   const badges = document.querySelectorAll('.cart-count');
+    
+  //   badges.forEach(badge => {
+  //     badge.textContent = count;
+  //     badge.setAttribute('data-count', count);
+  //     badge.style.display = count > 0 ? 'flex' : 'none';
+  //   });
+  // }
+
+  // Function to update cart count badges - with "+9" limit
   function updateCartCountBadges(count) {
     const badges = document.querySelectorAll('.cart-count');
     
     badges.forEach(badge => {
-      badge.textContent = count;
+      // If count is greater than 9, display "+9"
+      const displayText = count > 9 ? "+9" : count;
+      badge.textContent = displayText;
       badge.setAttribute('data-count', count);
       badge.style.display = count > 0 ? 'flex' : 'none';
     });

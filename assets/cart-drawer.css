@@ -94,6 +94,11 @@
     justify-content: center;
 }
 
+.cart-drawer-close:hover svg path {
+    stroke: var(--color-accent, #ff5c5c);
+    /* fallback color if --color-accent isn't defined */
+}
+
 .cart-drawer-content {
     flex: 1;
     overflow-y: auto;

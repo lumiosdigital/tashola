@@ -25,8 +25,15 @@
                 <button type="button" class="account-button" aria-label="Account" aria-expanded="false"
                     aria-controls="account-dropdown">{% render 'icon-account' %}</button>
                 <div class="account-dropdown" id="account-dropdown" aria-hidden="true">
+                    {% if customer %}
+                    <!-- Customer is logged in -->
+                    <a href="{{ routes.account_url }}">My Profile</a>
+                    <a href="{{ routes.account_logout_url }}">Logout</a>
+                    {% else %}
+                    <!-- Customer is not logged in -->
                     <a href="{{ routes.account_login_url }}">Login</a>
                     <a href="{{ routes.account_register_url }}">Register</a>
+                    {% endif %}
                 </div>
             </div>
             <button type="button" class="cart-drawer-trigger" aria-label="Cart with {{ cart.item_count }} items"

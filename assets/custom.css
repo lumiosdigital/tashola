@@ -405,6 +405,15 @@ body.mobile-menu-active {
     overflow: hidden;
 }
 
+.cart-drawer-trigger svg path {
+    stroke: var(--primary-color);
+    transition: stroke 0.1s ease-in-out;
+}
+
+.cart-drawer-trigger:hover svg path {
+    stroke: var(--secondary-color);
+}
+
 /* Responsive styles */
 @media (max-width: 1200px) {
     .nav-flex-wrapper {

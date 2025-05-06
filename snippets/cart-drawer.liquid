@@ -15,7 +15,7 @@
             {% if cart.item_count > 0 %}
             <div class="cart-items">
                 {%- for item in cart.items -%}
-                <div class="cart-item">
+                <div class="cart-item" data-item-key="{{ item.key }}">
                     <div class="cart-item-image">
                         {% if item.image %}
                         <img src="{{ item.image | img_url: '120x' }}" alt="{{ item.title | escape }}" loading="lazy">
@@ -25,14 +25,14 @@
                     </div>
                     <div class="cart-item-details">
                         <h3 class="cart-item-title">{{ item.product.title }}</h3>
-                        <p class="cart-item-price">{{ item.final_price | money }}</p>
+                        <p class="cart-item-price">{{ item.line_price | money }}</p>
                         <div class="cart-item-quantity">
                             <button type="button" class="quantity-button decrease" data-line="{{ forloop.index }}"
                                 aria-label="Decrease quantity">
                                 <span>−</span>
                             </button>
                             <input type="number" name="updates[]" id="updates_{{ item.key }}"
-                                value="{{ item.quantity }}" min="0" aria-label="Quantity" readonly>
+                                value="{{ item.quantity }}" min="0" aria-label="Quantity" readonly data-line="{{ forloop.index }}">
                             <button type="button" class="quantity-button increase" data-line="{{ forloop.index }}"
                                 aria-label="Increase quantity">
                                 <span>+</span>
