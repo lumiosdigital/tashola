@@ -318,6 +318,7 @@ button {
     width: auto !important;
     line-height: none !important;
     padding: 6px !important;
+    font-weight: 500 !important;
 }
 
 .nav-scrollable {
