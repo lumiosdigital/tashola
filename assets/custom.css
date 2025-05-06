@@ -254,7 +254,7 @@ button {
 }
 
 .swym-wishlist-detail-separator {
-    background: var(--light-gray) !important;
+    background: #e0e0e0 !important;
 }
 
 .swym-title, .swym-title-1 {
@@ -295,6 +295,7 @@ button {
 .swym-sfl-detail-separator {
     border-bottom: px1 solid #e0e0e0 !important;
 }
+
 
 .swym-sfl-add-all-to-cart-btn {
     border: none !important;
