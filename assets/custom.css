@@ -234,6 +234,10 @@ button {
     display: none !important;
 }
 
+.swym-product-price {
+    margin-bottom: 0px !important;
+}
+
 .swym-htc-tab-item {
     font-family: var(--font-body) !important;
     font-size: 1rem !important;
