@@ -1,4 +1,4 @@
-// Final Fixed Cart Script - All Issues Resolved
+// Modified Cart Script with Swym Wishlist Plus Integration
 document.addEventListener('DOMContentLoaded', function() {
   // Debug mode
   const DEBUG = true;
@@ -48,6 +48,110 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize product page quantity selectors
     initProductQuantitySelectors();
+    
+    // Set up Swym event listeners
+    setupSwymEventListeners();
+  }
+  
+  // Set up Swym event listeners to detect wishlist actions
+  function setupSwymEventListeners() {
+    log('Setting up Swym event listeners');
+    
+    // Check if Swym is available
+    if (typeof window.SwymCallbacks === 'undefined') {
+      // If SwymCallbacks doesn't exist, create it
+      window.SwymCallbacks = [];
+    }
+    
+    // Listen for Swym initialization
+    window.SwymCallbacks.push(function(swat) {
+      log('Swym initialized, setting up event listeners');
+      
+      // Listen for "added to cart" events from Swym
+      swat.evtLayer.addEventListener(swat.JSEvents.addedToCart, function(e) {
+        log('Swym addedToCart event detected', e);
+        
+        // Refresh cart and open it
+        refreshCart()
+          .then(() => {
+            // Update cart count
+            return fetch('/cart.js')
+              .then(response => response.json())
+              .then(cart => {
+                updateCartCount(cart.item_count);
+                openCart();
+              });
+          })
+          .catch(error => {
+            console.error('Error handling Swym addedToCart event:', error);
+            
+            // Try to open cart anyway
+            openCart();
+          });
+      });
+      
+      // Add other Swym event listeners if needed
+      // e.g., moved to wishlist, etc.
+    });
+    
+    // Also intercept the Swym continue shopping button as a fallback
+    // This is for older Swym versions or if the events aren't firing
+    interceptSwymButton();
+  }
+  
+  // Improved function to intercept Swym buttons
+  function interceptSwymButton() {
+    // Use mutation observer for dynamic button insertion
+    const observer = new MutationObserver((mutations) => {
+      // Look for the continue shopping button
+      const swymButton = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
+      if (swymButton && !swymButton.hasAttribute('data-cart-intercept')) {
+        log('Swym continue button found - applying override');
+        
+        // Mark the button as intercepted to prevent duplicate handlers
+        swymButton.setAttribute('data-cart-intercept', 'true');
+        
+        swymButton.addEventListener('click', function(e) {
+          // Don't prevent default - let Swym do its thing
+          log('Swym continue button clicked - will refresh cart');
+          
+          // Wait for Swym's cart add to complete (usually takes 300-500ms)
+          setTimeout(() => {
+            // Now fetch the latest cart data
+            fetch('/cart.js')
+              .then(response => response.json())
+              .then(cart => {
+                log('Cart updated after Swym action:', cart.item_count, 'items');
+                
+                // Update cart count
+                updateCartCount(cart.item_count);
+                
+                // Refresh and open cart
+                refreshCart()
+                  .then(() => {
+                    openCart();
+                  })
+                  .catch(err => {
+                    console.error('Error refreshing cart after Swym action:', err);
+                    openCart();
+                  });
+              })
+              .catch(error => {
+                console.error('Error fetching cart after Swym action:', error);
+                openCart();
+              });
+          }, 500); // 500ms delay to let Swym complete its operations
+        });
+        
+        log('Swym button override applied');
+      }
+    });
+    
+    // Observe the entire document for Swym button appearance
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
   }
   
   // FIXED: Re-implement product quantity selectors
@@ -322,6 +426,55 @@ document.addEventListener('DOMContentLoaded', function() {
       
       updateCartItemQuantity(line, 0);
     }
+    
+    // Save for later (Move to Wishlist) button
+    if (e.target.closest('.move-to-wishlist-button')) {
+      e.preventDefault();
+      const button = e.target.closest('.move-to-wishlist-button');
+      const productId = button.getAttribute('data-product-id');
+      const variantId = button.getAttribute('data-variant-id');
+      const line = button.getAttribute('data-line');
+      
+      if (!productId || !variantId || !line) return;
+      
+      // Check if Swym is loaded and ready
+      if (window.SwymWatchProducts && window.SwymWatchProducts.addToWishList) {
+        log('Moving item to wishlist:', productId, variantId);
+        
+        // Add to wishlist first, then remove from cart
+        window.SwymWatchProducts.addToWishList(
+          productId, 
+          variantId, 
+          null, // collection
+          function() {
+            // Success callback - now remove from cart
+            log('Added to wishlist successfully, removing from cart');
+            updateCartItemQuantity(line, 0);
+          }
+        );
+      } else {
+        log('Swym not ready, attempting to use generic wishlist functionality');
+        
+        // If Swym API not available, try with event
+        if (window._swat && window._swat.addToWishList) {
+          window._swat.addToWishList(
+            {
+              "epi": variantId,
+              "empi": productId
+            },
+            function() {
+              // Success callback
+              log('Added to wishlist with _swat API, removing from cart');
+              updateCartItemQuantity(line, 0);
+            }
+          );
+        } else {
+          // Fallback: just remove from cart
+          alert('Could not add to wishlist. Item will be removed from cart.');
+          updateCartItemQuantity(line, 0);
+        }
+      }
+    }
   }
   
   // Add item to cart
@@ -507,17 +660,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Update cart count badges
-  // function updateCartCountBadges(count) {
-  //   const badges = document.querySelectorAll('.cart-count');
-    
-  //   badges.forEach(badge => {
-  //     badge.textContent = count;
-  //     badge.setAttribute('data-count', count);
-  //     badge.style.display = count > 0 ? 'flex' : 'none';
-  //   });
-  // }
-
   // Function to update cart count badges - with "+9" limit
   function updateCartCountBadges(count) {
     const badges = document.querySelectorAll('.cart-count');
@@ -563,37 +705,86 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Handle wishlist continue button click to close cart drawer
-  function interceptSwymButton() {
-  const swymButton = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
-  if (!swymButton) return;
-
-  // Clone to remove existing handlers
-  const newButton = swymButton.cloneNode(true);
-  swymButton.parentNode.replaceChild(newButton, swymButton);
-
-  newButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    log('Swym continue button intercepted – opening cart drawer');
-    openCart();
-  });
-
-  log('Swym button override applied');
- }
-
-  // Observe DOM changes to catch when Swym loads the button
-  const observer = new MutationObserver(() => {
-    const btn = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
-    if (btn) {
-      interceptSwymButton();
-      observer.disconnect(); // Stop observing once handled
-    }
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-  
+  // Global AJAX request listener to catch Swym and other scripts' cart updates
+  (function() {
+    const originalFetch = window.fetch;
+    
+    window.fetch = function(url, options) {
+      // Call the original fetch
+      const promise = originalFetch.apply(this, arguments);
+      
+      // If this is a cart update or add request
+      if (typeof url === 'string' && 
+          (url.includes('/cart/add') || 
+           url.includes('/cart/change') || 
+           url.includes('/cart/update') ||
+           url.includes('/cart/clear'))) {
+        
+        // Wait for the operation to complete
+        promise.then(response => {
+          if (response.ok) {
+            log('Cart modified by fetch to:', url);
+            
+            // Wait a moment to let the operation complete server-side
+            setTimeout(() => {
+              // Update cart
+              fetch('/cart.js')
+                .then(res => res.json())
+                .then(cart => {
+                  log('Cart fetched after modification:', cart.item_count, 'items');
+                  updateCartCount(cart.item_count);
+                  refreshCart();
+                })
+                .catch(err => console.error('Error updating cart after intercept:', err));
+            }, 300);
+          }
+        }).catch(err => {
+          console.error('Error in intercepted fetch:', err);
+        });
+      }
+      
+      return promise;
+    };
+    
+    // Also intercept XMLHttpRequest for older scripts
+    const originalXHROpen = window.XMLHttpRequest.prototype.open;
+    const originalXHRSend = window.XMLHttpRequest.prototype.send;
+    
+    window.XMLHttpRequest.prototype.open = function() {
+      // Store the URL being requested
+      this._url = arguments[1];
+      return originalXHROpen.apply(this, arguments);
+    };
+    
+    window.XMLHttpRequest.prototype.send = function() {
+      if (this._url && typeof this._url === 'string' && 
+         (this._url.includes('/cart/add') || 
+          this._url.includes('/cart/change') || 
+          this._url.includes('/cart/update') ||
+          this._url.includes('/cart/clear'))) {
+          
+        // Add load event listener to detect when request completes
+        this.addEventListener('load', function() {
+          if (this.status >= 200 && this.status < 300) {
+            log('Cart modified by XHR to:', this._url);
+            
+            // Wait a moment to let the operation complete server-side
+            setTimeout(() => {
+              // Update cart
+              fetch('/cart.js')
+                .then(res => res.json())
+                .then(cart => {
+                  log('Cart fetched after XHR modification:', cart.item_count, 'items');
+                  updateCartCount(cart.item_count);
+                  refreshCart();
+                })
+                .catch(err => console.error('Error updating cart after XHR intercept:', err));
+            }, 300);
+          }
+        });
+      }
+      
+      return originalXHRSend.apply(this, arguments);
+    };
+  })();
 });
