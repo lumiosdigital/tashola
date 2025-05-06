@@ -275,6 +275,15 @@ button {
     border-bottom: px1 solid var(--light-gray) !important;
 }
 
+.swym-sfl-add-all-to-cart-btn, .swym-disabled {
+    background: var(--light-gray) !important;
+    color: var(--white) !important;
+    font-weight: 500 !important;
+    font-family: var(--font-body) !important;
+    /* font-size: 1rem !important; */
+    /* padding: 0.75rem 1.25rem !important; */
+}
+
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
