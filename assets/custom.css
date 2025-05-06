@@ -241,7 +241,14 @@ button {
 
 .swym-title, .swym-title-1 {
     font-family: var(--font-heading) !important;
-    font-weight: 400;
+    font-weight: 400 !important;
+    color: var(--primary-color) !important;
+}
+
+.swym-product-final-price, .swym-value {
+    font-family: var(--font-heading) !important;
+    font-weight: 400 !important;
+    color: var(--primary-color) !important;
 }
 
 .nav-scrollable {
