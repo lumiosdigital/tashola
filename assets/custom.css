@@ -241,6 +241,7 @@ button {
 
 .swym-title, .swym-title-1 {
     font-family: var(--font-heading) !important;
+    font-weight: 400;
 }
 
 .nav-scrollable {
