@@ -356,6 +356,12 @@ button {
     background-color: rgba(255, 163, 139, 0.2);
 }
 
+.swym-empty-wishlist-text {
+    font-family: var(--font-body) !important;
+    font-size: 1rem !important;
+    color: var(--primary-color) !important;
+}
+
 .nav-scrollable {
     transition: transform 0.3s ease-in-out;
     will-change: transform;
