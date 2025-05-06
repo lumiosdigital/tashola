@@ -580,107 +580,20 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   log('Swym button override applied');
-}
+ }
 
-// Observe DOM changes to catch when Swym loads the button
-const observer = new MutationObserver(() => {
-  const btn = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
-  if (btn) {
-    interceptSwymButton();
-    observer.disconnect(); // Stop observing once handled
-  }
-});
-
-observer.observe(document.body, {
-  childList: true,
-  subtree: true
-});
-
-// Add this to your cart-drawer.js file
-// Improved Wishlist Cart Integration
-
-// Function to update cart after wishlist actions
-function setupWishlistCartIntegration() {
-  log('Setting up wishlist integration');
-  
-  // Wait for Swym to be fully initialized
-  if (typeof window._swat !== 'undefined') {
-    // Method 1: Listen for Swym add to cart events
-    document.addEventListener('swym:addtocart', function(event) {
-      log('Swym add to cart event detected');
-      handleSwymCartUpdate();
-    });
-    
-    // Method 2: Override Swym's addToCart method to ensure we catch all add to cart events
-    if (window._swat && window._swat.addToCart) {
-      const originalAddToCart = window._swat.addToCart;
-      window._swat.addToCart = function() {
-        const result = originalAddToCart.apply(this, arguments);
-        log('Swym addToCart method called');
-        
-        // Wait for Shopify to process the cart update
-        setTimeout(function() {
-          handleSwymCartUpdate();
-        }, 1000);
-        
-        return result;
-      };
+  // Observe DOM changes to catch when Swym loads the button
+  const observer = new MutationObserver(() => {
+    const btn = document.querySelector('.swym-sfl-cart-btn.swym-bg-2');
+    if (btn) {
+      interceptSwymButton();
+      observer.disconnect(); // Stop observing once handled
     }
-    
-    log('Wishlist integration setup complete');
-  } else {
-    // Retry if Swym isn't loaded yet
-    log('Swym not loaded yet, retrying in 1 second');
-    setTimeout(setupWishlistCartIntegration, 1000);
-  }
-}
+  });
 
-// Function to handle cart updates from Swym
-function handleSwymCartUpdate() {
-  log('Handling cart update from Swym');
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
   
-  // Fetch the latest cart data
-  fetch('/cart.js')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(cart => {
-      log('Cart data fetched successfully', cart.item_count);
-      
-      // Update cart count
-      updateCartCount(cart.item_count);
-      
-      // Refresh cart drawer contents
-      if (typeof refreshCart === 'function') {
-        refreshCart().then(() => {
-          // Open the cart drawer
-          if (typeof openCart === 'function') {
-            openCart();
-            log('Cart drawer opened');
-          } else {
-            log('openCart function not available');
-          }
-        }).catch(error => {
-          console.error('Error refreshing cart:', error);
-        });
-      } else {
-        log('refreshCart function not available');
-        // Fallback: reload the page if refreshCart isn't available
-        window.location.reload();
-      }
-    })
-    .catch(error => {
-      console.error('Error updating cart after wishlist action:', error);
-    });
-}
-
-// Initialize the wishlist integration
-document.addEventListener('DOMContentLoaded', function() {
-  // Set up wishlist integration when the page loads
-  setupWishlistCartIntegration();
-});
-
 });
