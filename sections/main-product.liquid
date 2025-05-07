@@ -554,6 +554,11 @@
                 const variantId = document.getElementById('VariantId').value;
                 const quantity = document.querySelector('[data-quantity-input]')?.value || 1;
 
+                // Add loading state to button
+                buyNowButton.classList.add('loading');
+                const originalText = buyNowButton.textContent;
+                buyNowButton.textContent = 'PROCESSING...';
+
                 // Direct checkout using fetch
                 fetch('/cart/clear.js', {
                     method: 'POST',
