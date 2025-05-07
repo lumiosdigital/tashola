@@ -109,8 +109,8 @@
 
 .search-input:focus {
     outline: none;
-    border-color: var(--color-accent, #FFA38B);
-    box-shadow: 0 0 0 1px var(--color-accent, #FFA38B);
+    /* border-color: var(--color-accent, #FFA38B); */
+    /* box-shadow: 0 0 0 1px var(--color-accent, #FFA38B); */
 }
 
 /* Fix the browser's clear button (X) and search icon overlap */

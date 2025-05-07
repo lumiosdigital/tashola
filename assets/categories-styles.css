@@ -457,7 +457,9 @@ button:focus {
 
 @media (max-width: 576px) {
     .category-grid {
-        grid-auto-rows: 25rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 35vh 35vh 35vh 35vh;
     }
 
     .empty {
