@@ -98,7 +98,6 @@
         width: 100%;
         padding: 42px 0 75px;
         background-color: #F6F4F3;
-        /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
     }
 
     .pd-products-grid {
@@ -139,19 +138,20 @@
         padding: 2rem;
     }
 
-    /* Product card styling */
+    /* Product card styling - MATCHED to collection display's rectangular format */
     .pd-product-card {
-        /* width: 100%; */
-        /* max-width: 18.75rem; */
+        width: calc(50% - 10px);
+        max-width: 18.75rem;
         display: flex;
         flex-direction: column;
         height: 100%;
     }
 
     .pd-product-image-container {
-        width: 23vw;
-        height: 60vh;
-        padding-bottom: 100%;
+        width: 100%;
+        height: 0;
+        padding-bottom: 133%;
+        /* Rectangular aspect ratio - similar to the earrings photo */
         position: relative;
         overflow: hidden;
         margin-bottom: 1rem;
@@ -233,13 +233,67 @@
         cursor: not-allowed;
     }
 
-    /* Mobile Swiper Styles */
+    /* Reserve space for variant buttons */
+    .pd-product-variants {
+        min-height: 1.75rem;
+        /* Height of variant buttons plus margin */
+        display: flex;
+        margin-top: 0.5rem;
+    }
+
+    .pd-product-info {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    /* Mobile & Responsive styles */
+    @media (max-width: 992px) {
+        .pd-products-grid {
+            grid-template-columns: repeat(3, 1fr);
+            padding: 0 2rem;
+        }
+
+        .pd-product-card {
+            max-width: 16rem;
+        }
+    }
+
     @media (max-width: 768px) {
+
+        /* Ensure proper spacing between sections */
+        .category-grid {
+            display: block !important;
+            position: relative;
+            overflow: hidden;
+            /* Contains all floated elements */
+        }
+
+        /* Add a clearfix at the end of the category grid */
+        .category-grid:after {
+            content: "";
+            display: table;
+            clear: both;
+            margin-bottom: 30px;
+            /* Add space between categories and product display */
+        }
+
+        /* Fix product display spacing */
+        .product-display {
+            position: relative;
+            clear: both;
+            margin-top: 30px;
+            padding-top: 40px;
+        }
+
+        /* Swiper styles */
         .pd-products-grid {
             display: block;
             padding: 0;
             position: relative;
             z-index: 5;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 0 1.5rem;
         }
 
         .swiper-container {
@@ -270,25 +324,21 @@
             display: none;
         }
 
+        /* Keep same rectangular aspect ratio on mobile */
         .pd-product-image-container {
             width: 100%;
-            height: 0;
-            padding-bottom: 100%;
+            height: 400px;
+            
+            /* padding-bottom: 133%; */
+            /* Same rectangular aspect ratio */
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
         }
-    }
 
-    /* Responsive styles */
-    @media (max-width: 992px) {
-        .pd-products-grid {
-            grid-template-columns: repeat(3, 1fr);
-            padding: 0 2rem;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .pd-products-grid {
-            grid-template-columns: repeat(2, 1fr);
-            padding: 0 1.5rem;
+        .pd-product-card {
+            width: 100%;
+            max-width: 100%;
         }
 
         .pd-product-title {
@@ -303,26 +353,16 @@
         }
 
         .product-display {
-            padding: 30px 0 50px;
+            padding: 0px;
         }
 
         .pd-product-title {
             font-size: 1rem;
         }
-    }
 
-    /* Reserve space for variant buttons */
-    .pd-product-variants {
-        min-height: 1.75rem;
-        /* Height of variant buttons plus margin */
-        display: flex;
-        margin-top: 0.5rem;
-    }
-
-    .pd-product-info {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
+        .swiper-slide {
+            width: 80%;
+        }
     }
 </style>
 
