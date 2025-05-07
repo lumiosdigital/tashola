@@ -12,7 +12,8 @@
     "hero-banner": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/hero-image.png",
+        "image": "shopify://shop_images/Group_48_1.png",
+        "mobile_image": "shopify://shop_images/hero-image.png",
         "heading": "Jewelry That Speaks for You",
         "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
         "button_text": "SHOP NOW",
