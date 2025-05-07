@@ -61,9 +61,13 @@ document.addEventListener("DOMContentLoaded", function() {
       // Add account links
       const accountLinks = mobileMenu.querySelector('.mobile-menu-account');
       const isLoggedIn = document.body.classList.contains('customer-logged-in');
-      
+            
       if (isLoggedIn) {
-        accountLinks.innerHTML = `<a href="/account" class="mobile-account-link">YOUR PROFILE</a>`;
+        accountLinks.innerHTML = `
+          <a href="/account" class="mobile-account-link">MY PROFILE</a>
+          <a href="#swym-wishlist" class="mobile-account-link swym-wishlist">MY FAVOURITES</a>
+          <a href="/account/logout" class="mobile-account-link">LOGOUT</a>
+        `;
       } else {
         accountLinks.innerHTML = `
           <a href="/account/login" class="mobile-account-link">LOGIN</a>

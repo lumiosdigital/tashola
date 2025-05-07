@@ -174,6 +174,10 @@
             </div>
         </a>
     </div>
+
+    <!-- Swiper JS and CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </div>
 
 <style>
@@ -190,6 +194,148 @@
     .category-block .variant-radio:checked+.variant-color {
         box-shadow: 0 0 0 2px white, 0 0 0 3px var(--color-light-gray) !important;
     }
+
+    /* Mobile-specific styles */
+    @media (max-width: 768px) {
+
+        /* Completely override the grid layout on mobile */
+        .category-grid {
+            display: block !important;
+            /* Override any display property */
+            position: relative;
+        }
+
+        /* Create a wrapper for the first row */
+        .category-grid:before {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Make earrings and rings float side by side (first row) */
+        .category-grid .category-block:nth-child(1),
+        .category-grid .category-block:nth-child(2) {
+            float: left !important;
+            width: 50% !important;
+            height: 50vh !important;
+            display: block !important;
+        }
+
+        /* Clear the float after the first row */
+        .category-grid .category-block:nth-child(2):after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Make necklaces and bracelets float side by side (second row) */
+        .category-grid .category-block:nth-child(3),
+        .category-grid .category-block:nth-child(4) {
+            float: left !important;
+            width: 50% !important;
+            height: 50vh !important;
+            display: block !important;
+        }
+
+        /* Clear the float after the second row */
+        .category-grid .category-block:nth-child(4):after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Collection banner (swap it to appear before collection display) */
+        .category-grid .category-block.collection-block {
+            width: 100% !important;
+            display: block !important;
+            clear: both !important;
+            height: 60vh !important;
+            order: 5;
+            /* Put this first in row 3 */
+        }
+
+        /* Product grid section (swap it to appear after collection banner) */
+        .category-grid .category-block.empty {
+            width: 100% !important;
+            display: block !important;
+            clear: both !important;
+            height: auto !important;
+            padding: 2rem 1rem 3rem;
+            order: 6;
+            /* Put this second in row 3 */
+        }
+
+        /* Make personalization and charms float side by side (fourth row) */
+        .category-grid .category-block:nth-child(7),
+        .category-grid .category-block:nth-child(8) {
+            float: left !important;
+            width: 50% !important;
+            height: 50vh !important;
+            display: block !important;
+        }
+
+        /* Clear the float after the fourth row */
+        .category-grid .category-block:nth-child(8):after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .product-grid {
+            min-height: 10vh;
+        }
+
+        /* Hide pagination on mobile as we'll use Swiper */
+        .pagination {
+            display: none;
+        }
+
+        /* Swiper styles */
+        .swiper-container {
+            width: 100%;
+            overflow: visible;
+        }
+
+        .swiper-slide {
+            width: 80%;
+            padding: 0 5px;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--color-text);
+            background: rgba(255, 255, 255, 0.8);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 18px;
+        }
+    }
+
+    /* Additional styles for smaller screens */
+    @media (max-width: 576px) {
+
+        .category-grid .category-block:nth-child(1),
+        .category-grid .category-block:nth-child(2),
+        .category-grid .category-block:nth-child(3),
+        .category-grid .category-block:nth-child(4),
+        .category-grid .category-block:nth-child(7),
+        .category-grid .category-block:nth-child(8) {
+            height: 40vh !important;
+        }
+
+        .swiper-slide {
+            width: 80%;
+        }
+
+        .category-block.collection-block {
+            height: 60vh !important;
+        }
+    }
 </style>
 
 <script>
@@ -199,6 +345,9 @@
 
         // Initialize product variants
         initProductVariants();
+
+        // Initialize Swiper on mobile
+        initMobileSwiper();
 
         function initPagination() {
             // Add event listeners to all pagination links
@@ -245,6 +394,11 @@
 
                         // Re-initialize product variants for the new content
                         initProductVariants();
+
+                        // Reinitialize Swiper if on mobile
+                        if (window.innerWidth <= 768) {
+                            initMobileSwiper();
+                        }
                     }
 
                     // Replace the pagination
@@ -463,10 +617,116 @@
             } else if (lowerMaterial.includes('platinum')) {
                 return "#E5E4E2";  // Platinum
             } else {
-                  // Default dark color
+                // Default dark color
             }
         }
+
+        // Initialize Swiper for mobile devices
+        function initMobileSwiper() {
+            if (window.innerWidth <= 768) {
+                const productGrid = document.getElementById('product-grid');
+                if (!productGrid) return;
+
+                // Check if Swiper is already initialized
+                if (productGrid.classList.contains('swiper-initialized')) return;
+
+                // Get all product cards
+                const productCards = productGrid.querySelectorAll('.product-card');
+                if (productCards.length === 0) return;
+
+                // Create Swiper structure
+                const swiperContainer = document.createElement('div');
+                swiperContainer.className = 'swiper-container';
+
+                const swiperWrapper = document.createElement('div');
+                swiperWrapper.className = 'swiper-wrapper';
+
+                // Move all products into the swiper
+                productCards.forEach(card => {
+                    const swiperSlide = document.createElement('div');
+                    swiperSlide.className = 'swiper-slide';
+                    swiperSlide.appendChild(card.cloneNode(true));
+                    swiperWrapper.appendChild(swiperSlide);
+                });
+
+                // Build the swiper structure
+                swiperContainer.appendChild(swiperWrapper);
+
+                // Add navigation
+                const prevButton = document.createElement('div');
+                prevButton.className = 'swiper-button-prev';
+
+                const nextButton = document.createElement('div');
+                nextButton.className = 'swiper-button-next';
+
+                swiperContainer.appendChild(prevButton);
+                swiperContainer.appendChild(nextButton);
+
+                // Clear the original grid and append the swiper
+                productGrid.innerHTML = '';
+                productGrid.appendChild(swiperContainer);
+                productGrid.classList.add('swiper-initialized');
+
+                // Initialize Swiper
+                new Swiper('.swiper-container', {
+                    slidesPerView: 'auto',
+                    spaceBetween: 10,
+                    centeredSlides: false,
+                    grabCursor: true,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    breakpoints: {
+                        320: {
+                            slidesPerView: 1.3,
+                            spaceBetween: 10,
+                        },
+                        480: {
+                            slidesPerView: 2,
+                            spaceBetween: 15,
+                        }
+                    }
+                });
+
+                // Re-initialize product variants
+                initProductVariants();
+            }
+        }
+        
+        
     });
+    // Function to reorder blocks on mobile
+    function reorderMobileBlocks() {
+        if (window.innerWidth <= 768) {
+            const categoryGrid = document.querySelector('.category-grid');
+            if (!categoryGrid) return;
+            
+            // Get the two blocks we want to swap
+            const emptyBlock = categoryGrid.querySelector('.category-block.empty');
+            const collectionBlock = categoryGrid.querySelector('.category-block.collection-block');
+            
+            if (!emptyBlock || !collectionBlock) return;
+            
+            // Get the parent node
+            const parent = emptyBlock.parentNode;
+            
+            // Get the fourth block as reference (to insert after it)
+            const fourthBlock = categoryGrid.querySelector('.category-block:nth-child(4)');
+            
+            if (fourthBlock) {
+                // Move collection banner after the fourth block (before empty block)
+                parent.insertBefore(collectionBlock, fourthBlock.nextSibling);
+                // Move empty block after collection banner
+                parent.insertBefore(emptyBlock, collectionBlock.nextSibling);
+            }
+        }
+    }
+
+    // Call the function when DOM is loaded
+    document.addEventListener('DOMContentLoaded', reorderMobileBlocks);
+    // Call the function when window is resized
+    window.addEventListener('resize', reorderMobileBlocks);
 </script>
 
 {% schema %}

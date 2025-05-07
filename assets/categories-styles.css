@@ -408,12 +408,72 @@ button:focus {
 @media (max-width: 768px) {
     .category-grid {
         grid-template-columns: 1fr;
-        grid-auto-rows: 30rem;
+        grid-auto-rows: auto;
+    }
+
+    .category-block.collection-block {
+        order: 5;
+        height: 70vh;
+    }
+
+    .category-block.empty {
+        order: 6;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+        height: auto;
     }
 
     .product-grid {
         gap: 15px; /* Slightly reduced gap on mobile */
+        display: block;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        margin: 0 auto;
     }
+
+        .swiper-container {
+            overflow: visible;
+            width: 100%;
+        }
+    
+        .swiper-slide {
+            width: 50%;
+            padding: 0 5px;
+        }
+    
+        /* Swiper navigation */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--color-text);
+            background: rgba(255, 255, 255, 0.8);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 18px;
+        }
+    
+        /* Hide pagination and replace with Swiper */
+        .pagination {
+            display: none;
+        }
+    
+        /* Adjust banner image height on mobile */
+        .collection-banner {
+            height: 70vh;
+        }
+    
+        /* Make sure variant dots are visible */
+        .product-variants {
+            margin-bottom: 1rem;
+        }
     
     .product-card {
         width: calc(50% - 7.5px); /* Adjusted for 15px gap */
@@ -493,6 +553,15 @@ button:focus {
     
     .product-grid::after {
         display: none;
+    }
+
+    .swiper-slide {
+        width: 80%;
+    }
+    
+    .category-block.collection-block,
+    .collection-banner {
+        height: 60vh;
     }
 }
 

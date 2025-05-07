@@ -241,28 +241,60 @@
     }
 
     @media (max-width: 768px) {
+    /* Swiper container styling */
         .pd-products-grid {
-            grid-template-columns: repeat(2, 1fr);
-            padding: 0 1.5rem;
+            display: block;
+            width: 100%;
+            overflow: visible;
+            padding: 0;
         }
-
-        .pd-product-title {
-            font-size: 1.125rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .pd-products-grid {
-            grid-template-columns: 1fr;
+        
+        .pd-swiper-container {
+            overflow: visible;
+            width: 100%;
             padding: 0 1rem;
         }
-
-        .product-display {
-            padding: 30px 0 50px;
+        
+        .pd-swiper-slide {
+            width: auto;
         }
-
-        .pd-product-title {
-            font-size: 1rem;
+        
+        /* Swiper navigation */
+        .pd-swiper-button-next,
+        .pd-swiper-button-prev {
+            color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.8);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pd-swiper-button-next:after,
+        .pd-swiper-button-prev:after {
+            font-size: 18px;
+        }
+        
+        /* Hide pagination and replace with Swiper pagination */
+        .pd-pagination {
+            display: none;
+        }
+        
+        .pd-swiper-pagination {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        /* Adjust product card sizing */
+        .pd-product-image-container {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1/1;
+            padding-bottom: 0;
         }
     }
 
@@ -531,6 +563,125 @@
                 return "#373736";  // Default dark color
             }
         }
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if Swiper is already included
+            if (typeof Swiper === 'undefined') {
+                // Add Swiper CSS
+                const swiperCSS = document.createElement('link');
+                swiperCSS.rel = 'stylesheet';
+                swiperCSS.href = 'https://unpkg.com/swiper/swiper-bundle.min.css';
+                document.head.appendChild(swiperCSS);
+
+                // Add Swiper JS
+                const swiperScript = document.createElement('script');
+                swiperScript.src = 'https://unpkg.com/swiper/swiper-bundle.min.js';
+                document.head.appendChild(swiperScript);
+
+                // Initialize Swiper after script loads
+                swiperScript.onload = initProductDisplaySwiper;
+            } else {
+                // Swiper already loaded, initialize directly
+                initProductDisplaySwiper();
+            }
+
+            function initProductDisplaySwiper() {
+                // Only initialize Swiper on mobile
+                if (window.innerWidth <= 768) {
+                    const productGrid = document.querySelector('.pd-products-grid');
+                    if (!productGrid) return;
+
+                    // Get all product cards
+                    const productCards = productGrid.querySelectorAll('.pd-product-card');
+                    if (productCards.length === 0) return;
+
+                    // Create Swiper structure
+                    const swiperContainer = document.createElement('div');
+                    swiperContainer.className = 'pd-swiper-container';
+
+                    const swiperWrapper = document.createElement('div');
+                    swiperWrapper.className = 'swiper-wrapper';
+
+                    // Add product cards to Swiper
+                    productCards.forEach(card => {
+                        const swiperSlide = document.createElement('div');
+                        swiperSlide.className = 'swiper-slide pd-swiper-slide';
+                        swiperSlide.appendChild(card.cloneNode(true));
+                        swiperWrapper.appendChild(swiperSlide);
+                    });
+
+                    // Clear product grid and build new structure
+                    productGrid.innerHTML = '';
+                    swiperContainer.appendChild(swiperWrapper);
+
+                    // Add navigation
+                    const prevButton = document.createElement('div');
+                    prevButton.className = 'swiper-button-prev pd-swiper-button-prev';
+
+                    const nextButton = document.createElement('div');
+                    nextButton.className = 'swiper-button-next pd-swiper-button-next';
+
+                    // Add pagination
+                    const pagination = document.createElement('div');
+                    pagination.className = 'swiper-pagination pd-swiper-pagination';
+
+                    swiperContainer.appendChild(prevButton);
+                    swiperContainer.appendChild(nextButton);
+                    swiperContainer.appendChild(pagination);
+
+                    productGrid.appendChild(swiperContainer);
+
+                    // Initialize Swiper
+                    new Swiper('.pd-swiper-container', {
+                        slidesPerView: 'auto',
+                        spaceBetween: 20,
+                        centeredSlides: false,
+                        grabCursor: true,
+                        pagination: {
+                            el: '.pd-swiper-pagination',
+                            clickable: true,
+                        },
+                        navigation: {
+                            nextEl: '.pd-swiper-button-next',
+                            prevEl: '.pd-swiper-button-prev',
+                        },
+                        breakpoints: {
+                            320: {
+                                slidesPerView: 1.2,
+                                spaceBetween: 10,
+                            },
+                            480: {
+                                slidesPerView: 1.5,
+                                spaceBetween: 15,
+                            },
+                            576: {
+                                slidesPerView: 2.2,
+                                spaceBetween: 20,
+                            }
+                        }
+                    });
+
+                    // Re-initialize product variants if needed
+                    if (typeof initPDProductVariants === 'function') {
+                        initPDProductVariants();
+                    }
+                }
+            }
+
+            // Handle window resize
+            let resizeTimeout;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function () {
+                    // Reload page on resize to reinitialize Swiper
+                    if ((window.innerWidth <= 768 && window.prevWidth > 768) ||
+                        (window.innerWidth > 768 && window.prevWidth <= 768)) {
+                        location.reload();
+                    }
+                    window.prevWidth = window.innerWidth;
+                }, 250);
+            });
+            window.prevWidth = window.innerWidth;
+        });
     });
 </script>
 

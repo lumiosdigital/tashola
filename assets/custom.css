@@ -610,6 +610,10 @@ body.mobile-menu-active {
     overflow: hidden;
 }
 
+.cart-drawer-trigger {
+    position: relative;
+}
+
 .cart-drawer-trigger svg path {
     stroke: var(--primary-color);
     transition: stroke 0.1s ease-in-out;
@@ -733,6 +737,25 @@ body.mobile-menu-active {
         height: 2rem;
         width: auto;
     }
+      
+  .cart-drawer-trigger {
+      position: relative;
+  }
+
+  .cart-count {
+      position: absolute;
+      top: 25px;
+      left: 22px;
+      background-color: var(--secondary-color);
+      color: white;
+      font-size: 1rem;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
 }
 
 @media (max-width: 576px) {
