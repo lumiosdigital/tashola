@@ -10,7 +10,10 @@
         <li class="breadcrumbs-item">
             <span class="breadcrumbs-current">Search</span>
         </li>
-
+        {% elsif template contains 'cart' %}
+        <li class="breadcrumbs-item">
+            <span class="breadcrumbs-current">Shopping Cart</span>
+        </li>
         {% elsif template contains 'product' or template contains 'collection' %}
         <!-- Display catalog link only for product or collection pages -->
         <li class="breadcrumbs-item">
