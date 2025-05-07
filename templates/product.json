@@ -21,9 +21,14 @@
         "related_products_collection": "neptune",
         "related_products_limit": 4
       }
+    },
+    "1746598915486791e6": {
+      "type": "apps",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "1746598915486791e6"
   ]
 }
