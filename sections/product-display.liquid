@@ -321,6 +321,9 @@
         // Initialize product variants
         initPDProductVariants();
 
+        // Initialize mobile Swiper
+        initMobileProductDisplaySwiper();
+
         function initPDPagination() {
             // Add event listeners to all pagination links
             const paginationLinks = document.querySelectorAll('.pd-pagination-link');
@@ -344,8 +347,10 @@
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
             // Add a loading indicator
-            const productGrid = document.getElementById('pd-products-grid');
-            productGrid.classList.add('loading');
+            const productGrid = document.querySelector('.pd-products-grid');
+            if (productGrid) {
+                productGrid.classList.add('loading');
+            }
 
             // Fetch the new page content
             fetch(url)
@@ -356,25 +361,32 @@
                     const doc = parser.parseFromString(html, 'text/html');
 
                     // Find the product grid in the fetched content
-                    const newProductGrid = doc.querySelector('#pd-products-grid');
+                    const newProductGrid = doc.querySelector('.pd-products-grid');
                     const newPagination = doc.querySelector('#pd-pagination-container');
 
                     // Replace the existing product grid with the new one
-                    if (newProductGrid) {
+                    if (newProductGrid && productGrid) {
                         productGrid.innerHTML = newProductGrid.innerHTML;
                         productGrid.classList.remove('loading');
 
                         // Re-initialize product variants for the new content
                         initPDProductVariants();
+
+                        // Reinitialize Swiper for mobile
+                        if (window.innerWidth <= 768) {
+                            initMobileProductDisplaySwiper();
+                        }
                     }
 
                     // Replace the pagination
                     if (newPagination) {
                         const paginationContainer = document.getElementById('pd-pagination-container');
-                        paginationContainer.innerHTML = newPagination.innerHTML;
+                        if (paginationContainer) {
+                            paginationContainer.innerHTML = newPagination.innerHTML;
 
-                        // Re-add event listeners to the new pagination links
-                        initPDPagination();
+                            // Re-add event listeners to the new pagination links
+                            initPDPagination();
+                        }
                     }
 
                     // Maintain the scroll position
@@ -382,7 +394,9 @@
                 })
                 .catch(error => {
                     console.error('Error loading the products:', error);
-                    productGrid.classList.remove('loading');
+                    if (productGrid) {
+                        productGrid.classList.remove('loading');
+                    }
                 });
         }
 
@@ -392,6 +406,123 @@
                 loadPDPage(e.state.pdPath);
             }
         });
+
+        // Initialize mobile Swiper for product display
+        function initMobileProductDisplaySwiper() {
+            // Only run on mobile
+            if (window.innerWidth > 768) return;
+
+            // Check if Swiper is defined
+            if (typeof Swiper === 'undefined') {
+                // Load Swiper CSS if not already loaded
+                if (!document.querySelector('link[href*="swiper"]')) {
+                    const swiperCss = document.createElement('link');
+                    swiperCss.rel = 'stylesheet';
+                    swiperCss.href = 'https://unpkg.com/swiper/swiper-bundle.min.css';
+                    document.head.appendChild(swiperCss);
+                }
+
+                // Load Swiper JS if not already loaded
+                const swiperScript = document.createElement('script');
+                swiperScript.src = 'https://unpkg.com/swiper/swiper-bundle.min.js';
+                swiperScript.onload = function () {
+                    setupProductSwiper();
+                };
+                document.head.appendChild(swiperScript);
+            } else {
+                // Swiper is already loaded, proceed with setup
+                setupProductSwiper();
+            }
+        }
+
+        function setupProductSwiper() {
+            const productsGrid = document.querySelector('.pd-products-grid');
+            if (!productsGrid) return;
+
+            // Avoid initializing multiple times
+            if (productsGrid.classList.contains('swiper-initialized')) return;
+
+            // Get all product cards
+            const productCards = productsGrid.querySelectorAll('.pd-product-card');
+            if (productCards.length === 0) return;
+
+            // Save the original content to restore it later if needed
+            const originalContent = productsGrid.innerHTML;
+            productsGrid.setAttribute('data-original-content', originalContent);
+
+            // Clear the grid and create Swiper structure
+            productsGrid.innerHTML = '';
+            productsGrid.classList.add('swiper-initialized');
+
+            // Create Swiper container
+            const swiperContainer = document.createElement('div');
+            swiperContainer.className = 'swiper-container pd-swiper';
+
+            // Create Swiper wrapper
+            const swiperWrapper = document.createElement('div');
+            swiperWrapper.className = 'swiper-wrapper';
+
+            // Add product cards as slides
+            productCards.forEach(card => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                slide.appendChild(card.cloneNode(true));
+                swiperWrapper.appendChild(slide);
+            });
+
+            // Add pagination
+            const pagination = document.createElement('div');
+            pagination.className = 'swiper-pagination';
+
+            // Add navigation buttons
+            const prevButton = document.createElement('div');
+            prevButton.className = 'swiper-button-prev';
+
+            const nextButton = document.createElement('div');
+            nextButton.className = 'swiper-button-next';
+
+            // Build Swiper structure
+            swiperContainer.appendChild(swiperWrapper);
+            swiperContainer.appendChild(pagination);
+            swiperContainer.appendChild(prevButton);
+            swiperContainer.appendChild(nextButton);
+
+            // Add to the DOM
+            productsGrid.appendChild(swiperContainer);
+
+            // Initialize Swiper
+            const swiper = new Swiper('.pd-swiper', {
+                slidesPerView: 'auto',
+                spaceBetween: 15,
+                centeredSlides: false,
+                loop: false,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1.3,
+                        spaceBetween: 10,
+                    },
+                    480: {
+                        slidesPerView: 1.7,
+                        spaceBetween: 15,
+                    },
+                    576: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 20,
+                    }
+                }
+            });
+
+            // Re-initialize variants
+            initPDProductVariants();
+        }
 
         // Product variants functionality
         function initPDProductVariants() {
@@ -418,6 +549,52 @@
                 }
                 .pd-variant-radio-container:hover .pd-variant-color {
                     transform: scale(1.1);
+                }
+                
+                /* Swiper specific styles */
+                @media (max-width: 768px) {
+                    .pd-products-grid {
+                        overflow: visible !important;
+                        padding: 0 !important;
+                    }
+                    
+                    .swiper-container.pd-swiper {
+                        overflow: visible;
+                        padding: 0 1rem;
+                        margin-left: -1rem;
+                        margin-right: -1rem;
+                        width: calc(100% + 2rem);
+                    }
+                    
+                    .swiper-slide {
+                        height: auto;
+                        width: 80%;
+                    }
+                    
+                    .swiper-button-next,
+                    .swiper-button-prev {
+                        color: var(--primary-color) !important;
+                        background: rgba(255, 255, 255, 0.8);
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50%;
+                    }
+                    
+                    .swiper-button-next:after,
+                    .swiper-button-prev:after {
+                        font-size: 18px;
+                    }
+                    
+                    .pd-product-image-container {
+                        width: 100% !important;
+                        height: 0 !important;
+                        padding-bottom: 100% !important;
+                        position: relative;
+                    }
+                    
+                    .pd-pagination {
+                        display: none;
+                    }
                 }
             `;
                 document.head.appendChild(styleElement);
@@ -563,124 +740,26 @@
                 return "#373736";  // Default dark color
             }
         }
-        document.addEventListener('DOMContentLoaded', function () {
-            // Check if Swiper is already included
-            if (typeof Swiper === 'undefined') {
-                // Add Swiper CSS
-                const swiperCSS = document.createElement('link');
-                swiperCSS.rel = 'stylesheet';
-                swiperCSS.href = 'https://unpkg.com/swiper/swiper-bundle.min.css';
-                document.head.appendChild(swiperCSS);
 
-                // Add Swiper JS
-                const swiperScript = document.createElement('script');
-                swiperScript.src = 'https://unpkg.com/swiper/swiper-bundle.min.js';
-                document.head.appendChild(swiperScript);
+        // Handle window resize
+        window.addEventListener('resize', function () {
+            const productsGrid = document.querySelector('.pd-products-grid');
+            if (!productsGrid) return;
 
-                // Initialize Swiper after script loads
-                swiperScript.onload = initProductDisplaySwiper;
-            } else {
-                // Swiper already loaded, initialize directly
-                initProductDisplaySwiper();
-            }
-
-            function initProductDisplaySwiper() {
-                // Only initialize Swiper on mobile
-                if (window.innerWidth <= 768) {
-                    const productGrid = document.querySelector('.pd-products-grid');
-                    if (!productGrid) return;
-
-                    // Get all product cards
-                    const productCards = productGrid.querySelectorAll('.pd-product-card');
-                    if (productCards.length === 0) return;
-
-                    // Create Swiper structure
-                    const swiperContainer = document.createElement('div');
-                    swiperContainer.className = 'pd-swiper-container';
-
-                    const swiperWrapper = document.createElement('div');
-                    swiperWrapper.className = 'swiper-wrapper';
-
-                    // Add product cards to Swiper
-                    productCards.forEach(card => {
-                        const swiperSlide = document.createElement('div');
-                        swiperSlide.className = 'swiper-slide pd-swiper-slide';
-                        swiperSlide.appendChild(card.cloneNode(true));
-                        swiperWrapper.appendChild(swiperSlide);
-                    });
-
-                    // Clear product grid and build new structure
-                    productGrid.innerHTML = '';
-                    swiperContainer.appendChild(swiperWrapper);
-
-                    // Add navigation
-                    const prevButton = document.createElement('div');
-                    prevButton.className = 'swiper-button-prev pd-swiper-button-prev';
-
-                    const nextButton = document.createElement('div');
-                    nextButton.className = 'swiper-button-next pd-swiper-button-next';
-
-                    // Add pagination
-                    const pagination = document.createElement('div');
-                    pagination.className = 'swiper-pagination pd-swiper-pagination';
-
-                    swiperContainer.appendChild(prevButton);
-                    swiperContainer.appendChild(nextButton);
-                    swiperContainer.appendChild(pagination);
-
-                    productGrid.appendChild(swiperContainer);
-
-                    // Initialize Swiper
-                    new Swiper('.pd-swiper-container', {
-                        slidesPerView: 'auto',
-                        spaceBetween: 20,
-                        centeredSlides: false,
-                        grabCursor: true,
-                        pagination: {
-                            el: '.pd-swiper-pagination',
-                            clickable: true,
-                        },
-                        navigation: {
-                            nextEl: '.pd-swiper-button-next',
-                            prevEl: '.pd-swiper-button-prev',
-                        },
-                        breakpoints: {
-                            320: {
-                                slidesPerView: 1.2,
-                                spaceBetween: 10,
-                            },
-                            480: {
-                                slidesPerView: 1.5,
-                                spaceBetween: 15,
-                            },
-                            576: {
-                                slidesPerView: 2.2,
-                                spaceBetween: 20,
-                            }
-                        }
-                    });
-
-                    // Re-initialize product variants if needed
-                    if (typeof initPDProductVariants === 'function') {
-                        initPDProductVariants();
-                    }
+            // Check if going from mobile to desktop
+            if (window.innerWidth > 768 && productsGrid.classList.contains('swiper-initialized')) {
+                // Restore original content
+                const originalContent = productsGrid.getAttribute('data-original-content');
+                if (originalContent) {
+                    productsGrid.innerHTML = originalContent;
+                    productsGrid.classList.remove('swiper-initialized');
+                    initPDProductVariants();
                 }
             }
-
-            // Handle window resize
-            let resizeTimeout;
-            window.addEventListener('resize', function () {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(function () {
-                    // Reload page on resize to reinitialize Swiper
-                    if ((window.innerWidth <= 768 && window.prevWidth > 768) ||
-                        (window.innerWidth > 768 && window.prevWidth <= 768)) {
-                        location.reload();
-                    }
-                    window.prevWidth = window.innerWidth;
-                }, 250);
-            });
-            window.prevWidth = window.innerWidth;
+            // Check if going from desktop to mobile
+            else if (window.innerWidth <= 768 && !productsGrid.classList.contains('swiper-initialized')) {
+                initMobileProductDisplaySwiper();
+            }
         });
     });
 </script>
