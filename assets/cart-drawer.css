@@ -151,13 +151,16 @@
 
 .cart-item-title {
     margin: 0 0 5px;
-    font-size: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
     font-weight: 500;
 }
 
 .cart-item-price {
     margin: 0 0 10px;
     font-weight: 500;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
 }
 
 .cart-item-quantity {
