@@ -269,7 +269,7 @@
           "text_block_VQpaQQ": {
             "type": "text_block",
             "settings": {
-              "description": "<p>Our Frequently Asked Questions (FAQ)<strong> </strong>section is designed to provide quick answers to common customer inquiries. Whether you need help with orders, returns, shipping, payments, or general policies, this resource offers clear and straightforward solutions to save you time. If you don’t find the answer you’re looking for, our customer service team is happy to assist you further.</p>"
+              "description": "<h4>Currently, we only ship to the United Kingdom. Stay tuned, more to come very soon!</h4>"
             }
           },
           "faq_item_qBhHba": {
@@ -283,8 +283,8 @@
           "faq_item_NT7Cer": {
             "type": "faq_item",
             "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
+              "question": "When will my jewelry be delivered?",
+              "answer": "<p>Here are a few things to keep in mind about our delivery process:<br/>- Delivery times are estimated and begin from the moment your order is shipped—not when the order is placed.<br/>- We aim to dispatch all orders placed before 2pm GMT, Monday to Saturday, on the same day—but please note this is not guaranteed.<br/>- All our jewelry is shipped from the UK.<br/>- We do not deliver on Sundays or public holidays, so please allow an extra working day during those periods.<br/><br/></p>",
               "expanded_by_default": false
             }
           }
