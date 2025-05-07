@@ -304,7 +304,8 @@
   .search-results-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    row-gap: 30px;
+    column-gap: 10px;
     width: 100%;
   }
 
@@ -323,8 +324,9 @@
   }
 
   .search-product-image-container {
-    width: 100%;
-    aspect-ratio: 1 / 1.3;
+    width: 23vw;
+    height: 60vh;
+    /* aspect-ratio: 1 / 1.3; */
     overflow: hidden;
     margin-bottom: 1rem;
   }
@@ -337,7 +339,7 @@
   }
 
   /* Apply the scale effect only to the image, not the card */
-  .search-product-card:hover .search-product-image {
+   .search-product-image:hover {
     transform: scale(1.05);
   }
 
@@ -362,13 +364,14 @@
     font-family: var(--font-heading);
     font-size: 1.25rem;
     color: var(--color-text);
-    margin: 0 0 0.5rem;
+    /* margin: 0 0 0.5rem; */
     font-weight: 400;
   }
 
   .search-product-price {
-    font-family: var(--font-body);
-    font-size: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 400;
     color: var(--color-text);
   }
 

@@ -2,14 +2,15 @@
 .search-overlay {
     position: fixed;
     top: 0;
+    left: 0;
     right: 0;
-    bottom: 0;
-    width: 40%;
-    min-width: 320px;
+    height: 50%;
+    /* Take half the screen height */
     background-color: #ffffff;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     z-index: 1001;
-    transform: translateX(100%);
+    transform: translateY(-100%);
+    /* Start off-screen from the top */
     transition: transform 0.3s ease-in-out, visibility 0s 0.3s;
     visibility: hidden;
     display: flex;
@@ -18,7 +19,8 @@
 
 .search-overlay[aria-hidden="false"] {
     transition: transform 0.3s ease-in-out, visibility 0s;
-    transform: translateX(0);
+    transform: translateY(0);
+    /* Slide down to visible */
     visibility: visible;
 }
 
@@ -85,6 +87,8 @@
 
 .search-form {
     width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .search-input-wrapper {
@@ -94,7 +98,8 @@
 
 .search-input {
     width: 100%;
-    padding: 0.75rem 3rem 0.75rem 1rem;
+    padding: 0.75rem 4rem 0.75rem 1rem;
+    /* Increased right padding for more space */
     border: 1px solid #e0e0e0;
     border-radius: 30px;
     font-family: var(--font-body);
@@ -106,6 +111,43 @@
     outline: none;
     border-color: var(--color-accent, #FFA38B);
     box-shadow: 0 0 0 1px var(--color-accent, #FFA38B);
+}
+
+/* Fix the browser's clear button (X) and search icon overlap */
+/* Custom styling for the browser's clear button (X) */
+.search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    position: relative;
+    right: 35px;
+    /* Increased space between X and magnifying glass */
+    height: 16px;
+    width: 16px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23373736' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>");
+    background-size: contain;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* Hover effect for the X button */
+.search-input::-webkit-search-cancel-button:hover {
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFA38B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>");
+    background-size: contain;
+}
+
+/* For Firefox */
+.search-input::-moz-search-cancel-button {
+    -moz-appearance: none;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23373736' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>");
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+    transition: background 0.2s ease;
+}
+
+/* Hover effect for Firefox */
+.search-input::-moz-search-cancel-button:hover {
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFA38B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>");
+    background-size: contain;
 }
 
 .search-submit {
@@ -182,6 +224,7 @@
 /* Responsive styles */
 @media (max-width: 767px) {
     .search-overlay {
-        width: 85%;
+        height: 70%;
+        /* Larger on mobile for better usability */
     }
 }
