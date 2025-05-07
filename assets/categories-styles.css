@@ -413,7 +413,7 @@ button:focus {
 
     .category-block.collection-block {
         order: 5;
-        height: 70vh;
+        height: 60vh;
     }
 
     .category-block.empty {
