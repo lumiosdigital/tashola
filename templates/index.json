@@ -23,8 +23,9 @@
     "categories": {
       "type": "categories",
       "settings": {
-        "selected_collection": "neptune",
+        "selected_collection": "frontpage",
         "featured_collection": "neptune",
+        "collection_banner_image": "shopify://shop_images/jewelry.png",
         "earrings_image": "shopify://shop_images/earrings-category.png",
         "rings_image": "shopify://shop_images/rings-category.png",
         "necklaces_image": "shopify://shop_images/necklaces-category.png",
