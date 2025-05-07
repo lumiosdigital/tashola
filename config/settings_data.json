@@ -118,24 +118,24 @@
           "faq_item_XNjM3G": {
             "type": "faq_item",
             "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
+              "question": "When can I return my jewelry?",
+              "answer": "<p>Please send back your jewelry within 28 days of receiving your order</p>",
               "expanded_by_default": false
             }
           },
           "faq_item_baXBjj": {
             "type": "faq_item",
             "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
+              "question": "What condition should the jewelry be in?",
+              "answer": "<p>All pieces must be returned unworn, undamaged, and in their original packaging. We carefully inspect each return—any items that show signs of wear or damage will be sent back to you. If your order arrived with any issues (e.g. missing, incorrect, or faulty items), please get in touch with us within 5 working days of delivery.</p>",
               "expanded_by_default": false
             }
           },
           "faq_item_rnerNx": {
             "type": "faq_item",
             "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
+              "question": "Do I need to keep the tags and packaging?",
+              "answer": "<p>To be eligible for a full refund, make sure all original tags, pouches, and boxes are included and untouched.</p>",
               "expanded_by_default": false
             }
           }
