@@ -13,7 +13,8 @@
       "type": "main-product",
       "settings": {
         "show_quantity_selector": true,
-        "show_buy_it_now": false,
+        "show_buy_it_now": true,
+        "product_details_text": "",
         "shipping_returns_text": "<p>Free domestic shipping on all orders over £75.</p><p>Returns accepted within 14 days of delivery. Items must be unworn with original packaging.</p>",
         "show_related_products": false,
         "related_products_title": "You May Also Like",
