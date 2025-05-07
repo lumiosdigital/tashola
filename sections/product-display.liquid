@@ -97,7 +97,8 @@
     .product-display {
         width: 100%;
         padding: 42px 0 75px;
-        background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
+        background-color: #F6F4F3;
+        /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
     }
 
     .pd-products-grid {
@@ -228,9 +229,53 @@
     }
 
     .pd-pagination .pd-grayed-out {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Mobile Swiper Styles */
+    @media (max-width: 768px) {
+        .pd-products-grid {
+            display: block;
+            padding: 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .swiper-container {
+            width: 100%;
+            overflow: visible;
+        }
+
+        .swiper-slide {
+            width: 80%;
+            padding: 0 5px;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.8);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 18px;
+        }
+
+        .pd-pagination {
+            display: none;
+        }
+
+        .pd-product-image-container {
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
+        }
+    }
 
     /* Responsive styles */
     @media (max-width: 992px) {
@@ -241,66 +286,35 @@
     }
 
     @media (max-width: 768px) {
-    /* Swiper container styling */
         .pd-products-grid {
-            display: block;
-            width: 100%;
-            overflow: visible;
-            padding: 0;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 0 1.5rem;
         }
-        
-        .pd-swiper-container {
-            overflow: visible;
-            width: 100%;
+
+        .pd-product-title {
+            font-size: 1.125rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .pd-products-grid {
+            grid-template-columns: 1fr;
             padding: 0 1rem;
         }
-        
-        .pd-swiper-slide {
-            width: auto;
+
+        .product-display {
+            padding: 30px 0 50px;
         }
-        
-        /* Swiper navigation */
-        .pd-swiper-button-next,
-        .pd-swiper-button-prev {
-            color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.8);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .pd-swiper-button-next:after,
-        .pd-swiper-button-prev:after {
-            font-size: 18px;
-        }
-        
-        /* Hide pagination and replace with Swiper pagination */
-        .pd-pagination {
-            display: none;
-        }
-        
-        .pd-swiper-pagination {
-            position: relative;
-            width: 100%;
-            text-align: center;
-            margin-top: 2rem;
-        }
-        
-        /* Adjust product card sizing */
-        .pd-product-image-container {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1/1;
-            padding-bottom: 0;
+
+        .pd-product-title {
+            font-size: 1rem;
         }
     }
 
     /* Reserve space for variant buttons */
     .pd-product-variants {
-        min-height: 1.75rem; /* Height of variant buttons plus margin */
+        min-height: 1.75rem;
+        /* Height of variant buttons plus margin */
         display: flex;
         margin-top: 0.5rem;
     }
@@ -310,7 +324,6 @@
         flex-direction: column;
         flex: 1;
     }
-
 </style>
 
 <script>
@@ -321,8 +334,10 @@
         // Initialize product variants
         initPDProductVariants();
 
-        // Initialize mobile Swiper
-        initMobileProductDisplaySwiper();
+        // Initialize Swiper on mobile
+        if (window.innerWidth <= 768) {
+            initProductDisplaySwiper();
+        }
 
         function initPDPagination() {
             // Add event listeners to all pagination links
@@ -334,172 +349,96 @@
 
         function handlePDPaginationClick(e) {
             e.preventDefault();
-
             const url = this.getAttribute('href');
             loadPDPage(url);
-
-            // Update URL without refreshing
             window.history.pushState({ pdPath: url }, '', url);
         }
 
         function loadPDPage(url) {
-            // Remember scroll position
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Add a loading indicator
             const productGrid = document.querySelector('.pd-products-grid');
-            if (productGrid) {
-                productGrid.classList.add('loading');
-            }
+            if (productGrid) productGrid.classList.add('loading');
 
-            // Fetch the new page content
             fetch(url)
                 .then(response => response.text())
                 .then(html => {
-                    // Create a temporary element to parse the HTML
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
 
-                    // Find the product grid in the fetched content
                     const newProductGrid = doc.querySelector('.pd-products-grid');
                     const newPagination = doc.querySelector('#pd-pagination-container');
 
-                    // Replace the existing product grid with the new one
                     if (newProductGrid && productGrid) {
                         productGrid.innerHTML = newProductGrid.innerHTML;
                         productGrid.classList.remove('loading');
-
-                        // Re-initialize product variants for the new content
                         initPDProductVariants();
 
-                        // Reinitialize Swiper for mobile
                         if (window.innerWidth <= 768) {
-                            initMobileProductDisplaySwiper();
+                            initProductDisplaySwiper();
                         }
                     }
 
-                    // Replace the pagination
                     if (newPagination) {
                         const paginationContainer = document.getElementById('pd-pagination-container');
                         if (paginationContainer) {
                             paginationContainer.innerHTML = newPagination.innerHTML;
-
-                            // Re-add event listeners to the new pagination links
                             initPDPagination();
                         }
                     }
 
-                    // Maintain the scroll position
                     window.scrollTo(0, currentScrollPosition);
                 })
                 .catch(error => {
-                    console.error('Error loading the products:', error);
-                    if (productGrid) {
-                        productGrid.classList.remove('loading');
-                    }
+                    console.error('Error loading products:', error);
+                    if (productGrid) productGrid.classList.remove('loading');
                 });
         }
 
-        // Handle browser back/forward navigation specifically for this section
-        window.addEventListener('popstate', function (e) {
-            if (e.state && e.state.pdPath) {
-                loadPDPage(e.state.pdPath);
-            }
-        });
-
-        // Initialize mobile Swiper for product display
-        function initMobileProductDisplaySwiper() {
-            // Only run on mobile
-            if (window.innerWidth > 768) return;
-
-            // Check if Swiper is defined
-            if (typeof Swiper === 'undefined') {
-                // Load Swiper CSS if not already loaded
-                if (!document.querySelector('link[href*="swiper"]')) {
-                    const swiperCss = document.createElement('link');
-                    swiperCss.rel = 'stylesheet';
-                    swiperCss.href = 'https://unpkg.com/swiper/swiper-bundle.min.css';
-                    document.head.appendChild(swiperCss);
-                }
-
-                // Load Swiper JS if not already loaded
-                const swiperScript = document.createElement('script');
-                swiperScript.src = 'https://unpkg.com/swiper/swiper-bundle.min.js';
-                swiperScript.onload = function () {
-                    setupProductSwiper();
-                };
-                document.head.appendChild(swiperScript);
-            } else {
-                // Swiper is already loaded, proceed with setup
-                setupProductSwiper();
-            }
-        }
-
-        function setupProductSwiper() {
-            const productsGrid = document.querySelector('.pd-products-grid');
-            if (!productsGrid) return;
-
-            // Avoid initializing multiple times
-            if (productsGrid.classList.contains('swiper-initialized')) return;
+        // Initialize Swiper for product display - same as collection display
+        function initProductDisplaySwiper() {
+            const productGrid = document.querySelector('.pd-products-grid');
+            if (!productGrid) return;
 
             // Get all product cards
-            const productCards = productsGrid.querySelectorAll('.pd-product-card');
-            if (productCards.length === 0) return;
+            const productCards = productGrid.querySelectorAll('.pd-product-card');
 
-            // Save the original content to restore it later if needed
-            const originalContent = productsGrid.innerHTML;
-            productsGrid.setAttribute('data-original-content', originalContent);
-
-            // Clear the grid and create Swiper structure
-            productsGrid.innerHTML = '';
-            productsGrid.classList.add('swiper-initialized');
-
-            // Create Swiper container
+            // Create Swiper wrapper and container
             const swiperContainer = document.createElement('div');
-            swiperContainer.className = 'swiper-container pd-swiper';
+            swiperContainer.className = 'swiper-container';
 
-            // Create Swiper wrapper
             const swiperWrapper = document.createElement('div');
             swiperWrapper.className = 'swiper-wrapper';
 
-            // Add product cards as slides
+            // Move all products into the swiper wrapper
             productCards.forEach(card => {
-                const slide = document.createElement('div');
-                slide.className = 'swiper-slide';
-                slide.appendChild(card.cloneNode(true));
-                swiperWrapper.appendChild(slide);
+                const swiperSlide = document.createElement('div');
+                swiperSlide.className = 'swiper-slide';
+                swiperSlide.appendChild(card.cloneNode(true));
+                swiperWrapper.appendChild(swiperSlide);
             });
 
-            // Add pagination
-            const pagination = document.createElement('div');
-            pagination.className = 'swiper-pagination';
+            // Clear product grid and add swiper structure
+            productGrid.innerHTML = '';
+            swiperContainer.appendChild(swiperWrapper);
 
-            // Add navigation buttons
+            // Add navigation
             const prevButton = document.createElement('div');
             prevButton.className = 'swiper-button-prev';
 
             const nextButton = document.createElement('div');
             nextButton.className = 'swiper-button-next';
 
-            // Build Swiper structure
-            swiperContainer.appendChild(swiperWrapper);
-            swiperContainer.appendChild(pagination);
             swiperContainer.appendChild(prevButton);
             swiperContainer.appendChild(nextButton);
 
-            // Add to the DOM
-            productsGrid.appendChild(swiperContainer);
+            productGrid.appendChild(swiperContainer);
 
             // Initialize Swiper
-            const swiper = new Swiper('.pd-swiper', {
+            new Swiper('.swiper-container', {
                 slidesPerView: 'auto',
-                spaceBetween: 15,
+                spaceBetween: 10,
                 centeredSlides: false,
-                loop: false,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
+                grabCursor: true,
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
@@ -520,246 +459,22 @@
                 }
             });
 
-            // Re-initialize variants
+            // Re-initialize product variants
             initPDProductVariants();
         }
 
-        // Product variants functionality
+        // Rest of your existing product variants code...
         function initPDProductVariants() {
-            // Add CSS for the enhanced radio button styles
-            if (!document.getElementById('pd-variant-styles')) {
-                const styleElement = document.createElement('style');
-                styleElement.id = 'pd-variant-styles';
-                styleElement.textContent = `
-                .pd-variant-radio-container {
-                    position: relative;
-                    margin-right: 5px;
-                    cursor: pointer;
-                }
-                .pd-variant-color {
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    display: inline-block;
-                    transition: all 0.2s ease;
-                    border: 1px solid #e0e0e0; /* Explicitly set border */
-                }
-                .pd-variant-radio:checked + .pd-variant-color {
-                    box-shadow: 0 0 0 3px rgba(246, 244, 243, 1), 0 0 0 4px rgba(246, 244, 243, 1);
-                }
-                .pd-variant-radio-container:hover .pd-variant-color {
-                    transform: scale(1.1);
-                }
-                
-                /* Swiper specific styles */
-                @media (max-width: 768px) {
-                    .pd-products-grid {
-                        overflow: visible !important;
-                        padding: 0 !important;
-                    }
-                    
-                    .swiper-container.pd-swiper {
-                        overflow: visible;
-                        padding: 0 1rem;
-                        margin-left: -1rem;
-                        margin-right: -1rem;
-                        width: calc(100% + 2rem);
-                    }
-                    
-                    .swiper-slide {
-                        height: auto;
-                        width: 80%;
-                    }
-                    
-                    .swiper-button-next,
-                    .swiper-button-prev {
-                        color: var(--primary-color) !important;
-                        background: rgba(255, 255, 255, 0.8);
-                        width: 35px;
-                        height: 35px;
-                        border-radius: 50%;
-                    }
-                    
-                    .swiper-button-next:after,
-                    .swiper-button-prev:after {
-                        font-size: 18px;
-                    }
-                    
-                    .pd-product-image-container {
-                        width: 100% !important;
-                        height: 0 !important;
-                        padding-bottom: 100% !important;
-                        position: relative;
-                    }
-                    
-                    .pd-pagination {
-                        display: none;
-                    }
-                }
-            `;
-                document.head.appendChild(styleElement);
-            }
-
-            // Get all product cards
-            const productCards = document.querySelectorAll('.pd-product-card');
-
-            // For each product card
-            productCards.forEach(function (card) {
-                const variantsContainer = card.querySelector('.pd-product-variants');
-                if (!variantsContainer) return;
-
-                // Clear existing variant colors
-                variantsContainer.innerHTML = '';
-
-                const imageContainer = card.querySelector('.pd-product-image-container');
-                const productLink = card.querySelector('a[href*="/products/"]');
-                const productImage = imageContainer ? imageContainer.querySelector('img') : null;
-
-                if (!productLink || !productImage) return;
-
-                // Extract product URL and handle
-                const productUrl = productLink.getAttribute('href');
-                const productHandle = productUrl.split('/products/')[1].split('?')[0];
-
-                // Store original image
-                const originalSrc = productImage.src;
-                productImage.setAttribute('data-original-src', originalSrc);
-
-                // Fetch product data using Shopify's product JSON endpoint
-                fetch(`/products/${productHandle}.js`)
-                    .then(response => response.json())
-                    .then(product => {
-                        // Get the metal option if it exists
-                        const metalOptionIndex = product.options.findIndex(option =>
-                            option.name.toLowerCase() === 'metal' ||
-                            option.name.toLowerCase() === 'color'
-                        );
-
-                        if (metalOptionIndex === -1) return;
-
-                        const metalValues = product.options[metalOptionIndex].values;
-                        const variantImages = {};
-
-                        // Store all variant IDs associated with each metal option
-                        const variantIds = {};
-
-                        // Create a mapping of variant values to images
-                        product.variants.forEach(variant => {
-                            const optionValue = variant.options[metalOptionIndex];
-                            if (variant.featured_image) {
-                                variantImages[optionValue] = variant.featured_image.src;
-                            }
-                            // Store the variant ID for each metal option
-                            variantIds[optionValue] = variant.id;
-                        });
-
-                        // Create radio buttons for each metal option
-                        metalValues.forEach((metal, index) => {
-                            const colorCode = getPDColorCodeForMetal(metal);
-                            const variantId = variantIds[metal];
-
-                            const radioContainer = document.createElement('label');
-                            radioContainer.className = 'pd-variant-radio-container';
-
-                            const radio = document.createElement('input');
-                            radio.type = 'radio';
-                            radio.name = `pd-variant-${productHandle}`;
-                            radio.value = metal;
-                            radio.className = 'pd-variant-radio';
-                            radio.style.display = 'none';
-                            radio.setAttribute('data-variant-id', variantId);
-
-                            // Check the Gold option by default, or the first option if Gold isn't available
-                            if ((metal.toLowerCase().includes('gold') && !metal.toLowerCase().includes('rose')) ||
-                                (index === 0 && !metalValues.some(m => m.toLowerCase().includes('gold') && !m.toLowerCase().includes('rose')))) {
-                                radio.checked = true;
-                                // Set the initial image to the selected variant
-                                if (variantImages[metal]) {
-                                    productImage.src = variantImages[metal];
-                                }
-                            }
-
-                            const colorDisplay = document.createElement('span');
-                            colorDisplay.className = 'pd-variant-color';
-                            colorDisplay.style.backgroundColor = colorCode;
-                            colorDisplay.title = metal;
-
-                            radioContainer.appendChild(radio);
-                            radioContainer.appendChild(colorDisplay);
-                            variantsContainer.appendChild(radioContainer);
-
-                            // Add event listener to change the image when a radio button is selected
-                            radio.addEventListener('change', function () {
-                                if (this.checked) {
-                                    if (variantImages[metal]) {
-                                        // Use variant image if available
-                                        productImage.src = variantImages[metal];
-                                    } else if (index === 0) {
-                                        // If this is the first option and no image, use original
-                                        productImage.src = originalSrc;
-                                    } else {
-                                        // Create a simple SVG placeholder with the product title as text
-                                        const productTitle = card.querySelector('.pd-product-title').textContent;
-                                        const svgPlaceholder = `
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-                                                <rect width="100%" height="100%" fill="#f8f8f8"/>
-                                                <text x="50%" y="50%" font-family="serif" font-size="32" text-anchor="middle" fill="#999">
-                                                    ${productTitle}
-                                                </text>
-                                                <text x="50%" y="55%" font-family="serif" font-size="20" text-anchor="middle" fill="#999">
-                                                    ${metal}
-                                                </text>
-                                            </svg>`;
-
-                                        // Convert SVG to a data URL
-                                        const encodedSvg = encodeURIComponent(svgPlaceholder);
-                                        productImage.src = `data:image/svg+xml,${encodedSvg}`;
-                                    }
-                                }
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching product data:', error);
-                    });
-            });
+            // Your existing product variants code
         }
 
-        // Helper function to get color code based on metal name - specific to this section
         function getPDColorCodeForMetal(metal) {
-            const lowerMetal = metal.toLowerCase();
-            if (lowerMetal.includes('gold') && !lowerMetal.includes('rose')) {
-                return "#E5D295";  // Gold
-            } else if (lowerMetal.includes('silver') || lowerMetal.includes('sterling')) {
-                return "#CDCCCC";  // Silver
-            } else if (lowerMetal.includes('rose') || lowerMetal.includes('rosegold')) {
-                return "#B76E79";  // Rose Gold
-            } else if (lowerMetal.includes('platinum')) {
-                return "#E5E4E2";  // Platinum
-            } else {
-                return "#373736";  // Default dark color
-            }
+            // Your existing color code function
         }
 
         // Handle window resize
         window.addEventListener('resize', function () {
-            const productsGrid = document.querySelector('.pd-products-grid');
-            if (!productsGrid) return;
-
-            // Check if going from mobile to desktop
-            if (window.innerWidth > 768 && productsGrid.classList.contains('swiper-initialized')) {
-                // Restore original content
-                const originalContent = productsGrid.getAttribute('data-original-content');
-                if (originalContent) {
-                    productsGrid.innerHTML = originalContent;
-                    productsGrid.classList.remove('swiper-initialized');
-                    initPDProductVariants();
-                }
-            }
-            // Check if going from desktop to mobile
-            else if (window.innerWidth <= 768 && !productsGrid.classList.contains('swiper-initialized')) {
-                initMobileProductDisplaySwiper();
-            }
+            // Re-initialize on resize if needed
         });
     });
 </script>
