@@ -389,62 +389,6 @@
             });
         }
 
-        // Add this to sections/main-product.liquid, replacing the previous initBuyNowFunctionality function
-
-        function initBuyNowFunctionality() {
-            const buyNowButton = document.querySelector('[data-buy-now]');
-            const productForm = document.querySelector('[data-product-form]');
-
-            if (!buyNowButton || !productForm) return;
-
-            buyNowButton.addEventListener('click', function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-
-                // Get the variant ID and quantity
-                const variantId = document.getElementById('VariantId').value;
-                const quantity = document.querySelector('[data-quantity-input]')?.value || 1;
-
-                // Add loading state to button
-                buyNowButton.classList.add('loading');
-                const originalText = buyNowButton.textContent;
-                buyNowButton.textContent = 'PROCESSING...';
-
-                // Direct checkout using fetch
-                fetch('/cart/clear.js', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Failed to clear cart');
-                        return fetch('/cart/add.js', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                items: [{
-                                    id: variantId,
-                                    quantity: quantity
-                                }]
-                            })
-                        });
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Failed to add item');
-                        window.location.href = '/checkout';
-                    })
-                    .catch(error => {
-                        console.error('Error in Buy Now process:', error);
-                        buyNowButton.textContent = originalText;
-                        buyNowButton.classList.remove('loading');
-                        alert('There was an error processing your checkout. Please try again.');
-                    });
-            });
-        }
-
         function updateCartCount() {
             fetch('/cart.js')
                 .then(response => response.json())
@@ -594,6 +538,60 @@
                 .catch(error => {
                     console.error('Error updating cart item:', error);
                 });
+        }
+
+                function initBuyNowFunctionality() {
+            const buyNowButton = document.querySelector('[data-buy-now]');
+            const productForm = document.querySelector('[data-product-form]');
+
+            if (!buyNowButton || !productForm) return;
+
+            buyNowButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Get the variant ID and quantity
+                const variantId = document.getElementById('VariantId').value;
+                const quantity = document.querySelector('[data-quantity-input]')?.value || 1;
+
+                // Add loading state to button
+                buyNowButton.classList.add('loading');
+                const originalText = buyNowButton.textContent;
+                buyNowButton.textContent = 'PROCESSING...';
+
+                // Direct checkout using fetch
+                fetch('/cart/clear.js', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to clear cart');
+                        return fetch('/cart/add.js', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                items: [{
+                                    id: variantId,
+                                    quantity: quantity
+                                }]
+                            })
+                        });
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to add item');
+                        window.location.href = '/checkout';
+                    })
+                    .catch(error => {
+                        console.error('Error in Buy Now process:', error);
+                        buyNowButton.textContent = originalText;
+                        buyNowButton.classList.remove('loading');
+                        alert('There was an error processing your checkout. Please try again.');
+                    });
+            });
         }
     });
 </script>
