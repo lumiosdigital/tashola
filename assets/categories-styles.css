@@ -20,7 +20,7 @@ a {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* Specific row heights - Row 3 (the third row) is taller */
-    grid-template-rows: 114.3vh 114.3vh 128vh 114.3vh;
+    grid-template-rows: 100vh 100vh 100vh 100vh;
     width: 100%;
     background-color: var(--color-background);
 }
