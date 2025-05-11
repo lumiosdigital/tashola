@@ -12,7 +12,7 @@
     "hero-banner": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/Group_48_1.png",
+        "image": "shopify://shop_images/hero-image.png",
         "mobile_image": "shopify://shop_images/hero-image.png",
         "heading": "Jewelry That Speaks for You",
         "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
@@ -24,7 +24,7 @@
       "type": "categories",
       "settings": {
         "selected_collection": "frontpage",
-        "featured_collection": "frontpage",
+        "featured_collection": "neptune",
         "collection_banner_image": "shopify://shop_images/jewelry.png",
         "earrings_image": "shopify://shop_images/earrings-category.png",
         "rings_image": "shopify://shop_images/rings-category.png",
@@ -37,7 +37,7 @@
     "product-display": {
       "type": "product-display",
       "settings": {
-        "selected_collection": "frontpage"
+        "selected_collection": "neptune"
       }
     },
     "showroom-section": {
