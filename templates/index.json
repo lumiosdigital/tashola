@@ -51,12 +51,31 @@
             "collection": "rings",
             "collection_handle": "all"
           }
+        },
+        "category_row_xgHKCM": {
+          "type": "category_row",
+          "settings": {
+            "category_title": "Necklaces",
+            "category_image": "shopify://shop_images/necklaces-category.png",
+            "collection": "frontpage",
+            "collection_handle": "all"
+          }
+        },
+        "category_row_AC48Ya": {
+          "type": "category_row",
+          "settings": {
+            "category_title": "Category",
+            "collection": "",
+            "collection_handle": "all"
+          }
         }
       },
       "block_order": [
         "collection_display_JMjN3T",
         "category_row_AHCtgE",
-        "category_row_6Udekz"
+        "category_row_6Udekz",
+        "category_row_xgHKCM",
+        "category_row_AC48Ya"
       ],
       "settings": {}
     },
