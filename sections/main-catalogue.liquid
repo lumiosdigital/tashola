@@ -1,0 +1,363 @@
+<div class="breadcrumbs-container">
+    {% render 'breadcrumbs' %}
+</div>
+{% if collection.description != blank %}
+<div class="catalogue-header">
+    <h1 class="catalogue-title">{{ collection.title }}</h1>
+    <div class="catalogue-description">{{ collection.description }}</div>
+</div>
+{% else %}
+<div class="catalogue-header">
+    <h1 class="catalogue-title">{{ collection.title }}</h1>
+</div>
+{% endif %}
+
+<div class="catalogue-container" data-catalogue-container>
+    <!-- Filter button (visible on all devices) -->
+    <div class="mobile-filter-button-wrapper">
+        <button class="filter-button" aria-label="Show filters" data-filter-trigger>
+            {% render 'icon-filters' %}
+            <span>Filters</span>
+        </button>
+    </div>
+
+    <!-- Main Catalogue Grid and Filters Container -->
+    <div class="catalogue-layout">
+        <!-- Catalogue Filters - Slide from left -->
+        <div class="catalogue-filters-container" data-catalogue-filters aria-hidden="true">
+            <div class="catalogue-filters-header">
+                <h2>Filters</h2>
+                <button class="catalogue-filters-close" aria-label="Close filters" data-filter-close>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="catalogue-filters">
+                <form class="catalogue-filters-form" data-filter-form>
+                    <!-- Material filter -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Material:</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-sterling-silver" name="filter.v.option.material"
+                                    value="Sterling Silver">
+                                <label for="material-sterling-silver">Sterling Silver</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-gold-plated" name="filter.v.option.material"
+                                    value="Gold Plated">
+                                <label for="material-gold-plated">Gold Plated</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-pearl" name="filter.v.option.material"
+                                    value="Pearl">
+                                <label for="material-pearl">Pearl</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-gemstones" name="filter.v.option.material"
+                                    value="Gemstones">
+                                <label for="material-gemstones">Gemstones</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-semi-precious" name="filter.v.option.material"
+                                    value="Semi-precious Stone">
+                                <label for="material-semi-precious">Semi-precious Stone</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-beaded" name="filter.v.option.material"
+                                    value="Beaded">
+                                <label for="material-beaded">Beaded</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Color filter -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Color:</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="color-gold" name="filter.v.option.color" value="Gold">
+                                <label for="color-gold">Gold</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="color-silver" name="filter.v.option.color" value="Silver">
+                                <label for="color-silver">Silver</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Range filter -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Price Range:</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="price-under-20" name="filter.v.price" value="-20">
+                                <label for="price-under-20">Under £20</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="price-20-50" name="filter.v.price" value="20:50">
+                                <label for="price-20-50">£20 - £50</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="price-50-100" name="filter.v.price" value="50:100">
+                                <label for="price-50-100">£50 - £100</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="price-over-100" name="filter.v.price" value="100-">
+                                <label for="price-over-100">£100+</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Style filter -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Style:</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="style-minimalist" name="filter.v.option.style"
+                                    value="Minimalist">
+                                <label for="style-minimalist">Minimalist</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="style-statement" name="filter.v.option.style"
+                                    value="Statement">
+                                <label for="style-statement">Statement</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="style-classic" name="filter.v.option.style" value="Classic">
+                                <label for="style-classic">Classic</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="style-trendy" name="filter.v.option.style" value="Trendy">
+                                <label for="style-trendy">Trendy</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collections filter -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Collections:</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-stellar" name="filter.p.tag"
+                                    value="Stellar Collection">
+                                <label for="collection-stellar">Stellar Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-neptune" name="filter.p.tag"
+                                    value="Neptune Collection">
+                                <label for="collection-neptune">Neptune Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-celestial" name="filter.p.tag"
+                                    value="Celestial Collection">
+                                <label for="collection-celestial">Celestial Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-spartan" name="filter.p.tag"
+                                    value="Spartan Collection">
+                                <label for="collection-spartan">Spartan Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-deia" name="filter.p.tag" value="Deia Collection">
+                                <label for="collection-deia">Deia Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-aurelia" name="filter.p.tag"
+                                    value="Aurelia Collection">
+                                <label for="collection-aurelia">Aurelia Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-iris" name="filter.p.tag" value="Iris Collection">
+                                <label for="collection-iris">Iris Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="collection-charmed" name="filter.p.tag"
+                                    value="Charmed Collection">
+                                <label for="collection-charmed">Charmed Collection</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-buttons">
+                        <button type="submit" class="btn filter-apply-button">Apply Filters</button>
+                        <button type="reset" class="btn filter-clear-button">Clear Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="catalogue-grid-container">
+            <div class="catalogue-grid-wrapper">
+                <ul class="catalogue-grid" data-catalogue-grid>
+                    {% for product in collection.products %}
+                    {% assign grid_position = forloop.index %}
+
+                    {% if grid_position == 8 %}
+                    <!-- Catalogue Banner 1 - 4th column, 2nd row -->
+                    <li class="catalogue-banner banner-1">
+                        <a href="{{ section.settings.banner_1_link | default: routes.collections_url }}"
+                            class="catalogue-banner-link">
+                            <div class="catalogue-banner-image-wrapper">
+                                {% if section.settings.banner_1_image %}
+                                <img src="{{ section.settings.banner_1_image | img_url: 'master' }}"
+                                    alt="{{ section.settings.banner_1_title }}" class="catalogue-banner-image">
+                                {% else %}
+                                <div class="catalogue-banner-image" style="background-color: #e0e0e0;"></div>
+                                {% endif %}
+                            </div>
+                            <div class="catalogue-banner-content">
+                                <h3 class="catalogue-banner-title">
+                                    {% if section.settings.banner_1_title contains 'Collection' %}
+                                    {% assign title_parts = section.settings.banner_1_title | split: ' Collection' %}
+                                    {{ title_parts[0] }} <em>Collection</em>
+                                    {% else %}
+                                    {{ section.settings.banner_1_title }}
+                                    {% endif %}
+                                </h3>
+                                <p class="catalogue-banner-text">{{ section.settings.banner_1_text }}</p>
+                            </div>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if grid_position == 12 %}
+                    <!-- Catalogue Banner 2 - 1st column, 4th row -->
+                    <li class="catalogue-banner banner-2">
+                        <a href="{{ section.settings.banner_2_link | default: routes.collections_url }}"
+                            class="catalogue-banner-link">
+                            <div class="catalogue-banner-image-wrapper">
+                                {% if section.settings.banner_2_image %}
+                                <img src="{{ section.settings.banner_2_image | img_url: 'master' }}"
+                                    alt="{{ section.settings.banner_2_title }}" class="catalogue-banner-image">
+                                {% else %}
+                                <div class="catalogue-banner-image" style="background-color: #e0e0e0;"></div>
+                                {% endif %}
+                            </div>
+                            <div class="catalogue-banner-content">
+                                <h3 class="catalogue-banner-title">
+                                    {% if section.settings.banner_2_title contains 'Collection' %}
+                                    {% assign title_parts = section.settings.banner_2_title | split: ' Collection' %}
+                                    {{ title_parts[0] }} <em>Collection</em>
+                                    {% else %}
+                                    {{ section.settings.banner_2_title }}
+                                    {% endif %}
+                                </h3>
+                                <p class="catalogue-banner-text">{{ section.settings.banner_2_text }}</p>
+                            </div>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    <!-- Product Card -->
+                    <li class="catalogue-product">
+                        <a href="{{ product.url }}" class="product-card-link">
+                            <div class="product-card-image-wrapper">
+                                {% if product.featured_image %}
+                                <img src="{{ product.featured_image | img_url: 'medium' }}"
+                                    alt="{{ product.title | escape }}" class="product-card-image">
+                                {% else %}
+                                <div class="product-card-image-placeholder">{{ product.title | slice: 0, 1 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="product-card-content">
+                                <h3 class="product-card-title">{{ product.title }}</h3>
+                                <p class="product-card-price">
+                                    {% if product.compare_at_price > product.price %}
+                                    <span class="product-card-sale-price">{{ product.price | money }}</span>
+                                    <s class="product-card-compare-price">{{ product.compare_at_price | money }}</s>
+                                    {% else %}
+                                    <span class="product-card-regular-price">{{ product.price | money }}</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Load More Products (for infinite scroll implementation) -->
+            <div class="catalogue-load-more" data-load-more>
+                {% if paginate.next %}
+                <button class="load-more-button" data-load-more-button>Load More</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="catalogue-filters-backdrop" data-filters-backdrop></div>
+
+{% schema %}
+{
+"name": "Catalogue",
+"settings": [
+{
+"type": "header",
+"content": "Catalogue Layout"
+},
+{
+"type": "range",
+"id": "products_per_page",
+"label": "Products per page",
+"min": 8,
+"max": 48,
+"step": 4,
+"default": 16
+},
+{
+"type": "header",
+"content": "Catalogue Banners"
+},
+{
+"type": "image_picker",
+"id": "banner_1_image",
+"label": "Banner 1 Image"
+},
+{
+"type": "text",
+"id": "banner_1_title",
+"label": "Banner 1 Title",
+"default": "Deia Collection"
+},
+{
+"type": "text",
+"id": "banner_1_text",
+"label": "Banner 1 Text",
+"default": "Classic earrings to embody timeless elegance"
+},
+{
+"type": "url",
+"id": "banner_1_link",
+"label": "Banner 1 Link"
+},
+{
+"type": "image_picker",
+"id": "banner_2_image",
+"label": "Banner 2 Image"
+},
+{
+"type": "text",
+"id": "banner_2_title",
+"label": "Banner 2 Title",
+"default": "Stellar Collection"
+},
+{
+"type": "text",
+"id": "banner_2_text",
+"label": "Banner 2 Text",
+"default": "Embrace the celestial beauty"
+},
+{
+"type": "url",
+"id": "banner_2_link",
+"label": "Banner 2 Link"
+}
+]
+}
+{% endschema %}

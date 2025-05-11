@@ -25,6 +25,7 @@
   {{ 'mega-menu.css' | asset_url | stylesheet_tag }}
   {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
   {{ 'search-overlay.css' | asset_url | stylesheet_tag }}
+  {{ 'catalogue-styles.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}
 
   <!-- Swiper JS -->
@@ -56,6 +57,7 @@
   {% render 'search-overlay' %}
 
   {{ 'cart-drawer.js' | asset_url | script_tag }}
+  {{ 'catalogue-filters.js' | asset_url | script_tag }}
 </body>
 
 </html>

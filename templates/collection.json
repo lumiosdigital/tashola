@@ -1,7 +1,15 @@
+
 {
   "sections": {
     "main": {
-      "type": "main-collection"
+      "type": "main-catalogue",
+      "settings": {
+        "products_per_page": 20,
+        "banner_1_title": "Deia Collection",
+        "banner_1_text": "Classic earrings to embody timeless elegance",
+        "banner_2_title": "Stellar Collection",
+        "banner_2_text": "Embrace the celestial beauty"
+      }
     }
   },
   "order": [

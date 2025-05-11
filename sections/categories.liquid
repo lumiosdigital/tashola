@@ -28,7 +28,7 @@ Simplified categories section with flexible height and proper display of all blo
                         <div class="category-image"
                             style="background-image: url('{% if block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'large' }}{% endif %}');">
                         </div>
-                        <h3 class="collection-dynamic-title">{{ block.settings.selected_collection.title }}<span class="collection-subtitle">Collection</span></h3>
+                        <h3 class="collection-dynamic-title">{{ block.settings.selected_collection.title }}<span class="collection-subtitle"> Collection</span></h3>
                     </div>
                 </a>
             </div>
@@ -256,7 +256,7 @@ Simplified categories section with flexible height and proper display of all blo
         font-family: var(--font-heading);
         font-weight: 400;
         font-style: italic;
-        display: block;
+        /* display: block; */
     }
 
     /* Product collection */
