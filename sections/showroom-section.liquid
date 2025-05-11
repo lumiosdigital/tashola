@@ -1,20 +1,20 @@
-
-    <div class="showroom-grid">
-        <div class="showroom-block showroom-text-block">
-            <div class="showroom-content">
-                <h2 class="showroom-title">{{ section.settings.title }}</h2>
-                <div class="showroom-address-container">
-                    <div class="showroom-icon">
-                        {% render 'icon-location' %}
-                    </div>
-                    <div class="showroom-address">
-                        <p class="showroom-name">{{ section.settings.showroom_name }}</p>
-                        <p class="showroom-location">{{ section.settings.address }}</p>
-                    </div>
+<div class="showroom-grid">
+    <div class="showroom-block showroom-text-block">
+        <div class="showroom-content">
+            <h2 class="showroom-title">{{ section.settings.title }}</h2>
+            <div class="showroom-address-container">
+                <div class="showroom-icon">
+                    {% render 'icon-location' %}
+                </div>
+                <div class="showroom-address">
+                    <p class="showroom-name">{{ section.settings.showroom_name }}</p>
+                    <p class="showroom-location">{{ section.settings.address }}</p>
                 </div>
             </div>
         </div>
-        <div class="showroom-block showroom-image-block">
+    </div>
+    <div class="showroom-block showroom-image-block">
+        <a href="{{ section.settings.showroom_link }}" class="showroom-image-link">
             <div class="showroom-image-container">
                 {% if section.settings.showroom_image %}
                 <img src="{{ section.settings.showroom_image | img_url: 'master' }}"
@@ -23,14 +23,13 @@
                 <div class="showroom-placeholder">No image selected</div>
                 {% endif %}
             </div>
-        </div>
-    </div>    
+        </a>
+    </div>
+</div>
 
 
 
 <style>
-
-    
     .showroom-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -40,13 +39,14 @@
     .showroom-block {
         position: relative;
         width: 100%;
-        height: 114.3vh;
+        height: 100vh;
         /* Same as category blocks */
         overflow: hidden;
     }
 
     .showroom-text-block {
-        background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
+        background-color: #F6F4F3;
+        /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -127,6 +127,18 @@
         overflow: hidden;
     }
 
+    .showroom-image-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        transition: transform 0.5s ease;
+    }
+
+    .showroom-image-link:hover .showroom-image {
+        transform: scale(1.05);
+    }
+
     .showroom-image-container {
         width: 100%;
         height: 100%;
@@ -138,6 +150,7 @@
         height: 100%;
         object-fit: cover;
         display: block;
+        transition: transform 1s ease;
     }
 
     .showroom-placeholder {
@@ -202,6 +215,12 @@
 "type": "image_picker",
 "id": "showroom_image",
 "label": "Showroom Image"
+},
+{
+"type": "url",
+"id": "showroom_link",
+"label": "Showroom Link",
+"info": "When clicked, the showroom image will redirect to this URL"
 }
 ],
 "presets": [

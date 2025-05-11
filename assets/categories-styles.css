@@ -20,7 +20,7 @@ a {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* Specific row heights - Row 3 (the third row) is taller */
-    grid-template-rows: 100vh 100vh 100vh 100vh;
+    /* grid-template-rows: 100vh 100vh 100vh 100vh; */
     width: 100%;
     background-color: var(--color-background);
 }
@@ -37,7 +37,7 @@ a {
 /* Special height for row 3 blocks */
 .category-block.empty,
 .category-block.collection-block {
-    height: 128vh;
+    height: 100vh;
     background-color: var(--color-background);
 }
 
@@ -140,7 +140,7 @@ h3.collection-dynamic-title {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    min-height: 52rem;
+    /* min-height: 52rem; */
     transition: opacity 0.3s ease;
     width: 100%;
     /* padding: 0 1rem; */

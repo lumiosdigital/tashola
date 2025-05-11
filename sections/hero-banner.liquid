@@ -1,5 +1,14 @@
 <!-- HERO BANNER -->
-<section class="hero-banner">
+<section class="hero-banner {% if section.settings.background_type == 'video' %}hero-banner--video{% endif %}">
+    {% if section.settings.background_type == 'video' and section.settings.video != blank %}
+    <div class="hero-banner__video-container">
+        {{ section.settings.video | video_tag: class: 'hero-banner__video-background', autoplay: true, loop: true,
+        muted: true, playsinline: true }}
+        <div class="hero-banner__overlay"
+            style="background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity }});"></div>
+    </div>
+    {% endif %}
+
     <div class="hero-banner__content">
         <h1>{{ section.settings.heading }}</h1>
         <h2>{{ section.settings.subheading }}</h2>
@@ -23,16 +32,49 @@ position: relative;
 width: 100%;
 height: calc(100vh - var(--header-height));
 min-height: 40rem;
-background-size: cover;
-background-position: center top;
-background-repeat: no-repeat;
 overflow: hidden;
 margin-top: var(--header-height);
 padding: 0 2rem;
 }
 
+{% if section.settings.background_type == 'image' %}
 .hero-banner {
 background-image: url({{ section.settings.image | img_url: 'master' }});
+background-size: cover;
+background-position: center top;
+background-repeat: no-repeat;
+}
+{% endif %}
+
+/* Video background styles */
+.hero-banner__video-container {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: -1;
+overflow: hidden;
+}
+
+.hero-banner__video-background {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 100%;
+height: 100%;
+min-width: 100%;
+min-height: 100%;
+transform: translate(-50%, -50%);
+object-fit: cover;
+}
+
+.hero-banner__overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
 }
 
 .hero-banner__content {
@@ -41,6 +83,7 @@ max-width: 27rem;
 text-align: left;
 color: white;
 margin-left: 10%;
+z-index: 2;
 }
 
 .hero-banner__content h1 {
@@ -106,7 +149,9 @@ max-width: 24rem;
 .hero-banner {
 min-height: 35rem;
 align-items: center;
+{% if section.settings.background_type == 'image' %}
 background-image: url({{ section.settings.mobile_image | default: section.settings.image | img_url: 'master' }});
+{% endif %}
 }
 
 .hero-banner__content {
@@ -154,18 +199,51 @@ min-height: 30rem;
 {% schema %}
 {
 "name": "Hero Section",
-"limit": 1,
 "settings": [
+{
+"type": "radio",
+"id": "background_type",
+"label": "Background Type",
+"options": [
+{
+"value": "image",
+"label": "Image"
+},
+{
+"value": "video",
+"label": "Video"
+}
+],
+"default": "image"
+},
 {
 "type": "image_picker",
 "id": "image",
-"label": "Hero Image (Desktop)"
+"label": "Background Image",
+"info": "Used as background when Image is selected"
 },
 {
 "type": "image_picker",
 "id": "mobile_image",
-"label": "Hero Image (Mobile)",
-"info": "Optional. If not provided, desktop image will be used on mobile devices."
+"label": "Mobile Background Image",
+"info": "Optional. If not provided, desktop image will be used on mobile devices.",
+"info": "Only used when Image is selected"
+},
+{
+"type": "video",
+"id": "video",
+"label": "Background Video",
+"info": "Upload or select a video. Only used when Video is selected."
+},
+{
+"type": "range",
+"id": "overlay_opacity",
+"label": "Overlay Opacity",
+"min": 0,
+"max": 0.9,
+"step": 0.1,
+"default": 0.3,
+"info": "Adds a dark overlay to improve text visibility on video backgrounds"
 },
 {
 "type": "text",
