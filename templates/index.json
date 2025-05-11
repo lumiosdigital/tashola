@@ -12,8 +12,11 @@
     "hero-banner": {
       "type": "hero-banner",
       "settings": {
+        "background_type": "image",
         "image": "shopify://shop_images/hero-image.png",
         "mobile_image": "shopify://shop_images/hero-image.png",
+        "video": "shopify://files/videos/8512972-hd_1920_1080_30fps.mp4",
+        "overlay_opacity": 0.3,
         "heading": "Jewelry That Speaks for You",
         "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
         "button_text": "SHOP NOW",
@@ -22,17 +25,39 @@
     },
     "categories": {
       "type": "categories",
-      "settings": {
-        "selected_collection": "frontpage",
-        "featured_collection": "neptune",
-        "collection_banner_image": "shopify://shop_images/jewelry.png",
-        "earrings_image": "shopify://shop_images/earrings-category.png",
-        "rings_image": "shopify://shop_images/rings-category.png",
-        "necklaces_image": "shopify://shop_images/necklaces-category.png",
-        "bracelets_image": "shopify://shop_images/bracelets-category.png",
-        "personalization_image": "shopify://shop_images/personalization-category.png",
-        "charms_image": "shopify://shop_images/charms-category.png"
-      }
+      "blocks": {
+        "collection_display_kQCaCw": {
+          "type": "collection_display",
+          "settings": {
+            "layout_direction": "banner-left",
+            "selected_collection": "",
+            "featured_collection": ""
+          }
+        },
+        "category_row_w7MeRr": {
+          "type": "category_row",
+          "settings": {
+            "category_title": "Category",
+            "collection": "",
+            "collection_handle": "all"
+          }
+        },
+        "category_row_XQynd6": {
+          "type": "category_row",
+          "settings": {
+            "category_title": "Rings",
+            "category_image": "shopify://shop_images/rings-category.png",
+            "collection": "rings",
+            "collection_handle": "all"
+          }
+        }
+      },
+      "block_order": [
+        "collection_display_kQCaCw",
+        "category_row_w7MeRr",
+        "category_row_XQynd6"
+      ],
+      "settings": {}
     },
     "product-display": {
       "type": "product-display",
@@ -46,7 +71,8 @@
         "title": "Our Showroom",
         "showroom_name": "Tashola Showroom",
         "address": "123 Oxford Street, London, W1D 1LT, United Kingdom",
-        "showroom_image": "shopify://shop_images/showroom-image.png"
+        "showroom_image": "shopify://shop_images/showroom-image.png",
+        "showroom_link": ""
       }
     }
   },
