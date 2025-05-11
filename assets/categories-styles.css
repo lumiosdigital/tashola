@@ -19,8 +19,6 @@ a {
 .category-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* Specific row heights - Row 3 (the third row) is taller */
-    /* grid-template-rows: 100vh 100vh 100vh 100vh; */
     width: 100%;
     background-color: var(--color-background);
 }
@@ -30,7 +28,6 @@ a {
     position: relative;
     width: 100%;
     height: 100%;
-    /* Changed to 100% to respect grid container's row sizing */
     overflow: hidden;
 }
 
@@ -95,6 +92,7 @@ a {
     font-style: normal;
 }
 
+/* Revert to original collection title styling */
 h3.collection-dynamic-title {
     position: absolute;
     color: var(--color-white);
@@ -134,16 +132,13 @@ h3.collection-dynamic-title {
     justify-content: flex-start;
 }
 
-/* UPDATED: Changed from grid to flexbox for better control over card sizes */
+/* Product grid - fixed layout with proper spacing */
 .product-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    /* min-height: 52rem; */
-    transition: opacity 0.3s ease;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
     width: 100%;
-    /* padding: 0 1rem; */
+    padding: 0.5rem;
 }
 
 .product-grid.loading {
@@ -155,39 +150,31 @@ h3.collection-dynamic-title {
     content: "Loading...";
     position: absolute;
     top: 50%;
-    left: 63%;
+    left: 50%;
     transform: translate(-50%, -50%);
     font-family: var(--font-heading);
     font-size: 1.25rem;
     color: var(--color-text);
 }
 
-/* UPDATED: Product card styles with fixed width calculation */
+/* Product card styles */
 .product-card {
-    width: calc(50% - 10px); /* 50% width minus half the gap */
-    max-width: 18.75rem;
-    flex: 0 0 auto; /* Don't grow, don't shrink, use auto basis */
+    width: 100%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 1.5rem;
 }
 
-/* ADDED: Make sure cards remain centered with an even number in the last row */
-.product-grid::after {
-    content: "";
-    flex: 0 0 auto;
-    width: calc(50% - 10px);
-    max-width: 18.75rem;
-    margin-left: auto;
-    margin-right: auto;
-}
-
+/* Fixed rectangular image containers */
 .product-image-container {
     width: 100%;
     height: 0;
-    padding-bottom: 100%;
+    padding-bottom: 75%;
+    /* 4:3 aspect ratio for rectangular images */
     position: relative;
     overflow: hidden;
-    /* margin-bottom: 1.25rem; */
+    margin-bottom: 1rem;
+    background-color: #f5f3ef;
 }
 
 .product-image {
@@ -213,20 +200,22 @@ h3.collection-dynamic-title {
     opacity: 1;
 }
 
+/* Product info styles */
 .product-info {
     width: 100%;
-    padding: 0 0.9375rem;
+    padding: 0 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 .product-title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     text-align: left;
     font-family: var(--font-heading);
     color: var(--color-text);
     font-weight: 400;
+    margin-bottom: 0.25rem;
 }
 
 .product-price {
@@ -253,6 +242,7 @@ h3.collection-dynamic-title {
     display: flex;
     gap: 0.5rem;
     margin-top: 0.5rem;
+    min-height: 1.75rem;
 }
 
 .variant-color {
@@ -260,7 +250,6 @@ h3.collection-dynamic-title {
     height: 1.125rem;
     border-radius: 50%;
     border: 1px solid #e0e0e0 !important;
-    /* Force this color */
     transition: transform 0.2s ease;
     cursor: pointer;
 }
@@ -286,12 +275,11 @@ h3.collection-dynamic-title {
     transform: scale(1.1);
 }
 
-/* Pagination */
+/* Pagination styling - centered */
 .pagination {
     display: flex;
-    justify-content: flex-end;
-    margin-right: 3.3rem;
-    margin-top: 1.5rem;
+    justify-content: center;
+    margin: 2rem auto 1rem;
 }
 
 .pagination .prev,
@@ -315,16 +303,11 @@ h3.collection-dynamic-title {
 }
 
 /* Accessibility focus styles */
-/* Modify or remove focus styles */
 a:focus,
 button:focus {
     outline: none;
-    /* Remove outline completely */
-    /* OR make it more subtle */
-    /* outline: 1px solid rgba(255, 163, 139, 0.3); */
 }
 
-/* If you still want focus indicators for keyboard navigation but not mouse clicks */
 :focus:not(:focus-visible) {
     outline: none;
 }
@@ -392,10 +375,6 @@ button:focus {
         margin-right: 2rem;
     }
 
-    .product-card {
-        max-width: 16rem;
-    }
-
     .category-title,
     .collection-dynamic-title,
     .collection-title,
@@ -424,7 +403,8 @@ button:focus {
     }
 
     .product-grid {
-        gap: 15px; /* Slightly reduced gap on mobile */
+        gap: 15px;
+        /* Slightly reduced gap on mobile */
         display: block;
         position: relative;
         overflow: hidden;
@@ -432,69 +412,61 @@ button:focus {
         margin: 0 auto;
     }
 
-        .swiper-container {
-            overflow: visible;
-            width: 100%;
-        }
-    
-        .swiper-slide {
-            width: 50%;
-            padding: 0 5px;
-        }
-    
-        /* Swiper navigation */
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: var(--color-text);
-            background: rgba(255, 255, 255, 0.8);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-            font-size: 18px;
-        }
-    
-        /* Hide pagination and replace with Swiper */
-        .pagination {
-            display: none;
-        }
-    
-        /* Adjust banner image height on mobile */
-        .collection-banner {
-            height: 70vh;
-        }
-    
-        /* Make sure variant dots are visible */
-        .product-variants {
-            margin-bottom: 1rem;
-        }
-    
-    .product-card {
-        width: calc(50% - 7.5px); /* Adjusted for 15px gap */
-        max-width: 16rem;
-    }
-    
-    .product-grid::after {
-        width: calc(50% - 7.5px);
-        max-width: 16rem;
+    .swiper-container {
+        overflow: visible;
+        width: 100%;
     }
 
-    .category-title,
-    .collection-dynamic-title,
-    .collection-title,
-    h3.collection-dynamic-title {
-        font-size: 2rem;
-        margin-bottom: 3rem;
+    /* Adjust swiper slides to show TWO at once */
+    .swiper-slide {
+        width: 47%;
+        /* Show approximately two slides at once */
+        padding: 0 5px;
+    }
+
+    /* Swiper navigation */
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: var(--color-text);
+        background: rgba(255, 255, 255, 0.8);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 18px;
+    }
+
+    /* Hide pagination and replace with Swiper */
+    .pagination {
+        display: none;
+    }
+
+    /* Adjust banner image height on mobile */
+    .collection-banner {
+        height: 70vh;
+    }
+
+    /* Make sure variant dots are visible */
+    .product-variants {
+        margin-bottom: 1rem;
+    }
+
+    .product-card {
+        width: 100%;
     }
 
     .product-title {
-        font-size: 1.125rem;
+        font-size: 0.9rem;
+    }
+
+    .product-price {
+        font-size: 0.85rem;
     }
 
     .quick-view-button {
@@ -543,34 +515,19 @@ button:focus {
     }
 
     .product-title {
-        font-size: 1rem;
-    }
-    
-    .product-card {
-        width: 100%;
-        max-width: 18.75rem;
-    }
-    
-    .product-grid::after {
-        display: none;
+        font-size: 0.8rem;
     }
 
+    /* Adjust swiper for small screens */
     .swiper-slide {
-        width: 80%;
+        width: 47%;
+        /* Show two slides at once */
     }
-    
+
     .category-block.collection-block,
     .collection-banner {
         height: 60vh;
     }
-}
-
-/* Add to your custom.css file */
-
-.product-display {
-    width: 100%;
-    padding: 42px 0 75px;
-    background-color: var(--color-background);
 }
 
 .product-display-header {
@@ -627,6 +584,15 @@ button:focus {
     padding: 2rem;
 }
 
+/* Message styles */
+.no-products-message,
+.no-collection-message {
+    text-align: center;
+    padding: 2rem;
+    font-family: var(--font-body);
+    color: var(--color-text);
+}
+
 /* Responsive styles */
 @media (max-width: 992px) {
     .featured-products-grid {
@@ -651,29 +617,4 @@ button:focus {
         grid-template-columns: 1fr;
         padding: 0 1rem;
     }
-
-    .product-display {
-        padding: 30px 0 50px;
-    }
-}
-
-/* Reserve space for variant buttons */
-.product-variants {
-    min-height: 1.75rem;
-    /* Height of variant buttons plus margin */
-    display: flex;
-    margin-top: 0.5rem;
-}
-
-/* Ensure consistent card height */
-.product-card {
-    display: flex;
-    flex-direction: column;
-    /* height: 100%; */
-}
-
-.product-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
 }
