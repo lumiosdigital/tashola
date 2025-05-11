@@ -37,8 +37,9 @@
         "category_row_w7MeRr": {
           "type": "category_row",
           "settings": {
-            "category_title": "Category",
-            "collection": "",
+            "category_title": "Earrings",
+            "category_image": "shopify://shop_images/Group_16_upscayl_2x_high-fidelity-4x.webp",
+            "collection": "rings",
             "collection_handle": "all"
           }
         },
