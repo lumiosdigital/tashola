@@ -15,7 +15,6 @@
         "background_type": "image",
         "image": "shopify://shop_images/hero-image.png",
         "mobile_image": "shopify://shop_images/hero-image.png",
-        "video": "shopify://files/videos/8512972-hd_1920_1080_30fps.mp4",
         "overlay_opacity": 0.3,
         "heading": "Jewelry That Speaks for You",
         "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
@@ -26,45 +25,43 @@
     "categories": {
       "type": "categories",
       "blocks": {
-        "collection_display_kQCaCw": {
+        "collection_display_JMjN3T": {
           "type": "collection_display",
           "settings": {
             "layout_direction": "banner-right",
-            "selected_collection": "neptune",
-            "featured_collection": "neptune",
-            "collection_banner_image": "shopify://shop_images/Group_41_upscayl_2x_remacri-4x.png"
+            "selected_collection": "rings",
+            "featured_collection": "frontpage",
+            "collection_banner_image": "shopify://shop_images/Picture_2.jpg"
           }
         },
-        "category_row_w7MeRr": {
+        "category_row_AHCtgE": {
           "type": "category_row",
           "settings": {
-            "category_title": "Earrings",
-            "category_image": "shopify://shop_images/Group_16_upscayl_2x_high-fidelity-4x.webp",
-            "collection": "rings",
+            "category_title": "Category",
+            "collection": "",
             "collection_handle": "all"
           }
         },
-        "category_row_XQynd6": {
+        "category_row_6Udekz": {
           "type": "category_row",
           "settings": {
-            "category_title": "Rings",
-            "category_image": "shopify://shop_images/rings-category.png",
-            "collection": "rings",
+            "category_title": "Category",
+            "collection": "",
             "collection_handle": "all"
           }
         }
       },
       "block_order": [
-        "collection_display_kQCaCw",
-        "category_row_w7MeRr",
-        "category_row_XQynd6"
+        "collection_display_JMjN3T",
+        "category_row_AHCtgE",
+        "category_row_6Udekz"
       ],
       "settings": {}
     },
     "product-display": {
       "type": "product-display",
       "settings": {
-        "selected_collection": "neptune"
+        "selected_collection": "frontpage"
       }
     },
     "showroom-section": {
