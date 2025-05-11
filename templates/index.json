@@ -29,9 +29,10 @@
         "collection_display_kQCaCw": {
           "type": "collection_display",
           "settings": {
-            "layout_direction": "banner-left",
-            "selected_collection": "",
-            "featured_collection": ""
+            "layout_direction": "banner-right",
+            "selected_collection": "neptune",
+            "featured_collection": "neptune",
+            "collection_banner_image": "shopify://shop_images/Group_41_upscayl_2x_remacri-4x.png"
           }
         },
         "category_row_w7MeRr": {
