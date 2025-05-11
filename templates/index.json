@@ -46,8 +46,9 @@
         "category_row_6Udekz": {
           "type": "category_row",
           "settings": {
-            "category_title": "Category",
-            "collection": "",
+            "category_title": "Rings",
+            "category_image": "shopify://shop_images/rings-category.png",
+            "collection": "rings",
             "collection_handle": "all"
           }
         }
