@@ -37,7 +37,8 @@
         "category_row_AHCtgE": {
           "type": "category_row",
           "settings": {
-            "category_title": "Category",
+            "category_title": "Earrings",
+            "category_image": "shopify://shop_images/earrings-category.png",
             "collection": "",
             "collection_handle": "all"
           }
