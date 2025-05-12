@@ -22,6 +22,12 @@
         "button_link": "shopify://collections/new-in"
       }
     },
+    "product-display": {
+      "type": "product-display",
+      "settings": {
+        "selected_collection": "frontpage"
+      }
+    },
     "categories": {
       "type": "categories",
       "blocks": {
@@ -80,12 +86,6 @@
       ],
       "settings": {}
     },
-    "product-display": {
-      "type": "product-display",
-      "settings": {
-        "selected_collection": "frontpage"
-      }
-    },
     "showroom-section": {
       "type": "showroom-section",
       "settings": {
@@ -99,8 +99,8 @@
   },
   "order": [
     "hero-banner",
-    "categories",
     "product-display",
+    "categories",
     "showroom-section"
   ]
 }
