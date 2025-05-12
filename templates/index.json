@@ -13,7 +13,7 @@
       "type": "hero-banner",
       "settings": {
         "background_type": "image",
-        "image": "shopify://shop_images/hero-image.png",
+        "image": "shopify://shop_images/Group_48_1.png",
         "mobile_image": "shopify://shop_images/hero-image.png",
         "overlay_opacity": 0.3,
         "heading": "Jewelry That Speaks for You",
@@ -64,7 +64,8 @@
         "category_row_AC48Ya": {
           "type": "category_row",
           "settings": {
-            "category_title": "Category",
+            "category_title": "Bracelets",
+            "category_image": "shopify://shop_images/bracelets-category.png",
             "collection": "",
             "collection_handle": "all"
           }
