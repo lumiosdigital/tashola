@@ -25,7 +25,7 @@
     "product-display": {
       "type": "product-display",
       "settings": {
-        "selected_collection": "frontpage"
+        "selected_collection": "new-in"
       }
     },
     "categories": {
