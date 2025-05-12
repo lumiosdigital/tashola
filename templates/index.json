@@ -31,14 +31,14 @@
             "layout_direction": "banner-right",
             "selected_collection": "rings",
             "featured_collection": "frontpage",
-            "collection_banner_image": "shopify://shop_images/Picture_2.jpg"
+            "collection_banner_image": "shopify://shop_images/rings-category.png"
           }
         },
         "category_row_AHCtgE": {
           "type": "category_row",
           "settings": {
             "category_title": "Earrings",
-            "category_image": "shopify://shop_images/earrings-category.png",
+            "category_image": "shopify://shop_images/c89351439a0a251b70a95c6f04087fd8.jpg",
             "collection": "",
             "collection_handle": "all"
           }
