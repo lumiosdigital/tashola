@@ -86,19 +86,6 @@
       ],
       "settings": {}
     },
-    "hero_banner_Bkez7V": {
-      "type": "hero-banner",
-      "settings": {
-        "background_type": "image",
-        "image": "shopify://shop_images/showroom-page-image.png",
-        "mobile_image": "shopify://shop_images/showroom-image.png",
-        "overlay_opacity": 0.9,
-        "heading": "Our Showroom",
-        "subheading": "Tashola Showroom -  123 Oxford Street, London, W1D 1LT, United Kingdom",
-        "button_text": "DISCOVER",
-        "button_link": "shopify://pages/showroom"
-      }
-    },
     "showroom-section": {
       "type": "showroom-section",
       "disabled": true,
@@ -115,7 +102,6 @@
     "hero-banner",
     "product-display",
     "categories",
-    "hero_banner_Bkez7V",
     "showroom-section"
   ]
 }
