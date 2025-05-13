@@ -13,11 +13,11 @@
       "type": "hero-banner",
       "settings": {
         "background_type": "image",
-        "image": "shopify://shop_images/Group_48_1.png",
+        "image": "shopify://shop_images/Screenshot_2025-05-13_at_13.42.07.png",
         "mobile_image": "shopify://shop_images/hero-image.png",
-        "overlay_opacity": 0.3,
-        "heading": "Jewelry That Speaks for You",
-        "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
+        "overlay_opacity": 0.4,
+        "heading": "New collection",
+        "subheading": "Discover our new earrings collection",
         "button_text": "SHOP NOW",
         "button_link": "shopify://collections/new-in"
       }
