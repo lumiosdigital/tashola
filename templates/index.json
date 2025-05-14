@@ -31,6 +31,24 @@
     "categories": {
       "type": "categories",
       "blocks": {
+        "category_row_xgHKCM": {
+          "type": "category_row",
+          "settings": {
+            "category_title": "Necklaces",
+            "category_image": "shopify://shop_images/0cfe81fd6030aa8ebcd4fac40f5f2f53.jpg",
+            "collection": "frontpage",
+            "collection_handle": "all"
+          }
+        },
+        "category_row_AC48Ya": {
+          "type": "category_row",
+          "settings": {
+            "category_title": "Bracelets",
+            "category_image": "shopify://shop_images/Maje_MFABI00975-05_F_1.webp",
+            "collection": "",
+            "collection_handle": "all"
+          }
+        },
         "collection_display_JMjN3T": {
           "type": "collection_display",
           "settings": {
@@ -57,32 +75,14 @@
             "collection": "rings",
             "collection_handle": "all"
           }
-        },
-        "category_row_AC48Ya": {
-          "type": "category_row",
-          "settings": {
-            "category_title": "Bracelets",
-            "category_image": "shopify://shop_images/Maje_MFABI00975-05_F_1.webp",
-            "collection": "",
-            "collection_handle": "all"
-          }
-        },
-        "category_row_xgHKCM": {
-          "type": "category_row",
-          "settings": {
-            "category_title": "Necklaces",
-            "category_image": "shopify://shop_images/0cfe81fd6030aa8ebcd4fac40f5f2f53.jpg",
-            "collection": "frontpage",
-            "collection_handle": "all"
-          }
         }
       },
       "block_order": [
+        "category_row_xgHKCM",
+        "category_row_AC48Ya",
         "collection_display_JMjN3T",
         "category_row_AHCtgE",
-        "category_row_6Udekz",
-        "category_row_AC48Ya",
-        "category_row_xgHKCM"
+        "category_row_6Udekz"
       ],
       "settings": {}
     },
