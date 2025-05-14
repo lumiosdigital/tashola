@@ -52,7 +52,7 @@
         "collection_display_JMjN3T": {
           "type": "collection_display",
           "settings": {
-            "layout_direction": "banner-right",
+            "layout_direction": "banner-left",
             "selected_collection": "rings",
             "featured_collection": "frontpage",
             "collection_banner_image": "shopify://shop_images/rings-category.png"
@@ -60,6 +60,7 @@
         },
         "category_row_AHCtgE": {
           "type": "category_row",
+          "disabled": true,
           "settings": {
             "category_title": "Earrings",
             "category_image": "shopify://shop_images/573353f5579f6a56eba17abc42c37e2d.jpg",
@@ -69,6 +70,7 @@
         },
         "category_row_6Udekz": {
           "type": "category_row",
+          "disabled": true,
           "settings": {
             "category_title": "Rings",
             "category_image": "shopify://shop_images/Maje_MFABI00858-05_F_1.webp",
@@ -86,6 +88,20 @@
       ],
       "settings": {}
     },
+    "hero_banner_iDADg9": {
+      "type": "hero-banner",
+      "disabled": true,
+      "settings": {
+        "background_type": "image",
+        "image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
+        "mobile_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2.jpg",
+        "overlay_opacity": 0.4,
+        "heading": "New collection",
+        "subheading": "Discover our new earrings collection",
+        "button_text": "SHOP NOW",
+        "button_link": "shopify://collections/new-in"
+      }
+    },
     "showroom-section": {
       "type": "showroom-section",
       "disabled": true,
@@ -102,6 +118,7 @@
     "hero-banner",
     "product-display",
     "categories",
+    "hero_banner_iDADg9",
     "showroom-section"
   ]
 }
