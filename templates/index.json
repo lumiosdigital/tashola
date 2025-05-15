@@ -35,7 +35,7 @@
           "type": "category_row",
           "settings": {
             "category_title": "Necklaces",
-            "category_image": "shopify://shop_images/0cfe81fd6030aa8ebcd4fac40f5f2f53.jpg",
+            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_3.jpg",
             "collection": "frontpage",
             "collection_handle": "all"
           }
@@ -43,8 +43,8 @@
         "category_row_AC48Ya": {
           "type": "category_row",
           "settings": {
-            "category_title": "Bracelets",
-            "category_image": "shopify://shop_images/Maje_MFABI00975-05_F_1.webp",
+            "category_title": "Necklaces",
+            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2_adca00c1-afa2-415c-9b5a-34b664ea96a6.jpg",
             "collection": "",
             "collection_handle": "all"
           }
@@ -54,8 +54,8 @@
           "settings": {
             "layout_direction": "banner-left",
             "selected_collection": "rings",
-            "featured_collection": "frontpage",
-            "collection_banner_image": "shopify://shop_images/rings-category.png"
+            "featured_collection": "new-in",
+            "collection_banner_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_6.jpg"
           }
         },
         "category_row_AHCtgE": {
