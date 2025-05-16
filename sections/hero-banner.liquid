@@ -39,7 +39,7 @@ padding: 0 2rem;
 
 {% if section.settings.background_type == 'image' %}
 .hero-banner {
-background-image: url({{ section.settings.image | img_url: '2048x', scale: 2, quality: 100 }});
+background-image: url({{ section.settings.image | img_url: 'master' }});
 background-size: cover;
 background-position: center top;
 background-repeat: no-repeat;
