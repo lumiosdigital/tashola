@@ -13,8 +13,7 @@
       "type": "hero-banner",
       "settings": {
         "background_type": "image",
-        "image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
-        "mobile_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2.jpg",
+        "text_color": "white",
         "overlay_opacity": 0.4,
         "heading": "New collection",
         "subheading": "Discover our new earrings collection",
@@ -25,7 +24,7 @@
     "product-display": {
       "type": "product-display",
       "settings": {
-        "selected_collection": "new-in"
+        "selected_collection": "neptune"
       }
     },
     "categories": {
@@ -34,17 +33,18 @@
         "category_row_xgHKCM": {
           "type": "category_row",
           "settings": {
+            "text_color": "white",
             "category_title": "Necklaces",
-            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_3.jpg",
-            "collection": "frontpage",
+            "category_image": "shopify://shop_images/Group_41_upscayl_2x_remacri-4x.png",
+            "collection": "neptune",
             "collection_handle": "all"
           }
         },
         "category_row_AC48Ya": {
           "type": "category_row",
           "settings": {
+            "text_color": "white",
             "category_title": "Necklaces",
-            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2_adca00c1-afa2-415c-9b5a-34b664ea96a6.jpg",
             "collection": "",
             "collection_handle": "all"
           }
@@ -53,17 +53,17 @@
           "type": "collection_display",
           "settings": {
             "layout_direction": "banner-left",
+            "text_color": "white",
             "selected_collection": "rings",
-            "featured_collection": "new-in",
-            "collection_banner_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_6.jpg"
+            "featured_collection": "new-in"
           }
         },
         "category_row_AHCtgE": {
           "type": "category_row",
           "disabled": true,
           "settings": {
+            "text_color": "white",
             "category_title": "Earrings",
-            "category_image": "shopify://shop_images/573353f5579f6a56eba17abc42c37e2d.jpg",
             "collection": "",
             "collection_handle": "all"
           }
@@ -72,8 +72,8 @@
           "type": "category_row",
           "disabled": true,
           "settings": {
+            "text_color": "white",
             "category_title": "Rings",
-            "category_image": "shopify://shop_images/Maje_MFABI00858-05_F_1.webp",
             "collection": "rings",
             "collection_handle": "all"
           }
@@ -93,8 +93,7 @@
       "disabled": true,
       "settings": {
         "background_type": "image",
-        "image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
-        "mobile_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2.jpg",
+        "text_color": "white",
         "overlay_opacity": 0.4,
         "heading": "New collection",
         "subheading": "Discover our new earrings collection",
