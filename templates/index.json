@@ -13,8 +13,7 @@
       "type": "hero-banner",
       "settings": {
         "background_type": "image",
-        "text_color": "black",
-        "image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
+        "text_color": "white",
         "overlay_opacity": 0.4,
         "heading": "New collection",
         "subheading": "Discover our new earrings collection",
@@ -25,7 +24,7 @@
     "product-display": {
       "type": "product-display",
       "settings": {
-        "selected_collection": "new-in"
+        "selected_collection": "earrings"
       }
     },
     "categories": {
@@ -36,6 +35,7 @@
           "settings": {
             "text_color": "white",
             "category_title": "Necklaces",
+            "category_image": "shopify://shop_images/Group_41_upscayl_2x_remacri-4x.png",
             "collection": "neptune",
             "collection_handle": "all"
           }
