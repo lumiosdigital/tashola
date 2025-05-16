@@ -47,7 +47,7 @@ Simplified categories section with flexible height and proper display of all blo
                                 <div class="product-image-container">
                                     {% if product.featured_image != blank %}
                                     <img class="product-image"
-                                        src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                                        src="{{ product.featured_image | img_url: 'master' }}"
                                         alt="{{ product.title | escape }}" width="600" height="600">
                                     {% else %}
                                     {{ 'product-1' | placeholder_svg_tag: 'product-image' }}
@@ -315,7 +315,7 @@ Simplified categories section with flexible height and proper display of all blo
     /* Product cards */
     .product-card {
         width: calc(50% - 10px);
-        max-width: 18.75rem;
+        max-width: 20rem;
         flex: 0 0 auto;
         display: flex;
         flex-direction: column;
@@ -323,8 +323,8 @@ Simplified categories section with flexible height and proper display of all blo
 
     .product-image-container {
         width: 100%;
-        height: 0;
-        padding-bottom: 100%;
+        height: auto;
+        padding-bottom: 140%;
         position: relative;
         overflow: hidden;
     }
@@ -335,7 +335,7 @@ Simplified categories section with flexible height and proper display of all blo
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        /* object-fit: cover; */
         transition: transform 1s ease;
     }
 
