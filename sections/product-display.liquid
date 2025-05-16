@@ -17,7 +17,7 @@
                 <div class="pd-product-image-container">
                     {% if product.featured_image != blank %}
                     <img class="pd-product-image"
-                        src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                        src="{{ product.featured_image | img_url: 'master' }}"
                         alt="{{ product.title | escape }}" loading="lazy" width="600" height="600">
                     {% else %}
                     {{ 'product-1' | placeholder_svg_tag: 'pd-product-image' }}
