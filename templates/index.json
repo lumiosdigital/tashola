@@ -13,50 +13,29 @@
       "type": "hero-banner",
       "settings": {
         "background_type": "image",
-        "image": "shopify://shop_images/hero-image.png",
-        "mobile_image": "shopify://shop_images/hero-image.png",
-        "overlay_opacity": 0.3,
-        "heading": "Jewelry That Speaks for You",
-        "subheading": "Create bold accents with exquisite pieces that highlight your individuality.",
+        "image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
+        "mobile_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2.jpg",
+        "overlay_opacity": 0.4,
+        "heading": "New collection",
+        "subheading": "Discover our new earrings collection",
         "button_text": "SHOP NOW",
         "button_link": "shopify://collections/new-in"
+      }
+    },
+    "product-display": {
+      "type": "product-display",
+      "settings": {
+        "selected_collection": "new-in"
       }
     },
     "categories": {
       "type": "categories",
       "blocks": {
-        "collection_display_JMjN3T": {
-          "type": "collection_display",
-          "settings": {
-            "layout_direction": "banner-right",
-            "selected_collection": "rings",
-            "featured_collection": "frontpage",
-            "collection_banner_image": "shopify://shop_images/Picture_2.jpg"
-          }
-        },
-        "category_row_AHCtgE": {
-          "type": "category_row",
-          "settings": {
-            "category_title": "Earrings",
-            "category_image": "shopify://shop_images/earrings-category.png",
-            "collection": "",
-            "collection_handle": "all"
-          }
-        },
-        "category_row_6Udekz": {
-          "type": "category_row",
-          "settings": {
-            "category_title": "Rings",
-            "category_image": "shopify://shop_images/rings-category.png",
-            "collection": "rings",
-            "collection_handle": "all"
-          }
-        },
         "category_row_xgHKCM": {
           "type": "category_row",
           "settings": {
             "category_title": "Necklaces",
-            "category_image": "shopify://shop_images/necklaces-category.png",
+            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_3.jpg",
             "collection": "frontpage",
             "collection_handle": "all"
           }
@@ -64,29 +43,68 @@
         "category_row_AC48Ya": {
           "type": "category_row",
           "settings": {
-            "category_title": "Category",
+            "category_title": "Necklaces",
+            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2_adca00c1-afa2-415c-9b5a-34b664ea96a6.jpg",
             "collection": "",
+            "collection_handle": "all"
+          }
+        },
+        "collection_display_JMjN3T": {
+          "type": "collection_display",
+          "settings": {
+            "layout_direction": "banner-left",
+            "selected_collection": "rings",
+            "featured_collection": "new-in",
+            "collection_banner_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_6.jpg"
+          }
+        },
+        "category_row_AHCtgE": {
+          "type": "category_row",
+          "disabled": true,
+          "settings": {
+            "category_title": "Earrings",
+            "category_image": "shopify://shop_images/573353f5579f6a56eba17abc42c37e2d.jpg",
+            "collection": "",
+            "collection_handle": "all"
+          }
+        },
+        "category_row_6Udekz": {
+          "type": "category_row",
+          "disabled": true,
+          "settings": {
+            "category_title": "Rings",
+            "category_image": "shopify://shop_images/Maje_MFABI00858-05_F_1.webp",
+            "collection": "rings",
             "collection_handle": "all"
           }
         }
       },
       "block_order": [
+        "category_row_xgHKCM",
+        "category_row_AC48Ya",
         "collection_display_JMjN3T",
         "category_row_AHCtgE",
-        "category_row_6Udekz",
-        "category_row_xgHKCM",
-        "category_row_AC48Ya"
+        "category_row_6Udekz"
       ],
       "settings": {}
     },
-    "product-display": {
-      "type": "product-display",
+    "hero_banner_iDADg9": {
+      "type": "hero-banner",
+      "disabled": true,
       "settings": {
-        "selected_collection": "frontpage"
+        "background_type": "image",
+        "image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
+        "mobile_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2.jpg",
+        "overlay_opacity": 0.4,
+        "heading": "New collection",
+        "subheading": "Discover our new earrings collection",
+        "button_text": "SHOP NOW",
+        "button_link": "shopify://collections/new-in"
       }
     },
     "showroom-section": {
       "type": "showroom-section",
+      "disabled": true,
       "settings": {
         "title": "Our Showroom",
         "showroom_name": "Tashola Showroom",
@@ -98,8 +116,9 @@
   },
   "order": [
     "hero-banner",
-    "categories",
     "product-display",
+    "categories",
+    "hero_banner_iDADg9",
     "showroom-section"
   ]
 }

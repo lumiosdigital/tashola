@@ -1,14 +1,26 @@
-
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-catalogue",
       "settings": {
         "products_per_page": 20,
+        "banner_1_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_5.jpg",
         "banner_1_title": "Deia Collection",
         "banner_1_text": "Classic earrings to embody timeless elegance",
+        "banner_1_link": "",
+        "banner_2_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_4.jpg",
         "banner_2_title": "Stellar Collection",
-        "banner_2_text": "Embrace the celestial beauty"
+        "banner_2_text": "Embrace the celestial beauty",
+        "banner_2_link": ""
       }
     }
   },
