@@ -25,19 +25,28 @@
 
 .catalogue-container {
     margin: 0 auto;
-    padding: 0 3.75rem 6rem;
+    padding: 0 3.75rem 3.75rem;
     background-color: #F6F4F3;
 }
 
 .catalogue-layout {
     display: flex;
     position: relative;
+    padding: 0 3.75rem;
+}
+
+.catalogue-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 1.5rem; */
+    width: 100%;
 }
 
 /* Filter Button (visible on all devices) */
 .mobile-filter-button-wrapper {
     display: flex;
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
 }
 
 .filter-button {
@@ -45,8 +54,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background-color: white;
-    border: 1px solid #e0e0e0;
+    background-color: transparent;
+    border: 0px solid #e0e0e0;
     border-radius: 30px;
     font-family: var(--font-body);
     font-size: 0.875rem;
@@ -56,7 +65,133 @@
 }
 
 .filter-button:hover {
+    /* background-color: rgba(255, 163, 139, 0.1); */
+    color: var(--secondary-color);
+    /* stroke: var(--secondary-color); */
+}
+
+.filter-button:hover svg path {
+    stroke: var(--secondary-color);
+}
+
+/* Design Filter Pills */
+.design-filters {
+    display: flex;
+    gap: 0.313rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    margin: 0 1rem;
+    padding: 0.5rem 0;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.design-filters::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari and Opera */
+}
+
+.design-filter-button {
+    white-space: nowrap;
+    padding: 0.625rem 1.25rem;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.design-filter-button:hover {
     background-color: rgba(255, 163, 139, 0.1);
+}
+
+.design-filter-button.active {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+/* Sort Dropdown */
+.sort-dropdown-wrapper {
+    position: relative;
+}
+
+.sort-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    border: 0px solid #e0e0e0;
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.sort-button:hover {
+    color: var(--secondary-color);
+}
+
+.sort-button:hover svg path {
+    stroke: var(--secondary-color);
+}
+
+.sort-button svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.sort-button[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+.sort-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: none;
+    flex-direction: column;
+    z-index: 50;
+}
+
+.sort-dropdown[aria-hidden="false"] {
+    display: flex;
+}
+
+.sort-option {
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.sort-option:hover {
+    background-color: rgba(255, 163, 139, 0.1);
+}
+
+.sort-option.active {
+    font-weight: 600;
+    color: var(--secondary-color);
 }
 
 /* Filter Panel */
@@ -432,55 +567,91 @@
 
 @media screen and (max-width: 1200px) {
     .catalogue-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .catalogue-title {
-        font-size: 2.25rem;
-    }
-
-    .catalogue-banner-content {
-        bottom: 4rem;
-    }
-
-    .catalogue-banner-title {
-        font-size: 1.5rem;
-    }
-
-    .catalogue-banner-text {
-        font-size: 1rem;
-    }
+            grid-template-columns: repeat(3, 1fr);
+        }
+    
+        .catalogue-title {
+            font-size: 2.25rem;
+        }
+    
+        .catalogue-banner-content {
+            bottom: 4rem;
+        }
+    
+        .catalogue-banner-title {
+            font-size: 1.5rem;
+        }
+    
+        .catalogue-banner-text {
+            font-size: 1rem;
+        }
+    
+        .design-filters {
+            justify-content: flex-start;
+            padding-left: 0.5rem;
+        }
+    
+        .design-filter-button {
+            padding: 0.5rem 1rem;
+            font-size: 0.8125rem;
+        }
 }
 
 @media screen and (max-width: 992px) {
     .catalogue-container {
-        padding: 0 1.5rem 4rem;
-    }
-
-    .catalogue-header {
-        padding: 1.5rem 1.5rem 1rem;
-    }
-
-    .catalogue-title {
-        font-size: 2rem;
-    }
-
-    .catalogue-filters-container {
-        width: 300px;
-    }
-
-    .catalogue-banner-content {
-        bottom: 3rem;
-    }
-
-    .catalogue-banner-title {
-        font-size: 1.25rem;
-    }
-
-    .catalogue-banner-text {
-        font-size: 0.875rem;
-        max-width: 90%;
-    }
+            padding: 0 1.5rem 4rem;
+        }
+    
+        .catalogue-header {
+            padding: 1.5rem 1.5rem 1rem;
+        }
+    
+        .catalogue-title {
+            font-size: 2rem;
+        }
+    
+        .catalogue-filters-container {
+            width: 300px;
+        }
+    
+        .catalogue-banner-content {
+            bottom: 3rem;
+        }
+    
+        .catalogue-banner-title {
+            font-size: 1.25rem;
+        }
+    
+        .catalogue-banner-text {
+            font-size: 0.875rem;
+            max-width: 90%;
+        }
+    
+        .sort-dropdown {
+            min-width: 180px;
+        }
+    
+        .catalogue-controls {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+    
+        .design-filters {
+            order: 3;
+            width: 100%;
+            margin: 0;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+    
+        .mobile-filter-button-wrapper {
+            order: 1;
+        }
+    
+        .sort-dropdown-wrapper {
+            order: 2;
+        }
 }
 
 @media screen and (max-width: 768px) {
@@ -525,6 +696,24 @@
     .catalogue-banner-text {
         font-size: 0.75rem;
         max-width: 90%;
+    }
+
+    .sort-button span {
+        display: none;
+    }
+    
+    .sort-button {
+        padding: 0.75rem;
+        border-radius: 50%;
+    }
+    
+    .sort-button svg {
+        margin: 0;
+    }
+    
+    .sort-dropdown {
+        right: -10px;
+        min-width: 160px;
     }
 }
 

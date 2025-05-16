@@ -190,7 +190,9 @@ button {
     padding: var(--spacing-xs) var(--spacing-md);
     text-decoration: none;
     color: var(--primary-color);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: var(--font-body);
     transition: background 0.2s;
 }
 

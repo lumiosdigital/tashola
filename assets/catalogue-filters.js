@@ -1,6 +1,7 @@
-// catalogue-filters.js - Catalogue page functionality
 document.addEventListener('DOMContentLoaded', function() {
   initCatalogueFilters();
+  initSortDropdown();
+  initDesignFilters();
   initInfiniteScroll();
   
   // Initialize catalogue filters functionality
@@ -71,6 +72,97 @@ document.addEventListener('DOMContentLoaded', function() {
           window.location.href = window.location.pathname;
         }, 0);
       });
+    }
+  }
+  
+  // Initialize design filters functionality
+  function initDesignFilters() {
+    const designFilterButtons = document.querySelectorAll('.design-filter-button');
+    
+    if (!designFilterButtons.length) return;
+    
+    // Handle design filter button click
+    designFilterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        designFilterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Get filter value
+        const filterValue = this.getAttribute('data-filter-value');
+        
+        // Note: Actual filtering logic will be added later
+        console.log('Filter by design:', filterValue);
+      });
+    });
+  }
+  
+  // Initialize sort dropdown functionality
+  function initSortDropdown() {
+    const sortButton = document.querySelector('[data-sort-trigger]');
+    const sortDropdown = document.getElementById('sort-dropdown');
+    const sortOptions = document.querySelectorAll('.sort-option');
+    
+    if (!sortButton || !sortDropdown) return;
+    
+    // Toggle sort dropdown
+    sortButton.addEventListener('click', function() {
+      const isExpanded = sortButton.getAttribute('aria-expanded') === 'true';
+      
+      if (isExpanded) {
+        closeSortDropdown();
+      } else {
+        openSortDropdown();
+      }
+    });
+    
+    // Handle sort option click
+    sortOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        // Get sort value
+        const sortValue = this.getAttribute('data-sort-value');
+        
+        // Update button text to show current sort
+        const sortButtonText = sortButton.querySelector('span');
+        sortButtonText.textContent = 'Sort: ' + this.textContent;
+        
+        // Mark this option as active
+        sortOptions.forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Close dropdown
+        closeSortDropdown();
+        
+        // Note: Actual sorting logic will be added later
+        console.log('Sort by:', sortValue);
+      });
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!sortButton.contains(e.target) && !sortDropdown.contains(e.target) && 
+          sortDropdown.getAttribute('aria-hidden') === 'false') {
+        closeSortDropdown();
+      }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sortDropdown.getAttribute('aria-hidden') === 'false') {
+        closeSortDropdown();
+      }
+    });
+    
+    function openSortDropdown() {
+      sortButton.setAttribute('aria-expanded', 'true');
+      sortDropdown.setAttribute('aria-hidden', 'false');
+    }
+    
+    function closeSortDropdown() {
+      sortButton.setAttribute('aria-expanded', 'false');
+      sortDropdown.setAttribute('aria-hidden', 'true');
     }
   }
   

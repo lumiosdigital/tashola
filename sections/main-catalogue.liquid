@@ -14,12 +14,41 @@
 
 <div class="catalogue-container" data-catalogue-container>
     <!-- Filter button (visible on all devices) -->
-    <div class="mobile-filter-button-wrapper">
-        <button class="filter-button" aria-label="Show filters" data-filter-trigger>
-            {% render 'icon-filters' %}
-            <span>Filters</span>
-        </button>
-    </div>
+     <div class="catalogue-controls">
+         <div class="mobile-filter-button-wrapper">
+             <button class="filter-button" aria-label="Show filters" data-filter-trigger>
+                 {% render 'icon-filters' %}
+                 <span>Filters</span>
+             </button>
+         </div>
+        <!-- Design Filter Pills -->
+        <div class="design-filters">
+            <button class="design-filter-button active" data-filter-value="all">All</button>
+            <button class="design-filter-button" data-filter-value="hoops">Hoops</button>
+            <button class="design-filter-button" data-filter-value="studs">Studs</button>
+            <button class="design-filter-button" data-filter-value="dangle">Dangle</button>
+            <button class="design-filter-button" data-filter-value="drop">Drop Earrings</button>
+            <button class="design-filter-button" data-filter-value="cuffs">Cuffs</button>
+        </div>
+        <!-- Sort dropdown -->
+        <div class="sort-dropdown-wrapper">
+            <button class="sort-button" aria-label="Sort products" data-sort-trigger aria-expanded="false"
+                aria-controls="sort-dropdown">
+                <span>Sort By</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9L12 15L18 9" stroke="#373736" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <div class="sort-dropdown" id="sort-dropdown" aria-hidden="true">
+                <button class="sort-option" data-sort-value="price-ascending">Price, low to high</button>
+                <button class="sort-option" data-sort-value="price-descending">Price, high to low</button>
+                <button class="sort-option" data-sort-value="best-selling">Best selling</button>
+                <button class="sort-option" data-sort-value="created-descending">Newest</button>
+            </div>
+        </div>
+        </div>
+     </div>
 
     <!-- Main Catalogue Grid and Filters Container -->
     <div class="catalogue-layout">
