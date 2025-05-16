@@ -14,7 +14,7 @@ Simplified categories section with flexible height and proper display of all blo
                     <div class="category-image"
                         style="background-image: url('{% if block.settings.category_image %}{{ block.settings.category_image | img_url: 'master' }}{% else %}{{ block.settings.collection_handle | append: '-category.png' | asset_url }}{% endif %}');">
                     </div>
-                    <h3 class="category-title">{{ block.settings.category_title }}</h3>
+                    <h3 class="category-title" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">{{ block.settings.category_title }}</h3>
                 </div>
             </a>
         </div>
@@ -28,7 +28,7 @@ Simplified categories section with flexible height and proper display of all blo
                         <div class="category-image"
                             style="background-image: url('{% if block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'large' }}{% endif %}');">
                         </div>
-                        <h3 class="collection-dynamic-title">{{ block.settings.selected_collection.title }}<span class="collection-subtitle"> Collection</span></h3>
+                        <h3 class="collection-dynamic-title" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">{{ block.settings.selected_collection.title }}<span class="collection-subtitle" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};"> Collection</span></h3>
                     </div>
                 </a>
             </div>
@@ -221,7 +221,7 @@ Simplified categories section with flexible height and proper display of all blo
 
     /* Titles */
     .category-title {
-        color: var(--color-white);
+        color: white;
         font-size: 2.25rem;
         text-align: center;
         margin-bottom: 4rem;
@@ -236,7 +236,7 @@ Simplified categories section with flexible height and proper display of all blo
     }
 
     .collection-title {
-        color: var(--color-white);
+        color: white;
         font-size: 2.25rem;
         text-align: center;
         margin-bottom: 4rem;
@@ -251,8 +251,30 @@ Simplified categories section with flexible height and proper display of all blo
         width: 100%;
     }
 
+    .collection-dynamic-title {
+    color: white;
+    font-size: 2.25rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-style: normal;
+    }
+
+    h3.collection-dynamic-title {
+        position: absolute;
+        color: white;
+        font-size: 2.25rem;
+        text-align: center;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        bottom: 1.25rem;
+        z-index: 2;
+        /* Add text shadow for better readability */
+    }
+
     .collection-subtitle {
-        color: var(--color-white);
+        color: white;
         font-size: 2.25rem;
         text-align: center;
         font-family: var(--font-heading);
@@ -845,6 +867,23 @@ Simplified categories section with flexible height and proper display of all blo
 "type": "category_row",
 "name": "Category Block",
 "settings": [
+
+{
+"type": "select",
+"id": "text_color",
+"label": "Text Color",
+"options": [
+{
+"value": "white",
+"label": "White"
+},
+{
+"value": "black",
+"label": "Black"
+}
+],
+"default": "white"
+},
 {
 "type": "text",
 "id": "category_title",
@@ -891,6 +930,22 @@ Simplified categories section with flexible height and proper display of all blo
 }
 ],
 "default": "banner-left"
+},
+{
+"type": "select",
+"id": "text_color",
+"label": "Collection Banner Text Color",
+"options": [
+{
+"value": "white",
+"label": "White"
+},
+{
+"value": "black",
+"label": "Black"
+}
+],
+"default": "white"
 },
 {
 "type": "collection",

@@ -287,7 +287,7 @@
                         <a href="{{ product.url }}" class="product-card-link">
                             <div class="product-card-image-wrapper">
                                 {% if product.featured_image %}
-                                <img src="{{ product.featured_image | img_url: 'medium' }}"
+                                <img src="{{ product.featured_image | img_url: 'master' }}"
                                     alt="{{ product.title | escape }}" class="product-card-image">
                                 {% else %}
                                 <div class="product-card-image-placeholder">{{ product.title | slice: 0, 1 }}</div>

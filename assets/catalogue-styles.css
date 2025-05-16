@@ -95,13 +95,18 @@
 }
 
 .design-filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     white-space: nowrap;
-    padding: 0.625rem 1.25rem;
-    background-color: white;
-    border: 1px solid #e0e0e0;
+    padding: 0.6rem 1.5rem 0.2rem;
+    background-color: transparent;
+    border: 1px solid rgba(55, 55, 54, 0.2)    ;
     border-radius: 30px;
-    font-family: var(--font-body);
-    font-size: 0.875rem;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.1em;
     color: var(--primary-color);
     cursor: pointer;
     transition: all 0.2s ease;
@@ -109,6 +114,7 @@
 
 .design-filter-button:hover {
     background-color: rgba(255, 163, 139, 0.1);
+    border: 1px solid #FFA38B;
 }
 
 .design-filter-button.active {

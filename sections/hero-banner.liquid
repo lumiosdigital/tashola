@@ -81,7 +81,7 @@ height: 100%;
 position: relative;
 max-width: 27rem;
 text-align: left;
-color: white;
+color: {% if section.settings.text_color == 'black' %}#373736{% else %}white{% endif %};
 margin-left: 10%;
 z-index: 2;
 }
@@ -115,7 +115,7 @@ font-size: 1rem;
 font-weight: 400;
 text-decoration: none;
 background-color: transparent;
-color: white;
+color: {% if section.settings.text_color == 'black' %}#373736{% else %}white{% endif %};
 cursor: pointer;
 transition: color 0.3s ease;
 /* padding: 0.75rem 1.5rem; */
@@ -215,6 +215,22 @@ min-height: 30rem;
 }
 ],
 "default": "image"
+},
+{
+"type": "select",
+"id": "text_color",
+"label": "Text Color",
+"options": [
+{
+"value": "white",
+"label": "White"
+},
+{
+"value": "black",
+"label": "Black"
+}
+],
+"default": "white"
 },
 {
 "type": "image_picker",
