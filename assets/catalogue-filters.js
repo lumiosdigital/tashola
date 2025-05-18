@@ -107,6 +107,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!sortButton || !sortDropdown) return;
     
+    // Get current sort from URL if exists
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentSort = urlParams.get('sort_by');
+    
+    // Set active sort option on page load
+    if (currentSort) {
+      sortOptions.forEach(option => {
+        if (option.getAttribute('data-sort-value') === currentSort) {
+          // Mark this option as active
+          option.classList.add('active');
+          
+          // Update button text to show current sort
+          const sortButtonText = sortButton.querySelector('span');
+          if (sortButtonText) {
+            sortButtonText.textContent = 'Sort: ' + option.textContent;
+          }
+        }
+      });
+    }
+    
     // Toggle sort dropdown
     sortButton.addEventListener('click', function() {
       const isExpanded = sortButton.getAttribute('aria-expanded') === 'true';
@@ -126,7 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update button text to show current sort
         const sortButtonText = sortButton.querySelector('span');
-        sortButtonText.textContent = 'Sort: ' + this.textContent;
+        if (sortButtonText) {
+          sortButtonText.textContent = 'Sort: ' + this.textContent;
+        }
         
         // Mark this option as active
         sortOptions.forEach(opt => opt.classList.remove('active'));
@@ -135,8 +157,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close dropdown
         closeSortDropdown();
         
-        // Note: Actual sorting logic will be added later
-        console.log('Sort by:', sortValue);
+        // Apply the sort parameter to the URL
+        const url = new URL(window.location.href);
+        
+        // Set the sort_by parameter
+        if (sortValue) {
+          url.searchParams.set('sort_by', sortValue);
+        } else {
+          url.searchParams.delete('sort_by');
+        }
+        
+        // Redirect to the new URL
+        window.location.href = url.toString();
       });
     });
     

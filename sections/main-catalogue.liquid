@@ -34,19 +34,38 @@
         <div class="sort-dropdown-wrapper">
             <button class="sort-button" aria-label="Sort products" data-sort-trigger aria-expanded="false"
                 aria-controls="sort-dropdown">
-                <span>Sort By</span>
+                <span>{% if collection.sort_by %}
+                    {% case collection.sort_by %}
+                    {% when 'price-ascending' %}
+                    Sort: Price, low to high
+                    {% when 'price-descending' %}
+                    Sort: Price, high to low
+                    {% when 'best-selling' %}
+                    Sort: Best selling
+                    {% when 'created-descending' %}
+                    Sort: Newest
+                    {% else %}
+                    Sort By
+                    {% endcase %}
+                    {% else %}
+                    Sort By
+                    {% endif %}
+                </span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 9L12 15L18 9" stroke="#373736" stroke-width="1.5" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
             </button>
             <div class="sort-dropdown" id="sort-dropdown" aria-hidden="true">
-                <button class="sort-option" data-sort-value="price-ascending">Price, low to high</button>
-                <button class="sort-option" data-sort-value="price-descending">Price, high to low</button>
-                <button class="sort-option" data-sort-value="best-selling">Best selling</button>
-                <button class="sort-option" data-sort-value="created-descending">Newest</button>
-            </div>
-        </div>
+                <button class="sort-option {% if collection.sort_by == 'price-ascending' %}active{% endif %}"
+                    data-sort-value="price-ascending">Price, low to high</button>
+                <button class="sort-option {% if collection.sort_by == 'price-descending' %}active{% endif %}"
+                    data-sort-value="price-descending">Price, high to low</button>
+                <button class="sort-option {% if collection.sort_by == 'best-selling' %}active{% endif %}"
+                    data-sort-value="best-selling">Best selling</button>
+                <button class="sort-option {% if collection.sort_by == 'created-descending' %}active{% endif %}"
+                    data-sort-value="created-descending">Newest</button>
+            </div>  </div>
         </div>
      </div>
 
