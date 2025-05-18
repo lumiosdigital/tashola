@@ -1,4 +1,5 @@
-<div class="nav-container" data-mobile-nav-container>
+<div class="nav-container {% if template == 'index' %}home-header{% else %}secondary-header{% endif %} {% if section.settings.sticky_header %}sticky-header{% endif %}"
+    data-mobile-nav-container data-sticky-header="{{ section.settings.sticky_header }}">
     <div class="nav-flex-wrapper">
 
         <!-- NAVIGATION MENU -->
@@ -40,7 +41,8 @@
             <button type="button" class="cart-drawer-trigger" aria-label="Cart with {{ cart.item_count }} items"
                 aria-controls="cart-drawer">
                 {% render 'icon-shopping-bag' %}
-                <span class="cart-count" data-count="{{ cart.item_count }}" aria-hidden="true">{{ cart.item_count }}</span>
+                <span class="cart-count" data-count="{{ cart.item_count }}" aria-hidden="true">{{ cart.item_count
+                    }}</span>
             </button>
         </div>
     </div>
@@ -54,28 +56,34 @@
         let lastScrollTop = 0;
         const scrollThreshold = 10; // Minimum amount of pixels to scroll before showing/hiding
 
+        // Check if sticky header is enabled
+        const isStickyHeader = header.getAttribute('data-sticky-header') === 'true';
+
         // Add transition CSS class to header for smooth animations
         header.classList.add('nav-scrollable');
 
-        window.addEventListener('scroll', function () {
-            const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+        // Only apply scroll behavior if not using sticky header
+        if (!isStickyHeader) {
+            window.addEventListener('scroll', function () {
+                const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 
-            // Determine scroll direction and distance
-            if (Math.abs(lastScrollTop - currentScrollTop) <= scrollThreshold) {
-                return; // Skip if the scroll distance is too small
-            }
+                // Determine scroll direction and distance
+                if (Math.abs(lastScrollTop - currentScrollTop) <= scrollThreshold) {
+                    return; // Skip if the scroll distance is too small
+                }
 
-            // Scrolling down & not at the top
-            if (currentScrollTop > lastScrollTop && currentScrollTop > header.offsetHeight) {
-                header.classList.add('nav-hidden');
-            }
-            // Scrolling up or at the top
-            else {
-                header.classList.remove('nav-hidden');
-            }
+                // Scrolling down & not at the top
+                if (currentScrollTop > lastScrollTop && currentScrollTop > header.offsetHeight) {
+                    header.classList.add('nav-hidden');
+                }
+                // Scrolling up or at the top
+                else {
+                    header.classList.remove('nav-hidden');
+                }
 
-            lastScrollTop = currentScrollTop;
-        });
+                lastScrollTop = currentScrollTop;
+            });
+        }
 
         // Add cart drawer trigger functionality
         const cartTrigger = document.querySelector('.cart-drawer-trigger');
@@ -92,36 +100,31 @@
 
 {% schema %}
 {
-    "name": "Header",
-    "settings": [
-        {
-        "type": "image_picker",
-        "id": "mega_menu_image",
-        "label": "Mega Menu Image",
-        "info": "Featured image displayed in the mega menu dropdown"
-        },
-        {
-        "type": "url",
-        "id": "mega_menu_image_link",
-        "label": "Mega Menu Image Link",
-        "info": "Select a link for the featured mega menu image"
-        },
-        {
-        "type": "header",
-        "content": "Cart Drawer Settings"
-        },
-        {
-        "type": "checkbox",
-        "id": "enable_jewelry_box",
-        "label": "Enable Jewelry Box option",
-        "default": true
-        },
-        {
-        "type": "text",
-        "id": "jewelry_box_price",
-        "label": "Jewelry Box Price",
-        "default": "15.00"
-        }
-    ]
+"name": "Header",
+"settings": [
+{
+"type": "header",
+"content": "Navigation Behavior"
+},
+{
+"type": "checkbox",
+"id": "sticky_header",
+"label": "Always visible header",
+"default": false,
+"info": "When enabled, the header will always be visible. When disabled, it will hide when scrolling down."
+},
+{
+"type": "image_picker",
+"id": "mega_menu_image",
+"label": "Mega Menu Image",
+"info": "Featured image displayed in the mega menu dropdown"
+},
+{
+"type": "url",
+"id": "mega_menu_image_link",
+"label": "Mega Menu Image Link",
+"info": "Select a link for the featured mega menu image"
+}
+]
 }
 {% endschema %}

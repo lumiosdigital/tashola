@@ -7,6 +7,7 @@
     --secondary-color: #FFA38B;
     --light-gray: #D0CECD;
     --white: #ffffff;
+    --background-gray: #F6F4F3;
 
     /* Typography */
     --font-heading: "adobe-caslon-pro", serif;
@@ -68,7 +69,7 @@ button {
 }
 
 .nav-container {
-    background-color: var(--white);
+    /* background-color: var(--white); */
     height: var(--header-height);
     display: flex;
     align-items: center;
@@ -80,6 +81,34 @@ button {
     /* box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); */
     width: 100%;
     
+}
+
+/* Scrollable header styles (default) */
+.nav-scrollable {
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+}
+
+.nav-hidden {
+    transform: translateY(-100%);
+}
+
+/* Sticky header styles - always visible */
+.sticky-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    /* Remove transform properties to keep visible */
+}
+
+/* Homepage header (white background) */
+.home-header {
+    background-color: var(--white);
+}
+
+/* Secondary pages header (light gray background) */
+.secondary-header {
+    background-color: #F6F4F3;
 }
 
 .nav-flex-wrapper {
