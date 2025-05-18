@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initSortDropdown();
   initDesignFilters();
   initInfiniteScroll();
+  updateFilterButtonCount(); // Initialize filter button count
   
   // Initialize catalogue filters functionality
   function initCatalogueFilters() {
@@ -45,33 +46,147 @@ document.addEventListener('DOMContentLoaded', function() {
       filtersBackdrop.classList.remove('visible');
     }
     
-    // Handle filter form submission
+    // Set up filter form handlers
     if (filterForm) {
-      filterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(filterForm);
-        const searchParams = new URLSearchParams();
-        
-        // Build filter parameters
-        for (const [key, value] of formData.entries()) {
-          if (value) {
-            searchParams.append(key, value);
+      handleFilterFormSubmission(filterForm);
+      
+      // Check for active filters and highlight them
+      highlightActiveFilters();
+    }
+    
+    // Function to highlight active filters based on URL parameters
+    function highlightActiveFilters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Check for each type of filter in the URL
+      for (const [key, value] of urlParams.entries()) {
+        if (key.startsWith('filter.')) {
+          // For metafield filters that might have multiple values
+          if (key.startsWith('filter.p.m.')) {
+            // Split comma-separated values
+            const values = value.split(',');
+            
+            values.forEach(val => {
+              // Find corresponding checkbox and check it
+              const checkbox = filterForm.querySelector(`input[name="${key}"][value="${val}"]`);
+              if (checkbox) {
+                checkbox.checked = true;
+              }
+            });
+          } else {
+            // For regular filters
+            const filterInputs = filterForm.querySelectorAll(`input[name="${key}"]`);
+            
+            filterInputs.forEach(input => {
+              if (input.value === value || value.split(',').includes(input.value)) {
+                input.checked = true;
+              }
+            });
           }
         }
-        
-        // Redirect to filtered catalogue URL
-        window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
-      });
+      }
+    }
+  }
+  
+  // Handle filter form submission for metafield filters
+  function handleFilterFormSubmission(filterForm) {
+    filterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
       
-      // Handle filter form reset
-      filterForm.addEventListener('reset', function() {
-        // Wait for form to reset
-        setTimeout(() => {
-          // Redirect to base catalogue URL
+      const formData = new FormData(filterForm);
+      const searchParams = new URLSearchParams();
+      const metafieldFilters = {};
+      
+      // Build filter parameters
+      for (const [key, value] of formData.entries()) {
+        if (!value) continue;
+        
+        // Check if this is a metafield filter
+        if (key.startsWith('filter.p.m.')) {
+          // Extract the metafield path
+          const metafieldPath = key.replace('filter.p.m.', '');
+          
+          // Group values for the same metafield
+          if (!metafieldFilters[metafieldPath]) {
+            metafieldFilters[metafieldPath] = [];
+          }
+          metafieldFilters[metafieldPath].push(value);
+        } else {
+          // Regular filter parameter
+          searchParams.append(key, value);
+        }
+      }
+      
+      // Add metafield filters to search params
+      for (const [path, values] of Object.entries(metafieldFilters)) {
+        // Format for Shopify: filter.p.m.metafield_path=value1,value2,...
+        searchParams.append(`filter.p.m.${path}`, values.join(','));
+      }
+      
+      // Preserve sort parameter if it exists
+      const url = new URL(window.location.href);
+      const sortBy = url.searchParams.get('sort_by');
+      if (sortBy) {
+        searchParams.append('sort_by', sortBy);
+      }
+      
+      // Redirect to filtered catalogue URL
+      window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+    });
+    
+    // Handle filter form reset
+    filterForm.addEventListener('reset', function() {
+      // Wait for form to reset
+      setTimeout(() => {
+        // Preserve sort parameter if it exists
+        const url = new URL(window.location.href);
+        const sortBy = url.searchParams.get('sort_by');
+        
+        // Redirect to base catalogue URL with sort parameter if it exists
+        if (sortBy) {
+          window.location.href = `${window.location.pathname}?sort_by=${sortBy}`;
+        } else {
           window.location.href = window.location.pathname;
-        }, 0);
-      });
+        }
+      }, 0);
+    });
+  }
+  
+  // Function to update filter button with active filter count
+  function updateFilterButtonCount() {
+    const filterButton = document.querySelector('[data-filter-trigger]');
+    if (!filterButton) return;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    let activeFilterCount = 0;
+    
+    // Count active filters
+    for (const [key, value] of urlParams.entries()) {
+      if (key.startsWith('filter.')) {
+        // For comma-separated values, count each as a separate filter
+        if (value.includes(',')) {
+          activeFilterCount += value.split(',').length;
+        } else {
+          activeFilterCount += 1;
+        }
+      }
+    }
+    
+    // Update the filter button text
+    const filterButtonText = filterButton.querySelector('span');
+    if (filterButtonText) {
+      if (activeFilterCount > 0) {
+        filterButtonText.textContent = `Filters (${activeFilterCount})`;
+      } else {
+        filterButtonText.textContent = 'Filters';
+      }
+    }
+    
+    // Add an active class to the filter button if filters are applied
+    if (activeFilterCount > 0) {
+      filterButton.classList.add('has-active-filters');
+    } else {
+      filterButton.classList.remove('has-active-filters');
     }
   }
   
@@ -222,6 +337,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = new URL(window.location.href);
       url.searchParams.set('page', currentPage);
       
+      // Preserve the sort parameter if it exists
+      const sortBy = url.searchParams.get('sort_by');
+      if (sortBy) {
+        url.searchParams.set('sort_by', sortBy);
+      }
+      
       // Fetch next page products
       fetch(url)
         .then(response => response.text())
@@ -244,6 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
               insertCatalogueBanner(2);
             }
             
+            // Add product with its badges (preserving all data attributes)
             catalogueGrid.appendChild(product.cloneNode(true));
           });
           

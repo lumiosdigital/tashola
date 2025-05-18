@@ -85,40 +85,37 @@
 
             <div class="catalogue-filters">
                 <form class="catalogue-filters-form" data-filter-form>
-                    <!-- Material filter -->
+                    <!-- Dynamic Material Filter Section -->
                     <div class="filter-group">
                         <h3 class="filter-group-title">Material:</h3>
                         <div class="filter-options">
+                            {% comment %} Get all unique material values from product metafields {% endcomment %}
+                            {% assign all_materials = '' %}
+
+                            {% for product in collection.products %}
+                            {% if product.metafields.shopify.jewelry_material %}
+                            {% assign material_value = product.metafields.shopify.jewelry_material %}
+                            {% assign all_materials = all_materials | append: ',' | append: material_value %}
+                            {% endif %}
+                            {% endfor %}
+
+                            {% assign all_materials = all_materials | remove_first: ',' | split: ',' %}
+                            {% assign unique_materials = all_materials | uniq | sort %}
+
+                            {% for material in unique_materials %}
+                            {% assign material_handle = material | handleize %}
                             <div class="filter-option">
-                                <input type="checkbox" id="material-sterling-silver" name="filter.v.option.material"
-                                    value="Sterling Silver">
-                                <label for="material-sterling-silver">Sterling Silver</label>
+                                <input type="checkbox" id="material-{{ material_handle }}"
+                                    name="filter.p.m.metafields.shopify.jewelry_material" value="{{ material }}" {% if current_tags contains
+                                    material %}checked{% endif %}>
+                                <label for="material-{{ material_handle }}">{{ material }}</label>
                             </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="material-gold-plated" name="filter.v.option.material"
-                                    value="Gold Plated">
-                                <label for="material-gold-plated">Gold Plated</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="material-pearl" name="filter.v.option.material"
-                                    value="Pearl">
-                                <label for="material-pearl">Pearl</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="material-gemstones" name="filter.v.option.material"
-                                    value="Gemstones">
-                                <label for="material-gemstones">Gemstones</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="material-semi-precious" name="filter.v.option.material"
-                                    value="Semi-precious Stone">
-                                <label for="material-semi-precious">Semi-precious Stone</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="material-beaded" name="filter.v.option.material"
-                                    value="Beaded">
-                                <label for="material-beaded">Beaded</label>
-                            </div>
+                            {% endfor %}
+
+                            {% comment %} Show message if no materials are found {% endcomment %}
+                            {% if unique_materials.size == 0 %}
+                            <div class="filter-no-options">No materials found</div>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -301,30 +298,46 @@
                     </li>
                     {% endif %}
 
-                    <!-- Product Card -->
-                    <li class="catalogue-product">
-                        <a href="{{ product.url }}" class="product-card-link">
-                            <div class="product-card-image-wrapper">
-                                {% if product.featured_image %}
-                                <img src="{{ product.featured_image | img_url: 'master' }}"
-                                    alt="{{ product.title | escape }}" class="product-card-image">
-                                {% else %}
-                                <div class="product-card-image-placeholder">{{ product.title | slice: 0, 1 }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="product-card-content">
-                                <h3 class="product-card-title">{{ product.title }}</h3>
-                                <p class="product-card-price">
-                                    {% if product.compare_at_price > product.price %}
-                                    <span class="product-card-sale-price">{{ product.price | money }}</span>
-                                    <s class="product-card-compare-price">{{ product.compare_at_price | money }}</s>
+                        <!-- Updated Product Card with Data Attributes -->
+                        <li class="catalogue-product" data-tags="{{ product.tags | join: ',' }}"
+                            data-best-selling-rank="{{ product.best_selling_rank | default: 999 }}">
+                            <a href="{{ product.url }}" class="product-card-link">
+                                <div class="product-card-image-wrapper">
+                                    {% if product.featured_image %}
+                                        <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title | escape }}"
+                                        class="product-card-image">
                                     {% else %}
-                                    <span class="product-card-regular-price">{{ product.price | money }}</span>
+                                        <div class="product-card-image-placeholder">{{ product.title | slice: 0, 1 }}</div>
                                     {% endif %}
-                                </p>
-                            </div>
-                        </a>
-                    </li>
+                                </div>
+                                <div class="product-card-content">
+                                    <div class="product-title-badge-container">
+                                        {% comment %} Product title with a maximum of 2 lines {% endcomment %}
+                                        <h3 class="product-card-title">{{ product.title }}</h3>    
+                                        {% comment %} Badges container {% endcomment %}
+                                        {% if product.tags contains 'New' or product.tags contains 'Best Seller' or product.best_selling_rank <= 5 %} 
+                                            <div class="product-badge-container">
+                                                {% if product.tags contains 'New' %}
+                                                    <span class="product-badge badge-new">New In</span>
+                                                {% endif %}
+                                                {% if product.tags contains 'Best Seller' or product.best_selling_rank <= 5 %} 
+                                                    <span class="product-badge badge-bestseller">Best Seller</span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}                                   
+                                    </div>
+
+                                    <p class="product-card-price">
+                                        {% if product.compare_at_price > product.price %}
+                                        <span class="product-card-sale-price">{{ product.price | money }}</span>
+                                        <s class="product-card-compare-price">{{ product.compare_at_price | money }}</s>
+                                        {% else %}
+                                        <span class="product-card-regular-price">{{ product.price | money }}</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>

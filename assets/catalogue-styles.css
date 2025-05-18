@@ -74,6 +74,23 @@
     stroke: var(--secondary-color);
 }
 
+/* Styles for filter button with active filters */
+.filter-button.has-active-filters {
+    background-color: rgba(255, 163, 139, 0.1);
+    color: var(--secondary-color);
+}
+
+.filter-button.has-active-filters svg path {
+    stroke: var(--secondary-color);
+}
+
+/* No options message for filters */
+.filter-no-options {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: #777;
+    font-style: italic; }
+
 /* Design Filter Pills */
 .design-filters {
     display: flex;
@@ -428,6 +445,12 @@
     margin-top: 1rem;
 }
 
+.product-title-badge-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+}
+
 .product-card-title {
     font-family: var(--font-heading);
     font-size: 1.25rem;
@@ -551,6 +574,38 @@
 .load-more-button:hover {
     background-color: #e88871;
 }
+
+/* Product Badge Styles */
+.product-badge-container {
+    display: flex;
+    align-items: baseline;
+    /* justify-content: baseline; */
+    gap: 0.5rem;
+    /* margin-bottom: 0.5rem; */
+}
+
+.product-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.badge-new {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.badge-bestseller {
+    background-color: var(--secondary-color);
+    color: white;
+    /* border: 1px solid var(--primary-color);  */
+}
+
 
 /* Responsive styles */
 @media screen and (max-width: 1400px) {
@@ -725,6 +780,11 @@
         right: -10px;
         min-width: 160px;
     }
+
+    .product-badge {
+        font-size: 0.7rem;
+        padding: 0.15rem 0.5rem;   
+    }
 }
 
 @media screen and (max-width: 576px) {
@@ -769,4 +829,8 @@
         font-size: 0.75rem;
         max-width: 95%;
     }
+
+    .product-badge-container {
+        margin-bottom: 0.25rem;   
+    }    
 }
