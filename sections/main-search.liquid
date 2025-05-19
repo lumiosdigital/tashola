@@ -68,7 +68,7 @@
                         <a href="{{ collection.url }}" class="search-collection-card">
                             <div class="search-collection-image-container">
                                 {% if collection.image %}
-                                <img src="{{ collection.image | img_url: '400x400', crop: 'center' }}"
+                                <img src="{{ collection.image | img_url: 'master' }}"
                                     alt="{{ collection.title | escape }}" class="search-collection-image">
                                 {% else %}
                                 <div class="search-collection-image-placeholder">{{ collection.title | slice: 0, 1 }}
@@ -91,7 +91,7 @@
                     <a href="{{ item.url }}">
                         <div class="search-product-image-container">
                             {% if item.featured_image %}
-                            <img src="{{ item.featured_image | img_url: '400x400', crop: 'center' }}"
+                            <img src="{{ item.featured_image | img_url: 'master' }}"
                                 alt="{{ item.title | escape }}" class="search-product-image">
                             {% else %}
                             <div class="search-product-image-placeholder">{{ item.title | slice: 0, 1 }}</div>

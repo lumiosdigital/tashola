@@ -85,37 +85,40 @@
 
             <div class="catalogue-filters">
                 <form class="catalogue-filters-form" data-filter-form>
-                    <!-- Dynamic Material Filter Section -->
+                    <!-- Material filter -->
                     <div class="filter-group">
                         <h3 class="filter-group-title">Material:</h3>
                         <div class="filter-options">
-                            {% comment %} Get all unique material values from product metafields {% endcomment %}
-                            {% assign all_materials = '' %}
-
-                            {% for product in collection.products %}
-                            {% if product.metafields.shopify.jewelry_material %}
-                            {% assign material_value = product.metafields.shopify.jewelry_material %}
-                            {% assign all_materials = all_materials | append: ',' | append: material_value %}
-                            {% endif %}
-                            {% endfor %}
-
-                            {% assign all_materials = all_materials | remove_first: ',' | split: ',' %}
-                            {% assign unique_materials = all_materials | uniq | sort %}
-
-                            {% for material in unique_materials %}
-                            {% assign material_handle = material | handleize %}
                             <div class="filter-option">
-                                <input type="checkbox" id="material-{{ material_handle }}"
-                                    name="filter.p.m.metafields.shopify.jewelry_material" value="{{ material }}" {% if current_tags contains
-                                    material %}checked{% endif %}>
-                                <label for="material-{{ material_handle }}">{{ material }}</label>
+                                <input type="checkbox" id="material-sterling-silver" name="filter.v.option.material"
+                                    value="Sterling Silver">
+                                <label for="material-sterling-silver">Sterling Silver</label>
                             </div>
-                            {% endfor %}
-
-                            {% comment %} Show message if no materials are found {% endcomment %}
-                            {% if unique_materials.size == 0 %}
-                            <div class="filter-no-options">No materials found</div>
-                            {% endif %}
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-gold-plated" name="filter.v.option.material"
+                                    value="Gold Plated">
+                                <label for="material-gold-plated">Gold Plated</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-pearl" name="filter.v.option.material"
+                                    value="Pearl">
+                                <label for="material-pearl">Pearl</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-gemstones" name="filter.v.option.material"
+                                    value="Gemstones">
+                                <label for="material-gemstones">Gemstones</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-semi-precious" name="filter.v.option.material"
+                                    value="Semi-precious Stone">
+                                <label for="material-semi-precious">Semi-precious Stone</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="material-beaded" name="filter.v.option.material"
+                                    value="Beaded">
+                                <label for="material-beaded">Beaded</label>
+                            </div>
                         </div>
                     </div>
 
