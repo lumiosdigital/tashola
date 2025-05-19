@@ -94,10 +94,10 @@
     },
     "hero_banner_iDADg9": {
       "type": "hero-banner",
-      "disabled": true,
       "settings": {
         "background_type": "image",
         "text_color": "white",
+        "image": "shopify://shop_images/Picture_1_TEST.jpg",
         "overlay_opacity": 0.4,
         "heading": "New collection",
         "subheading": "Discover our new earrings collection",
