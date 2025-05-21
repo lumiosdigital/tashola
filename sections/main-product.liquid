@@ -2,13 +2,16 @@
     {% render 'breadcrumbs' %}
 </div>
 
+<!-- Add Swiper CSS to head -->
+{{ 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' | stylesheet_tag }}
 
 <div class="product-container" data-product-container>
     <div class="single-product-grid">
-        <!-- Left column: Product images 2x2 grid -->
+        <!-- Left column: Product images - now with Swiper support for mobile -->
         <div class="product-gallery-column">
             <div class="product-gallery" data-product-gallery>
-                <div class="image-grid">
+                <!-- Desktop image grid (hidden on mobile) -->
+                <div class="image-grid desktop-only">
                     {% assign image_count = product.images | size %}
                     {% for i in (1..4) %}
                     <div class="image-grid-item {% if i > image_count %}empty{% endif %}">
@@ -23,183 +26,202 @@
                     </div>
                     {% endfor %}
                 </div>
+
+                <!-- Mobile Swiper (hidden on desktop) -->
+                <div class="swiper product-swiper mobile-only">
+                    <div class="swiper-wrapper">
+                        {% assign image_count = product.images | size %}
+                        {% for i in (1..4) %}
+                        {% assign image_index = i | minus: 1 %}
+                        {% if image_index < image_count %} <div class="swiper-slide">
+                            <img src="{{ product.images[image_index] | img_url: '800x' }}"
+                                alt="{{ product.images[image_index].alt | escape }}" class="swiper-image">
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- Add pagination -->
+                <div class="swiper-pagination"></div>
             </div>
         </div>
+    </div>
 
-        <!-- Right column: Product details -->
-        <div class="product-details-column">
-            <div class="product-info">
-                <h1 class="product-title">{{ product.title }}</h1>
+    <!-- Right column: Product details -->
+    <div class="product-details-column">
+        <div class="product-info">
+            <h1 class="product-title">{{ product.title }}</h1>
 
-                {% if product.description != blank %}
-                <div class="product-description">
-                    {{ product.description }}
+            {% if product.description != blank %}
+            <div class="product-description">
+                {{ product.description }}
+            </div>
+            {% endif %}
+
+            {% form 'product', product, data-product-form: '', novalidate: 'novalidate' %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="VariantId">
+
+            {% if product.has_only_default_variant == false or product.metafields.custom.color_variants != blank %}
+            <div class="product-variants">
+                {% comment %} Display only non-color variant selectors (if needed) {% endcomment %}
+                {% for option in product.options_with_values %}
+                {% if option.name != 'Color' %}
+                {% endif %}
+                {% endfor %}
+
+                {% comment %} Display color options based on linked products - just color swatches {% endcomment %}
+                {% if product.metafields.custom.color_variants != blank %}
+                {% comment %} Get current product's color from standard metafield {% endcomment %}
+                {% assign current_color = product.metafields.standard.color.value | default: product.title %}
+                {% assign current_hex = color_hex_map[current_color] | default: "#CCCCCC" %}
+
+                <div class="color-option-wrapper">
+                    {% comment %} Show current product color option {% endcomment %}
+                    <div class="color-option selected" style="background: {{ current_hex }};"
+                        data-product-url="{{ product.url }}" data-product-handle="{{ product.handle }}"
+                        data-color-name="{{ current_color }}" title="{{ current_color }}">
+                    </div>
+
+                    {% comment %} Show linked product color options {% endcomment %}
+                    {% for linked_product in product.metafields.custom.color_variants %}
+                    {% if linked_product.handle != product.handle %}
+                    {% assign linked_color = linked_product.metafields.standard.color.value | default:
+                    linked_product.title %}
+                    {% assign linked_hex = color_hex_map[linked_color] | default: "#CCCCCC" %}
+
+                    <div class="color-option" style="background: {{ linked_hex }};"
+                        data-product-url="{{ linked_product.url }}" data-product-handle="{{ linked_product.handle }}"
+                        data-color-name="{{ linked_color }}" title="{{ linked_color }}">
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% comment %} Show price and add to cart button {% endcomment %}
+
+            <div class="product-price-container">
+                <span class="product-price {% if product.compare_at_price > product.price %}on-sale{% endif %}"
+                    data-product-price>
+                    {{ product.price | money }}
+                </span>
+
+                {% if product.compare_at_price > product.price %}
+                <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+            </div>
+            <div class="product-interactions-wrapper">
+                {% if section.settings.show_quantity_selector %}
+                <div class="quantity-add-wrapper">
+                    <div class="quantity-selector">
+                        <button type="button" class="quantity-adjust quantity-minus"
+                            aria-label="Decrease quantity by one" data-quantity-minus>
+                            <span>−</span>
+                        </button>
+                        <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-input"
+                            aria-label="Quantity" data-quantity-input>
+                        <button type="button" class="quantity-adjust quantity-plus"
+                            aria-label="Increase quantity by one" data-quantity-plus>
+                            <span>+</span>
+                        </button>
+                    </div>
+
+                    <button type="button" name="add" id="AddToCart"
+                        class="add-to-cart-button {% unless product.available %}disabled{% endunless %}" {% unless
+                        product.available %}disabled="disabled" {% endunless %} data-add-to-cart>
+                        {% if product.available %}
+                        ADD TO CART
+                        {% else %}
+                        SOLD OUT
+                        {% endif %}
+                    </button>
+                </div>
+                {% else %}
+                <div class="add-to-cart-wrapper">
+                    <button type="button" name="add" id="AddToCart"
+                        class="add-to-cart-button wide {% unless product.available %}disabled{% endunless %}" {% unless
+                        product.available %}disabled="disabled" {% endunless %} data-add-to-cart>
+                        {% if product.available %}
+                        ADD TO CART
+                        {% else %}
+                        SOLD OUT
+                        {% endif %}
+                    </button>
                 </div>
                 {% endif %}
 
-                {% form 'product', product, data-product-form: '', novalidate: 'novalidate' %}
-                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"
-                    id="VariantId">
+                {% if section.settings.show_buy_it_now and product.available %}
+                <button type="submit" name="checkout" class="buy-it-now-button" data-buy-now>
+                    BUY IT NOW
+                </button>
+                {% endif %}
+                {% endform %}
 
-{% if product.has_only_default_variant == false or product.metafields.custom.color_variants != blank %}
-<div class="product-variants">
-    {% comment %} Display only non-color variant selectors (if needed) {% endcomment %}
-    {% for option in product.options_with_values %}
-    {% if option.name != 'Color' %}
-    {% endif %}
-    {% endfor %}
+                <!-- Wishlist button -->
+                <button type="button" class="wishlist-button swym-button swym-add-to-wishlist" data-with-epi="true"
+                    data-swaction="addToWishlist" data-product-id="{{ product.id }}"
+                    data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                    data-product-url="{{ shop.url }}{{ product.url }}">
+                    {% render 'icon-favorites' %}
+                </button>
+            </div>
 
-    {% comment %} Display color options based on linked products - just color swatches {% endcomment %}
-    {% if product.metafields.custom.color_variants != blank %}
-    {% comment %} Get current product's color from standard metafield {% endcomment %}
-    {% assign current_color = product.metafields.standard.color.value | default: product.title %}
-    {% assign current_hex = color_hex_map[current_color] | default: "#CCCCCC" %}
-
-    <div class="color-option-wrapper">
-        {% comment %} Show current product color option {% endcomment %}
-        <div class="color-option selected" style="background: {{ current_hex }};" data-product-url="{{ product.url }}"
-            data-product-handle="{{ product.handle }}" data-color-name="{{ current_color }}"
-            title="{{ current_color }}">
-        </div>
-
-        {% comment %} Show linked product color options {% endcomment %}
-        {% for linked_product in product.metafields.custom.color_variants %}
-        {% if linked_product.handle != product.handle %}
-        {% assign linked_color = linked_product.metafields.standard.color.value | default: linked_product.title %}
-        {% assign linked_hex = color_hex_map[linked_color] | default: "#CCCCCC" %}
-
-        <div class="color-option" style="background: {{ linked_hex }};" data-product-url="{{ linked_product.url }}"
-            data-product-handle="{{ linked_product.handle }}" data-color-name="{{ linked_color }}"
-            title="{{ linked_color }}">
-        </div>
-        {% endif %}
-        {% endfor %}
-    </div>
-    {% endif %}
-</div>
-{% endif %}
-
-                {% comment %} Show price and add to cart button {% endcomment %}
-
-                <div class="product-price-container">
-                    <span class="product-price {% if product.compare_at_price > product.price %}on-sale{% endif %}"
-                        data-product-price>
-                        {{ product.price | money }}
-                    </span>
-
-                    {% if product.compare_at_price > product.price %}
-                    <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
-                    {% endif %}
-                </div>
-                <div class="product-interactions-wrapper">
-                    {% if section.settings.show_quantity_selector %}
-                    <div class="quantity-add-wrapper">
-                        <div class="quantity-selector">
-                            <button type="button" class="quantity-adjust quantity-minus"
-                                aria-label="Decrease quantity by one" data-quantity-minus>
-                                <span>−</span>
-                            </button>
-                            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-input"
-                                aria-label="Quantity" data-quantity-input>
-                            <button type="button" class="quantity-adjust quantity-plus"
-                                aria-label="Increase quantity by one" data-quantity-plus>
-                                <span>+</span>
-                            </button>
-                        </div>
-
-                        <button type="button" name="add" id="AddToCart"
-                            class="add-to-cart-button {% unless product.available %}disabled{% endunless %}" {% unless
-                            product.available %}disabled="disabled" {% endunless %} data-add-to-cart>
-                            {% if product.available %}
-                            ADD TO CART
-                            {% else %}
-                            SOLD OUT
-                            {% endif %}
-                        </button>
-                    </div>
-                    {% else %}
-                    <div class="add-to-cart-wrapper">
-                        <button type="button" name="add" id="AddToCart"
-                            class="add-to-cart-button wide {% unless product.available %}disabled{% endunless %}" {% unless
-                            product.available %}disabled="disabled" {% endunless %} data-add-to-cart>
-                            {% if product.available %}
-                            ADD TO CART
-                            {% else %}
-                            SOLD OUT
-                            {% endif %}
-                        </button>
-                    </div>
-                    {% endif %}
-
-                    {% if section.settings.show_buy_it_now and product.available %}
-                    <button type="submit" name="checkout" class="buy-it-now-button" data-buy-now>
-                        BUY IT NOW
+            <!-- Accordion dropdowns -->
+            <div class="product-accordions">
+                <div class="accordion-item">
+                    <button type="button" class="accordion-header" aria-expanded="false"
+                        aria-controls="product-details-content">
+                        <span>PRODUCT DETAILS</span>
+                        <span class="accordion-icon">+</span>
                     </button>
-                    {% endif %}
-                    {% endform %}
-
-                    <!-- Wishlist button -->
-                    <button type="button" class="wishlist-button swym-button swym-add-to-wishlist" data-with-epi="true"
-                        data-swaction="addToWishlist" data-product-id="{{ product.id }}"
-                        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                        data-product-url="{{ shop.url }}{{ product.url }}">
-                        {% render 'icon-favorites' %}
-                    </button>
-                </div>
- 
-                <!-- Accordion dropdowns -->
-                <div class="product-accordions">
-                    <div class="accordion-item">
-                        <button type="button" class="accordion-header" aria-expanded="false" aria-controls="product-details-content">
-                            <span>PRODUCT DETAILS</span>
-                            <span class="accordion-icon">+</span>
-                        </button>
-                        <div id="product-details-content" class="accordion-content" hidden>
-                            {% if product.metafields.custom.product_content != blank %}
-                            <div class="product-details-content">
-                                {{ product.metafields.custom.product_content | metafield_tag }}
-                            </div>
-                            {% elsif section.settings.product_details_text != blank %}
-                            <div class="product-details-content">
-                                {{ section.settings.product_details_text }}
-                            </div>
-                            {% else %}
-                            {% assign collection_descriptions = "" %}
-                            {% for collection in product.collections %}
-                            {% if collection.description != blank %}
-                            {% assign collection_descriptions = collection_descriptions | append: collection.description |
-                            append: " " %}
-                            {% endif %}
-                            {% endfor %}
-
-                            {% if collection_descriptions != blank %}
-                            <div class="collection-description">
-                                {{ collection_descriptions }}
-                            </div>
-                            {% else %}
-                            <div class="collection-description">
-                                {{ product.description }}
-                            </div>
-                            {% endif %}
-                            {% endif %}
+                    <div id="product-details-content" class="accordion-content" hidden>
+                        {% if product.metafields.custom.product_content != blank %}
+                        <div class="product-details-content">
+                            {{ product.metafields.custom.product_content | metafield_tag }}
                         </div>
-                    </div>
+                        {% elsif section.settings.product_details_text != blank %}
+                        <div class="product-details-content">
+                            {{ section.settings.product_details_text }}
+                        </div>
+                        {% else %}
+                        {% assign collection_descriptions = "" %}
+                        {% for collection in product.collections %}
+                        {% if collection.description != blank %}
+                        {% assign collection_descriptions = collection_descriptions | append: collection.description |
+                        append: " " %}
+                        {% endif %}
+                        {% endfor %}
 
-                    <div class="accordion-item">
-                        <button type="button" class="accordion-header" aria-expanded="false" aria-controls="shipping-returns-content">
-                            <span>SHIPPING AND RETURNS</span>
-                            <span class="accordion-icon">+</span>
-                        </button>
-                        <div id="shipping-returns-content" class="accordion-content" hidden>
-                            <div class="shipping-returns-content">
-                                {{ section.settings.shipping_returns_text }}
-                            </div>
+                        {% if collection_descriptions != blank %}
+                        <div class="collection-description">
+                            {{ collection_descriptions }}
+                        </div>
+                        {% else %}
+                        <div class="collection-description">
+                            {{ product.description }}
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button type="button" class="accordion-header" aria-expanded="false"
+                        aria-controls="shipping-returns-content">
+                        <span>SHIPPING AND RETURNS</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div id="shipping-returns-content" class="accordion-content" hidden>
+                        <div class="shipping-returns-content">
+                            {{ section.settings.shipping_returns_text }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {% if section.settings.show_related_products and section.settings.related_products_limit > 0 %}
@@ -236,13 +258,17 @@
 </div>
 {% endif %}
 
+<!-- Add Swiper JS before closing body tag -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
 <script type="application/json" id="ProductJson-{{ section.id }}">
   {{ product | json }}
 </script>
 
 <script>
+    // Wait for both DOMContentLoaded and window load events
     document.addEventListener('DOMContentLoaded', function () {
-        // Get product data
+        // First initialize all non-Swiper functionality
         const productJson = document.getElementById('ProductJson-{{ section.id }}');
         if (!productJson) return;
 
@@ -254,7 +280,7 @@
         // Initialize quantity selector
         initQuantitySelector();
 
-        // Initialize the color product selector (new approach)
+        // Initialize the color product selector
         initColorProductSelector();
 
         // Initialize cart functionality
@@ -262,6 +288,12 @@
 
         // Initialize buy now functionality
         initBuyNowFunctionality();
+
+        // Initialize Swiper separately
+        // Slight delay to ensure DOM is fully processed
+        setTimeout(function () {
+            initMobileSwiper();
+        }, 100);
 
         function initAccordions() {
             const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -540,7 +572,7 @@
                 });
         }
 
-                function initBuyNowFunctionality() {
+        function initBuyNowFunctionality() {
             const buyNowButton = document.querySelector('[data-buy-now]');
             const productForm = document.querySelector('[data-product-form]');
 
@@ -593,6 +625,51 @@
                     });
             });
         }
+
+        // Initialize Swiper on mobile
+        function initMobileSwiper() {
+            console.log('Initializing Swiper...');
+
+            // Check if Swiper is loaded
+            if (typeof Swiper === 'undefined') {
+                console.error('Swiper not loaded yet');
+                // Try again in 200ms
+                setTimeout(initMobileSwiper, 200);
+                return;
+            }
+
+            // Only initialize if element exists
+            const swiperElement = document.querySelector('.product-swiper');
+            if (!swiperElement) {
+                console.error('Swiper element not found');
+                return;
+            }
+
+            console.log('Swiper element found, initializing...');
+
+            // Initialize Swiper with updated class name
+            const productSwiper = new Swiper('.product-swiper', {
+                init: true,
+                speed: 400,
+                spaceBetween: 0,
+                slidesPerView: 1,
+                centeredSlides: true,
+                loop: false,
+                observer: true,
+                observeParents: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                touchRatio: 1,
+                grabCursor: true,
+                on: {
+                    init: function () {
+                        console.log('Swiper initialized successfully');
+                    }
+                }
+            });
+        }
     });
 </script>
 
@@ -620,25 +697,47 @@
         gap: 3.125rem;
     }
 
+    /* Mobile/Desktop visibility classes */
+    .mobile-only {
+        display: none !important;
+    }
+
+    .desktop-only {
+        display: block;
+    }
+
+    /* Override display property based on screen size */
+    @media screen and (max-width: 768px) {
+        .mobile-only {
+            display: block !important;
+        }
+
+        .desktop-only {
+            display: none !important;
+        }
+
+        /* Hide grid on mobile */
+        .image-grid {
+            display: none !important;
+        }
+    }
+
     /* Product gallery styles - 2x2 grid */
     .product-gallery-column {
         display: flex;
         flex-direction: column;
-        /* width: 60%; */
     }
 
     .image-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
-        /* gap: 8px; */
         aspect-ratio: 1.2 / 1.5;
     }
 
     .image-grid-item {
         position: relative;
         overflow: hidden;
-        /* background-color: #f6f4f3; */
     }
 
     .image-grid-item.empty {
@@ -650,6 +749,74 @@
         height: 100%;
         object-fit: cover;
         display: block;
+    }
+
+    /* Swiper styles */
+    .product-swiper {
+        width: 100%;
+        height: 60vh;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        /* Ensure content doesn't overflow */
+        position: relative;
+        z-index: 1;
+    }
+
+    .product-swiper .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #F6F4F3;
+        width: 100% !important;
+        /* Ensure slides take full width */
+        height: 100%;
+        /* Ensure slides take full height */
+    }
+
+    .product-swiper .swiper-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        /* Ensure proper display */
+    }
+
+    .product-swiper .swiper-pagination {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+    }
+
+    .product-swiper .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        background: var(--color-text);
+        opacity: 0.5;
+        margin: 0 4px;
+    }
+
+    .product-swiper .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: var(--color-accent);
+    }
+
+    .swiper-pagination {
+        position: absolute;
+        bottom: 10px;
+    }
+
+    .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        background: var(--color-text);
+        opacity: 0.5;
+    }
+
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: var(--color-accent);
     }
 
     /* Product details styles */
@@ -1074,7 +1241,7 @@
         .related-products-grid {
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 3rem;  
+            margin-bottom: 3rem;
             /* margin: 0 2rem 3rem;           */
         }
 
@@ -1086,6 +1253,7 @@
             width: 30vw;
             height: 40vh;
         }
+
         .related-product-image {
             width: 100%;
             height: 100%;
@@ -1093,6 +1261,15 @@
     }
 
     @media screen and (max-width: 768px) {
+
+        /* Toggle mobile/desktop visibility */
+        .mobile-only {
+            display: block;
+        }
+
+        .desktop-only {
+            display: none;
+        }
 
         .breadcrumbs-container,
         .product-container {
@@ -1129,7 +1306,7 @@
         .related-products-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            margin-bottom: 3rem;  
+            margin-bottom: 3rem;
             /* margin: 0 2rem 3rem;           */
         }
 
@@ -1141,6 +1318,7 @@
             width: 43vw;
             height: 50vh;
         }
+
         .related-product-image {
             width: 100%;
             height: 100%;
@@ -1155,32 +1333,50 @@
             padding-right: 1rem;
         }
 
+        /* Modified mobile layout - vertical stacking of buttons */
         .quantity-add-wrapper {
+            display: flex;
             flex-direction: column;
+            width: 100%;
+            gap: 0.75rem;
         }
 
         .quantity-selector {
-            /* width: 100%; */
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+
+        .quantity-adjust {
+            flex: 0 0 auto;
         }
 
         .quantity-input {
             flex: 1;
-        }
-        
-        .quantity-add-wrapper {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.625rem;
+            width: 100%;
         }
 
+        .add-to-cart-button {
+            width: 100%;
+            margin: 0;
+        }
+
+        .buy-it-now-button {
+            width: 100%;
+            margin-top: 0.75rem;
+        }
+
+        /* Adjust overall product interactions container */
         .product-interactions-wrapper {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.625rem;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
+        }
+
+        /* Move wishlist button to be separate */
+        .wishlist-button {
+            position: absolute;
+            top: 0;
+            right: 0;
         }
 
         .related-products-grid {
@@ -1196,10 +1392,12 @@
             width: 90vw;
             height: 60vh;
         }
+
         .related-product-image {
             width: 100%;
             height: 100%;
         }
+
         .related-products-grid {
             grid-template-columns: 1fr;
         }
