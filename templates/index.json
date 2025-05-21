@@ -13,7 +13,7 @@
       "type": "hero-banner",
       "settings": {
         "background_type": "image",
-        "text_color": "white",
+        "text_color": "black",
         "image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
         "mobile_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_2.jpg",
         "overlay_opacity": 0.4,
@@ -66,7 +66,7 @@
           "type": "category_row",
           "disabled": true,
           "settings": {
-            "text_color": "white",
+            "text_color": "black",
             "category_title": "Earrings",
             "collection": "",
             "collection_handle": "all"

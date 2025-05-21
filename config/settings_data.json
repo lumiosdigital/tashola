@@ -13,10 +13,9 @@
       "header": {
         "type": "header",
         "settings": {
+          "sticky_header": true,
           "mega_menu_image": "shopify://shop_images/Screenshot_2025-05-13_at_13.39.50.png",
-          "mega_menu_image_link": "",
-          "enable_jewelry_box": true,
-          "jewelry_box_price": "15.00"
+          "mega_menu_image_link": ""
         }
       },
       "footer": {
