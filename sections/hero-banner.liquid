@@ -1,7 +1,7 @@
 {% for block in section.blocks %}
 <!-- HERO BANNER -->
-<section class="hero-banner {% if block.settings.background_type == 'video' %}hero-banner--video{% endif %}" {{
-    block.shopify_attributes }}>
+<section class="hero-banner {% if block.settings.background_type == 'video' %}hero-banner--video{% endif %}"
+    data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
     {% if block.settings.background_type == 'video' and block.settings.video != blank %}
     <div class="hero-banner__video-container">
         {{ block.settings.video | video_tag: class: 'hero-banner__video-background', autoplay: true, loop: true,
@@ -40,7 +40,7 @@ padding: 0 2rem;
 }
 
 {% if block.settings.background_type == 'image' %}
-.hero-banner {
+.hero-banner[data-block-id="{{ block.id }}"] {
 background-image: url({{ block.settings.image | img_url: 'master' }});
 background-size: cover;
 background-position: center top;
@@ -151,10 +151,13 @@ max-width: 24rem;
 .hero-banner {
 min-height: 35rem;
 align-items: center;
-{% if block.settings.background_type == 'image' %}
-background-image: url({{ block.settings.mobile_image | default: block.settings.image | img_url: 'master' }});
-{% endif %}
 }
+
+{% if block.settings.background_type == 'image' %}
+.hero-banner[data-block-id="{{ block.id }}"] {
+background-image: url({{ block.settings.mobile_image | default: block.settings.image | img_url: 'master' }});
+}
+{% endif %}
 
 .hero-banner__content {
 margin-left: 5%;
