@@ -111,12 +111,36 @@
         "showroom_image": "shopify://shop_images/showroom-image.png",
         "showroom_link": ""
       }
+    },
+    "hero_banner_BrCLCn": {
+      "type": "hero-banner",
+      "blocks": {
+        "hero_banner_FUhhRY": {
+          "type": "hero_banner",
+          "settings": {
+            "background_type": "image",
+            "text_color": "white",
+            "image": "shopify://shop_images/Picture_1_TEST.jpg",
+            "overlay_opacity": 0.3,
+            "heading": "Discover our jewellery",
+            "subheading": "",
+            "button_text": "SHOP NOW",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "hero_banner_FUhhRY"
+      ],
+      "name": "Hero Banners",
+      "settings": {}
     }
   },
   "order": [
     "hero-banner",
     "product-display",
     "categories",
-    "showroom-section"
+    "showroom-section",
+    "hero_banner_BrCLCn"
   ]
 }
