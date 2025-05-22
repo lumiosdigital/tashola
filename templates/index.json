@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-banner": {
@@ -92,19 +101,6 @@
       ],
       "settings": {}
     },
-    "hero_banner_iDADg9": {
-      "type": "hero-banner",
-      "disabled": true,
-      "settings": {
-        "background_type": "image",
-        "text_color": "white",
-        "overlay_opacity": 0.4,
-        "heading": "New collection",
-        "subheading": "Discover our new earrings collection",
-        "button_text": "SHOP NOW",
-        "button_link": "shopify://collections/new-in"
-      }
-    },
     "showroom-section": {
       "type": "showroom-section",
       "disabled": true,
@@ -115,13 +111,36 @@
         "showroom_image": "shopify://shop_images/showroom-image.png",
         "showroom_link": ""
       }
+    },
+    "hero_banner_9hhp4a": {
+      "type": "hero-banner",
+      "blocks": {
+        "hero_banner_HLxM9z": {
+          "type": "hero_banner",
+          "settings": {
+            "background_type": "image",
+            "text_color": "white",
+            "image": "shopify://shop_images/Picture_1_TEST.jpg",
+            "overlay_opacity": 0.3,
+            "heading": "test",
+            "subheading": "test test test",
+            "button_text": "SHOP NOW",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "hero_banner_HLxM9z"
+      ],
+      "name": "Hero Banners",
+      "settings": {}
     }
   },
   "order": [
     "hero-banner",
     "product-display",
     "categories",
-    "hero_banner_iDADg9",
-    "showroom-section"
+    "showroom-section",
+    "hero_banner_9hhp4a"
   ]
 }
