@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-banner": {
@@ -92,19 +101,6 @@
       ],
       "settings": {}
     },
-    "hero_banner_iDADg9": {
-      "type": "hero-banner",
-      "disabled": true,
-      "settings": {
-        "background_type": "image",
-        "text_color": "white",
-        "overlay_opacity": 0.4,
-        "heading": "New collection",
-        "subheading": "Discover our new earrings collection",
-        "button_text": "SHOP NOW",
-        "button_link": "shopify://collections/new-in"
-      }
-    },
     "showroom-section": {
       "type": "showroom-section",
       "disabled": true,
@@ -121,7 +117,6 @@
     "hero-banner",
     "product-display",
     "categories",
-    "hero_banner_iDADg9",
     "showroom-section"
   ]
 }
