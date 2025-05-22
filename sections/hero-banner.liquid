@@ -1,19 +1,21 @@
+{% for block in section.blocks %}
 <!-- HERO BANNER -->
-<section class="hero-banner {% if section.settings.background_type == 'video' %}hero-banner--video{% endif %}">
-    {% if section.settings.background_type == 'video' and section.settings.video != blank %}
+<section class="hero-banner {% if block.settings.background_type == 'video' %}hero-banner--video{% endif %}" {{
+    block.shopify_attributes }}>
+    {% if block.settings.background_type == 'video' and block.settings.video != blank %}
     <div class="hero-banner__video-container">
-        {{ section.settings.video | video_tag: class: 'hero-banner__video-background', autoplay: true, loop: true,
+        {{ block.settings.video | video_tag: class: 'hero-banner__video-background', autoplay: true, loop: true,
         muted: true, playsinline: true }}
         <div class="hero-banner__overlay"
-            style="background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity }});"></div>
+            style="background-color: rgba(0, 0, 0, {{ block.settings.overlay_opacity }});"></div>
     </div>
     {% endif %}
 
     <div class="hero-banner__content">
-        <h1>{{ section.settings.heading }}</h1>
-        <h2>{{ section.settings.subheading }}</h2>
-        <a href="{{ section.settings.button_link }}" class="hero-banner__button">
-            {{ section.settings.button_text }}
+        <h1>{{ block.settings.heading }}</h1>
+        <h2>{{ block.settings.subheading }}</h2>
+        <a href="{{ block.settings.button_link }}" class="hero-banner__button">
+            {{ block.settings.button_text }}
         </a>
     </div>
 </section>
@@ -37,9 +39,9 @@ margin-top: var(--header-height);
 padding: 0 2rem;
 }
 
-{% if section.settings.background_type == 'image' %}
+{% if block.settings.background_type == 'image' %}
 .hero-banner {
-background-image: url({{ section.settings.image | img_url: 'master' }});
+background-image: url({{ block.settings.image | img_url: 'master' }});
 background-size: cover;
 background-position: center top;
 background-repeat: no-repeat;
@@ -81,7 +83,7 @@ height: 100%;
 position: relative;
 max-width: 27rem;
 text-align: left;
-color: {% if section.settings.text_color == 'black' %}#373736{% else %}white{% endif %};
+color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};
 margin-left: 10%;
 z-index: 2;
 }
@@ -115,7 +117,7 @@ font-size: 1rem;
 font-weight: 400;
 text-decoration: none;
 background-color: transparent;
-color: {% if section.settings.text_color == 'black' %}#373736{% else %}white{% endif %};
+color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};
 cursor: pointer;
 transition: color 0.3s ease;
 /* padding: 0.75rem 1.5rem; */
@@ -149,8 +151,8 @@ max-width: 24rem;
 .hero-banner {
 min-height: 35rem;
 align-items: center;
-{% if section.settings.background_type == 'image' %}
-background-image: url({{ section.settings.mobile_image | default: section.settings.image | img_url: 'master' }});
+{% if block.settings.background_type == 'image' %}
+background-image: url({{ block.settings.mobile_image | default: block.settings.image | img_url: 'master' }});
 {% endif %}
 }
 
@@ -194,11 +196,17 @@ min-height: 30rem;
 }
 }
 {% endstyle %}
+{% endfor %}
 
 <!-- SCHEMA FOR BANNER TEMPLATE -->
 {% schema %}
 {
-"name": "Hero Section",
+"name": "Hero Banners",
+"max_blocks": 10,
+"blocks": [
+{
+"type": "hero_banner",
+"name": "Hero Banner",
 "settings": [
 {
 "type": "radio",
@@ -284,10 +292,17 @@ min-height: 30rem;
 "id": "button_link",
 "label": "Button Link"
 }
+]
+}
 ],
 "presets": [
 {
-"name": "Hero Banner"
+"name": "Hero Banners",
+"blocks": [
+{
+"type": "hero_banner"
+}
+]
 }
 ]
 }

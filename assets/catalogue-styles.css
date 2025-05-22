@@ -763,6 +763,12 @@
         max-width: 90%;
     }
 
+    .design-filter-button {
+        font-size: 0.8125rem;
+        line-height: 1.1em;
+        padding: 0.1rem 1rem 0rem;
+    }
+
     .sort-button span {
         display: none;
     }
