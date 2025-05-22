@@ -119,7 +119,7 @@
           "type": "hero_banner",
           "settings": {
             "background_type": "image",
-            "text_color": "white",
+            "text_color": "black",
             "image": "shopify://shop_images/Picture_1_TEST.jpg",
             "overlay_opacity": 0.3,
             "heading": "Discover our jewellery",
