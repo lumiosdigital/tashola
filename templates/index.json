@@ -111,36 +111,12 @@
         "showroom_image": "shopify://shop_images/showroom-image.png",
         "showroom_link": ""
       }
-    },
-    "hero_banner_9hhp4a": {
-      "type": "hero-banner",
-      "blocks": {
-        "hero_banner_HLxM9z": {
-          "type": "hero_banner",
-          "settings": {
-            "background_type": "image",
-            "text_color": "white",
-            "image": "shopify://shop_images/Picture_1_TEST.jpg",
-            "overlay_opacity": 0.3,
-            "heading": "test",
-            "subheading": "test test test",
-            "button_text": "SHOP NOW",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "hero_banner_HLxM9z"
-      ],
-      "name": "Hero Banners",
-      "settings": {}
     }
   },
   "order": [
     "hero-banner",
     "product-display",
     "categories",
-    "showroom-section",
-    "hero_banner_9hhp4a"
+    "showroom-section"
   ]
 }
