@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero-banner": {
@@ -112,11 +103,11 @@
         "showroom_link": ""
       }
     },
-    "hero_banner_BrCLCn": {
-      "type": "hero-banner",
+    "feature-banners": {
+      "type": "feature-section",
       "blocks": {
-        "hero_banner_FUhhRY": {
-          "type": "hero_banner",
+        "feature_banner_1": {
+          "type": "feature_banner",
           "settings": {
             "background_type": "image",
             "text_color": "black",
@@ -130,9 +121,8 @@
         }
       },
       "block_order": [
-        "hero_banner_FUhhRY"
+        "feature_banner_1"
       ],
-      "name": "Hero Banners",
       "settings": {}
     }
   },
@@ -141,6 +131,6 @@
     "product-display",
     "categories",
     "showroom-section",
-    "hero_banner_BrCLCn"
+    "feature-banners"
   ]
 }

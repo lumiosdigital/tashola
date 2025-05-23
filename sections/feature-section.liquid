@@ -1,47 +1,43 @@
 {% for block in section.blocks %}
-<!-- HERO BANNER -->
-<section class="hero-banner {% if block.settings.background_type == 'video' %}hero-banner--video{% endif %}"
+<!-- FEATURE BANNER -->
+<section class="feature-banner {% if block.settings.background_type == 'video' %}feature-banner--video{% endif %}"
     data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
     {% if block.settings.background_type == 'video' and block.settings.video != blank %}
-    <div class="hero-banner__video-container">
-        {{ block.settings.video | video_tag: class: 'hero-banner__video-background', autoplay: true, loop: true,
+    <div class="feature-banner__video-container">
+        {{ block.settings.video | video_tag: class: 'feature-banner__video-background', autoplay: true, loop: true,
         muted: true, playsinline: true }}
-        <div class="hero-banner__overlay"
+        <div class="feature-banner__overlay"
             style="background-color: rgba(0, 0, 0, {{ block.settings.overlay_opacity }});"></div>
     </div>
     {% endif %}
 
-    <div class="hero-banner__content">
+    <div class="feature-banner__content">
         <h1>{{ block.settings.heading }}</h1>
         <h2>{{ block.settings.subheading }}</h2>
-        <a href="{{ block.settings.button_link }}" class="hero-banner__button">
+        <a href="{{ block.settings.button_link }}" class="feature-banner__button">
             {{ block.settings.button_text }}
         </a>
     </div>
 </section>
 
-<!-- STYLES FOR HERO BANNER -->
+<!-- STYLES FOR FEATURE BANNER -->
 {% style %}
-:root {
---header-height: 5.625rem;
-}
 
-.hero-banner {
+.feature-banner {
 display: flex;
 justify-content: flex-start;
 align-items: center;
 position: relative;
 width: 100%;
-height: calc(100vh - var(--header-height));
-min-height: 40rem;
+height: 100vh;
 overflow: hidden;
 /* CHANGED: Only add margin-top if this is the first block */
-margin-top: {% if forloop.first %}var(--header-height){% else %}0{% endif %};
+margin-top: 0;
 padding: 0 2rem;
 }
 
 {% if block.settings.background_type == 'image' %}
-.hero-banner[data-block-id="{{ block.id }}"] {
+.feature-banner[data-block-id="{{ block.id }}"] {
 background-image: url({{ block.settings.image | img_url: 'master' }});
 background-size: cover;
 background-position: center top;
@@ -50,7 +46,7 @@ background-repeat: no-repeat;
 {% endif %}
 
 /* Video background styles */
-.hero-banner__video-container {
+.feature-banner__video-container {
 position: absolute;
 top: 0;
 left: 0;
@@ -60,7 +56,7 @@ z-index: -1;
 overflow: hidden;
 }
 
-.hero-banner__video-background {
+.feature-banner__video-background {
 position: absolute;
 top: 50%;
 left: 50%;
@@ -72,7 +68,7 @@ transform: translate(-50%, -50%);
 object-fit: cover;
 }
 
-.hero-banner__overlay {
+.feature-banner__overlay {
 position: absolute;
 top: 0;
 left: 0;
@@ -80,7 +76,7 @@ width: 100%;
 height: 100%;
 }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content {
 position: relative;
 max-width: 27rem;
 text-align: left;
@@ -89,7 +85,7 @@ margin-left: 10%;
 z-index: 2;
 }
 
-.hero-banner__content h1 {
+.feature-banner__content h1 {
 font-size: 4.375rem;
 font-weight: 600;
 line-height: 1.1;
@@ -100,7 +96,7 @@ font-weight: 600;
 font-style: normal;
 }
 
-.hero-banner__content h2 {
+.feature-banner__content h2 {
 font-size: 1.25rem;
 font-weight: 300;
 line-height: 1.4;
@@ -111,7 +107,7 @@ font-weight: 400;
 font-style: normal;
 }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content .hero-banner__button {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content .feature-banner__button {
 display: inline-block;
 margin-top: 1rem;
 font-size: 1rem;
@@ -125,68 +121,68 @@ min-width: 44px;
 min-height: 44px;
 }
 
-.hero-banner__button:hover {
+.feature-banner__button:hover {
 text-decoration: underline !important;
 text-underline-offset: 0.2rem;
 }
 
 /* Responsive styles */
 @media (max-width: 1200px) {
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content h1 {
 font-size: 3.75rem;
 }
 }
 
 @media (max-width: 992px) {
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content h1 {
 font-size: 3rem;
 }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content {
 max-width: 24rem;
 }
 }
 
 @media (max-width: 768px) {
-.hero-banner {
+.feature-banner {
 min-height: 35rem;
 align-items: center;
 }
 
 {% if block.settings.background_type == 'image' %}
-.hero-banner[data-block-id="{{ block.id }}"] {
+.feature-banner[data-block-id="{{ block.id }}"] {
 background-image: url({{ block.settings.mobile_image | default: block.settings.image | img_url: 'master' }});
 }
 {% endif %}
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content {
 margin-left: 5%;
 max-width: 80%;
 }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content h1 {
 font-size: 2.5rem;
 margin-bottom: 1rem;
 }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h2 {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content h2 {
 font-size: 1.125rem;
 margin-bottom: 2rem;
 }
 }
 
 @media (max-width: 576px) {
-.hero-banner {
+.feature-banner {
 /* CHANGED: Only add margin-top if this is the first block */
 margin-top: {% if forloop.first %}5rem{% else %}0{% endif %};
 height: 90vh;
 }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content h1 {
 font-size: 2.25rem;
 }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h2 {
+.feature-banner[data-block-id="{{ block.id }}"] .feature-banner__content h2 {
 font-size: 1rem;
 margin-bottom: 1.5rem;
 }
@@ -194,7 +190,7 @@ margin-bottom: 1.5rem;
 
 /* Fix for iOS Safari 100vh issue */
 @supports (-webkit-touch-callout: none) {
-.hero-banner {
+.feature-banner {
 height: calc(100vh - var(--header-height) - 80px);
 min-height: 35rem;
 }
@@ -202,15 +198,15 @@ min-height: 35rem;
 {% endstyle %}
 {% endfor %}
 
-<!-- SCHEMA FOR BANNER TEMPLATE -->
+<!-- SCHEMA FOR FEATURE TEMPLATE -->
 {% schema %}
 {
-"name": "Hero Banners",
+"name": "Feature Section",
 "max_blocks": 10,
 "blocks": [
 {
-"type": "hero_banner",
-"name": "Hero Banner",
+"type": "feature_banner",
+"name": "Feature Banner",
 "settings": [
 {
 "type": "radio",
@@ -277,19 +273,19 @@ min-height: 35rem;
 "type": "text",
 "id": "heading",
 "label": "Main Heading",
-"default": "Jewelry that speaks for you"
+"default": "Feature heading"
 },
 {
 "type": "text",
 "id": "subheading",
 "label": "Subheading",
-"default": "Create bold accents with exquisite pieces that highlight your individuality."
+"default": "Add your feature description here."
 },
 {
 "type": "text",
 "id": "button_text",
 "label": "Button Text",
-"default": "SHOP NOW"
+"default": "LEARN MORE"
 },
 {
 "type": "url",
@@ -301,10 +297,10 @@ min-height: 35rem;
 ],
 "presets": [
 {
-"name": "Hero Banners",
+"name": "Feature Section",
 "blocks": [
 {
-"type": "hero_banner"
+"type": "feature_banner"
 }
 ]
 }

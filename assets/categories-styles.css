@@ -21,7 +21,11 @@ a {
     grid-template-columns: repeat(2, 1fr);
     width: 100%;
     background-color: var(--color-background);
+    margin: 0;
+    padding: 0;
 }
+
+
 
 .category-block,
 .collection-banner {
@@ -533,7 +537,7 @@ button:focus {
         padding: 2rem 1rem 3rem;
         display: block;
         position: relative;
-        clear: both;
+        /* clear: both; */
         margin-top: 50px !important;
         padding-top: 40px;
     }
