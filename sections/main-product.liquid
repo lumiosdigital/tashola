@@ -2,12 +2,12 @@
     {% render 'breadcrumbs' %}
 </div>
 
-<!-- Add Swiper CSS to head -->
+<!-- Swiper -->
 {{ 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' | stylesheet_tag }}
 
 <div class="product-container" data-product-container>
     <div class="single-product-grid">
-        <!-- Left column: Product images - now with Swiper support for mobile -->
+        <!-- Left column: Product images -->
         <div class="product-gallery-column">
             <div class="product-gallery" data-product-gallery>
                 <!-- Desktop image grid (hidden on mobile) -->
@@ -40,7 +40,7 @@
                     {% endif %}
                     {% endfor %}
                 </div>
-                <!-- Add pagination -->
+                <!-- pagination -->
                 <div class="swiper-pagination"></div>
             </div>
         </div>
@@ -258,7 +258,7 @@
 </div>
 {% endif %}
 
-<!-- Add Swiper JS before closing body tag -->
+<!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
 <script type="application/json" id="ProductJson-{{ section.id }}">
@@ -936,7 +936,7 @@
 
     .product-interactions-wrapper {
         display: flex;
-        justify-content: center;
+        justify-content: left;
         align-items: center;
         align-content: center;
         gap: 0.625rem;

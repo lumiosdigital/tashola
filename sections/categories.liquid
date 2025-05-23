@@ -1,5 +1,5 @@
 {% comment %}
-Simplified categories section with flexible height and proper display of all blocks
+Updated categories section with pagination removed and editable title
 {% endcomment %}
 
 <div class="categories-section">
@@ -38,10 +38,14 @@ Simplified categories section with flexible height and proper display of all blo
                 <div class="collection-product-display">
                     {% if block.settings.featured_collection != blank %}
                     {% assign collection = collections[block.settings.featured_collection] %}
-                    {% paginate collection.products by 4 %}
+                    {% if block.settings.custom_collection_title != blank %}
+                    <h2 class="product-display-title">{{ block.settings.custom_collection_title }}</h2>
+                    {% else %}
+                    <h2 class="product-display-title">{{ block.settings.selected_collection.title }}</h2>
+                    {% endif %}
                     {% if collection.products.size > 0 %}
                     <div class="product-grid" id="product-grid-{{ block.id }}">
-                        {% for product in collection.products %}
+                        {% for product in collection.products limit: 4 %}
                         <div class="product-card">
                             <a href="{{ product.url }}">
                                 <div class="product-image-container">
@@ -95,32 +99,9 @@ Simplified categories section with flexible height and proper display of all blo
                         </div>
                         {% endfor %}
                     </div>
-
-                    {% if paginate.pages > 1 %}
-                    <div class="pagination" id="pagination-container-{{ block.id }}">
-                        {% if paginate.previous %}
-                        <a href="{{ paginate.previous.url }}" class="prev pagination-link" data-page="{{ paginate.previous.page }}"
-                            data-block-id="{{ block.id }}" aria-label="Previous page">
-                            {% render 'icon-arrow-left' %}
-                        </a>
-                        {% else %}
-                        <div class="prev grayed-out" aria-disabled="true">{% render 'icon-arrow-left-gray' %}</div>
-                        {% endif %}
-
-                        {% if paginate.next %}
-                        <a href="{{ paginate.next.url }}" class="next pagination-link" data-page="{{ paginate.next.page }}"
-                            data-block-id="{{ block.id }}" aria-label="Next page">
-                            {% render 'icon-arrow-right' %}
-                        </a>
-                        {% else %}
-                        <div class="next grayed-out" aria-disabled="true">{% render 'icon-arrow-right-gray' %}</div>
-                        {% endif %}
-                    </div>
-                    {% endif %}
                     {% else %}
                     <p class="no-products-message">No products found in this collection</p>
                     {% endif %}
-                    {% endpaginate %}
                     {% else %}
                     <p class="no-collection-message">Please select a collection in the theme editor</p>
                     {% endif %}
@@ -136,479 +117,13 @@ Simplified categories section with flexible height and proper display of all blo
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-<style>
-    /* Main container */
-    .categories-section {
-        width: 100%;
-    }
-
-    /* Category grid - much simpler layout using CSS grid */
-    .category-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        width: 100%;
-    }
-
-    /* Regular category items */
-    .category-item {
-        height: 100vh;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .category-link {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    /* Collection display row - spans full width */
-    .collection-display-row {
-        display: flex;
-        width: 100%;
-        grid-column: 1 / span 2;
-    }
-
-    .collection-display-row.reverse {
-        flex-direction: row-reverse;
-    }
-
-    .collection-banner {
-        flex: 0 0 50%;
-        width: 50%;
-        height: 100vh;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .collection-banner-link {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    .product-display {
-        flex: 0 0 50%;
-        /* width: 50%; */
-        height: 100vh;
-        padding: 2.5rem 1.75rem 1.5rem 1.75rem;
-        background-color: #F6F4F3;
-        overflow: auto;
-    }
-
-    /* Image containers */
-    .category-image-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-    }
-
-    .category-image {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        transition: transform 1s ease;
-    }
-
-    .category-image-container:hover .category-image {
-        transform: scale(1.05);
-    }
-
-    /* Titles */
-    .category-title {
-        color: white;
-        font-size: 2.25rem;
-        text-align: center;
-        margin-bottom: 4rem;
-        font-family: var(--font-heading);
-        font-weight: 600;
-        font-style: normal;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 2;
-        width: 100%;
-    }
-
-    .collection-title {
-        color: white;
-        font-size: 2.25rem;
-        text-align: center;
-        margin-bottom: 4rem;
-        font-family: var(--font-heading);
-        font-weight: 600;
-        font-style: normal;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 1.25rem;
-        z-index: 2;
-        width: 100%;
-    }
-
-    .collection-dynamic-title {
-    color: white;
-    font-size: 2.25rem;
-    text-align: center;
-    margin-bottom: 4rem;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-style: normal;
-    }
-
-    h3.collection-dynamic-title {
-        position: absolute;
-        color: white;
-        font-size: 2.25rem;
-        text-align: center;
-        font-family: var(--font-heading);
-        font-weight: 600;
-        bottom: 1.25rem;
-        z-index: 2;
-        /* Add text shadow for better readability */
-    }
-
-    .collection-subtitle {
-        color: white;
-        font-size: 2.25rem;
-        text-align: center;
-        font-family: var(--font-heading);
-        font-weight: 400;
-        font-style: italic;
-        /* display: block; */
-    }
-
-    /* Product collection */
-    .collection-product-display {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Product grid */
-    .product-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-        min-height: 52rem;
-        width: 100%;
-    }
-
-    .product-grid.loading:after {
-        content: "Loading...";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: var(--font-heading);
-        font-size: 1.25rem;
-        color: var(--color-text);
-    }
-
-    /* Product cards */
-    .product-card {
-        width: calc(50% - 10px);
-        max-width: 20rem;
-        flex: 0 0 auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .product-image-container {
-        width: 100%;
-        height: auto;
-        padding-bottom: 140%;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .product-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* object-fit: cover; */
-        transition: transform 1s ease;
-    }
-
-    .product-image-container:hover .product-image {
-        transform: scale(1.05);
-    }
-
-    .product-info {
-        width: 100%;
-        padding: 0 0.9375rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .product-title {
-        font-size: 1.25rem;
-        text-align: left;
-        font-family: var(--font-heading);
-        color: var(--color-text);
-        font-weight: 400;
-    }
-
-    .product-price {
-        font-weight: 400;
-        margin-bottom: 0.5rem;
-        text-align: left;
-        font-family: var(--font-heading);
-        text-decoration: none;
-        color: var(--color-text);
-    }
-
-    .sale-price {
-        color: var(--color-text);
-        margin-right: 0.5rem;
-    }
-
-    /* Variants */
-    .product-variants {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-        min-height: 1.75rem;
-    }
-
-    .variant-color {
-        width: 1.125rem;
-        height: 1.125rem;
-        border-radius: 50%;
-        border: 1px solid #e0e0e0 !important;
-        transition: transform 0.2s ease;
-        cursor: pointer;
-    }
-
-    .variant-color:hover {
-        transform: scale(1.1);
-    }
-
-    /* Pagination */
-    .pagination {
-        display: flex;
-        justify-content: flex-end;
-        margin-right: 3.3rem;
-        margin-top: 1.5rem;
-    }
-
-    .pagination .prev,
-    .pagination .next {
-        padding: 0.5rem;
-        cursor: pointer;
-    }
-
-    .pagination .grayed-out {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .pagination-link:hover svg path {
-        stroke: var(--color-accent);
-    }
-
-    /* Mobile styles */
-    @media (max-width: 768px) {
-
-        /* Switch to single column grid on mobile */
-        .category-grid {
-            display: block;
-        }
-
-        .category-item {
-            width: 50%;
-            height: 50vh;
-            float: left;
-        }
-
-        .collection-display-row,
-        .collection-display-row.reverse {
-            width: 100%;
-            display: block;
-            clear: both;
-        }
-
-        .collection-banner {
-            width: 100%;
-            height: 60vh;
-            display: block;
-        }
-
-        .product-display {
-            width: 100%;
-            height: auto;
-            min-height: auto;
-            padding: 2rem 1rem 3rem;
-            display: block;
-        }
-
-        .product-grid {
-            min-height: 10vh;
-        }
-
-        /* Hide pagination on mobile and use swiper instead */
-        .pagination {
-            display: none;
-        }
-
-        /* Swiper styles */
-        .swiper-container {
-            width: 100%;
-            overflow: visible;
-        }
-
-        .swiper-slide {
-            width: 80%;
-            padding: 0 5px;
-        }
-
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: var(--color-text);
-            background: rgba(255, 255, 255, 0.8);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-        }
-
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-            font-size: 18px;
-        }
-    }
-
-    /* Additional mobile adjustments */
-    @media (max-width: 576px) {
-        .category-item {
-            height: 50vh;
-        }
-
-        .collection-banner {
-            height: 50vh;
-        }
-
-        .category-title,
-        .collection-title,
-        .collection-subtitle {
-            font-size: 1.75rem;
-        }
-
-        .swiper-slide {
-            width: 80%;
-        }
-    }
-</style>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Initialize the pagination functionality for all product grids
-        const productGrids = document.querySelectorAll('.product-grid');
-        productGrids.forEach(grid => {
-            const blockId = grid.id.split('-').pop();
-            initPagination(blockId);
-        });
-
         // Initialize product variants
         initProductVariants();
 
         // Initialize Swiper on mobile
         initMobileSwiper();
-
-        function initPagination(blockId) {
-            // Add event listeners to all pagination links for this block
-            const paginationLinks = document.querySelectorAll(`.pagination-link[data-block-id="${blockId}"]`);
-            paginationLinks.forEach(function (link) {
-                link.addEventListener('click', handlePaginationClick);
-            });
-        }
-
-        function handlePaginationClick(e) {
-            e.preventDefault();
-
-            const url = this.getAttribute('href');
-            const blockId = this.getAttribute('data-block-id');
-            loadPage(url, blockId);
-
-            // Update URL without refreshing (optional but helps with browser history)
-            window.history.pushState({ path: url, blockId: blockId }, '', url);
-        }
-
-        function loadPage(url, blockId) {
-            // Remember scroll position
-            const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Add a loading indicator if you want
-            const productGrid = document.getElementById(`product-grid-${blockId}`);
-            if (productGrid) {
-                productGrid.classList.add('loading');
-
-                // Fetch the new page content
-                fetch(url)
-                    .then(response => response.text())
-                    .then(html => {
-                        // Create a temporary element to parse the HTML
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-
-                        // Find the product grid in the fetched content
-                        const newProductGrid = doc.querySelector(`#product-grid-${blockId}`);
-                        const newPagination = doc.querySelector(`#pagination-container-${blockId}`);
-
-                        // Replace the existing product grid with the new one
-                        if (newProductGrid) {
-                            productGrid.innerHTML = newProductGrid.innerHTML;
-                            productGrid.classList.remove('loading');
-
-                            // Re-initialize product variants for the new content
-                            initProductVariants();
-
-                            // Reinitialize Swiper if on mobile
-                            if (window.innerWidth <= 768) {
-                                initMobileSwiper();
-                            }
-                        }
-
-                        // Replace the pagination
-                        if (newPagination) {
-                            const paginationContainer = document.getElementById(`pagination-container-${blockId}`);
-                            if (paginationContainer) {
-                                paginationContainer.innerHTML = newPagination.innerHTML;
-
-                                // Re-add event listeners to the new pagination links
-                                initPagination(blockId);
-                            }
-                        }
-
-                        // Maintain the scroll position
-                        window.scrollTo(0, currentScrollPosition);
-                    })
-                    .catch(error => {
-                        console.error('Error loading the products:', error);
-                        productGrid.classList.remove('loading');
-                    });
-            }
-        }
-
-        // Handle browser back/forward navigation
-        window.addEventListener('popstate', function (e) {
-            if (e.state && e.state.path) {
-                const blockId = e.state.blockId || '';
-                loadPage(e.state.path, blockId);
-            } else {
-                // If no state, reload current page
-                window.location.reload();
-            }
-        });
 
         // Extract this functionality into its own function that can be called after each page load
         function initProductVariants() {
@@ -631,7 +146,7 @@ Simplified categories section with flexible height and proper display of all blo
                     border: none; /* Remove default border */
                 }
                 .variant-radio:checked + .variant-color {
-                    box-shadow: 0 0 0 3px #F6F4F3), rgba(246, 244, 243, 1);
+                    box-shadow: 0 0 0 3px #F6F4F3;
                 }
                 .variant-radio-container:hover .variant-color {
                     transform: scale(1.1);
@@ -915,6 +430,12 @@ Simplified categories section with flexible height and proper display of all blo
 "type": "collection_display",
 "name": "Collection with Products",
 "settings": [
+{
+"type": "text",
+"id": "custom_collection_title",
+"label": "Custom Collection Title",
+"info": "Leave blank to use the selected collection's title"
+},
 {
 "type": "select",
 "id": "layout_direction",
