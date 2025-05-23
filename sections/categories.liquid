@@ -1,5 +1,5 @@
 {% comment %}
-Updated categories section with pagination removed and editable title
+Updated categories section with pagination dots for product displays
 {% endcomment %}
 
 <div class="categories-section">
@@ -14,7 +14,9 @@ Updated categories section with pagination removed and editable title
                     <div class="category-image"
                         style="background-image: url('{% if block.settings.category_image %}{{ block.settings.category_image | img_url: 'master' }}{% else %}{{ block.settings.collection_handle | append: '-category.png' | asset_url }}{% endif %}');">
                     </div>
-                    <h3 class="category-title" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">{{ block.settings.category_title }}</h3>
+                    <h3 class="category-title"
+                        style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
+                        {{ block.settings.category_title }}</h3>
                 </div>
             </a>
         </div>
@@ -28,7 +30,11 @@ Updated categories section with pagination removed and editable title
                         <div class="category-image"
                             style="background-image: url('{% if block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'master' }}{% endif %}');">
                         </div>
-                        <h3 class="collection-dynamic-title" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">{{ block.settings.selected_collection.title }}<span class="collection-subtitle" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};"> Collection</span></h3>
+                        <h3 class="collection-dynamic-title"
+                            style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
+                            {{ block.settings.selected_collection.title }}<span class="collection-subtitle"
+                                style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
+                                Collection</span></h3>
                     </div>
                 </a>
             </div>
@@ -44,14 +50,13 @@ Updated categories section with pagination removed and editable title
                     <h2 class="product-display-title">{{ block.settings.selected_collection.title }}</h2>
                     {% endif %}
                     {% if collection.products.size > 0 %}
-                    <div class="product-grid" id="product-grid-{{ block.id }}">
+                    <div class="product-grid" id="product-grid-{{ block.id }}" data-block-id="{{ block.id }}">
                         {% for product in collection.products limit: 4 %}
-                        <div class="product-card">
+                        <div class="product-card" data-product-index="{{ forloop.index0 }}">
                             <a href="{{ product.url }}">
                                 <div class="product-image-container">
                                     {% if product.featured_image != blank %}
-                                    <img class="product-image"
-                                        src="{{ product.featured_image | img_url: 'master' }}"
+                                    <img class="product-image" src="{{ product.featured_image | img_url: 'master' }}"
                                         alt="{{ product.title | escape }}" width="600" height="600">
                                     {% else %}
                                     {{ 'product-1' | placeholder_svg_tag: 'product-image' }}
@@ -89,7 +94,8 @@ Updated categories section with pagination removed and editable title
                                     {% endif %}
 
                                     {% if color_code != "" %}
-                                    <div class="variant-color" style="background-color: {{ color_code }};" title="{{ value }}">
+                                    <div class="variant-color" style="background-color: {{ color_code }};"
+                                        title="{{ value }}">
                                     </div>
                                     {% endif %}
                                     {% endfor %}
@@ -99,6 +105,15 @@ Updated categories section with pagination removed and editable title
                         </div>
                         {% endfor %}
                     </div>
+
+                    <!-- Product Pagination Dots -->
+                    <div class="product-pagination" id="pagination-{{ block.id }}">
+                        {% for product in collection.products limit: 4 %}
+                        <div class="product-pagination-dot{% if forloop.first %} active{% endif %}"
+                            data-index="{{ forloop.index0 }}"></div>
+                        {% endfor %}
+                    </div>
+
                     {% else %}
                     <p class="no-products-message">No products found in this collection</p>
                     {% endif %}
@@ -124,6 +139,9 @@ Updated categories section with pagination removed and editable title
 
         // Initialize Swiper on mobile
         initMobileSwiper();
+
+        // Initialize desktop pagination dots
+        initDesktopPagination();
 
         // Extract this functionality into its own function that can be called after each page load
         function initProductVariants() {
@@ -298,6 +316,42 @@ Updated categories section with pagination removed and editable title
             }
         }
 
+        // Initialize desktop pagination dots functionality
+        function initDesktopPagination() {
+            if (window.innerWidth > 768) {
+                const productGrids = document.querySelectorAll('.product-grid');
+
+                productGrids.forEach(grid => {
+                    const blockId = grid.getAttribute('data-block-id');
+                    const pagination = document.getElementById(`pagination-${blockId}`);
+                    const productCards = grid.querySelectorAll('.product-card');
+                    const dots = pagination ? pagination.querySelectorAll('.product-pagination-dot') : [];
+
+                    if (!pagination || dots.length === 0) return;
+
+                    // Add click handlers to dots
+                    dots.forEach((dot, index) => {
+                        dot.addEventListener('click', () => {
+                            // Remove active class from all dots
+                            dots.forEach(d => d.classList.remove('active'));
+                            // Add active class to clicked dot
+                            dot.classList.add('active');
+
+                            // Optionally, you can add functionality to highlight the corresponding product
+                            productCards.forEach(card => card.classList.remove('highlighted'));
+                            if (productCards[index]) {
+                                productCards[index].classList.add('highlighted');
+                                // Remove highlight after 2 seconds
+                                setTimeout(() => {
+                                    productCards[index].classList.remove('highlighted');
+                                }, 2000);
+                            }
+                        });
+                    });
+                });
+            }
+        }
+
         // Initialize Swiper for mobile devices
         function initMobileSwiper() {
             if (window.innerWidth <= 768) {
@@ -309,6 +363,13 @@ Updated categories section with pagination removed and editable title
                     // Get all product cards
                     const productCards = productGrid.querySelectorAll('.product-card');
                     if (productCards.length === 0) return;
+
+                    // Hide desktop pagination on mobile
+                    const blockId = productGrid.getAttribute('data-block-id');
+                    const desktopPagination = document.getElementById(`pagination-${blockId}`);
+                    if (desktopPagination) {
+                        desktopPagination.style.display = 'none';
+                    }
 
                     // Create Swiper structure
                     const swiperContainer = document.createElement('div');
@@ -328,30 +389,27 @@ Updated categories section with pagination removed and editable title
                     // Build the swiper structure
                     swiperContainer.appendChild(swiperWrapper);
 
-                    // Add navigation
-                    const prevButton = document.createElement('div');
-                    prevButton.className = 'swiper-button-prev';
-
-                    const nextButton = document.createElement('div');
-                    nextButton.className = 'swiper-button-next';
-
-                    swiperContainer.appendChild(prevButton);
-                    swiperContainer.appendChild(nextButton);
+                    // Create pagination container for mobile
+                    const paginationContainer = document.createElement('div');
+                    paginationContainer.className = 'swiper-pagination';
+                    swiperContainer.appendChild(paginationContainer);
 
                     // Clear the original grid and append the swiper
                     productGrid.innerHTML = '';
                     productGrid.appendChild(swiperContainer);
                     productGrid.classList.add('swiper-initialized');
 
-                    // Initialize Swiper
+                    // Initialize Swiper with pagination
                     new Swiper(swiperContainer, {
                         slidesPerView: 'auto',
                         spaceBetween: 10,
                         centeredSlides: false,
                         grabCursor: true,
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                            bulletClass: 'swiper-pagination-bullet',
+                            bulletActiveClass: 'swiper-pagination-bullet-active'
                         },
                         breakpoints: {
                             320: {
@@ -370,6 +428,22 @@ Updated categories section with pagination removed and editable title
                 initProductVariants();
             }
         }
+
+        // Add CSS for product highlighting
+        const highlightStyles = document.createElement('style');
+        highlightStyles.textContent = `
+            .product-card.highlighted {
+                transform: scale(1.05);
+                transition: transform 0.3s ease;
+                z-index: 10;
+                position: relative;
+            }
+            .product-card.highlighted .product-image-container {
+                box-shadow: 0 4px 20px rgba(255, 163, 139, 0.3);
+                border-radius: 4px;
+            }
+        `;
+        document.head.appendChild(highlightStyles);
     });
 </script>
 
