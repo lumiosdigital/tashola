@@ -26,7 +26,7 @@ Updated categories section with pagination removed and editable title
                 <a href="{{ block.settings.selected_collection.url }}" class="collection-banner-link">
                     <div class="category-image-container">
                         <div class="category-image"
-                            style="background-image: url('{% if block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'large' }}{% endif %}');">
+                            style="background-image: url('{% if block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'master' }}{% endif %}');">
                         </div>
                         <h3 class="collection-dynamic-title" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">{{ block.settings.selected_collection.title }}<span class="collection-subtitle" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};"> Collection</span></h3>
                     </div>
