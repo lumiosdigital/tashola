@@ -666,14 +666,18 @@
     .catalogue-container {
             padding: 0 1.5rem 4rem;
         }
+
+    .catalogue-layout {
+        padding: 0 1rem;   
+    }
     
-        .catalogue-header {
-            padding: 1.5rem 1.5rem 1rem;
-        }
+    .catalogue-header {
+        padding: 2rem 1rem 1rem;
+    }
     
-        .catalogue-title {
-            font-size: 2rem;
-        }
+    .catalogue-title {
+        font-size: 2rem;
+    }
     
         .catalogue-filters-container {
             width: 300px;
@@ -708,6 +712,7 @@
             justify-content: flex-start;
             flex-wrap: nowrap;
             overflow-x: auto;
+            padding: 0rem;
         }
     
         .mobile-filter-button-wrapper {
@@ -721,7 +726,7 @@
 
 @media screen and (max-width: 768px) {
     .catalogue-header {
-        padding: 1.5rem 1rem 1rem;
+        padding: 2rem 1rem 1rem;
         margin-top: 70px;
         /* Header height on mobile */
     }
@@ -732,6 +737,10 @@
 
     .catalogue-description {
         font-size: 1rem;
+    }
+
+    .catalogue-layout {
+        padding: 0 1rem;
     }
 
     .catalogue-grid {
@@ -795,7 +804,7 @@
 
 @media screen and (max-width: 576px) {
     .catalogue-header {
-        padding: 1rem 0.75rem;
+        padding: 2rem 1rem;
     }
 
     .catalogue-title {
@@ -803,11 +812,15 @@
     }
 
     .catalogue-container {
-        padding: 0 0.75rem 3rem;
+        padding: 0 1rem 3rem;
     }
 
     .catalogue-grid {
         gap: 15px;
+    }
+
+    .catalogue-layout {
+        padding: 0 1rem;
     }
 
     .product-card-title {
@@ -822,8 +835,17 @@
         width: 260px;
     }
 
+    .filter-button {
+        padding: 0rem;
+        /* font-size: 0.75rem; */
+    }
+
+    .sort-button {
+        padding: 0rem;
+    }
+
     .catalogue-banner-content {
-        bottom: 1.5rem;
+        bottom: 7.5rem;
         padding: 0.5rem;
     }
 
@@ -837,6 +859,10 @@
     }
 
     .product-badge-container {
-        margin-bottom: 0.25rem;   
-    }    
+        margin-bottom: 0rem;   
+    }
+
+    .catalogue-product {
+        margin-bottom: 0px;
+    }
 }
