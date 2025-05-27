@@ -327,9 +327,31 @@
 }
 
 /* Mobile responsiveness */
-@media (max-width: 767px) {
+@media (max-width:1024px) {
+    .btn {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
     .cart-drawer {
         width: 85%;
+    }
+}
+
+@media (max-width: 576px) {
+    .cart-drawer {
+        width: 100%;
+        min-width: 100%;
+    }
+    .cart-drawer-header h2 {
+        font-size: 1.50rem;
+    }
+    .cart-item-title {
+        font-size: 1.2rem;
+    }
+    .cart-item-price {
+        font-size: 1.2rem;
     }
 }
 

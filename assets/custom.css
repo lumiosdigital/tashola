@@ -659,11 +659,21 @@ body.mobile-menu-active {
     .nav-flex-wrapper {
         padding: var(--spacing-lg) var(--spacing-xl);
     }
+
+        .nav-container::after {
+            left: 1.6rem;
+            right: 1.6rem;
+        }
 }
 
 @media (max-width: 992px) {
     .nav-flex-wrapper {
         padding: var(--spacing-lg) var(--spacing-lg);
+    }
+
+    .nav-container::after {
+        left: 1.2rem;
+        right: 1.2rem;
     }
 
     .nav-icons {
@@ -687,7 +697,7 @@ body.mobile-menu-active {
         left: 16px;
         right: 16px;
         opacity: 20%;
-        margin-bottom: 1px;
+        /* margin-bottom: 1px; */
         /* Make line fully visible */
     }
 

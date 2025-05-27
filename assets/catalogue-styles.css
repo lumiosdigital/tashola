@@ -610,7 +610,7 @@
 /* Responsive styles */
 @media screen and (max-width: 1400px) {
     .catalogue-container {
-        padding: 0 2rem 5rem;
+        padding: 0 2rem 3rem;
     }
 
     .catalogue-header {
@@ -670,8 +670,12 @@
 }
 
 @media screen and (max-width: 992px) {
+    .breadcrumbs {
+        display: none;
+    }
+
     .catalogue-container {
-            padding: 0 1.5rem 4rem;
+        padding: 0 1rem 4rem;
         }
 
     .catalogue-layout {
@@ -679,6 +683,7 @@
     }
     
     .catalogue-header {
+        margin-top: 7rem;
         padding: 2rem 1rem 1rem;
     }
     
@@ -705,6 +710,9 @@
     
         .sort-dropdown {
             min-width: 180px;
+        }
+        .filter-button {
+            padding: 0rem;
         }
 
         .sort-button {
