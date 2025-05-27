@@ -220,7 +220,7 @@
 /* Filter Panel */
 .catalogue-filters-container {
     position: fixed;
-    top: var(--header-height);
+    top: 0;
     left: 0;
     bottom: 0;
     width: 350px;
@@ -228,7 +228,7 @@
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
-    z-index: 990;
+    z-index: 1000;
     overflow-y: auto;
 }
 
@@ -238,12 +238,12 @@
 
 .catalogue-filters-backdrop {
     position: fixed;
-    top: var(--header-height);
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.8);
-    z-index: 980;
+    z-index: 999;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
@@ -259,8 +259,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 2rem 0 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 .catalogue-filters-header h2 {
@@ -295,7 +297,7 @@
 }
 
 .filter-group {
-    border-bottom: 1px solid rgba(55, 55, 54, 0.1);
+    border-bottom: 1px solid #f0f0f0;
     padding-bottom: 1.5rem;
 }
 
@@ -847,6 +849,14 @@
     .product-badge {
         font-size: 0.7rem;
         padding: 0.15rem 0.5rem;   
+    }
+
+    .catalogue-filters-container {
+        width: 40%;
+    }
+
+    .filter-apply-button, .filter-clear-button {
+        min-height: 20px;
     }
 }
 
