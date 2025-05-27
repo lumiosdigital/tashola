@@ -618,7 +618,7 @@
     }
 
     .catalogue-banner-content {
-        bottom: 5rem;
+        bottom: 10rem;
     }
 
     .catalogue-banner-title {
@@ -640,7 +640,7 @@
         }
     
         .catalogue-banner-content {
-            bottom: 4rem;
+            bottom: 10rem;
         }
     
         .catalogue-banner-title {
@@ -652,14 +652,21 @@
         }
     
         .design-filters {
-            justify-content: flex-start;
+            justify-content: center;
             padding-left: 0.5rem;
         }
     
         .design-filter-button {
-            padding: 0.5rem 1rem;
-            font-size: 0.8125rem;
+            padding: 0.3rem 1rem 0rem;
+            min-height: 25px;
+            min-width: 65px;
+            font-size: 1rem;
         }
+
+.sort-button {
+    padding: 0rem;
+}
+
 }
 
 @media screen and (max-width: 992px) {
@@ -684,20 +691,24 @@
         }
     
         .catalogue-banner-content {
-            bottom: 3rem;
+            bottom: 12rem;
         }
     
         .catalogue-banner-title {
-            font-size: 1.25rem;
+            font-size: 1.50rem;
         }
     
         .catalogue-banner-text {
-            font-size: 0.875rem;
+            font-size: 1rem;
             max-width: 90%;
         }
     
         .sort-dropdown {
             min-width: 180px;
+        }
+
+        .sort-button {
+            padding: 0rem;   
         }
     
         .catalogue-controls {
@@ -709,7 +720,7 @@
             order: 3;
             width: 100%;
             margin: 0;
-            justify-content: flex-start;
+            justify-content: center;
             flex-wrap: nowrap;
             overflow-x: auto;
             padding: 0rem;
@@ -726,7 +737,7 @@
 
 @media screen and (max-width: 768px) {
     .catalogue-header {
-        padding: 2rem 1rem 1rem;
+        padding: 2rem 1.25rem 1rem;
         margin-top: 70px;
         /* Header height on mobile */
     }
@@ -735,12 +746,16 @@
         font-size: 1.75rem;
     }
 
+    .catalogue-container {
+        padding: 0 1.25rem 4rem;
+    }
+
     .catalogue-description {
         font-size: 1rem;
     }
 
     .catalogue-layout {
-        padding: 0 1rem;
+        padding: 0 1.25rem;
     }
 
     .catalogue-grid {
@@ -754,28 +769,45 @@
         width: 280px;
     }
 
+    .catalogue-banner-image-wrapper {
+        padding-bottom: 155%;
+    }
+
+    .catalogue-product {
+        margin-bottom: 0px;
+    }
+
+    .catalogue-banner-content {
+        bottom: 4rem;
+        padding: 0.5rem;
+    }
+
     .catalogue-filters-backdrop {
         top: 70px;
         /* Header height on mobile */
     }
 
-    .catalogue-banner-content {
+    .filter-button {
+        padding: 0rem;
+    }
+
+    .c-content {
         bottom: 2rem;
     }
 
     .catalogue-banner-title {
-        font-size: 1.25rem;
+        font-size: 1.50rem;
     }
 
     .catalogue-banner-text {
-        font-size: 0.75rem;
+        font-size: 1rem;
         max-width: 90%;
     }
 
     .design-filter-button {
-        font-size: 0.8125rem;
-        line-height: 1.1em;
-        padding: 0.1rem 1rem 0rem;
+        font-size: 0.95rem;
+        padding: 0.3rem 1rem 0rem;
+        min-height: 25px;
     }
 
     .sort-button span {
@@ -783,7 +815,7 @@
     }
     
     .sort-button {
-        padding: 0.75rem;
+        padding: 0rem;
         border-radius: 50%;
     }
     
@@ -856,6 +888,10 @@
     .catalogue-banner-text {
         font-size: 0.75rem;
         max-width: 95%;
+    }
+
+    .catalogue-banner-image-wrapper {
+        padding-bottom: 165%;
     }
 
     .product-badge-container {
