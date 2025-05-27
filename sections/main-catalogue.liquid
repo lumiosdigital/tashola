@@ -184,6 +184,30 @@
                             </div>
                         </div>
                     </div>
+<!-- Shopify Native Personalization Filter - Fixed for OR logic -->
+{% for filter in collection.filters %}
+    {% if filter.label == 'Personalization Themes' or filter.param_name contains 'personalization_themes' %}
+        <div class="filter-group">
+            <h3 class="filter-group-title">Personalization:</h3>
+            <div class="filter-options">
+                {% assign sorted_values = filter.values | sort: 'label' %}
+                {% for value in sorted_values %}
+                    <div class="filter-option">
+                        <input type="checkbox"
+                               name="{{ filter.param_name }}"
+                               value="{{ value.value }}"
+                               id="personalization-filter-{{ forloop.index }}"
+                               {% if value.active %}checked{% endif %}
+                               {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                        <label for="personalization-filter-{{ forloop.index }}">
+                            {{ value.label }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
 
                     <!-- Collections filter -->
                     <div class="filter-group">
@@ -239,10 +263,12 @@
         </div>
 
         <!-- Product Grid -->
-        <div class="catalogue-grid-container">
-            <div class="catalogue-grid-wrapper">
-                <ul class="catalogue-grid" data-catalogue-grid>
-                    {% for product in collection.products %}
+<!-- Product Grid -->
+<div class="catalogue-grid-container">
+    <div class="catalogue-grid-wrapper">
+        {% paginate collection.products by section.settings.products_per_page %}
+        <ul class="catalogue-grid" data-catalogue-grid>
+            {% for product in collection.products %}
                     {% assign grid_position = forloop.index %}
 
                     {% if grid_position == 8 %}
@@ -342,18 +368,47 @@
                             </a>
                         </li>
                     {% endfor %}
-                </ul>
-            </div>
+                    </ul>
 
-            <!-- Load More Products (for infinite scroll implementation) -->
-            <div class="catalogue-load-more" data-load-more>
-                {% if paginate.next %}
-                <button class="load-more-button" data-load-more-button>Load More</button>
-                {% endif %}
+                    <!-- Pagination -->
+                    {% if paginate.pages > 1 %}
+                    <nav class="pagination" aria-label="Pagination">
+                        {% if paginate.previous %}
+                            <a href="{{ paginate.previous.url }}" class="pagination-prev" aria-label="Previous page">
+                                ← Previous
+                            </a>
+                        {% endif %}
+                        
+                        {% for part in paginate.parts %}
+                            {% if part.is_link %}
+                                <a href="{{ part.url }}" class="pagination-item">{{ part.title }}</a>
+                            {% else %}
+                                {% if part.title == paginate.current_page %}
+                                    <span class="pagination-item pagination-current" aria-current="page">{{ part.title }}</span>
+                                {% else %}
+                                    <span class="pagination-item pagination-gap">{{ part.title }}</span>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if paginate.next %}
+                            <a href="{{ paginate.next.url }}" class="pagination-next" aria-label="Next page">
+                                Next →
+                            </a>
+                        {% endif %}
+                    </nav>
+                    {% endif %}
+                    
+                    {% endpaginate %}
+                </div>
+    
+                <!-- Load More Products (for infinite scroll implementation) -->
+                <div class="catalogue-load-more" data-load-more>
+                    {% if paginate.next %}
+                    <button class="load-more-button" data-load-more-button>Load More</button>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    </div>
-</div>
 
 <div class="catalogue-filters-backdrop" data-filters-backdrop></div>
 

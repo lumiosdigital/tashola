@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up filter form handlers
     if (filterForm) {
       handleFilterFormSubmission(filterForm);
+      handlePersonalizationFilters(filterForm); // Add personalization OR logic
       
       // Check for active filters and highlight them
       highlightActiveFilters();
@@ -149,6 +150,45 @@ document.addEventListener('DOMContentLoaded', function() {
           window.location.href = window.location.pathname;
         }
       }, 0);
+    });
+  }
+  
+  // Handle personalization filter OR logic
+  function handlePersonalizationFilters(filterForm) {
+    filterForm.addEventListener('submit', function(e) {
+      // Find all checked personalization theme checkboxes
+      const personalizationCheckboxes = filterForm.querySelectorAll('input[name*="personalization_themes"]:checked');
+      
+      if (personalizationCheckboxes.length > 1) {
+        e.preventDefault();
+        
+        // Get all other form data
+        const formData = new FormData(filterForm);
+        const searchParams = new URLSearchParams();
+        
+        // Add non-personalization filters normally
+        for (const [key, value] of formData.entries()) {
+          if (!key.includes('personalization_themes')) {
+            searchParams.append(key, value);
+          }
+        }
+        
+        // Add personalization filters as separate parameters for OR logic
+        personalizationCheckboxes.forEach(checkbox => {
+          searchParams.append(checkbox.name, checkbox.value);
+        });
+        
+        // Preserve sort parameter if it exists
+        const url = new URL(window.location.href);
+        const sortBy = url.searchParams.get('sort_by');
+        if (sortBy) {
+          searchParams.append('sort_by', sortBy);
+        }
+        
+        // Redirect with proper OR parameters
+        window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+      }
+      // If only one personalization filter is selected, let the form submit normally
     });
   }
   
@@ -313,117 +353,64 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Initialize infinite scroll functionality
+  // Initialize infinite scroll functionality for pagination
   function initInfiniteScroll() {
     const catalogueGrid = document.querySelector('[data-catalogue-grid]');
     const loadMoreButton = document.querySelector('[data-load-more-button]');
     
     if (!catalogueGrid || !loadMoreButton) return;
     
-    let currentPage = 1;
     let isLoading = false;
     
     // Handle load more button click
     loadMoreButton.addEventListener('click', function() {
-      if (isLoading) return;
-      
-      isLoading = true;
-      currentPage++;
-      
-      // Show loading state
-      loadMoreButton.textContent = 'Loading...';
-      
-      // Build URL for next page
-      const url = new URL(window.location.href);
-      url.searchParams.set('page', currentPage);
-      
-      // Preserve the sort parameter if it exists
-      const sortBy = url.searchParams.get('sort_by');
-      if (sortBy) {
-        url.searchParams.set('sort_by', sortBy);
-      }
-      
-      // Fetch next page products
-      fetch(url)
-        .then(response => response.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-          const newProducts = doc.querySelectorAll('.catalogue-product');
-          
-          // Append new products to the grid
-          newProducts.forEach(product => {
-            // Check if we need to insert a banner after specific products
-            const productIndex = Array.from(catalogueGrid.children).length + 1;
-            
-            // Banner placements - add banners at specific positions
-            if (productIndex === 8) {
-              // Catalogue Banner 1 - 4th column, 2nd row
-              insertCatalogueBanner(1);
-            } else if (productIndex === 12) {
-              // Catalogue Banner 2 - 1st column, 4th row
-              insertCatalogueBanner(2);
-            }
-            
-            // Add product with its badges (preserving all data attributes)
-            catalogueGrid.appendChild(product.cloneNode(true));
-          });
-          
-          // Check if there are more pages
-          const nextPageLink = doc.querySelector('.pagination-next');
-          if (!nextPageLink || nextPageLink.classList.contains('disabled')) {
+        if (isLoading) return;
+        
+        isLoading = true;
+        
+        // Show loading state
+        loadMoreButton.textContent = 'Loading...';
+        
+        // Find the next page URL from pagination
+        const nextPageLink = document.querySelector('.pagination-next');
+        if (!nextPageLink) {
             loadMoreButton.style.display = 'none';
-          } else {
-            loadMoreButton.textContent = 'Load More';
-          }
-          
-          isLoading = false;
-        })
-        .catch(error => {
-          console.error('Error loading more products:', error);
-          loadMoreButton.textContent = 'Load More';
-          isLoading = false;
-        });
+            return;
+        }
+        
+        // Fetch next page products
+        fetch(nextPageLink.href)
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newProducts = doc.querySelectorAll('.catalogue-product');
+                
+                // Append new products to the grid
+                newProducts.forEach(product => {
+                    catalogueGrid.appendChild(product.cloneNode(true));
+                });
+                
+                // Update pagination links
+                const newNextPageLink = doc.querySelector('.pagination-next');
+                if (!newNextPageLink) {
+                    loadMoreButton.style.display = 'none';
+                } else {
+                    // Update the next page link for subsequent loads
+                    const currentNextLink = document.querySelector('.pagination-next');
+                    if (currentNextLink) {
+                        currentNextLink.href = newNextPageLink.href;
+                    }
+                    loadMoreButton.textContent = 'Load More';
+                }
+                
+                isLoading = false;
+            })
+            .catch(error => {
+                console.error('Error loading more products:', error);
+                loadMoreButton.textContent = 'Load More';
+                isLoading = false;
+            });
     });
-    
-    // Function to insert catalogue banners
-    function insertCatalogueBanner(bannerNumber) {
-      const bannerTemplate = document.createElement('template');
-      
-      if (bannerNumber === 1) {
-        bannerTemplate.innerHTML = `
-          <li class="catalogue-banner banner-1">
-            <a href="${document.querySelector('.banner-1 a')?.getAttribute('href') || '#'}" class="catalogue-banner-link">
-              <div class="catalogue-banner-image-wrapper">
-                <img src="${document.querySelector('.banner-1 img')?.getAttribute('src') || ''}" alt="Catalogue Banner 1" class="catalogue-banner-image">
-              </div>
-              <div class="catalogue-banner-content">
-                <h3 class="catalogue-banner-title">${document.querySelector('.banner-1 .catalogue-banner-title')?.innerHTML || 'Collection'}</h3>
-                <p class="catalogue-banner-text">${document.querySelector('.banner-1 .catalogue-banner-text')?.textContent || ''}</p>
-              </div>
-            </a>
-          </li>
-        `;
-      } else {
-        bannerTemplate.innerHTML = `
-          <li class="catalogue-banner banner-2">
-            <a href="${document.querySelector('.banner-2 a')?.getAttribute('href') || '#'}" class="catalogue-banner-link">
-              <div class="catalogue-banner-image-wrapper">
-                <img src="${document.querySelector('.banner-2 img')?.getAttribute('src') || ''}" alt="Catalogue Banner 2" class="catalogue-banner-image">
-              </div>
-              <div class="catalogue-banner-content">
-                <h3 class="catalogue-banner-title">${document.querySelector('.banner-2 .catalogue-banner-title')?.innerHTML || 'Collection'}</h3>
-                <p class="catalogue-banner-text">${document.querySelector('.banner-2 .catalogue-banner-text')?.textContent || ''}</p>
-              </div>
-            </a>
-          </li>
-        `;
-      }
-      
-      // Only insert if template content is valid
-      if (bannerTemplate.content.firstElementChild) {
-        catalogueGrid.appendChild(bannerTemplate.content.firstElementChild);
-      }
-    }
   }
 });

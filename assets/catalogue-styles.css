@@ -53,7 +53,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    /* padding: 0.75rem 1.5rem; */
     background-color: transparent;
     border: 0px solid #e0e0e0;
     border-radius: 30px;
@@ -149,7 +149,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    /* padding: 0.75rem 1.5rem; */
     background-color: transparent;
     border: 0px solid #e0e0e0;
     border-radius: 30px;
@@ -926,5 +926,95 @@
 
     .catalogue-product {
         margin-bottom: 0px;
+    }
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    padding: 1rem 0;
+}
+
+.pagination-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    text-decoration: none;
+    color: var(--primary-color);
+    border: 1px solid rgba(55, 55, 54, 0.2);
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.pagination-item:hover {
+    background-color: rgba(255, 163, 139, 0.1);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.pagination-current {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.pagination-current:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.pagination-gap {
+    border: none;
+    color: #999;
+}
+
+.pagination-prev,
+.pagination-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--primary-color);
+    border: 1px solid rgba(55, 55, 54, 0.2);
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.pagination-prev:hover,
+.pagination-next:hover {
+    background-color: rgba(255, 163, 139, 0.1);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+@media screen and (max-width: 768px) {
+    .pagination {
+        gap: 0.25rem;
+        margin-top: 2rem;
+    }
+
+    .pagination-item {
+        min-width: 36px;
+        height: 36px;
+        font-size: 0.75rem;
+    }
+
+    .pagination-prev,
+    .pagination-next {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
     }
 }
