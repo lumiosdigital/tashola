@@ -393,7 +393,7 @@
 .catalogue-product {
     display: flex;
     flex-direction: column;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .product-card-link {
@@ -621,6 +621,10 @@
         bottom: 10rem;
     }
 
+    .catalogue-product {
+        margin-bottom: 0px;
+    }
+
     .catalogue-banner-title {
         font-size: 1.75rem;
     }
@@ -690,13 +694,17 @@
     .catalogue-title {
         font-size: 2rem;
     }
+
+    .catalogue-product {
+        margin-bottom: 0px;
+    }
     
         .catalogue-filters-container {
             width: 300px;
         }
     
         .catalogue-banner-content {
-            bottom: 12rem;
+            bottom: 9rem;
         }
     
         .catalogue-banner-title {
@@ -786,7 +794,7 @@
     }
 
     .catalogue-banner-content {
-        bottom: 4rem;
+        bottom: 5rem;
         padding: 0.5rem;
     }
 
@@ -804,7 +812,7 @@
     }
 
     .catalogue-banner-title {
-        font-size: 1.50rem;
+        font-size: 1.8rem;
     }
 
     .catalogue-banner-text {
