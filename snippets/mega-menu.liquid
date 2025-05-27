@@ -39,23 +39,58 @@
                     {% endif %}
                     {% endif %}
                     {% endfor %}
-                    {% if total_collections > 8 %}
+                    {% comment %} {% if total_collections > 8 %}
                     <li><a href="/collections" class="mega-menu-link mega-menu-link-all">See All Collections</a></li>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
             </ul>
         </div>
 
-        <div class="mega-menu-column">
-            <h3 class="mega-menu-title">Personalization</h3>
-            <ul class="mega-menu-list">
-                <li><a href="{{ routes.collections_url }}/zodiac" class="mega-menu-link">Zodiac</a></li>
-                <li><a href="{{ routes.collections_url }}/birth-stones" class="mega-menu-link">Birth Stones</a></li>
-                <li><a href="{{ routes.collections_url }}/birth-flowers" class="mega-menu-link">Birth Flowers</a></li>
-                <li><a href="{{ routes.collections_url }}/star-constellations" class="mega-menu-link">Star
-                        Constellations</a></li>
-                <li><a href="{{ routes.collections_url }}/letters" class="mega-menu-link">Letters</a></li>
-            </ul>
-        </div>
+<!-- Basic Dynamic Personalization Column -->
+<div class="mega-menu-column">
+    <h3 class="mega-menu-title">Personalization</h3>
+    <ul class="mega-menu-list">
+        {% assign themes_list = '' %}
+        
+        {% comment %} Simple loop through products {% endcomment %}
+        {% for product in collections.all.products limit: 50 %}
+            {% if product.metafields.custom.personalization_themes %}
+                {% assign theme_value = product.metafields.custom.personalization_themes | strip %}
+                
+                {% comment %} Remove JSON formatting: brackets and quotes {% endcomment %}
+                {% assign clean_theme = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
+                
+                {% comment %} Check for duplicates by splitting existing list {% endcomment %}
+                {% assign already_exists = false %}
+                {% if themes_list != '' %}
+                    {% assign existing_themes = themes_list | split: ',' %}
+                    {% for existing_theme in existing_themes %}
+                        {% if existing_theme == clean_theme %}
+                            {% assign already_exists = true %}
+                            {% break %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                
+                {% unless already_exists %}
+                    {% if themes_list == '' %}
+                        {% assign themes_list = clean_theme %}
+                    {% else %}
+                        {% assign themes_list = themes_list | append: ',' | append: clean_theme %}
+                    {% endif %}
+                {% endunless %}
+            {% endif %}
+        {% endfor %}
+        
+        {% comment %} Split and display themes in alphabetical order {% endcomment %}
+        {% if themes_list != '' %}
+            {% assign themes_array = themes_list | split: ',' | sort %}
+            {% for theme in themes_array %}
+                {% assign theme_handle = theme | downcase | replace: ' ', '-' %}
+                <li><a href="{{ routes.collections_url }}/{{ theme_handle }}" class="mega-menu-link">{{ theme }}</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>
 
         <div class="mega-menu-column">
             <h3 class="mega-menu-title">Gifting</h3>
