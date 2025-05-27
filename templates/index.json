@@ -68,7 +68,7 @@
             "layout_direction": "banner-left",
             "text_color": "white",
             "selected_collection": "rings",
-            "featured_collection": "new-in",
+            "featured_collection": "image-test",
             "collection_banner_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_6.jpg"
           }
         },
