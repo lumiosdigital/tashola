@@ -353,64 +353,164 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Initialize infinite scroll functionality for pagination
+  // Initialize infinite scroll functionality
   function initInfiniteScroll() {
     const catalogueGrid = document.querySelector('[data-catalogue-grid]');
-    const loadMoreButton = document.querySelector('[data-load-more-button]');
+    const loadingIndicator = document.getElementById('loading-indicator');
     
-    if (!catalogueGrid || !loadMoreButton) return;
+    if (!catalogueGrid) return;
     
     let isLoading = false;
+    let hasMorePages = true;
+    let currentProductCount = 0;
     
-    // Handle load more button click
-    loadMoreButton.addEventListener('click', function() {
-        if (isLoading) return;
-        
-        isLoading = true;
-        
-        // Show loading state
-        loadMoreButton.textContent = 'Loading...';
-        
-        // Find the next page URL from pagination
-        const nextPageLink = document.querySelector('.pagination-next');
-        if (!nextPageLink) {
-            loadMoreButton.style.display = 'none';
-            return;
-        }
-        
-        // Fetch next page products
-        fetch(nextPageLink.href)
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newProducts = doc.querySelectorAll('.catalogue-product');
-                
-                // Append new products to the grid
-                newProducts.forEach(product => {
-                    catalogueGrid.appendChild(product.cloneNode(true));
-                });
-                
-                // Update pagination links
-                const newNextPageLink = doc.querySelector('.pagination-next');
-                if (!newNextPageLink) {
-                    loadMoreButton.style.display = 'none';
-                } else {
-                    // Update the next page link for subsequent loads
-                    const currentNextLink = document.querySelector('.pagination-next');
-                    if (currentNextLink) {
-                        currentNextLink.href = newNextPageLink.href;
-                    }
-                    loadMoreButton.textContent = 'Load More';
-                }
-                
-                isLoading = false;
-            })
-            .catch(error => {
-                console.error('Error loading more products:', error);
-                loadMoreButton.textContent = 'Load More';
-                isLoading = false;
-            });
+    // Count initial products (excluding banners)
+    function updateProductCount() {
+      const products = catalogueGrid.querySelectorAll('.catalogue-product');
+      currentProductCount = products.length;
+    }
+    
+    // Initialize product count
+    updateProductCount();
+    
+    // Check if there are more pages available
+    function checkForMorePages() {
+      const paginationInfo = document.getElementById('pagination-info');
+      if (!paginationInfo) {
+        hasMorePages = false;
+        return null;
+      }
+      
+      const nextUrl = paginationInfo.getAttribute('data-next-url');
+      if (!nextUrl) {
+        hasMorePages = false;
+        return null;
+      }
+      
+      return nextUrl;
+    }
+    
+    // Function to load more products
+    function loadMoreProducts() {
+      if (isLoading || !hasMorePages) return;
+      
+      const nextUrl = checkForMorePages();
+      if (!nextUrl) return;
+      
+      isLoading = true;
+      
+      // Show loading indicator
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'flex';
+      }
+      
+      // Fetch next page
+      fetch(nextUrl)
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const newProducts = doc.querySelectorAll('.catalogue-product');
+          const newPaginationInfo = doc.getElementById('pagination-info');
+          
+          // Calculate banner positions for the new batch
+          const startPosition = currentProductCount + 1;
+          
+          // Append new products to the grid
+          newProducts.forEach((product, index) => {
+            const globalPosition = startPosition + index;
+            const clonedProduct = product.cloneNode(true);
+            
+            // Insert banners at correct positions
+            if (globalPosition === 8 && !document.querySelector('.banner-1')) {
+              // Insert Banner 1 if it doesn't exist and we're at position 8
+              insertBannerAtPosition(8, 'banner-1');
+            }
+            
+            if (globalPosition === 12 && !document.querySelector('.banner-2')) {
+              // Insert Banner 2 if it doesn't exist and we're at position 12
+              insertBannerAtPosition(12, 'banner-2');
+            }
+            
+            catalogueGrid.appendChild(clonedProduct);
+          });
+          
+          // Update product count
+          updateProductCount();
+          
+          // Update pagination info
+          const currentPaginationInfo = document.getElementById('pagination-info');
+          if (currentPaginationInfo) {
+            if (newPaginationInfo) {
+              // Update with new pagination data
+              const nextUrl = newPaginationInfo.getAttribute('data-next-url');
+              const currentPage = newPaginationInfo.getAttribute('data-current-page');
+              const totalPages = newPaginationInfo.getAttribute('data-total-pages');
+              
+              currentPaginationInfo.setAttribute('data-next-url', nextUrl || '');
+              currentPaginationInfo.setAttribute('data-current-page', currentPage || '');
+              currentPaginationInfo.setAttribute('data-total-pages', totalPages || '');
+              
+              // Check if this was the last page
+              if (!nextUrl) {
+                hasMorePages = false;
+              }
+            } else {
+              // No more pages
+              hasMorePages = false;
+              currentPaginationInfo.remove();
+            }
+          }
+          
+          // Hide loading indicator
+          if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+          }
+          
+          isLoading = false;
+        })
+        .catch(error => {
+          console.error('Error loading more products:', error);
+          
+          // Hide loading indicator
+          if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+          }
+          
+          isLoading = false;
+        });
+    }
+    
+    // Function to insert banner at specific position (placeholder - would need actual banner data)
+    function insertBannerAtPosition(position, bannerClass) {
+      // This is a simplified version - you'd need to get actual banner data from your template
+      console.log(`Would insert ${bannerClass} at position ${position}`);
+    }
+    
+    // Scroll event listener for infinite scroll
+    function handleScroll() {
+      if (isLoading || !hasMorePages) return;
+      
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.documentElement.offsetHeight;
+      
+      // Load more when user is within 1000px of the bottom
+      if (scrollPosition >= documentHeight - 1000) {
+        loadMoreProducts();
+      }
+    }
+    
+    // Throttle scroll events for better performance
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      
+      scrollTimeout = setTimeout(handleScroll, 100);
     });
+    
+    // Initial check for pagination info
+    checkForMorePages();
   }
 });

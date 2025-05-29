@@ -636,6 +636,15 @@ button:focus {
     margin-bottom: 1.5rem;
 }
 
+.mobile-menu-link-all {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.mobile-menu-personalization {
+    padding-bottom: 1.5rem;
+}
+
 /* Body lock when menu is open */
 body.mobile-menu-active {
     overflow: hidden;

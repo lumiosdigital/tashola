@@ -45,59 +45,59 @@
             </ul>
         </div>
 
-<!-- Basic Dynamic Personalization Column -->
+<!-- Fixed Dynamic Personalization Column -->
 <div class="mega-menu-column">
     <h3 class="mega-menu-title">Personalization</h3>
     <ul class="mega-menu-list">
         {% assign themes_list = '' %}
         {% assign total_themes = 0 %}
-        
-        {% comment %} Simple loop through products {% endcomment %}
+
         {% for product in collections.all.products limit: 50 %}
-            {% if product.metafields.custom.personalization_themes %}
-                {% assign theme_value = product.metafields.custom.personalization_themes | strip %}
-                
-                {% comment %} Remove JSON formatting: brackets and quotes {% endcomment %}
-                {% assign clean_theme = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
-                
-                {% comment %} Check for duplicates by splitting existing list {% endcomment %}
-                {% assign already_exists = false %}
-                {% if themes_list != '' %}
-                    {% assign existing_themes = themes_list | split: ',' %}
-                    {% for existing_theme in existing_themes %}
-                        {% if existing_theme == clean_theme %}
-                            {% assign already_exists = true %}
-                            {% break %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-                
-                {% unless already_exists %}
-                    {% assign total_themes = total_themes | plus: 1 %}
-                    {% if themes_list == '' %}
-                        {% assign themes_list = clean_theme %}
-                    {% else %}
-                        {% assign themes_list = themes_list | append: ',' | append: clean_theme %}
-                    {% endif %}
-                {% endunless %}
-            {% endif %}
-        {% endfor %}
-        
-        {% comment %} Split, sort and display up to 8 themes {% endcomment %}
+        {% if product.metafields.custom.personalization_themes %}
+        {% assign theme_value = product.metafields.custom.personalization_themes | strip %}
+
+        {% comment %} Remove JSON formatting {% endcomment %}
+        {% assign clean_theme = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
+
+        {% comment %} Check for duplicates using lowercase comparison {% endcomment %}
+        {% assign already_exists = false %}
+        {% assign clean_theme_lower = clean_theme | downcase %}
         {% if themes_list != '' %}
-            {% assign themes_array = themes_list | split: ',' | sort %}
-            {% assign theme_count = 0 %}
-            {% for theme in themes_array %}
-                {% if theme_count < 8 %}
-                    {% assign theme_handle = theme | downcase | replace: ' ', '-' %}
-                    <li><a href="{{ routes.collections_url }}/{{ theme_handle }}" class="mega-menu-link">{{ theme }}</a></li>
-                    {% assign theme_count = theme_count | plus: 1 %}
-                {% endif %}
+        {% assign existing_themes = themes_list | split: '|' %}
+        {% for existing_theme in existing_themes %}
+        {% assign existing_theme_lower = existing_theme | downcase %}
+        {% if existing_theme_lower == clean_theme_lower %}
+        {% assign already_exists = true %}
+        {% break %}
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        {% unless already_exists %}
+        {% assign total_themes = total_themes | plus: 1 %}
+        {% if themes_list == '' %}
+        {% assign themes_list = clean_theme %}
+        {% else %}
+        {% assign themes_list = themes_list | append: '|' | append: clean_theme %}
+        {% endif %}
+        {% endunless %}
+        {% endif %}
+        {% endfor %}
+
+        {% if themes_list != '' %}
+        {% assign themes_array = themes_list | split: '|' | sort %}
+        {% assign theme_count = 0 %}
+        {% for theme in themes_array %}
+        {% if theme_count < 8 %} {% assign theme_handle=theme | handleize %} <li><a
+                href="{{ routes.collections_url }}/{{ theme_handle }}" class="mega-menu-link">{{ theme }}</a></li>
+            {% assign theme_count = theme_count | plus: 1 %}
+            {% endif %}
             {% endfor %}
             {% if total_themes > 8 %}
-                <li><a href="{{ routes.collections_url }}/personalization" class="mega-menu-link mega-menu-link-all">See All Personalization</a></li>
+            <li><a href="{{ routes.collections_url }}/personalization" class="mega-menu-link mega-menu-link-all">See All
+                    Personalization</a></li>
             {% endif %}
-        {% endif %}
+            {% endif %}
     </ul>
 </div>
 

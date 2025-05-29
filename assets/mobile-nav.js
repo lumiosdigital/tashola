@@ -1,4 +1,4 @@
-// mobile-nav.js - With dynamic collections
+// mobile-nav.js - With dynamic collections and personalization
 document.addEventListener("DOMContentLoaded", function() {
   // Create mobile menu toggle button if it doesn't exist
   if (!document.querySelector('.mobile-menu-toggle')) {
@@ -54,9 +54,24 @@ document.addEventListener("DOMContentLoaded", function() {
         <path d="M6 6L18 18" stroke="#373736" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>`;
       
-      // Add the navigation links to the mobile menu
+      // Add only About Us and Showroom links to mobile menu (remove Catalog)
       const mainLinks = mobileMenu.querySelector('.mobile-menu-main-links');
-      mainLinks.innerHTML = navLinks.innerHTML;
+      const navLinksHtml = navLinks.innerHTML;
+      
+      // Filter out the Catalog link and keep only About Us and Showroom
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = navLinksHtml;
+      const allLinks = tempDiv.querySelectorAll('.navbar-links');
+      
+      let filteredLinksHtml = '';
+      allLinks.forEach(link => {
+        const linkText = link.textContent.trim().toLowerCase();
+        if (linkText === 'about us' || linkText === 'showroom') {
+          filteredLinksHtml += link.outerHTML;
+        }
+      });
+      
+      mainLinks.innerHTML = filteredLinksHtml;
       
       // Add account links
       const accountLinks = mobileMenu.querySelector('.mobile-menu-account');
@@ -96,19 +111,21 @@ document.addEventListener("DOMContentLoaded", function() {
           manualCollectionsContainer.innerHTML = manualCollectionsData.innerHTML;
         }
         
-        // Populate personalization section
+        // Populate personalization section from existing data or generate it
         const personalizationContainer = mobileMenu.querySelector('.mobile-menu-personalization');
         const personalizationData = collectionsData.querySelector('#personalization-data');
         if (personalizationData) {
           personalizationContainer.innerHTML = personalizationData.innerHTML;
         } else {
-          // Hide personalization section if no data
+          // Since we can't access Liquid data from JS, we need to create a data element
+          // For now, hide the personalization section if no data is available
           document.getElementById('mobile-menu-personalization').style.display = 'none';
         }
       } else {
         // Fallback content if data element not found
         const categoriesContainer = mobileMenu.querySelector('.mobile-menu-categories');
         const collectionsContainer = mobileMenu.querySelector('.mobile-menu-collections');
+        const personalizationContainer = mobileMenu.querySelector('.mobile-menu-personalization');
         
         categoriesContainer.innerHTML = `
           <a href="/collections/all" class="mobile-menu-link">All Products</a>
@@ -118,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <a href="/collections" class="mobile-menu-link">View All Collections</a>
         `;
         
-        // Hide personalization
+        // Hide personalization section if no data available
         document.getElementById('mobile-menu-personalization').style.display = 'none';
       }
       
