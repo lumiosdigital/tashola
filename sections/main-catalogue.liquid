@@ -21,15 +21,47 @@
                 <span>Filters</span>
             </button>
         </div>
-        <!-- Design Filter Pills -->
-        <div class="design-filters">
-            <button class="design-filter-button active" data-filter-value="all">All</button>
-            <button class="design-filter-button" data-filter-value="hoops">Hoops</button>
-            <button class="design-filter-button" data-filter-value="studs">Studs</button>
-            <button class="design-filter-button" data-filter-value="dangle">Dangle</button>
-            <button class="design-filter-button" data-filter-value="drop">Drop Earrings</button>
-            <button class="design-filter-button" data-filter-value="cuffs">Cuffs</button>
-        </div>
+<!-- Dynamic Design Filter Pills -->
+<div class="design-filters">
+    {% comment %} Always show "All" button first {% endcomment %}
+    <button class="design-filter-button active" data-filter-value="all" data-filter-param="">All</button>
+
+    {% comment %} Determine which design filter to show based on collection {% endcomment %}
+    {% assign design_filter = null %}
+    {% assign collection_handle = collection.handle | downcase %}
+
+    {% comment %} Check collection handle to determine design type {% endcomment %}
+    {% if collection_handle contains 'earring' %}
+    {% assign design_metafield = 'earring-design' %}
+    {% elsif collection_handle contains 'ring' %}
+    {% assign design_metafield = 'ring-design' %}
+    {% elsif collection_handle contains 'necklace' %}
+    {% assign design_metafield = 'necklace-design' %}
+    {% elsif collection_handle contains 'bracelet' %}
+    {% assign design_metafield = 'bracelet-design' %}
+    {% endif %}
+
+    {% comment %} Find the appropriate design filter {% endcomment %}
+    {% if design_metafield %}
+    {% for filter in collection.filters %}
+    {% if filter.param_name contains design_metafield %}
+    {% assign design_filter = filter %}
+    {% break %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    {% comment %} Display design options if found {% endcomment %}
+    {% if design_filter %}
+    {% assign sorted_values = design_filter.values | sort: 'label' %}
+    {% for value in sorted_values %}
+    <button class="design-filter-button {% if value.active %}active{% endif %}" data-filter-value="{{ value.value }}"
+        data-filter-param="{{ design_filter.param_name }}">
+        {{ value.label }}
+    </button>
+    {% endfor %}
+    {% endif %}
+</div>
         <!-- Sort dropdown -->
         <div class="sort-dropdown-wrapper">
             <button class="sort-button" aria-label="Sort products" data-sort-trigger aria-expanded="false"
