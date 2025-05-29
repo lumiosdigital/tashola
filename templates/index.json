@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-banner": {
@@ -26,7 +35,7 @@
     "product-display": {
       "type": "product-display",
       "settings": {
-        "selected_collection": "new-in"
+        "selected_collection": "image-test"
       }
     },
     "categories": {
@@ -55,10 +64,11 @@
         "collection_display_JMjN3T": {
           "type": "collection_display",
           "settings": {
+            "custom_collection_title": "",
             "layout_direction": "banner-left",
             "text_color": "white",
             "selected_collection": "rings",
-            "featured_collection": "new-in",
+            "featured_collection": "image-test",
             "collection_banner_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_6.jpg"
           }
         },
