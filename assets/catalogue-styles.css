@@ -94,6 +94,83 @@
     font-style: italic;
 }
 
+/* Price Range Filter Styles */
+.price-range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.price-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.price-input-group label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.price-input-group input[type="number"] {
+    padding: 0.5rem;
+    border: 1px solid rgba(55, 55, 54, 0.2);
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.price-input-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(255, 163, 139, 0.1);
+}
+
+.price-input-group input[type="number"]::placeholder {
+    color: #999;
+    font-size: 0.75rem;
+}
+
+.price-separator {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    margin-top: 1rem;
+    white-space: nowrap;
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 768px) {
+    .price-range-inputs {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .price-input-group {
+        width: 100%;
+    }
+
+    .price-separator {
+        margin-top: 0;
+        align-self: center;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .price-input-group input[type="number"] {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+}
+
 /* Design Filter Pills */
 .design-filters {
     display: flex;

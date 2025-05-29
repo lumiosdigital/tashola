@@ -547,4 +547,5 @@ function handlePersonalizationFilters(filterForm) {
     // Initial check for pagination info
     checkForMorePages();
   }
+  
 });
