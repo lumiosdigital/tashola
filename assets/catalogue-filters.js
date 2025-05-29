@@ -153,44 +153,70 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Handle personalization filter OR logic
-  function handlePersonalizationFilters(filterForm) {
-    filterForm.addEventListener('submit', function(e) {
-      // Find all checked personalization theme checkboxes
-      const personalizationCheckboxes = filterForm.querySelectorAll('input[name*="personalization_themes"]:checked');
+// Handle multiple filter OR logic (personalization + color + material + styles)
+function handlePersonalizationFilters(filterForm) {
+  filterForm.addEventListener('submit', function(e) {
+    // Find all checked checkboxes for filters that need OR logic
+    const personalizationCheckboxes = filterForm.querySelectorAll('input[name*="personalization_themes"]:checked');
+    const colorCheckboxes = filterForm.querySelectorAll('input[name*="color-pattern"]:checked');
+    const materialCheckboxes = filterForm.querySelectorAll('input[name*="jewelry-material"]:checked');
+    const styleCheckboxes = filterForm.querySelectorAll('input[name*="jewelry-type"]:checked');
+    
+    const needsOrLogic = personalizationCheckboxes.length > 1 || 
+                        colorCheckboxes.length > 1 || 
+                        materialCheckboxes.length > 1 ||
+                        styleCheckboxes.length > 1;
+    
+    if (needsOrLogic) {
+      e.preventDefault();
       
-      if (personalizationCheckboxes.length > 1) {
-        e.preventDefault();
-        
-        // Get all other form data
-        const formData = new FormData(filterForm);
-        const searchParams = new URLSearchParams();
-        
-        // Add non-personalization filters normally
-        for (const [key, value] of formData.entries()) {
-          if (!key.includes('personalization_themes')) {
-            searchParams.append(key, value);
-          }
+      // Get all other form data
+      const formData = new FormData(filterForm);
+      const searchParams = new URLSearchParams();
+      
+      // Add non-OR filters normally
+      for (const [key, value] of formData.entries()) {
+        if (!key.includes('personalization_themes') && 
+            !key.includes('color-pattern') && 
+            !key.includes('jewelry-material') &&
+            !key.includes('jewelry-type')) {
+          searchParams.append(key, value);
         }
-        
-        // Add personalization filters as separate parameters for OR logic
-        personalizationCheckboxes.forEach(checkbox => {
-          searchParams.append(checkbox.name, checkbox.value);
-        });
-        
-        // Preserve sort parameter if it exists
-        const url = new URL(window.location.href);
-        const sortBy = url.searchParams.get('sort_by');
-        if (sortBy) {
-          searchParams.append('sort_by', sortBy);
-        }
-        
-        // Redirect with proper OR parameters
-        window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
       }
-      // If only one personalization filter is selected, let the form submit normally
-    });
-  }
+      
+      // Add personalization filters as separate parameters for OR logic
+      personalizationCheckboxes.forEach(checkbox => {
+        searchParams.append(checkbox.name, checkbox.value);
+      });
+      
+      // Add color filters as separate parameters for OR logic
+      colorCheckboxes.forEach(checkbox => {
+        searchParams.append(checkbox.name, checkbox.value);
+      });
+      
+      // Add material filters as separate parameters for OR logic
+      materialCheckboxes.forEach(checkbox => {
+        searchParams.append(checkbox.name, checkbox.value);
+      });
+      
+      // Add style filters as separate parameters for OR logic
+      styleCheckboxes.forEach(checkbox => {
+        searchParams.append(checkbox.name, checkbox.value);
+      });
+      
+      // Preserve sort parameter if it exists
+      const url = new URL(window.location.href);
+      const sortBy = url.searchParams.get('sort_by');
+      if (sortBy) {
+        searchParams.append('sort_by', sortBy);
+      }
+      
+      // Redirect with proper OR parameters
+      window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+    }
+    // If only one filter of each type is selected, let the form submit normally
+  });
+}
   
   // Function to update filter button with active filter count
   function updateFilterButtonCount() {

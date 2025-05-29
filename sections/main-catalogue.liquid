@@ -86,55 +86,49 @@
 
         <div class="catalogue-filters">
             <form class="catalogue-filters-form" data-filter-form>
-                <!-- Material filter -->
+                <!-- Material Filter -->
+                {% for filter in collection.filters %}
+                {% if filter.label == 'Material' or filter.param_name contains 'jewelry-material' %}
                 <div class="filter-group">
                     <h3 class="filter-group-title">Material:</h3>
                     <div class="filter-options">
+                        {% assign sorted_values = filter.values | sort: 'label' %}
+                        {% for value in sorted_values %}
                         <div class="filter-option">
-                            <input type="checkbox" id="material-sterling-silver" name="filter.v.option.material"
-                                value="Sterling Silver">
-                            <label for="material-sterling-silver">Sterling Silver</label>
+                            <input type="checkbox" name="{{ filter.param_name }}" value="{{ value.value }}"
+                                id="material-filter-{{ forloop.index }}" {% if value.active %}checked{% endif %} {% if value.count==0
+                                and value.active==false %}disabled{% endif %}>
+                            <label for="material-filter-{{ forloop.index }}">
+                                {{ value.label }}
+                            </label>
                         </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="material-gold-plated" name="filter.v.option.material"
-                                value="Gold Plated">
-                            <label for="material-gold-plated">Gold Plated</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="material-pearl" name="filter.v.option.material" value="Pearl">
-                            <label for="material-pearl">Pearl</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="material-gemstones" name="filter.v.option.material"
-                                value="Gemstones">
-                            <label for="material-gemstones">Gemstones</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="material-semi-precious" name="filter.v.option.material"
-                                value="Semi-precious Stone">
-                            <label for="material-semi-precious">Semi-precious Stone</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="material-beaded" name="filter.v.option.material" value="Beaded">
-                            <label for="material-beaded">Beaded</label>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
 
-                <!-- Color filter -->
+                <!-- Color Filter -->
+                {% for filter in collection.filters %}
+                {% if filter.label == 'Color' or filter.param_name contains 'color-pattern' %}
                 <div class="filter-group">
                     <h3 class="filter-group-title">Color:</h3>
                     <div class="filter-options">
+                        {% assign sorted_values = filter.values | sort: 'label' %}
+                        {% for value in sorted_values %}
                         <div class="filter-option">
-                            <input type="checkbox" id="color-gold" name="filter.v.option.color" value="Gold">
-                            <label for="color-gold">Gold</label>
+                            <input type="checkbox" name="{{ filter.param_name }}" value="{{ value.value }}"
+                                id="color-filter-{{ forloop.index }}" {% if value.active %}checked{% endif %} {% if value.count==0 and
+                                value.active==false %}disabled{% endif %}>
+                            <label for="color-filter-{{ forloop.index }}">
+                                {{ value.label }}
+                            </label>
                         </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="color-silver" name="filter.v.option.color" value="Silver">
-                            <label for="color-silver">Silver</label>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
 
                 <!-- Price Range filter -->
                 <div class="filter-group">
@@ -158,30 +152,27 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Style filter -->
+                <!-- Styles Filter -->
+                {% for filter in collection.filters %}
+                {% if filter.label == 'Style' or filter.label == 'Jewelry Type' or filter.param_name contains 'jewelry-type' %}
                 <div class="filter-group">
                     <h3 class="filter-group-title">Style:</h3>
                     <div class="filter-options">
+                        {% assign sorted_values = filter.values | sort: 'label' %}
+                        {% for value in sorted_values %}
                         <div class="filter-option">
-                            <input type="checkbox" id="style-minimalist" name="filter.v.option.style"
-                                value="Minimalist">
-                            <label for="style-minimalist">Minimalist</label>
+                            <input type="checkbox" name="{{ filter.param_name }}" value="{{ value.value }}"
+                                id="style-filter-{{ forloop.index }}" {% if value.active %}checked{% endif %} {% if value.count==0 and
+                                value.active==false %}disabled{% endif %}>
+                            <label for="style-filter-{{ forloop.index }}">
+                                {{ value.label }}
+                            </label>
                         </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="style-statement" name="filter.v.option.style" value="Statement">
-                            <label for="style-statement">Statement</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="style-classic" name="filter.v.option.style" value="Classic">
-                            <label for="style-classic">Classic</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="style-trendy" name="filter.v.option.style" value="Trendy">
-                            <label for="style-trendy">Trendy</label>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
                 <!-- Shopify Native Personalization Filter - Fixed for OR logic -->
                 {% for filter in collection.filters %}
                 {% if filter.label == 'Personalization Themes' or filter.param_name contains 'personalization_themes' %}
@@ -257,7 +248,6 @@
         </div>
     </div>
 
-    <!-- Product Grid -->
     <!-- Product Grid -->
     <div class="catalogue-grid-container">
         <div class="catalogue-grid-wrapper">
@@ -348,7 +338,6 @@
                         {% endif %}
         </div>
         <div class="product-card-content">
-            {% comment %} Product title only {% endcomment %}
             <h3 class="product-card-title">{{ product.title }}</h3>
 
             <p class="product-card-price">
