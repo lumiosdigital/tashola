@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-// Handle multiple filter OR logic (personalization + color + material + styles)
+// Handle multiple filter OR logic (personalization + color + material + styles + collections)
 function handlePersonalizationFilters(filterForm) {
   filterForm.addEventListener('submit', function(e) {
     // Find all checked checkboxes for filters that need OR logic
@@ -161,11 +161,13 @@ function handlePersonalizationFilters(filterForm) {
     const colorCheckboxes = filterForm.querySelectorAll('input[name*="color-pattern"]:checked');
     const materialCheckboxes = filterForm.querySelectorAll('input[name*="jewelry-material"]:checked');
     const styleCheckboxes = filterForm.querySelectorAll('input[name*="jewelry-type"]:checked');
+    const collectionsCheckboxes = filterForm.querySelectorAll('input[name*="custom.collections"]:checked');
     
     const needsOrLogic = personalizationCheckboxes.length > 1 || 
                         colorCheckboxes.length > 1 || 
                         materialCheckboxes.length > 1 ||
-                        styleCheckboxes.length > 1;
+                        styleCheckboxes.length > 1 ||
+                        collectionsCheckboxes.length > 1;
     
     if (needsOrLogic) {
       e.preventDefault();
@@ -179,7 +181,8 @@ function handlePersonalizationFilters(filterForm) {
         if (!key.includes('personalization_themes') && 
             !key.includes('color-pattern') && 
             !key.includes('jewelry-material') &&
-            !key.includes('jewelry-type')) {
+            !key.includes('jewelry-type') &&
+            !key.includes('custom.collections')) {
           searchParams.append(key, value);
         }
       }
@@ -201,6 +204,11 @@ function handlePersonalizationFilters(filterForm) {
       
       // Add style filters as separate parameters for OR logic
       styleCheckboxes.forEach(checkbox => {
+        searchParams.append(checkbox.name, checkbox.value);
+      });
+      
+      // Add collections filters as separate parameters for OR logic
+      collectionsCheckboxes.forEach(checkbox => {
         searchParams.append(checkbox.name, checkbox.value);
       });
       

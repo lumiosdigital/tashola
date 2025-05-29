@@ -195,50 +195,27 @@
                 {% endif %}
                 {% endfor %}
 
-                <!-- Collections filter -->
+                <!-- Collections Filter -->
+                {% for filter in collection.filters %}
+                {% if filter.label == 'Collections' or filter.param_name contains 'custom.collections' %}
                 <div class="filter-group">
                     <h3 class="filter-group-title">Collections:</h3>
                     <div class="filter-options">
+                        {% assign sorted_values = filter.values | sort: 'label' %}
+                        {% for value in sorted_values %}
                         <div class="filter-option">
-                            <input type="checkbox" id="collection-stellar" name="filter.p.tag"
-                                value="Stellar Collection">
-                            <label for="collection-stellar">Stellar Collection</label>
+                            <input type="checkbox" name="{{ filter.param_name }}" value="{{ value.value }}"
+                                id="collections-filter-{{ forloop.index }}" {% if value.active %}checked{% endif %} {% if value.count==0
+                                and value.active==false %}disabled{% endif %}>
+                            <label for="collections-filter-{{ forloop.index }}">
+                                {{ value.label }}
+                            </label>
                         </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="collection-neptune" name="filter.p.tag"
-                                value="Neptune Collection">
-                            <label for="collection-neptune">Neptune Collection</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="collection-celestial" name="filter.p.tag"
-                                value="Celestial Collection">
-                            <label for="collection-celestial">Celestial Collection</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="collection-spartan" name="filter.p.tag"
-                                value="Spartan Collection">
-                            <label for="collection-spartan">Spartan Collection</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="collection-deia" name="filter.p.tag" value="Deia Collection">
-                            <label for="collection-deia">Deia Collection</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="collection-aurelia" name="filter.p.tag"
-                                value="Aurelia Collection">
-                            <label for="collection-aurelia">Aurelia Collection</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="collection-iris" name="filter.p.tag" value="Iris Collection">
-                            <label for="collection-iris">Iris Collection</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="collection-charmed" name="filter.p.tag"
-                                value="Charmed Collection">
-                            <label for="collection-charmed">Charmed Collection</label>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
 
                 <div class="filter-buttons">
                     <button type="submit" class="btn filter-apply-button">Apply Filters</button>
