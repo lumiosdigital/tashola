@@ -42,11 +42,6 @@
   {% endif %}
 
   {% section 'header' %}
-  {% if customer %}
-  <p style="color:red">Customer is logged in: {{ customer.email }}</p>
-  {% else %}
-  <p style="color:red">Customer is NOT logged in</p>
-  {% endif%}
   {{ content_for_layout }}
   {% section 'footer' %}
   <script src="{{ 'account-dropdown.js' | asset_url }}" defer="defer"></script>
