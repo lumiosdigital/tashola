@@ -210,7 +210,7 @@ button {
     box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.05%);
     display: none;
     flex-direction: column;
-    min-width: 7.5rem;
+    min-width: 8.5rem;
     z-index: 9999;
 }
 
@@ -440,6 +440,48 @@ button {
 
 .swym-empty-wishlist-container {
     padding: 0 !important; 
+}
+
+.swym-modal-heading {
+    font-family: var(--font-heading) !important;
+    font-size: 2rem !important;
+    color: var(--primary-color) !important;
+    font-weight: 600 !important;
+    margin-bottom: 1rem !important;
+}
+
+.swym-sfl-modal-product-title {
+    font-size: 1rem !important;
+    margin-bottom: 1rem !important;
+    font-family: var(--font-body) !important;
+    color: var(--primary-color) !important;
+    font-weight: 400 !important;
+}
+
+.swym-sfl-popup-save-btn {
+    background: var(--secondary-color) !important;
+    color: var(--white) !important;
+    font-weight: 700 !important;
+    font-family: var(--font-body) !important;
+    text-transform: uppercase !important;
+    /* padding: 0.75rem 1.25rem !important; */
+}
+
+.swym-sfl-popup-save-btn:hover {
+    background-color: #e88871 !important;
+}
+
+.swym-sfl-popup-cancel {
+    background-color: var(--white) !important;
+    color: var(--primary-color) !important;
+    font-weight: 500 !important;
+    font-family: var(--font-body) !important;
+    text-transform: uppercase !important;
+    border: 1px solid #e0e0e0 !important;
+}
+
+.swym-sfl-popup-cancel:hover {
+    background-color: rgba(255, 163, 139, 0.2) !important;
 }
 
 .nav-scrollable {
