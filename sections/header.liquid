@@ -26,6 +26,13 @@
                 <button type="button" class="account-button" aria-label="Account" aria-expanded="false"
                     aria-controls="account-dropdown">{% render 'icon-account' %}</button>
                 <div class="account-dropdown" id="account-dropdown" aria-hidden="true">
+                    <div style="position: fixed; top: 100px; right: 10px; background: red; color: white; padding: 10px; z-index: 9999;">
+                        {% if customer %}
+                        LOGGED IN: {{ customer.email }}
+                        {% else %}
+                        NOT LOGGED IN
+                        {% endif %}
+                    </div>
                     {% if customer %}
                     <!-- Customer is logged in -->
                     <a href="{{ routes.account_url }}">My Profile</a>
