@@ -46,7 +46,7 @@
           "settings": {
             "text_color": "white",
             "category_title": "Necklaces",
-            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-28_at_17.06.39.jpg",
+            "category_image": "shopify://shop_images/Shot_13_0066.png",
             "collection": "",
             "collection_handle": "all"
           }
@@ -56,7 +56,7 @@
           "settings": {
             "text_color": "white",
             "category_title": "Necklaces",
-            "category_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.21.15_2_adca00c1-afa2-415c-9b5a-34b664ea96a6.jpg",
+            "category_image": "shopify://shop_images/Shot_14_0138.png",
             "collection": "",
             "collection_handle": "all"
           }
@@ -69,7 +69,7 @@
             "text_color": "white",
             "selected_collection": "rings",
             "featured_collection": "image-test",
-            "collection_banner_image": "shopify://shop_images/WhatsApp_Image_2025-05-28_at_17.06.34.jpg"
+            "collection_banner_image": "shopify://shop_images/Shot_12_0122.png"
           }
         },
         "category_row_AHCtgE": {
@@ -120,8 +120,8 @@
           "type": "feature_banner",
           "settings": {
             "background_type": "image",
-            "text_color": "black",
-            "image": "shopify://shop_images/Picture_1_TEST.jpg",
+            "text_color": "white",
+            "image": "shopify://shop_images/Shot_10_0004.png",
             "overlay_opacity": 0.3,
             "heading": "Discover our jewellery",
             "subheading": "",
