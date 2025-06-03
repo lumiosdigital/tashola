@@ -1,59 +1,64 @@
 {% schema %}
 {
-  "name": "Footer",
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Logo"
-    },
-    {
-      "type": "text",
-      "id": "copyright_text",
-      "label": "Copyright Text",
-      "default": "© 2025 Tashola. All rights reserved."
-    },
-    {
-      "type": "url",
-      "id": "facebook_link",
-      "label": "Facebook URL"
-    },
-    {
-      "type": "url",
-      "id": "instagram_link",
-      "label": "Instagram URL"
-    },
-    {
-      "type": "url",
-      "id": "pinterest_link",
-      "label": "Pinterest URL"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "payment_icons",
-      "name": "Payment Icons",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "checkbox",
-          "id": "show_payment_icons",
-          "label": "Show payment icons",
-          "default": true
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Footer",
-      "blocks": [
-        {
-          "type": "payment_icons"
-        }
-      ]
-    }
-  ]
+"name": "Footer",
+"settings": [
+{
+"type": "image_picker",
+"id": "logo",
+"label": "Logo"
+},
+{
+"type": "text",
+"id": "copyright_text",
+"label": "Copyright Text",
+"default": "© 2025 Tashola. All rights reserved."
+},
+{
+"type": "url",
+"id": "facebook_link",
+"label": "Facebook URL"
+},
+{
+"type": "url",
+"id": "instagram_link",
+"label": "Instagram URL"
+},
+{
+"type": "url",
+"id": "pinterest_link",
+"label": "Pinterest URL"
+},
+{
+"type": "url",
+"id": "tiktok_link",
+"label": "TikTok URL"
+}
+],
+"blocks": [
+{
+"type": "payment_icons",
+"name": "Payment Icons",
+"limit": 1,
+"settings": [
+{
+"type": "checkbox",
+"id": "show_payment_icons",
+"label": "Show payment icons",
+"default": true
+}
+]
+}
+],
+"presets": [
+{
+"name": "Footer",
+"blocks": [
+{
+"type": "payment_icons"
+}
+]
+}
+]
 }
 {% endschema %}
 
@@ -63,9 +68,9 @@
     <div class="footer-branding">
       <a href="{{ routes.root_url }}" class="footer-logo-link">
         {% if section.settings.logo %}
-          {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'footer-logo', loading: 'lazy' }}
+        {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'footer-logo', loading: 'lazy' }}
         {% else %}
-          <h2 class="h2 footer-logo-text">{{ shop.name }}</h2>
+        <h2 class="h2 footer-logo-text">{{ shop.name }}</h2>
         {% endif %}
       </a>
       <p class="copyright-text">{{ section.settings.copyright_text }}</p>
@@ -96,7 +101,8 @@
           <li><a href="{{ routes.pages_url }}/pages/about-us" class="footer-menu-link">About Us</a></li>
           <li><a href="{{ routes.pages_url }}/pages/returns" class="footer-menu-link">Returns</a></li>
           <li><a href="{{ routes.pages_url }}/pages/delivery" class="footer-menu-link">Delivery</a></li>
-          <li><a href="{{ routes.pages_url }}/pages/terms-and-conditions" class="footer-menu-link">Terms & Conditions</a></li>
+          <li><a href="{{ routes.pages_url }}/pages/terms-and-conditions" class="footer-menu-link">Terms &
+              Conditions</a></li>
           <li><a href="{{ routes.pages_url }}/pages/privacy" class="footer-menu-link">Privacy Policy</a></li>
           <li><a href="{{ routes.pages_url }}/pages/payment" class="footer-menu-link">Payment Options</a></li>
           <li><a href="{{ routes.pages_url }}/pages/faq" class="footer-menu-link">FAQ</a></li>
@@ -118,50 +124,58 @@
       <!-- Social Icons -->
       <div class="social-icons">
         {%- if section.settings.facebook_link != blank -%}
-          <a href="{{ section.settings.facebook_link }}" class="social-icon-link" target="_blank" rel="noopener">
-            {% render 'icon-facebook' %}
-            <span class="visually-hidden">Facebook</span>
-          </a>
+        <a href="{{ section.settings.facebook_link }}" class="social-icon-link" target="_blank" rel="noopener">
+          {% render 'icon-facebook' %}
+          <span class="visually-hidden">Facebook</span>
+        </a>
         {%- endif -%}
         {%- if section.settings.instagram_link != blank -%}
-          <a href="{{ section.settings.instagram_link }}" class="social-icon-link" target="_blank" rel="noopener">
-            {% render 'icon-instagram' %}
-            <span class="visually-hidden">Instagram</span>
-          </a>
+        <a href="{{ section.settings.instagram_link }}" class="social-icon-link" target="_blank" rel="noopener">
+          {% render 'icon-instagram' %}
+          <span class="visually-hidden">Instagram</span>
+        </a>
         {%- endif -%}
         {%- if section.settings.pinterest_link != blank -%}
-          <a href="{{ section.settings.pinterest_link }}" class="social-icon-link" target="_blank" rel="noopener">
-            {% render 'icon-pinterest' %}
-            <span class="visually-hidden">Pinterest</span>
-          </a>
+        <a href="{{ section.settings.pinterest_link }}" class="social-icon-link" target="_blank" rel="noopener">
+          {% render 'icon-pinterest' %}
+          <span class="visually-hidden">Pinterest</span>
+        </a>
+        {%- endif -%}
+        {%- if section.settings.tiktok_link != blank -%}
+        <a href="{{ section.settings.tiktok_link }}" class="social-icon-link" target="_blank" rel="noopener">
+          {% render 'icon-tiktok' %}
+          <span class="visually-hidden">TikTok</span>
+        </a>
         {%- endif -%}
       </div>
     </div>
   </div>
-  
+
   <!-- Payment Icons - Positioned below the menu section but aligned with "Information" column -->
   {% for block in section.blocks %}
-    {% if block.type == 'payment_icons' and block.settings.show_payment_icons %}
-      <div class="payment-methods-container">
-        <div class="payment-methods" {{ block.shopify_attributes }}>
-          <ul class="payment-icons-list" role="list">
-            {% for type in shop.enabled_payment_types %}
-              <li class="payment-icon">
-                {{ type | payment_type_svg_tag: class: 'payment-icon-svg' }}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    {% endif %}
+  {% if block.type == 'payment_icons' and block.settings.show_payment_icons %}
+  <div class="payment-methods-container">
+    <div class="payment-methods" {{ block.shopify_attributes }}>
+      <ul class="payment-icons-list" role="list">
+        {% for type in shop.enabled_payment_types %}
+        <li class="payment-icon">
+          {{ type | payment_type_svg_tag: class: 'payment-icon-svg' }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
   {% endfor %}
-  {% comment %} <div class="lumios-tag">Designed and developed by<a href="https://lumiosdigital.com">Lumios Digital</a></div> {% endcomment %}
+  {% comment %} <div class="lumios-tag">Designed and developed by<a href="https://lumiosdigital.com">Lumios Digital</a>
+  </div> {% endcomment %}
 </footer>
 
 <style>
   .footer {
-    background-color: #F6F4F3; /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
-    padding: 2rem ;
+    background-color: #F6F4F3;
+    /* THIS CHANGES THE COLOR OF THE BLOCK'S BACKGROUND */
+    padding: 2rem;
     border-top: 1px solid #e0e0e0;
     color: var(--color-text);
     font-family: var(--font-body);
@@ -206,7 +220,7 @@
     display: flex;
     flex-direction: column;
   }
- 
+
 
   .footer-logo-text {
     font-family: var(--font-heading);
@@ -215,7 +229,7 @@
     color: var(--color-text);
     margin-bottom: 1rem;
   }
-  
+
 
   .copyright-text {
     font-size: 0.875rem;
@@ -288,8 +302,8 @@
   }
 
   /* .social-icon-link:hover {
-    background-color: #f0b09b;
-  } */
+      background-color: #f0b09b;
+    } */
 
   .social-icon-link svg {
     width: 1.5rem;
@@ -307,8 +321,10 @@
 
   .payment-methods {
     /* Position aligned with Information column */
-    margin-left: calc(33.33% + 0.66rem); /* Aligns with Information column */
-    margin-top: 1.5rem; /* Space from bottom of menu items */
+    margin-left: calc(33.33% + 0.66rem);
+    /* Aligns with Information column */
+    margin-top: 1.5rem;
+    /* Space from bottom of menu items */
     margin-right: calc(33.33% + 0.66rem);
   }
 
@@ -319,7 +335,8 @@
     padding: 0;
     margin: 0;
     list-style: none;
-    justify-content: center; /* Left aligned */
+    justify-content: center;
+    /* Left aligned */
   }
 
   .payment-icon {
@@ -369,13 +386,13 @@
       align-items: center;
       margin-top: 2rem;
     }
-    
+
     .payment-methods {
       margin-left: 0;
       text-align: center;
       width: 100%;
     }
-    
+
     .payment-icons-list {
       justify-content: center;
     }
@@ -410,4 +427,4 @@
 
   }
 
-</style>
+  </style>
