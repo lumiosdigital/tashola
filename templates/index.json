@@ -122,6 +122,7 @@
             "background_type": "image",
             "text_color": "white",
             "image": "shopify://shop_images/Shot_10_0004.png",
+            "mobile_image": "shopify://shop_images/Shot_01_037.png",
             "overlay_opacity": 0.3,
             "heading": "Discover our jewellery",
             "subheading": "",
