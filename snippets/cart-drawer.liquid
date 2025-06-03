@@ -11,6 +11,32 @@
             </button>
         </div>
 
+        {% comment %}Display banner if enabled and has content{% endcomment %}
+        {% if enable_banner and banner_text_1 != blank %}
+        {% assign opacity_percent = banner_opacity | default: 13 | times: 0.01 %}
+
+        <div class="cart-banner-container" data-auto-slide="false" data-slide-speed="4"
+            data-bg-color="{{ banner_background_color | default: '#FFA38B' }}"
+            data-text-color="{{ banner_text_color | default: '#373736' }}" data-opacity="{{ opacity_percent }}">
+            <div class="cart-banner-slider">
+                <div class="cart-banner-slide active">
+                    <p>{{ banner_text_1 }}</p>
+                </div>
+                {% if banner_text_2 != blank %}
+                <div class="cart-banner-slide">
+                    <p>{{ banner_text_2 }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% if banner_text_2 != blank %}
+            <div class="cart-banner-indicators">
+                <span class="banner-dot active" data-slide="0"></span>
+                <span class="banner-dot" data-slide="1"></span>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
         <div class="cart-drawer-content">
             {% if cart.item_count > 0 %}
             <div class="cart-items">
@@ -32,14 +58,15 @@
                                 <span>−</span>
                             </button>
                             <input type="number" name="updates[]" id="updates_{{ item.key }}"
-                                value="{{ item.quantity }}" min="0" aria-label="Quantity" readonly data-line="{{ forloop.index }}">
+                                value="{{ item.quantity }}" min="0" aria-label="Quantity" readonly
+                                data-line="{{ forloop.index }}">
                             <button type="button" class="quantity-button increase" data-line="{{ forloop.index }}"
                                 aria-label="Increase quantity">
                                 <span>+</span>
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="cart-item-remove">
                         <button type="button" class="remove-button" data-line="{{ forloop.index }}"
                             aria-label="Remove item">

@@ -48,7 +48,16 @@
     </div>
 </div>
 
-{% render 'cart-drawer' %}
+{% render 'cart-drawer',
+enable_banner: section.settings.enable_cart_drawer_banner,
+banner_text_1: section.settings.cart_drawer_banner_text_1,
+banner_text_2: section.settings.cart_drawer_banner_text_2,
+banner_background_color: section.settings.cart_drawer_banner_background_color,
+banner_text_color: section.settings.cart_drawer_banner_text_color,
+banner_opacity: section.settings.cart_drawer_banner_opacity,
+banner_auto_slide: false,
+banner_slide_speed: 4
+%}
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -96,6 +105,18 @@
             });
         }
     });
+
+    // Make cart drawer banner settings available globally for JavaScript
+    window.cartDrawerBannerSettings = {
+        enabled: {{ section.settings.enable_cart_drawer_banner | json }},
+    text1: { { section.settings.cart_drawer_banner_text_1 | json } },
+    text2: { { section.settings.cart_drawer_banner_text_2 | json } },
+    backgroundColor: { { section.settings.cart_drawer_banner_background_color | json } },
+    textColor: { { section.settings.cart_drawer_banner_text_color | json } },
+    opacity: { { section.settings.cart_drawer_banner_opacity | json } },
+    autoSlide: false,
+        slideSpeed: 4
+};
 </script>
 
 {% schema %}
@@ -124,6 +145,66 @@
 "id": "mega_menu_image_link",
 "label": "Mega Menu Image Link",
 "info": "Select a link for the featured mega menu image"
+},
+{
+"type": "header",
+"content": "Cart Drawer Banner Settings"
+},
+{
+"type": "paragraph",
+"content": "Configure the banner that appears at the top of the sliding cart drawer."
+},
+{
+"type": "checkbox",
+"id": "enable_cart_drawer_banner",
+"label": "Enable Cart Drawer Banner",
+"default": false
+},
+{
+"type": "text",
+"id": "cart_drawer_banner_text_1",
+"label": "Banner Text 1",
+"default": "Free Delivery for purchases over $200 in USA and abroad"
+},
+{
+"type": "text",
+"id": "cart_drawer_banner_text_2",
+"label": "Banner Text 2 (optional)",
+"default": "Free Returns within 30 days"
+},
+{
+"type": "color",
+"id": "cart_drawer_banner_background_color",
+"label": "Banner Background Color",
+"default": "#FFA38B"
+},
+{
+"type": "select",
+"id": "cart_drawer_banner_opacity",
+"label": "Banner Background Opacity",
+"options": [
+{ "value": "5", "label": "5%" },
+{ "value": "10", "label": "10%" },
+{ "value": "13", "label": "13%" },
+{ "value": "15", "label": "15%" },
+{ "value": "20", "label": "20%" },
+{ "value": "25", "label": "25%" },
+{ "value": "30", "label": "30%" },
+{ "value": "40", "label": "40%" },
+{ "value": "50", "label": "50%" },
+{ "value": "60", "label": "60%" },
+{ "value": "70", "label": "70%" },
+{ "value": "80", "label": "80%" },
+{ "value": "90", "label": "90%" },
+{ "value": "100", "label": "100%" }
+],
+"default": "13"
+},
+{
+"type": "color",
+"id": "cart_drawer_banner_text_color",
+"label": "Banner Text Color",
+"default": "#373736"
 }
 ]
 }

@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize
   initCartDrawer();
   
+  // Initialize banner slider
+  initBannerSlider();
+  
   function initCartDrawer() {
     log('Initializing cart drawer');
     
@@ -51,6 +54,170 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up Swym event listeners
     setupSwymEventListeners();
+  }
+  
+  // Banner slider functionality - AUTOSLIDE DISABLED BY DEFAULT
+  function initBannerSlider() {
+    const bannerContainer = document.querySelector('.cart-banner-container');
+    if (!bannerContainer) {
+      log('No banner container found');
+      return;
+    }
+
+    // Apply dynamic colors from theme settings
+    applyBannerColors(bannerContainer);
+    
+    const slides = bannerContainer.querySelectorAll('.cart-banner-slide');
+    const dots = bannerContainer.querySelectorAll('.banner-dot');
+    
+    if (slides.length <= 1) {
+      log('Only one slide, skipping slider initialization');
+      return;
+    }
+    
+    let currentSlide = 0;
+    let slideInterval = null;
+    
+    // AUTOSLIDE IS DISABLED - only manual clicking allowed
+    const autoSlide = false; // Always false
+    const slideSpeed = parseInt(bannerContainer.getAttribute('data-slide-speed') || '4') * 1000;
+    
+    function showSlide(index) {
+      // Remove active class from all slides and dots
+      slides.forEach(slide => slide.classList.remove('active', 'prev'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      // Add prev class to current slide for animation
+      if (slides[currentSlide]) {
+        slides[currentSlide].classList.add('prev');
+      }
+      
+      // Update current slide index
+      currentSlide = index;
+      
+      // Show new slide
+      if (slides[currentSlide]) {
+        slides[currentSlide].classList.add('active');
+      }
+      
+      // Update dot indicator and apply colors
+      if (dots[currentSlide]) {
+        dots[currentSlide].classList.add('active');
+      }
+      
+      // Reapply dot colors after state change
+      applyDotColors(bannerContainer);
+    }
+    
+    function nextSlide() {
+      const next = (currentSlide + 1) % slides.length;
+      showSlide(next);
+    }
+    
+    function startAutoSlide() {
+      // DISABLED: Auto-slide is turned off
+      // if (autoSlide && slides.length > 1) {
+      //   slideInterval = setInterval(nextSlide, slideSpeed);
+      // }
+    }
+    
+    function stopAutoSlide() {
+      if (slideInterval) {
+        clearInterval(slideInterval);
+        slideInterval = null;
+      }
+    }
+    
+    // Set up dot click handlers for manual navigation
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', function() {
+        showSlide(index);
+      });
+    });
+    
+    // No auto-slide functionality - removed hover listeners
+    
+    log('Banner slider initialized with', slides.length, 'slides (manual navigation only)');
+  }
+
+  // Apply dynamic banner colors based on theme settings
+  function applyBannerColors(bannerContainer) {
+    const bgColor = bannerContainer.getAttribute('data-bg-color') || '#FFA38B';
+    const textColor = bannerContainer.getAttribute('data-text-color') || '#373736';
+    const opacity = parseFloat(bannerContainer.getAttribute('data-opacity')) || 0.13;
+    
+    // Convert hex color to RGB
+    const hexToRgb = (hex) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    };
+    
+    const rgb = hexToRgb(bgColor);
+    if (rgb) {
+      const rgbaBackground = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+      
+      // Apply background color with opacity
+      bannerContainer.style.backgroundColor = rgbaBackground;
+      bannerContainer.style.color = textColor;
+      
+      // Apply text color to slides
+      const slides = bannerContainer.querySelectorAll('.cart-banner-slide p');
+      slides.forEach(slide => {
+        slide.style.color = textColor;
+      });
+      
+      // Apply dot colors
+      applyDotColors(bannerContainer);
+      
+      log('Applied banner colors:', { background: rgbaBackground, text: textColor, opacity: opacity });
+    }
+  }
+
+  // Apply dot colors based on text color and state
+  function applyDotColors(bannerContainer) {
+    const dots = bannerContainer.querySelectorAll('.banner-dot');
+    
+    // Fixed colors for dots
+    const activeDotColor = '#FFA38B';  // Always this color for active
+    const inactiveDotColor = '#f0f0f0'; // Grey for inactive
+    
+    dots.forEach(dot => {
+      if (dot.classList.contains('active')) {
+        // Active dot: filled with #FFA38B
+        dot.style.borderColor = activeDotColor;
+        dot.style.backgroundColor = activeDotColor;
+      } else {
+        // Inactive dot: grey hollow circle
+        dot.style.borderColor = inactiveDotColor;
+        dot.style.backgroundColor = 'transparent';
+      }
+      
+      // Remove existing event listeners to avoid duplicates
+      dot.removeEventListener('mouseenter', dot._hoverIn);
+      dot.removeEventListener('mouseleave', dot._hoverOut);
+      
+      // Add hover event listeners
+      dot._hoverIn = function() {
+        if (!this.classList.contains('active')) {
+          // Hover state: semi-filled with grey
+          this.style.backgroundColor = '#f0f0f0';
+        }
+      };
+      
+      dot._hoverOut = function() {
+        if (!this.classList.contains('active')) {
+          // Back to hollow
+          this.style.backgroundColor = 'transparent';
+        }
+      };
+      
+      dot.addEventListener('mouseenter', dot._hoverIn);
+      dot.addEventListener('mouseleave', dot._hoverOut);
+    });
   }
   
   // Set up Swym event listeners to detect wishlist actions
@@ -711,6 +878,9 @@ document.addEventListener('DOMContentLoaded', function() {
           // Reattach close button event
           setupCartToggle();
         }
+        
+        // Reinitialize banner slider after content refresh
+        initBannerSlider();
         
         return Promise.resolve();
       })
