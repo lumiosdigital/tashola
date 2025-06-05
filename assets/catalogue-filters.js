@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchParams.append('sort_by', sortBy);
       }
       
-      // Preserve active design filter if it exists
+      // Preserve active design filter or primary category filter if it exists
       const activeDesignButton = document.querySelector('.design-filter-button.active:not([data-filter-value="all"])');
       if (activeDesignButton) {
         const designParam = activeDesignButton.getAttribute('data-filter-param');
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = new URL(window.location.href);
         const sortBy = url.searchParams.get('sort_by');
         
-        // Preserve active design filter if it exists
+        // Preserve active design filter or primary category filter if it exists
         const activeDesignButton = document.querySelector('.design-filter-button.active:not([data-filter-value="all"])');
         const searchParams = new URLSearchParams();
         
@@ -245,7 +245,7 @@ function handlePersonalizationFilters(filterForm) {
         searchParams.append('sort_by', sortBy);
       }
       
-      // Preserve active design filter if it exists
+      // Preserve active design filter or primary category filter if it exists
       const activeDesignButton = document.querySelector('.design-filter-button.active:not([data-filter-value="all"])');
       if (activeDesignButton) {
         const designParam = activeDesignButton.getAttribute('data-filter-param');
@@ -308,19 +308,45 @@ function handlePersonalizationFilters(filterForm) {
   
   // Initialize design filters functionality with actual filtering
   function initDesignFilters() {
+    console.log('=== DESIGN FILTERS INITIALIZATION ==='); // Debug log
+    
     const designFilterButtons = document.querySelectorAll('.design-filter-button');
+    console.log('Found design filter buttons:', designFilterButtons.length); // Debug log
     
-    if (!designFilterButtons.length) return;
+    if (!designFilterButtons.length) {
+      console.log('No design filter buttons found, exiting'); // Debug log
+      return;
+    }
     
-    // Set active state based on URL parameters on page load
+    // Check if we need to create dynamic product type filters instead
+    console.log('Checking for collection data...'); // Debug log
+    const collectionData = getCollectionData();
+    console.log('Collection data result:', collectionData); // Debug log
+    
+    if (collectionData) {
+      console.log('Collection type detected:', collectionData.collection_type); // Debug log
+      console.log('Products count:', collectionData.products ? collectionData.products.length : 'No products'); // Debug log
+      
+      if (collectionData.collection_type === 'collection') {
+        console.log('Creating primary category filters for collection type'); // Debug log
+        createProductTypeFilters(collectionData);
+        return; // Exit early, don't run standard design filter code
+      } else {
+        console.log('Using standard design filters (collection_type is not "collection")'); // Debug log
+      }
+    } else {
+      console.log('No collection data found, using standard design filters'); // Debug log
+    }
+    
+    // Standard design filter logic
     setActiveDesignFilterFromURL();
-    
-    // Initialize scroll indicators
     initScrollIndicators();
     
     // Handle design filter button click
     designFilterButtons.forEach(button => {
       button.addEventListener('click', function() {
+        console.log('Standard design filter clicked:', this.getAttribute('data-filter-value')); // Debug log
+        
         // Remove active class from all buttons
         designFilterButtons.forEach(btn => btn.classList.remove('active'));
         
@@ -331,6 +357,203 @@ function handlePersonalizationFilters(filterForm) {
         applyDesignFilter(this);
       });
     });
+  }
+  
+  // Get collection data from the page
+  function getCollectionData() {
+    console.log('Looking for collection data element...'); // Debug log
+    const collectionDataElement = document.querySelector('[data-collection-info]');
+    
+    if (collectionDataElement) {
+      console.log('Collection data element found'); // Debug log
+      console.log('Raw text content:', collectionDataElement.textContent); // Debug log
+      
+      try {
+        const data = JSON.parse(collectionDataElement.textContent);
+        console.log('Successfully parsed collection data:', data); // Debug log
+        return data;
+      } catch (e) {
+        console.error('Error parsing collection data JSON:', e);
+        console.log('Raw content that failed to parse:', collectionDataElement.textContent);
+        return null;
+      }
+    } else {
+      console.error('Collection data element with [data-collection-info] not found in DOM');
+      // Let's see what elements are available
+      const allDataElements = document.querySelectorAll('[data-*]');
+      console.log('Available data elements:', Array.from(allDataElements).map(el => el.getAttribute('data-*') || el.outerHTML.substring(0, 100)));
+      return null;
+    }
+  }
+  
+  // Create product type filters for collections
+  function createProductTypeFilters(collectionData) {
+    const designFiltersContainer = document.querySelector('.design-filters');
+    if (!designFiltersContainer) return;
+    
+    console.log('Creating primary category filters...'); // Debug log
+    
+    // Clear existing buttons
+    designFiltersContainer.innerHTML = '';
+    
+    // Get unique primary categories from the collection products
+    const primaryCategories = getUniquePrimaryCategories(collectionData.products);
+    console.log('Found primary categories:', primaryCategories); // Debug log
+    
+    if (primaryCategories.length === 0) {
+      console.log('No primary categories found, creating fallback'); // Debug log
+      // Create just the "All" button as fallback
+      const allButton = createProductTypeButton('all', 'All', true);
+      designFiltersContainer.appendChild(allButton);
+      return;
+    }
+    
+    // Create "All" button first
+    const allButton = createProductTypeButton('all', 'All', true);
+    designFiltersContainer.appendChild(allButton);
+    
+    // Create buttons for each primary category
+    primaryCategories.forEach(category => {
+      const button = createProductTypeButton(category.value, category.label, false);
+      designFiltersContainer.appendChild(button);
+    });
+    
+    // Initialize scroll indicators for the new buttons
+    initScrollIndicators();
+    
+    // Set active state based on URL parameters
+    setActiveProductTypeFilterFromURL();
+    
+    // Add event listeners to the new buttons
+    const productTypeButtons = designFiltersContainer.querySelectorAll('.design-filter-button');
+    productTypeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        console.log('Primary category button clicked:', this.getAttribute('data-filter-value')); // Debug log
+        
+        // Remove active class from all buttons
+        productTypeButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Apply the product type filter
+        applyProductTypeFilter(this);
+      });
+    });
+  }
+  
+  // Get unique primary categories from collection products
+  function getUniquePrimaryCategories(products) {
+    const categoriesSet = new Set();
+    const categoryLabels = {
+      'rings': 'Rings',
+      'necklaces': 'Necklaces', 
+      'earrings': 'Earrings',
+      'bracelets': 'Bracelets',
+      'charms': 'Charms'
+    };
+    
+    console.log('Processing products for primary categories:', products); // Debug log
+    
+    products.forEach(product => {
+      if (product.primary_category && product.primary_category.trim() !== '') {
+        const normalizedCategory = product.primary_category.toLowerCase().trim();
+        console.log('Found primary category:', normalizedCategory); // Debug log
+        categoriesSet.add(normalizedCategory);
+      }
+    });
+    
+    console.log('All primary categories found:', Array.from(categoriesSet)); // Debug log
+    
+    // Convert to array and sort, only include known categories
+    const sortedCategories = Array.from(categoriesSet)
+      .filter(category => categoryLabels[category])
+      .sort()
+      .map(category => ({
+        value: category,
+        label: categoryLabels[category]
+      }));
+    
+    console.log('Filtered and sorted categories:', sortedCategories); // Debug log
+    return sortedCategories;
+  }
+  
+  // Create a product type filter button
+  function createProductTypeButton(value, label, isActive) {
+    const button = document.createElement('button');
+    button.className = `design-filter-button ${isActive ? 'active' : ''}`;
+    button.setAttribute('data-filter-value', value);
+    // Use correct metafield filter parameter for custom.primary_category
+    button.setAttribute('data-filter-param', 'filter.p.m.custom.primary_category');
+    button.textContent = label;
+    return button;
+  }
+  
+  // Set active product type filter based on URL parameters
+  function setActiveProductTypeFilterFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productTypeButtons = document.querySelectorAll('.design-filter-button');
+    
+    // First, remove active class from all buttons
+    productTypeButtons.forEach(btn => btn.classList.remove('active'));
+    
+    // Check for primary category filter in URL
+    const primaryCategoryParam = urlParams.get('filter.p.m.custom.primary_category');
+    console.log('Primary category from URL:', primaryCategoryParam); // Debug log
+    
+    if (primaryCategoryParam) {
+      const matchingButton = Array.from(productTypeButtons).find(button => {
+        return button.getAttribute('data-filter-value') === primaryCategoryParam;
+      });
+      
+      if (matchingButton) {
+        matchingButton.classList.add('active');
+        moveFilterButtonToFront(matchingButton);
+        return;
+      }
+    }
+    
+    // If no primary category filter is active, activate the "All" button
+    const allButton = document.querySelector('.design-filter-button[data-filter-value="all"]');
+    if (allButton) {
+      allButton.classList.add('active');
+    }
+  }
+  
+  // Apply product type filter when button is clicked
+  function applyProductTypeFilter(button) {
+    const filterValue = button.getAttribute('data-filter-value');
+    const filterParam = button.getAttribute('data-filter-param');
+    
+    console.log('Applying primary category filter:', filterValue, filterParam); // Debug log
+    
+    // Move the selected button to second position (after "All" button)
+    moveFilterButtonToFront(button);
+    
+    // Get current URL parameters
+    const url = new URL(window.location.href);
+    const searchParams = new URLSearchParams(url.search);
+    
+    // Remove any existing primary category filter parameters
+    searchParams.delete('filter.p.m.custom.primary_category');
+    
+    // Add new primary category filter if not "all"
+    if (filterValue !== 'all' && filterParam && filterValue) {
+      searchParams.set('filter.p.m.custom.primary_category', filterValue);
+    }
+    
+    console.log('New URL will be:', `${window.location.pathname}?${searchParams.toString()}`); // Debug log
+    
+    // Redirect to the new URL
+    window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+  }
+  
+  // Helper function to check if a filter parameter is a design filter or product type filter
+  function isDesignFilter(paramKey) {
+    const designFilterTypes = ['earring-design', 'ring-design', 'necklace-design', 'bracelet-design'];
+    const isDesign = designFilterTypes.some(type => paramKey.includes(type));
+    const isPrimaryCategory = paramKey.includes('filter.p.m.custom.primary_category');
+    return isDesign || isPrimaryCategory;
   }
   
   // Initialize scroll indicators for design filters
@@ -486,7 +709,7 @@ function handlePersonalizationFilters(filterForm) {
     // First, remove active class from all buttons
     designFilterButtons.forEach(btn => btn.classList.remove('active'));
     
-    // Find if any design filter is active in URL
+    // Find if any design filter or primary category filter is active in URL
     let activeFilterFound = false;
     for (const [key, value] of urlParams.entries()) {
       if (isDesignFilter(key)) {
