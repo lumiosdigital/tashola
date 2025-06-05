@@ -1,374 +1,473 @@
 <!-- sections/product-display.liquid -->
 <div class="pd-product-display">
-    <div class="product-display-header">
-        {% if section.settings.show_description and section.settings.selected_collection.description != blank %}
-        <div class="product-display-description">{{ section.settings.selected_collection.description }}</div>
-        {% endif %}
-    </div>
+  <div class="product-display-header">
+    {% if section.settings.show_description and section.settings.selected_collection.description != blank %}
+      <div class="product-display-description">{{ section.settings.selected_collection.description }}</div>
+    {% endif %}
+  </div>
 
-    {% if section.settings.selected_collection != blank %}
+  {% if section.settings.selected_collection != blank %}
     {% assign collection = collections[section.settings.selected_collection] %}
 
-    {% paginate collection.products by 4 %}
-    <div class="pd-products-grid" id="pd-products-grid">
-        {% for product in collection.products %}
-        <div class="pd-product-card">
-            <a href="{{ product.url }}">
+    <!-- Desktop view with pagination -->
+    <div class="pd-desktop-view">
+      {% paginate collection.products by 4 %}
+        <div class="pd-products-grid" id="pd-products-grid">
+          {% for product in collection.products %}
+            <div class="pd-product-card">
+              <a href="{{ product.url }}">
                 <div class="pd-product-image-container">
-                    {% if product.featured_image != blank %}
-                    <img class="pd-product-image"
-                        src="{{ product.featured_image | img_url: 'master' }}"
-                        alt="{{ product.title | escape }}" loading="lazy" width="600" height="600">
-                    {% else %}
+                  {% if product.featured_image != blank %}
+                    <img
+                      class="pd-product-image"
+                      src="{{ product.featured_image | img_url: 'master' }}"
+                      alt="{{ product.title | escape }}"
+                      loading="lazy"
+                      width="600"
+                      height="600">
+                  {% else %}
                     {{ 'product-1' | placeholder_svg_tag: 'pd-product-image' }}
-                    {% endif %}
+                  {% endif %}
                 </div>
-            </a>
-            <div class="pd-product-info">
+              </a>
+              <div class="pd-product-info">
                 <a href="{{ product.url }}">
-                    <h3 class="pd-product-title">{{ product.title }}</h3>
-                    <div class="pd-product-price">
-                        {% if product.compare_at_price > product.price %}
-                        <span class="pd-sale-price">{{ product.price | money }}</span>
-                        <s>{{ product.compare_at_price | money }}</s>
-                        {% else %}
-                        <span>{{ product.price | money }}</span>
-                        {% endif %}
-                    </div>
+                  <h3 class="pd-product-title">{{ product.title }}</h3>
+                  <div class="pd-product-price">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="pd-sale-price">{{ product.price | money }}</span>
+                      <s>{{ product.compare_at_price | money }}</s>
+                    {% else %}
+                      <span>{{ product.price | money }}</span>
+                    {% endif %}
+                  </div>
                 </a>
 
                 {% if product.variants.size > 1 and product.options_by_name['Metal'] != blank %}
-                <div class="pd-product-variants">
+                  <div class="pd-product-variants">
                     {% assign metal_option = product.options_by_name['Metal'] %}
                     {% for value in metal_option.values limit: 4 %}
+                      {% assign color_code = "" %}
+                      {% if value contains 'Gold' %}
+                        {% assign color_code = "#E5D295" %}
+                      {% elsif value contains 'Silver' %}
+                        {% assign color_code = "#CDCCCC" %}
+                      {% elsif value contains 'Rose Gold' %}
+                        {% assign color_code = "#B76E79" %}
+                      {% elsif value contains 'Platinum' %}
+                        {% assign color_code = "#BCBCBC" %}
+                      {% elsif value contains 'Stainless Steel' %}
+                        {% assign color_code = "#E4E4E4" %}
+                      {% endif %}
+                      {% if color_code != "" %}
+                        <div
+                          class="pd-variant-color"
+                          style="background-color: {{ color_code }};"
+                          title="{{ value }}"></div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <div class="pd-pagination" id="pd-pagination-container">
+            {% if paginate.previous %}
+              <a
+                href="{{ paginate.previous.url }}"
+                class="pd-prev pd-pagination-link"
+                data-page="{{ paginate.previous.page }}"
+                aria-label="Previous page">
+                {% render 'icon-arrow-left' %}
+              </a>
+            {% else %}
+              <div class="pd-prev pd-grayed-out" aria-disabled="true">{% render 'icon-arrow-left-gray' %}</div>
+            {% endif %}
+
+            {% if paginate.next %}
+              <a
+                href="{{ paginate.next.url }}"
+                class="pd-next pd-pagination-link"
+                data-page="{{ paginate.next.page }}"
+                aria-label="Next page">
+                {% render 'icon-arrow-right' %}
+              </a>
+            {% else %}
+              <div class="pd-next pd-grayed-out" aria-disabled="true">{% render 'icon-arrow-right-gray' %}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    </div>
+
+    <!-- Mobile view - all products without pagination -->
+    <div class="pd-mobile-view">
+      <div class="pd-products-grid pd-mobile-grid" id="pd-mobile-products-grid">
+        {% for product in collection.products %}
+          <div class="pd-product-card">
+            <a href="{{ product.url }}">
+              <div class="pd-product-image-container">
+                {% if product.featured_image != blank %}
+                  <img
+                    class="pd-product-image"
+                    src="{{ product.featured_image | img_url: 'master' }}"
+                    alt="{{ product.title | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="600">
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'pd-product-image' }}
+                {% endif %}
+              </div>
+            </a>
+            <div class="pd-product-info">
+              <a href="{{ product.url }}">
+                <h3 class="pd-product-title">{{ product.title }}</h3>
+                <div class="pd-product-price">
+                  {% if product.compare_at_price > product.price %}
+                    <span class="pd-sale-price">{{ product.price | money }}</span>
+                    <s>{{ product.compare_at_price | money }}</s>
+                  {% else %}
+                    <span>{{ product.price | money }}</span>
+                  {% endif %}
+                </div>
+              </a>
+
+              {% if product.variants.size > 1 and product.options_by_name['Metal'] != blank %}
+                <div class="pd-product-variants">
+                  {% assign metal_option = product.options_by_name['Metal'] %}
+                  {% for value in metal_option.values limit: 4 %}
                     {% assign color_code = "" %}
                     {% if value contains 'Gold' %}
-                    {% assign color_code = "#E5D295" %}
+                      {% assign color_code = "#E5D295" %}
                     {% elsif value contains 'Silver' %}
-                    {% assign color_code = "#CDCCCC" %}
+                      {% assign color_code = "#CDCCCC" %}
                     {% elsif value contains 'Rose Gold' %}
-                    {% assign color_code = "#B76E79" %}
+                      {% assign color_code = "#B76E79" %}
                     {% elsif value contains 'Platinum' %}
-                    {% assign color_code = "#BCBCBC" %}
+                      {% assign color_code = "#BCBCBC" %}
                     {% elsif value contains 'Stainless Steel' %}
-                    {% assign color_code = "#E4E4E4" %}
+                      {% assign color_code = "#E4E4E4" %}
                     {% endif %}
                     {% if color_code != "" %}
-                    <div class="pd-variant-color" style="background-color: {{ color_code }};" title="{{ value }}">
-                    </div>
+                      <div
+                        class="pd-variant-color"
+                        style="background-color: {{ color_code }};"
+                        title="{{ value }}"></div>
                     {% endif %}
-                    {% endfor %}
+                  {% endfor %}
                 </div>
-                {% endif %}
+              {% endif %}
             </div>
-        </div>
+          </div>
         {% endfor %}
+      </div>
     </div>
-
-    {% if paginate.pages > 1 %}
-    <div class="pd-pagination" id="pd-pagination-container">
-        {% if paginate.previous %}
-        <a href="{{ paginate.previous.url }}" class="pd-prev pd-pagination-link"
-            data-page="{{ paginate.previous.page }}" aria-label="Previous page">
-            {% render 'icon-arrow-left' %}
-        </a>
-        {% else %}
-        <div class="pd-prev pd-grayed-out" aria-disabled="true">{% render 'icon-arrow-left-gray' %}</div>
-        {% endif %}
-
-        {% if paginate.next %}
-        <a href="{{ paginate.next.url }}" class="pd-next pd-pagination-link" data-page="{{ paginate.next.page }}"
-            aria-label="Next page">
-            {% render 'icon-arrow-right' %}
-        </a>
-        {% else %}
-        <div class="pd-next pd-grayed-out" aria-disabled="true">{% render 'icon-arrow-right-gray' %}</div>
-        {% endif %}
-    </div>
-    {% endif %}
-    {% endpaginate %}
-    {% else %}
+  {% else %}
     <p class="pd-no-collection-selected">Please select a collection in the theme editor</p>
-    {% endif %}
+  {% endif %}
 </div>
 
 <style>
-    /* Product display styling */
-    .pd-product-display {
-        width: 100%;
-        padding: 42px 0 75px;
-        background-color: #F6F4F3;
-    }
+  /* Product display styling */
+  .pd-product-display {
+    width: 100%;
+    padding: 42px 0 75px;
+    background-color: #F6F4F3;
+  }
 
+  .pd-products-grid {
+    display: flex;
+    justify-items: center;
+    justify-content: flex-start;
+    /* Changed from center to prevent expansion */
+    gap: 10px;
+    padding: 0 3.75rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .pd-products-grid.loading {
+    opacity: 0.6;
+    position: relative;
+  }
+
+  .pd-products-grid.loading::after {
+    content: "Loading...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--primary-color);
+  }
+
+  .pd-pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    margin-right: 60px;
+    gap: 16px;
+  }
+
+  .pd-no-collection-selected {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* Hide mobile view on desktop */
+  .pd-mobile-view {
+    display: none;
+  }
+
+  /* Product card styling - MATCHED to collection display's rectangular format */
+  .pd-product-card {
+    width: calc(50% - 10px);
+    max-width: 27.5rem;
+    /* Prevent cards from getting bigger */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .pd-product-image-container {
+    width: 100%;
+    height: 0;
+    padding-bottom: 130%;
+    /* Rectangular aspect ratio - similar to the earrings photo */
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .pd-product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+  }
+
+  .pd-product-image-container:hover .pd-product-image {
+    transform: scale(1.05);
+  }
+
+  .pd-product-info {
+    width: 100%;
+    /* padding: 0 0.9375rem; */
+  }
+
+  .pd-product-title {
+    font-size: 1.25rem;
+    text-align: left;
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    font-weight: 400;
+  }
+
+  .pd-product-price {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+  }
+
+  .pd-sale-price {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+  }
+
+  .pd-product-price s {
+    color: #3737366d;
+    font-size: 1rem;
+  }
+
+  /* Variant colors styling */
+  .pd-variant-color {
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  .pd-variant-color:hover {
+    transform: scale(1.1);
+  }
+
+  .pd-variant-color.selected {
+    box-shadow: 0 0 0 2px white
+    , 0 0 0 3px var(--primary-color);
+    transform: scale(1.1);
+  }
+
+  .pd-pagination-link:hover svg path {
+    stroke: var(--color-accent);
+  }
+
+  .pd-pagination .pd-grayed-out {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Reserve space for variant buttons */
+  .pd-product-variants {
+    min-height: 1.75rem;
+    /* Height of variant buttons plus margin */
+    display: flex;
+    margin-top: 0.5rem;
+  }
+
+  .pd-product-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* Mobile & Responsive styles */
+  @media (max-width: 992px) {
     .pd-products-grid {
-        display: flex;
-        justify-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 0 3.75rem;
-        transition: opacity 0.3s ease;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 2rem;
     }
 
-    .pd-products-grid.loading {
-        opacity: 0.6;
-        position: relative;
+    .pd-product-card {
+      max-width: 16rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    /* Hide desktop view on mobile */
+    .pd-desktop-view {
+      display: none;
     }
 
-    .pd-products-grid.loading::after {
-        content: "Loading...";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: var(--font-heading);
-        font-size: 1.25rem;
-        color: var(--primary-color);
+    /* Show mobile view */
+    .pd-mobile-view {
+      display: block;
+    }
+
+    .pd-product-display {
+      padding: 20px 0;
+      background-color: #F6F4F3;
+    }
+    /* Ensure proper spacing between sections */
+    .category-grid {
+      display: block !important;
+      position: relative;
+      overflow: hidden;
+      /* Contains all floated elements */
+    }
+
+    /* Add a clearfix at the end of the category grid */
+    .category-grid:after {
+      content: "";
+      display: table;
+      clear: both;
+      margin-bottom: 30px;
+      /* Add space between categories and product display */
+    }
+
+    /* Fix product display spacing */
+    .product-display {
+      position: relative;
+      clear: both;
+      margin-top: 30px;
+      padding-top: 40px;
+    }
+
+    /* Swiper styles */
+    .pd-mobile-grid {
+      display: block;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 5;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .swiper-container {
+      width: 100%;
+      overflow: hidden !important;
+    }
+
+    .swiper-slide {
+      width: 80%;
+      padding: 0 5px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.8);
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+      font-size: 18px;
     }
 
     .pd-pagination {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 1rem;
-        margin-right: 60px;
-        gap: 16px;
+      display: none;
     }
 
-    .pd-no-collection-selected {
-        text-align: center;
-        padding: 2rem;
-    }
-
-    /* Product card styling - MATCHED to collection display's rectangular format */
-    .pd-product-card {
-        width: calc(50% - 10px);
-        /* max-width: 18.75rem; */
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-
+    /* Keep same rectangular aspect ratio on mobile */
     .pd-product-image-container {
-        width: 100%;
-        height: 0;
-        padding-bottom: 130%;
-        /* Rectangular aspect ratio - similar to the earrings photo */
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 1rem;
+      width: 100%;
+      height: 400px;
+      padding-bottom: 0;
+      /* Override padding-bottom for mobile */
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
     }
 
-    .pd-product-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 1s ease;
-    }
-
-    .pd-product-image-container:hover .pd-product-image {
-        transform: scale(1.05);
-    }
-
-    .pd-product-info {
-        width: 100%;
-        /* padding: 0 0.9375rem; */
+    .pd-product-card {
+      width: 100%;
+      max-width: 100%;
     }
 
     .pd-product-title {
-        font-size: 1.25rem;
-        text-align: left;
-        font-family: var(--font-heading);
-        color: var(--primary-color);
-        font-weight: 400;
+      font-size: 1.125rem;
+      /* Keep original mobile title size */
+    }
+  }
+
+  @media (max-width: 576px) {
+    .pd-products-grid {
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
     }
 
-    .pd-product-price {
-        font-size: 1.25rem;
-        font-weight: 400;
-        margin-bottom: 0.5rem;
-        text-align: left;
-        font-family: var(--font-heading);
-        color: var(--primary-color);
+    .product-display {
+      padding: 0;
     }
 
-    .pd-sale-price {
-        color: var(--primary-color);
-        margin-right: 0.5rem;
+    .pd-product-title {
+      font-size: 1rem;
     }
 
-    .pd-product-price s {
-        color: #3737366d;
-        font-size: 1rem;
+    .swiper-slide {
+      width: 80%;
     }
-
-    /* Variant colors styling */
-    .pd-variant-color {
-        width: 1.125rem;
-        height: 1.125rem;
-        border-radius: 50%;
-        border: 1px solid #e0e0e0;
-        transition: transform 0.2s ease;
-        cursor: pointer;
-        display: inline-block;
-        margin-right: 0.5rem;
-    }
-
-    .pd-variant-color:hover {
-        transform: scale(1.1);
-    }
-
-    .pd-variant-color.selected {
-        box-shadow: 0 0 0 2px white, 0 0 0 3px var(--primary-color);
-        transform: scale(1.1);
-    }
-
-    .pd-pagination-link:hover svg path {
-        stroke: var(--color-accent);
-    }
-
-    .pd-pagination .pd-grayed-out {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    /* Reserve space for variant buttons */
-    .pd-product-variants {
-        min-height: 1.75rem;
-        /* Height of variant buttons plus margin */
-        display: flex;
-        margin-top: 0.5rem;
-    }
-
-    .pd-product-info {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-    }
-
-    /* Mobile & Responsive styles */
-    @media (max-width: 992px) {
-        .pd-products-grid {
-            grid-template-columns: repeat(3, 1fr);
-            padding: 0 2rem;
-        }
-
-        .pd-product-card {
-            max-width: 16rem;
-        }
-    }
-
-    @media (max-width: 768px) {
-
-        .pd-product-display {
-            padding: 20px 0 20px;
-            background-color: #F6F4F3;
-        }
-        /* Ensure proper spacing between sections */
-        .category-grid {
-            display: block !important;
-            position: relative;
-            overflow: hidden;
-            /* Contains all floated elements */
-        }
-
-        /* Add a clearfix at the end of the category grid */
-        .category-grid:after {
-            content: "";
-            display: table;
-            clear: both;
-            margin-bottom: 30px;
-            /* Add space between categories and product display */
-        }
-
-        /* Fix product display spacing */
-        .product-display {
-            position: relative;
-            clear: both;
-            margin-top: 30px;
-            padding-top: 40px;
-        }
-
-        /* Swiper styles */
-        .pd-products-grid {
-            display: block;
-            padding: 0;
-            position: relative;
-            z-index: 5;
-            grid-template-columns: repeat(2, 1fr);
-            padding: 0 1.5rem;
-        }
-
-        .swiper-container {
-            width: 100%;
-            overflow: hidden !important;
-        }
-
-        .swiper-slide {
-            width: 80%;
-            padding: 0 5px;
-        }
-
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.8);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-        }
-
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-            font-size: 18px;
-        }
-
-        .pd-pagination {
-            display: none;
-        }
-
-        /* Keep same rectangular aspect ratio on mobile */
-        .pd-product-image-container {
-            width: 100%;
-            height: 400px;
-            
-            /* padding-bottom: 133%; */
-            /* Same rectangular aspect ratio */
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 1.25rem;
-        }
-
-        .pd-product-card {
-            width: 100%;
-            max-width: 100%;
-        }
-
-        .pd-product-title {
-            font-size: 1.125rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .pd-products-grid {
-            grid-template-columns: 1fr;
-            padding: 0 1rem;
-        }
-
-        .product-display {
-            padding: 0px;
-        }
-
-        .pd-product-title {
-            font-size: 1rem;
-        }
-
-        .swiper-slide {
-            width: 80%;
-        }
-    }
+  }
 </style>
+
+<!-- Add Swiper CSS and JS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -400,7 +499,7 @@
 
         function loadPDPage(url) {
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-            const productGrid = document.querySelector('.pd-products-grid');
+            const productGrid = document.querySelector('.pd-desktop-view .pd-products-grid'); // Target desktop view specifically
             if (productGrid) productGrid.classList.add('loading');
 
             fetch(url)
@@ -409,17 +508,13 @@
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
 
-                    const newProductGrid = doc.querySelector('.pd-products-grid');
+                    const newProductGrid = doc.querySelector('.pd-desktop-view .pd-products-grid');
                     const newPagination = doc.querySelector('#pd-pagination-container');
 
                     if (newProductGrid && productGrid) {
                         productGrid.innerHTML = newProductGrid.innerHTML;
                         productGrid.classList.remove('loading');
                         initPDProductVariants();
-
-                        if (window.innerWidth <= 768) {
-                            initProductDisplaySwiper();
-                        }
                     }
 
                     if (newPagination) {
@@ -438,13 +533,14 @@
                 });
         }
 
-        // Initialize Swiper for product display - same as collection display
+        // Initialize Swiper for mobile product display
         function initProductDisplaySwiper() {
-            const productGrid = document.querySelector('.pd-products-grid');
+            const productGrid = document.querySelector('.pd-mobile-grid');
             if (!productGrid) return;
 
             // Get all product cards
             const productCards = productGrid.querySelectorAll('.pd-product-card');
+            if (productCards.length === 0) return;
 
             // Create Swiper wrapper and container
             const swiperContainer = document.createElement('div');
@@ -478,7 +574,7 @@
             productGrid.appendChild(swiperContainer);
 
             // Initialize Swiper
-            new Swiper('.swiper-container', {
+            new Swiper(swiperContainer, {
                 slidesPerView: 'auto',
                 spaceBetween: 10,
                 centeredSlides: false,
@@ -507,39 +603,185 @@
             initPDProductVariants();
         }
 
-        // Rest of your existing product variants code...
         function initPDProductVariants() {
-            // Your existing product variants code
+            // Add CSS for the enhanced radio button styles
+            if (!document.getElementById('pd-variant-styles')) {
+                const styleElement = document.createElement('style');
+                styleElement.id = 'pd-variant-styles';
+                styleElement.textContent = `
+                .pd-variant-radio-container {
+                    position: relative;
+                    margin-right: 5px;
+                    cursor: pointer;
+                }
+                .pd-variant-color {
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    display: inline-block;
+                    transition: all 0.2s ease;
+                    border: none;
+                }
+                .pd-variant-radio:checked + .pd-variant-color {
+                    box-shadow: 0 0 0 3px #F6F4F3;
+                }
+                .pd-variant-radio-container:hover .pd-variant-color {
+                    transform: scale(1.1);
+                }
+            `;
+                document.head.appendChild(styleElement);
+            }
+
+            // Get all product cards in both desktop and mobile views
+            const productCards = document.querySelectorAll('.pd-product-card');
+
+            productCards.forEach(function (card) {
+                const variantsContainer = card.querySelector('.pd-product-variants');
+                if (!variantsContainer) return;
+
+                // Clear existing variant colors
+                variantsContainer.innerHTML = '';
+
+                const imageContainer = card.querySelector('.pd-product-image-container');
+                const productLink = card.querySelector('a[href*="/products/"]');
+                const productImage = imageContainer ? imageContainer.querySelector('img') : null;
+
+                if (!productLink || !productImage) return;
+
+                // Extract product URL and handle
+                const productUrl = productLink.getAttribute('href');
+                const productHandle = productUrl.split('/products/')[1].split('?')[0];
+
+                // Store original image
+                const originalSrc = productImage.src;
+                productImage.setAttribute('data-original-src', originalSrc);
+
+                // Fetch product data using Shopify's product JSON endpoint
+                fetch(`/products/${productHandle}.js`)
+                    .then(response => response.json())
+                    .then(product => {
+                        // Get the metal option if it exists
+                        const metalOptionIndex = product.options.findIndex(option =>
+                            option.name.toLowerCase() === 'metal' ||
+                            option.name.toLowerCase() === 'material' ||
+                            option.name.toLowerCase() === 'color'
+                        );
+
+                        if (metalOptionIndex === -1) return;
+
+                        const metalValues = product.options[metalOptionIndex].values;
+                        const variantImages = {};
+                        const variantIds = {};
+
+                        // Create a mapping of variant values to images
+                        product.variants.forEach(variant => {
+                            const optionValue = variant.options[metalOptionIndex];
+                            if (variant.featured_image) {
+                                variantImages[optionValue] = variant.featured_image.src;
+                            }
+                            variantIds[optionValue] = variant.id;
+                        });
+
+                        // Create radio buttons for each metal option
+                        metalValues.forEach((metal, index) => {
+                            const colorCode = getPDColorCodeForMetal(metal);
+                            const variantId = variantIds[metal];
+
+                            const radioContainer = document.createElement('label');
+                            radioContainer.className = 'pd-variant-radio-container';
+
+                            const radio = document.createElement('input');
+                            radio.type = 'radio';
+                            radio.name = `pd-variant-${productHandle}`;
+                            radio.value = metal;
+                            radio.className = 'pd-variant-radio';
+                            radio.style.display = 'none';
+                            radio.setAttribute('data-variant-id', variantId);
+                            radio.setAttribute('aria-label', metal);
+
+                            // Check the Gold option by default
+                            if ((metal.toLowerCase().includes('gold') && !metal.toLowerCase().includes('rose')) ||
+                                (index === 0 && !metalValues.some(m => m.toLowerCase().includes('gold') && !m.toLowerCase().includes('rose')))) {
+                                radio.checked = true;
+                                if (variantImages[metal]) {
+                                    productImage.src = variantImages[metal];
+                                }
+                            }
+
+                            const colorDisplay = document.createElement('span');
+                            colorDisplay.className = 'pd-variant-color';
+                            colorDisplay.style.backgroundColor = colorCode;
+                            colorDisplay.title = metal;
+
+                            radioContainer.appendChild(radio);
+                            radioContainer.appendChild(colorDisplay);
+                            variantsContainer.appendChild(radioContainer);
+
+                            // Add event listener to change the image
+                            radio.addEventListener('change', function () {
+                                if (this.checked) {
+                                    if (variantImages[metal]) {
+                                        productImage.src = variantImages[metal];
+                                    } else if (index === 0) {
+                                        productImage.src = originalSrc;
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching product data:', error);
+                    });
+            });
         }
 
         function getPDColorCodeForMetal(metal) {
-            // Your existing color code function
+            const lowerMetal = metal.toLowerCase();
+            if (lowerMetal.includes('gold') && !lowerMetal.includes('rose')) {
+                return "#E5D295";  // Gold
+            } else if (lowerMetal.includes('silver') || lowerMetal.includes('sterling')) {
+                return "#CDCCCC";  // Silver
+            } else if (lowerMetal.includes('rose') || lowerMetal.includes('rosegold')) {
+                return "#B76E79";  // Rose Gold
+            } else if (lowerMetal.includes('platinum')) {
+                return "#E5E4E2";  // Platinum
+            } else {
+                return "#373736";  // Default dark color
+            }
         }
 
         // Handle window resize
         window.addEventListener('resize', function () {
             // Re-initialize on resize if needed
+            if (window.innerWidth <= 768) {
+                initProductDisplaySwiper();
+            }
         });
     });
 </script>
 
 {% schema %}
-{
-"name": "Product Display",
-"tag": "section",
-"class": "section",
-"settings": [
-{
-"type": "collection",
-"id": "selected_collection",
-"label": "Collection"
-}
-],
-"presets": [
-{
-"name": "Product Display",
-"category": "Collections"
-}
-]
-}
+  {
+    "name": "Product Display",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "selected_collection",
+        "label": "Collection"
+      }, {
+        "type": "checkbox",
+        "id": "show_description",
+        "label": "Show Collection Description",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Display",
+        "category": "Collections"
+      }
+    ]
+  }
 {% endschema %}
