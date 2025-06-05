@@ -1,119 +1,136 @@
 <div class="categories-section">
-    <div class="category-grid">
-        {% for block in section.blocks %}
-        {% case block.type %}
+  <div class="category-grid">
+    {% for block in section.blocks %}
+      {% case block.type %}
         {% when 'category_row' %}
-        <div class="category-item" {{ block.shopify_attributes }}>
-            <a href="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}{{ routes.collections_url }}/{{ block.settings.collection_handle }}{% endif %}"
-                class="category-link">
-                <div class="category-image-container">
-                    <div class="category-image"
-                        style="background-image: url('{% if block.settings.category_image %}{{ block.settings.category_image | img_url: 'master' }}{% else %}{{ block.settings.collection_handle | append: '-category.png' | asset_url }}{% endif %}');">
-                    </div>
-                    <h3 class="category-title"
-                        style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
-                        {{ block.settings.category_title }}</h3>
-                </div>
+          <div class="category-item" {{ block.shopify_attributes }}>
+            <a href="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}{{ routes.collections_url }}/{{ block.settings.collection_handle }}{% endif %}" class="category-link">
+              <div class="category-image-container">
+                <div class="category-image category-image-{{ block.id }}"></div>
+                <h3 class="category-title" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
+                  {{ block.settings.category_title }}</h3>
+              </div>
             </a>
-        </div>
+          </div>
         {% when 'collection_display' %}
-        <div class="collection-display-row {% if block.settings.layout_direction == 'banner-right' %}reverse{% endif %}"
-            {{ block.shopify_attributes }}>
+          <div class="collection-display-row {% if block.settings.layout_direction == 'banner-right' %}reverse{% endif %}" {{ block.shopify_attributes }}>
             <!-- Collection Banner -->
             <div class="collection-banner">
-                <a href="{{ block.settings.selected_collection.url }}" class="collection-banner-link">
-                    <div class="category-image-container">
-                        <div class="category-image"
-                            style="background-image: url('{% if block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'master' }}{% endif %}');">
-                        </div>
-                        <h3 class="collection-dynamic-title"
-                            style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
-                            {{ block.settings.selected_collection.title }}<span class="collection-subtitle"
-                                style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
-                                Collection</span></h3>
-                    </div>
-                </a>
+              <a href="{{ block.settings.selected_collection.url }}" class="collection-banner-link">
+                <div class="category-image-container">
+                  <div class="category-image collection-banner-{{ block.id }}"></div>
+                  <h3 class="collection-dynamic-title" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
+                    {{ block.settings.selected_collection.title }}<span class="collection-subtitle" style="color: {% if block.settings.text_color == 'black' %}#373736{% else %}white{% endif %};">
+                      Collection</span>
+                  </h3>
+                </div>
+              </a>
             </div>
 
             <!-- Product Collection Display -->
             <div class="product-display">
-                <div class="collection-product-display">
-                    {% if block.settings.featured_collection != blank %}
-                    {% assign collection = collections[block.settings.featured_collection] %}
-                    {% comment %} {% if block.settings.custom_collection_title != blank %}
-                    <h2 class="product-display-title">{{ block.settings.custom_collection_title }}</h2>
-                    {% else %}
-                    <h2 class="product-display-title">{{ block.settings.selected_collection.title }}</h2>
-                    {% endif %} {% endcomment %}
-                    {% if collection.products.size > 0 %}
+              <div class="collection-product-display">
+                {% if block.settings.featured_collection != blank %}
+                  {% assign collection = collections[block.settings.featured_collection] %}
+                  {% if collection.products.size > 0 %}
                     <div class="product-grid" id="product-grid-{{ block.id }}">
-                        {% for product in collection.products limit: 4 %}
+                      {% for product in collection.products limit: 4 %}
                         <div class="product-card">
-                            <a href="{{ product.url }}">
-                                <div class="product-image-container">
-                                    {% if product.featured_image != blank %}
-                                    <img class="product-image" src="{{ product.featured_image | img_url: 'master' }}"
-                                        alt="{{ product.title | escape }}" width="600" height="600">
-                                    {% else %}
-                                    {{ 'product-1' | placeholder_svg_tag: 'product-image' }}
-                                    {% endif %}
-                                </div>
-                            </a>
-                            <div class="product-info">
-                                <a href="{{ product.url }}">
-                                    <h3 class="product-title">{{ product.title }}</h3>
-                                    {% comment %} <div class="product-price">
-                                        {% if product.compare_at_price > product.price %}
-                                        <span class="sale-price">{{ product.price | money }}</span>
-                                        <s>{{ product.compare_at_price | money }}</s>
-                                        {% else %}
-                                        <span>{{ product.price | money }}</span>
-                                        {% endif %}
-                                    </div> {% endcomment %}
-                                </a>
-
-                                {% if product.variants.size > 1 and product.options_by_name['Material'] != blank %}
-                                <div class="product-variants">
-                                    {% assign material_option = product.options_by_name['Material'] %}
-                                    {% for value in material_option.values limit: 4 %}
-                                    {% assign color_code = "" %}
-                                    {% if value contains 'Gold' %}
-                                    {% assign color_code = "#E5D295" %}
-                                    {% elsif value contains 'Silver' %}
-                                    {% assign color_code = "#CDCCCC" %}
-                                    {% elsif value contains 'Rose Gold' %}
-                                    {% assign color_code = "#B76E79" %}
-                                    {% elsif value contains 'Platinum' %}
-                                    {% assign color_code = "#BCBCBC" %}
-                                    {% elsif value contains 'Stainless Steel' %}
-                                    {% assign color_code = "#E4E4E4" %}
-                                    {% endif %}
-
-                                    {% if color_code != "" %}
-                                    <div class="variant-color" style="background-color: {{ color_code }};"
-                                        title="{{ value }}">
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
+                          <a href="{{ product.url }}">
+                            <div class="product-image-container">
+                              {% if product.featured_image != blank %}
+                                <img
+                                  class="product-image"
+                                  src="{{ product.featured_image | img_url: 'master' }}"
+                                  alt="{{ product.title | escape }}"
+                                  width="600"
+                                  height="600">
+                              {% else %}
+                                {{ 'product-1' | placeholder_svg_tag: 'product-image' }}
+                              {% endif %}
                             </div>
+                          </a>
+                          <div class="product-info">
+                            <a href="{{ product.url }}">
+                              <h3 class="product-title">{{ product.title }}</h3>
+                            </a>
+
+                            {% if product.variants.size > 1 and product.options_by_name['Material'] != blank %}
+                              <div class="product-variants">
+                                {% assign material_option = product.options_by_name['Material'] %}
+                                {% for value in material_option.values limit: 4 %}
+                                  {% assign color_code = "" %}
+                                  {% if value contains 'Gold' %}
+                                    {% assign color_code = "#E5D295" %}
+                                  {% elsif value contains 'Silver' %}
+                                    {% assign color_code = "#CDCCCC" %}
+                                  {% elsif value contains 'Rose Gold' %}
+                                    {% assign color_code = "#B76E79" %}
+                                  {% elsif value contains 'Platinum' %}
+                                    {% assign color_code = "#BCBCBC" %}
+                                  {% elsif value contains 'Stainless Steel' %}
+                                    {% assign color_code = "#E4E4E4" %}
+                                  {% endif %}
+
+                                  {% if color_code != "" %}
+                                    <div
+                                      class="variant-color"
+                                      style="background-color: {{ color_code }};"
+                                      title="{{ value }}"></div>
+                                  {% endif %}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
                         </div>
-                        {% endfor %}
+                      {% endfor %}
                     </div>
-                    {% else %}
+                  {% else %}
                     <p class="no-products-message">No products found in this collection</p>
-                    {% endif %}
-                    {% else %}
-                    <p class="no-collection-message">Please select a collection in the theme editor</p>
-                    {% endif %}
-                </div>
+                  {% endif %}
+                {% else %}
+                  <p class="no-collection-message">Please select a collection in the theme editor</p>
+                {% endif %}
+              </div>
             </div>
-        </div>
-        {% endcase %}
-        {% endfor %}
-    </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
 </div>
+
+<!-- Dynamic CSS for background images with mobile support -->
+<style>
+  {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'category_row' %}
+    .category-image-{{ block.id }} {
+      background-image: url('{% if block.settings.category_image %}{{ block.settings.category_image | img_url: 'master' }}{% else %}{{ block.settings.collection_handle | append: '-category.png' | asset_url }}{% endif %}');
+      background-size: cover;
+      background-position: center;
+    }
+
+    @media (max-width: 768px) {
+      .category-image-{{ block.id }} {
+        background-image: url('{% if block.settings.category_mobile_image %}{{ block.settings.category_mobile_image | img_url: 'master' }}{% elsif block.settings.category_image %}{{ block.settings.category_image | img_url: 'master' }}{% else %}{{ block.settings.collection_handle | append: '-category.png' | asset_url }}{% endif %}');
+      }
+    }
+
+  {% when 'collection_display' %}
+  .collection-banner-{{ block.id }} {
+    background-image: url('{% if block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'master' }}{% endif %}');
+    background-size: cover;
+    background-position: center;
+  }
+
+  @media (max-width: 768px) {
+    .collection-banner-{{ block.id }} {
+      background-image: url('{% if block.settings.collection_banner_mobile_image %}{{ block.settings.collection_banner_mobile_image | img_url: 'master' }}{% elsif block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'master' }}{% endif %}');
+    }
+  }
+{% endcase %}
+{% endfor %}
+</style>
 
 <!-- Swiper JS and CSS for mobile -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -373,172 +390,172 @@
 </script>
 
 {% schema %}
-{
-"name": "Categories Section",
-"settings": [],
-"blocks": [
-{
-"type": "category_row",
-"name": "Category Block",
-"settings": [
+  {
+    "name": "Categories Section",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "category_row",
+        "name": "Category Block",
+        "settings": [
 
-{
-"type": "select",
-"id": "text_color",
-"label": "Text Color",
-"options": [
-{
-"value": "white",
-"label": "White"
-},
-{
-"value": "black",
-"label": "Black"
-}
-],
-"default": "white"
-},
-{
-"type": "text",
-"id": "category_title",
-"label": "Category Title",
-"default": "Category"
-},
-{
-"type": "image_picker",
-"id": "category_image",
-"label": "Category Image",
-"info": "Upload an image for this category."
-},
-{
-"type": "collection",
-"id": "collection",
-"label": "Collection",
-"info": "Select a collection for this category block."
-},
-{
-"type": "text",
-"id": "collection_handle",
-"label": "Collection Handle (fallback)",
-"info": "Used if no collection is selected above. Example: earrings, rings, etc.",
-"default": "all"
-}
-]
-},
-{
-"type": "collection_display",
-"name": "Collection with Products",
-"settings": [
-{
-"type": "text",
-"id": "custom_collection_title",
-"label": "Custom Collection Title",
-"info": "Leave blank to use the selected collection's title"
-},
-{
-"type": "select",
-"id": "layout_direction",
-"label": "Layout Direction",
-"options": [
-{
-"value": "banner-left",
-"label": "Banner Left, Products Right"
-},
-{
-"value": "banner-right",
-"label": "Banner Right, Products Left"
-}
-],
-"default": "banner-left"
-},
-{
-"type": "select",
-"id": "text_color",
-"label": "Collection Banner Text Color",
-"options": [
-{
-"value": "white",
-"label": "White"
-},
-{
-"value": "black",
-"label": "Black"
-}
-],
-"default": "white"
-},
-{
-"type": "collection",
-"id": "selected_collection",
-"label": "Select Banner Collection",
-"info": "Choose a collection to display on the banner."
-},
-{
-"type": "collection",
-"id": "featured_collection",
-"label": "Products to Display",
-"info": "Choose a collection for the products grid"
-},
-{
-"type": "image_picker",
-"id": "collection_banner_image",
-"label": "Collection Banner Image",
-"info": "Upload a custom image for the collection banner. If left blank, the collection's featured image will be used."
-}
-]
-}
-],
-"presets": [
-{
-"name": "Categories Grid",
-"blocks": [
-{
-"type": "category_row",
-"settings": {
-"category_title": "Earrings",
-"collection_handle": "earrings"
-}
-},
-{
-"type": "category_row",
-"settings": {
-"category_title": "Rings",
-"collection_handle": "rings"
-}
-},
-{
-"type": "category_row",
-"settings": {
-"category_title": "Necklaces",
-"collection_handle": "necklaces"
-}
-},
-{
-"type": "category_row",
-"settings": {
-"category_title": "Bracelets",
-"collection_handle": "bracelets"
-}
-},
-{
-"type": "collection_display"
-},
-{
-"type": "category_row",
-"settings": {
-"category_title": "Personalization",
-"collection_handle": "personalization"
-}
-},
-{
-"type": "category_row",
-"settings": {
-"category_title": "Charms",
-"collection_handle": "charms"
-}
-}
-]
-}
-]
-}
+          {
+            "type": "select",
+            "id": "text_color",
+            "label": "Text Color",
+            "options": [
+              {
+                "value": "white",
+                "label": "White"
+              }, {
+                "value": "black",
+                "label": "Black"
+              }
+            ],
+            "default": "white"
+          },
+          {
+            "type": "text",
+            "id": "category_title",
+            "label": "Category Title",
+            "default": "Category"
+          },
+          {
+            "type": "image_picker",
+            "id": "category_image",
+            "label": "Category Image",
+            "info": "Upload an image for this category."
+          },
+          {
+            "type": "image_picker",
+            "id": "category_mobile_image",
+            "label": "Mobile Category Image",
+            "info": "Optional. If not provided, desktop image will be used on mobile devices."
+          }, {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection",
+            "info": "Select a collection for this category block."
+          }, {
+            "type": "text",
+            "id": "collection_handle",
+            "label": "Collection Handle (fallback)",
+            "info": "Used if no collection is selected above. Example: earrings, rings, etc.",
+            "default": "all"
+          }
+        ]
+      }, {
+        "type": "collection_display",
+        "name": "Collection with Products",
+        "settings": [
+          {
+            "type": "text",
+            "id": "custom_collection_title",
+            "label": "Custom Collection Title",
+            "info": "Leave blank to use the selected collection's title"
+          },
+          {
+            "type": "select",
+            "id": "layout_direction",
+            "label": "Layout Direction",
+            "options": [
+              {
+                "value": "banner-left",
+                "label": "Banner Left, Products Right"
+              }, {
+                "value": "banner-right",
+                "label": "Banner Right, Products Left"
+              }
+            ],
+            "default": "banner-left"
+          },
+          {
+            "type": "select",
+            "id": "text_color",
+            "label": "Collection Banner Text Color",
+            "options": [
+              {
+                "value": "white",
+                "label": "White"
+              }, {
+                "value": "black",
+                "label": "Black"
+              }
+            ],
+            "default": "white"
+          },
+          {
+            "type": "collection",
+            "id": "selected_collection",
+            "label": "Select Banner Collection",
+            "info": "Choose a collection to display on the banner."
+          }, {
+            "type": "collection",
+            "id": "featured_collection",
+            "label": "Products to Display",
+            "info": "Choose a collection for the products grid"
+          }, {
+            "type": "image_picker",
+            "id": "collection_banner_image",
+            "label": "Collection Banner Image",
+            "info": "Upload a custom image for the collection banner. If left blank, the collection's featured image will be used."
+          }, {
+            "type": "image_picker",
+            "id": "collection_banner_mobile_image",
+            "label": "Mobile Collection Banner Image",
+            "info": "Optional. If not provided, desktop banner image will be used on mobile devices."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Categories Grid",
+        "blocks": [
+          {
+            "type": "category_row",
+            "settings": {
+              "category_title": "Earrings",
+              "collection_handle": "earrings"
+            }
+          },
+          {
+            "type": "category_row",
+            "settings": {
+              "category_title": "Rings",
+              "collection_handle": "rings"
+            }
+          },
+          {
+            "type": "category_row",
+            "settings": {
+              "category_title": "Necklaces",
+              "collection_handle": "necklaces"
+            }
+          },
+          {
+            "type": "category_row",
+            "settings": {
+              "category_title": "Bracelets",
+              "collection_handle": "bracelets"
+            }
+          }, {
+            "type": "collection_display"
+          }, {
+            "type": "category_row",
+            "settings": {
+              "category_title": "Personalization",
+              "collection_handle": "personalization"
+            }
+          }, {
+            "type": "category_row",
+            "settings": {
+              "category_title": "Charms",
+              "collection_handle": "charms"
+            }
+          }
+        ]
+      }
+    ]
+  }
 {% endschema %}

@@ -66,6 +66,11 @@
   </div>
 </div>
 
+<!-- Hidden collection data for mobile menu -->
+<div id="collection-data" style="display: none;">
+  {% render 'collections-mobile-menu' %}
+</div>
+
 {% render 'cart-drawer'
   ,enable_banner: section.settings.enable_cart_drawer_banner
   , banner_text_1: section.settings.cart_drawer_banner_text_1
