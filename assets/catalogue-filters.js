@@ -131,6 +131,16 @@ document.addEventListener('DOMContentLoaded', function() {
         searchParams.append('sort_by', sortBy);
       }
       
+      // Preserve active design filter if it exists
+      const activeDesignButton = document.querySelector('.design-filter-button.active:not([data-filter-value="all"])');
+      if (activeDesignButton) {
+        const designParam = activeDesignButton.getAttribute('data-filter-param');
+        const designValue = activeDesignButton.getAttribute('data-filter-value');
+        if (designParam && designValue) {
+          searchParams.append(designParam, designValue);
+        }
+      }
+      
       // Redirect to filtered catalogue URL
       window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
     });
@@ -143,16 +153,32 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = new URL(window.location.href);
         const sortBy = url.searchParams.get('sort_by');
         
-        // Redirect to base catalogue URL with sort parameter if it exists
+        // Preserve active design filter if it exists
+        const activeDesignButton = document.querySelector('.design-filter-button.active:not([data-filter-value="all"])');
+        const searchParams = new URLSearchParams();
+        
         if (sortBy) {
-          window.location.href = `${window.location.pathname}?sort_by=${sortBy}`;
+          searchParams.append('sort_by', sortBy);
+        }
+        
+        if (activeDesignButton) {
+          const designParam = activeDesignButton.getAttribute('data-filter-param');
+          const designValue = activeDesignButton.getAttribute('data-filter-value');
+          if (designParam && designValue) {
+            searchParams.append(designParam, designValue);
+          }
+        }
+        
+        // Redirect to base catalogue URL with preserved parameters
+        if (searchParams.toString()) {
+          window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
         } else {
           window.location.href = window.location.pathname;
         }
       }, 0);
     });
   }
-  
+
 // Handle multiple filter OR logic (personalization + color + material + styles + collections)
 function handlePersonalizationFilters(filterForm) {
   filterForm.addEventListener('submit', function(e) {
@@ -219,6 +245,16 @@ function handlePersonalizationFilters(filterForm) {
         searchParams.append('sort_by', sortBy);
       }
       
+      // Preserve active design filter if it exists
+      const activeDesignButton = document.querySelector('.design-filter-button.active:not([data-filter-value="all"])');
+      if (activeDesignButton) {
+        const designParam = activeDesignButton.getAttribute('data-filter-param');
+        const designValue = activeDesignButton.getAttribute('data-filter-value');
+        if (designParam && designValue) {
+          searchParams.append(designParam, designValue);
+        }
+      }
+      
       // Redirect with proper OR parameters
       window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
     }
@@ -234,9 +270,9 @@ function handlePersonalizationFilters(filterForm) {
     const urlParams = new URLSearchParams(window.location.search);
     let activeFilterCount = 0;
     
-    // Count active filters
+    // Count active filters (excluding design filters)
     for (const [key, value] of urlParams.entries()) {
-      if (key.startsWith('filter.')) {
+      if (key.startsWith('filter.') && !isDesignFilter(key)) {
         // For comma-separated values, count each as a separate filter
         if (value.includes(',')) {
           activeFilterCount += value.split(',').length;
@@ -264,11 +300,23 @@ function handlePersonalizationFilters(filterForm) {
     }
   }
   
-  // Initialize design filters functionality
+  // Helper function to check if a filter parameter is a design filter
+  function isDesignFilter(paramKey) {
+    const designFilterTypes = ['earring-design', 'ring-design', 'necklace-design', 'bracelet-design'];
+    return designFilterTypes.some(type => paramKey.includes(type));
+  }
+  
+  // Initialize design filters functionality with actual filtering
   function initDesignFilters() {
     const designFilterButtons = document.querySelectorAll('.design-filter-button');
     
     if (!designFilterButtons.length) return;
+    
+    // Set active state based on URL parameters on page load
+    setActiveDesignFilterFromURL();
+    
+    // Initialize scroll indicators
+    initScrollIndicators();
     
     // Handle design filter button click
     designFilterButtons.forEach(button => {
@@ -279,13 +327,245 @@ function handlePersonalizationFilters(filterForm) {
         // Add active class to clicked button
         this.classList.add('active');
         
-        // Get filter value
-        const filterValue = this.getAttribute('data-filter-value');
-        
-        // Note: Actual filtering logic will be added later
-        console.log('Filter by design:', filterValue);
+        // Apply the design filter
+        applyDesignFilter(this);
       });
     });
+  }
+  
+  // Initialize scroll indicators for design filters
+  function initScrollIndicators() {
+    const designFiltersContainer = document.querySelector('.design-filters');
+    if (!designFiltersContainer) return;
+    
+    const buttons = designFiltersContainer.querySelectorAll('.design-filter-button');
+    
+    // Only show indicators if there are more than 6 buttons
+    if (buttons.length <= 6) return;
+    
+    // Find the parent container to position chevrons relative to it
+    const parentContainer = designFiltersContainer.parentElement;
+    
+    // Create left chevron (positioned relative to parent, not the scrolling container)
+    const leftChevron = document.createElement('button');
+    leftChevron.className = 'scroll-indicator scroll-indicator-left';
+    leftChevron.setAttribute('aria-label', 'Scroll left');
+    leftChevron.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 18L9 12L15 6" stroke="#373736" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+    leftChevron.style.display = 'none';
+    
+    // Create right chevron (positioned relative to parent, not the scrolling container)
+    const rightChevron = document.createElement('button');
+    rightChevron.className = 'scroll-indicator scroll-indicator-right';
+    rightChevron.setAttribute('aria-label', 'Scroll right');
+    rightChevron.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 18L15 12L9 6" stroke="#373736" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+    
+    // Add chevrons to the parent container, not the scrolling container
+    parentContainer.appendChild(leftChevron);
+    parentContainer.appendChild(rightChevron);
+    
+    // Add scroll functionality
+    setupScrollFunctionality(designFiltersContainer, leftChevron, rightChevron);
+  }
+  
+  // Setup scroll functionality for design filters
+  function setupScrollFunctionality(container, leftChevron, rightChevron) {
+    const scrollAmount = 120; // Amount to scroll per click
+    let scrollInterval;
+    
+    // Position the right chevron dynamically based on container width
+    function positionRightChevron() {
+      const containerRect = container.getBoundingClientRect();
+      const parentRect = container.parentElement.getBoundingClientRect();
+      const rightPosition = containerRect.right - parentRect.left - 28; // 28px is chevron width
+      rightChevron.style.left = rightPosition + 'px';
+    }
+    
+    // Update chevron visibility based on scroll position
+    function updateChevronVisibility() {
+      const isAtStart = container.scrollLeft <= 0;
+      const isAtEnd = container.scrollLeft >= (container.scrollWidth - container.clientWidth - 5);
+      
+      leftChevron.style.display = isAtStart ? 'none' : 'flex';
+      rightChevron.style.display = isAtEnd ? 'none' : 'flex';
+      
+      // Update right chevron position
+      if (!isAtEnd) {
+        positionRightChevron();
+      }
+    }
+    
+    // Smooth scroll function
+    function smoothScroll(direction) {
+      const targetScroll = direction === 'left' 
+        ? Math.max(0, container.scrollLeft - scrollAmount)
+        : Math.min(container.scrollWidth - container.clientWidth, container.scrollLeft + scrollAmount);
+      
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
+    
+    // Continuous scroll while holding button
+    function startContinuousScroll(direction) {
+      smoothScroll(direction);
+      scrollInterval = setInterval(() => {
+        smoothScroll(direction);
+      }, 150);
+    }
+    
+    function stopContinuousScroll() {
+      if (scrollInterval) {
+        clearInterval(scrollInterval);
+        scrollInterval = null;
+      }
+    }
+    
+    // Left chevron event listeners
+    leftChevron.addEventListener('mousedown', () => startContinuousScroll('left'));
+    leftChevron.addEventListener('mouseup', stopContinuousScroll);
+    leftChevron.addEventListener('mouseleave', stopContinuousScroll);
+    leftChevron.addEventListener('click', (e) => {
+      e.preventDefault();
+      smoothScroll('left');
+    });
+    
+    // Right chevron event listeners
+    rightChevron.addEventListener('mousedown', () => startContinuousScroll('right'));
+    rightChevron.addEventListener('mouseup', stopContinuousScroll);
+    rightChevron.addEventListener('mouseleave', stopContinuousScroll);
+    rightChevron.addEventListener('click', (e) => {
+      e.preventDefault();
+      smoothScroll('right');
+    });
+    
+    // Touch support for mobile
+    leftChevron.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      startContinuousScroll('left');
+    });
+    leftChevron.addEventListener('touchend', stopContinuousScroll);
+    
+    rightChevron.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      startContinuousScroll('right');
+    });
+    rightChevron.addEventListener('touchend', stopContinuousScroll);
+    
+    // Listen for scroll events to update chevron visibility
+    container.addEventListener('scroll', updateChevronVisibility);
+    
+    // Initial setup
+    setTimeout(() => {
+      positionRightChevron();
+      updateChevronVisibility();
+    }, 100);
+    
+    // Update on window resize
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        positionRightChevron();
+        updateChevronVisibility();
+      }, 100);
+    });
+  }
+  
+  // Set active design filter based on URL parameters
+  function setActiveDesignFilterFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const designFilterButtons = document.querySelectorAll('.design-filter-button');
+    
+    // First, remove active class from all buttons
+    designFilterButtons.forEach(btn => btn.classList.remove('active'));
+    
+    // Find if any design filter is active in URL
+    let activeFilterFound = false;
+    for (const [key, value] of urlParams.entries()) {
+      if (isDesignFilter(key)) {
+        // Find the button that matches this filter
+        const matchingButton = Array.from(designFilterButtons).find(button => {
+          const buttonParam = button.getAttribute('data-filter-param');
+          const buttonValue = button.getAttribute('data-filter-value');
+          return buttonParam === key && buttonValue === value;
+        });
+        
+        if (matchingButton) {
+          matchingButton.classList.add('active');
+          // Move the active button to front position (after "All" button)
+          moveFilterButtonToFront(matchingButton);
+          activeFilterFound = true;
+          break;
+        }
+      }
+    }
+    
+    // If no design filter is active, activate the "All" button
+    if (!activeFilterFound) {
+      const allButton = document.querySelector('.design-filter-button[data-filter-value="all"]');
+      if (allButton) {
+        allButton.classList.add('active');
+      }
+    }
+  }
+  
+  // Apply design filter when button is clicked
+  function applyDesignFilter(button) {
+    const filterValue = button.getAttribute('data-filter-value');
+    const filterParam = button.getAttribute('data-filter-param');
+    
+    // Move the selected button to second position (after "All" button)
+    moveFilterButtonToFront(button);
+    
+    // Get current URL parameters
+    const url = new URL(window.location.href);
+    const searchParams = new URLSearchParams(url.search);
+    
+    // Remove any existing design filter parameters
+    const keysToRemove = [];
+    for (const [key] of searchParams.entries()) {
+      if (isDesignFilter(key)) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => searchParams.delete(key));
+    
+    // Add new design filter if not "all"
+    if (filterValue !== 'all' && filterParam && filterValue) {
+      searchParams.set(filterParam, filterValue);
+    }
+    
+    // Redirect to the new URL
+    window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+  }
+  
+  // Move selected filter button to second position (after "All" button)
+  function moveFilterButtonToFront(selectedButton) {
+    const filterValue = selectedButton.getAttribute('data-filter-value');
+    
+    // Don't move the "All" button - it should always stay first
+    if (filterValue === 'all') {
+      return;
+    }
+    
+    const designFiltersContainer = selectedButton.parentElement;
+    const allButton = designFiltersContainer.querySelector('.design-filter-button[data-filter-value="all"]');
+    
+    if (allButton && selectedButton !== allButton) {
+      // Move the selected button right after the "All" button
+      if (allButton.nextSibling) {
+        designFiltersContainer.insertBefore(selectedButton, allButton.nextSibling);
+      } else {
+        designFiltersContainer.appendChild(selectedButton);
+      }
+    }
   }
   
   // Initialize sort dropdown functionality

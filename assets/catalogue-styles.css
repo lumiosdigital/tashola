@@ -1117,3 +1117,156 @@
         font-size: 0.75rem;
     }
 }
+/* Design Filter Scroll Indicators */
+.catalogue-controls {
+    position: relative;
+    /* Required for absolute positioning of chevrons */
+}
+
+.design-filters {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 0 1rem;
+    padding: 0.5rem 0;
+    justify-content: flex-start;
+    scroll-behavior: smooth;
+    position: relative;
+    width: calc(100% - 2rem);
+    max-width: 830px;
+    /* Keep original max-width */
+}
+
+.design-filters::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-indicator {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: transparent;
+    border: 1px solid rgba(55, 55, 54, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+    /* Center vertically with the design filters */
+    /* top: 0.5rem; */
+    /* margin-top: 14px; */
+    /* Half of button height to center with buttons */
+}
+
+.scroll-indicator-left {
+    left: 27rem !important;
+    /* Position at the start of the design filters area */
+    animation: pulseLeft 2s ease-in-out infinite;
+}
+
+.scroll-indicator-right {
+    left: 82.5rem !important;
+    /* Position dynamically based on design filters width */
+    animation: pulseRight 2s ease-in-out infinite;
+}
+
+.scroll-indicator:hover {
+    background-color: rgba(255, 163, 139, 0.95);
+    border-color: var(--secondary-color);
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
+    transform: scale(1.05);
+}
+
+.scroll-indicator:hover svg path {
+    stroke: white;
+}
+
+.scroll-indicator:active {
+    transform: scale(0.95);
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
+}
+
+.scroll-indicator svg {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+}
+
+/* Subtle pulse animations to draw attention */
+@keyframes pulseLeft {
+
+    0%,
+    100% {
+        transform: translateX(0);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translateX(-2px);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseRight {
+
+    0%,
+    100% {
+        transform: translateX(0);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translateX(2px);
+        opacity: 1;
+    }
+}
+
+/* Disable animations on hover for better UX */
+.scroll-indicator:hover {
+    animation: none !important;
+}
+
+/* Ensure design filter buttons are not affected by the chevrons */
+.design-filter-button {
+    position: relative;
+    z-index: 1;
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 992px) {
+    .scroll-indicator {
+        width: 24px;
+        height: 24px;
+        margin-top: 12px;
+        /* Adjust for smaller button height */
+    }
+
+    .scroll-indicator svg {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .scroll-indicator {
+        width: 22px;
+        height: 22px;
+        margin-top: 12px;
+    }
+
+    .scroll-indicator svg {
+        width: 12px;
+        height: 12px;
+    }
+}
