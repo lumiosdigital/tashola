@@ -2,93 +2,99 @@
 
 <!-- Categories section (Jewelry) -->
 <div id="smart-collections-data">
-    <!-- First, display "New In" category if it exists -->
-    {% for collection in collections %}
-    {% assign metafield_value = collection.metafields.collection.collection_type | strip %}
-    {% if metafield_value contains '"category"' and collection.title == 'New In' %}
-    <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+  {% comment %} Display the featured category first if specified {% endcomment %}
+  {% if section.settings.featured_category != blank %}
+    {% assign featured_collection = collections[section.settings.featured_category] %}
+    {% if featured_collection %}
+      {% assign metafield_value = featured_collection.metafields.collection.collection_type | strip %}
+      {% if metafield_value contains '"category"' %}
+        <a href="{{ featured_collection.url }}" class="mobile-menu-link">{{ featured_collection.title }}</a>
+      {% endif %}
     {% endif %}
-    {% endfor %}
+  {% endif %}
 
-    <!-- Then display other categories, except personalization -->
-    {% for collection in collections %}
+  {% comment %} Then display all other categories, excluding the featured one and Personalization {% endcomment %}
+  {% for collection in collections %}
     {% assign metafield_value = collection.metafields.collection.collection_type | strip %}
-    {% if metafield_value contains '"category"' and collection.title != 'New In' and collection.title !=
-    'Personalization' %}
-    <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+      {% if metafield_value contains '"category"' and collection.title != 'Personalization' %}
+      {% comment %} Skip the featured category if it was already displayed {% endcomment %}
+      {% unless section.settings.featured_category != blank and collection.handle == section.settings.featured_category %}
+        <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+      {% endunless %}
     {% endif %}
-    {% endfor %}
+  {% endfor %}
 </div>
 
 <!-- Collections section -->
 <div id="manual-collections-data">
-    {% assign collection_count = 0 %}
-    {% assign total_collections = 0 %}
+  {% assign collection_count = 0 %}
+  {% assign total_collections = 0 %}
 
-    {% for collection in collections %}
+  {% for collection in collections %}
     {% assign metafield_value = collection.metafields.collection.collection_type | strip %}
     {% if metafield_value contains '"collection"' %}
-    {% assign total_collections = total_collections | plus: 1 %}
-    {% if collection_count < 8 %} <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
+      {% assign total_collections = total_collections | plus: 1 %}
+      {% if collection_count < 8 %}
+        <a href="{{ collection.url }}" class="mobile-menu-link">{{ collection.title }}</a>
         {% assign collection_count = collection_count | plus: 1 %}
-        {% endif %}
-        {% endif %}
-        {% endfor %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
 
-        {% if total_collections > 8 %}
-        <a href="/collections" class="mobile-menu-link mobile-menu-link-all">All Collections</a>
-        {% endif %}
+  {% if total_collections > 8 %}
+    <a href="/collections" class="mobile-menu-link mobile-menu-link-all">All Collections</a>
+  {% endif %}
 </div>
 
 <!-- Personalization section -->
 <div id="personalization-data">
-    {% assign themes_list = '' %}
-    {% assign total_themes = 0 %}
-    
-    {% for product in collections.all.products limit: 50 %}
-        {% if product.metafields.custom.personalization_themes %}
-            {% assign theme_value = product.metafields.custom.personalization_themes | strip %}
-            
-            {% comment %} Remove JSON formatting {% endcomment %}
-            {% assign clean_theme = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
-            
-            {% comment %} Check for duplicates using lowercase comparison {% endcomment %}
-            {% assign already_exists = false %}
-            {% assign clean_theme_lower = clean_theme | downcase %}
-            {% if themes_list != '' %}
-                {% assign existing_themes = themes_list | split: '|' %}
-                {% for existing_theme in existing_themes %}
-                    {% assign existing_theme_lower = existing_theme | downcase %}
-                    {% if existing_theme_lower == clean_theme_lower %}
-                        {% assign already_exists = true %}
-                        {% break %}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-            
-            {% unless already_exists %}
-                {% assign total_themes = total_themes | plus: 1 %}
-                {% if themes_list == '' %}
-                    {% assign themes_list = clean_theme %}
-                {% else %}
-                    {% assign themes_list = themes_list | append: '|' | append: clean_theme %}
-                {% endif %}
-            {% endunless %}
-        {% endif %}
-    {% endfor %}
-    
-    {% if themes_list != '' %}
-        {% assign themes_array = themes_list | split: '|' | sort %}
-        {% assign theme_count = 0 %}
-        {% for theme in themes_array %}
-            {% if theme_count < 8 %}
-                {% assign theme_handle = theme | handleize %}
-                <a href="{{ routes.collections_url }}/{{ theme_handle }}" class="mobile-menu-link">{{ theme }}</a>
-                {% assign theme_count = theme_count | plus: 1 %}
-            {% endif %}
+  {% assign themes_list = '' %}
+  {% assign total_themes = 0 %}
+
+  {% for product in collections.all.products limit: 50 %}
+    {% if product.metafields.custom.personalization_themes %}
+    {% assign theme_value = product.metafields.custom.personalization_themes | strip %}
+
+      {% comment %} Remove JSON formatting {% endcomment %}
+    {% assign clean_theme = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
+
+      {% comment %} Check for duplicates using lowercase comparison {% endcomment %}
+      {% assign already_exists = false %}
+      {% assign clean_theme_lower = clean_theme | downcase %}
+      {% if themes_list != '' %}
+        {% assign existing_themes = themes_list | split: '|' %}
+        {% for existing_theme in existing_themes %}
+          {% assign existing_theme_lower = existing_theme | downcase %}
+          {% if existing_theme_lower == clean_theme_lower %}
+            {% assign already_exists = true %}
+            {% break %}
+          {% endif %}
         {% endfor %}
-        {% if total_themes > 8 %}
-            <a href="{{ routes.collections_url }}/personalization" class="mobile-menu-link mobile-menu-link-all">All Personalization</a>
+      {% endif %}
+
+      {% unless already_exists %}
+        {% assign total_themes = total_themes | plus: 1 %}
+        {% if themes_list == '' %}
+          {% assign themes_list = clean_theme %}
+        {% else %}
+          {% assign themes_list = themes_list | append: '|' | append: clean_theme %}
         {% endif %}
+      {% endunless %}
     {% endif %}
+  {% endfor %}
+
+  {% if themes_list != '' %}
+    {% assign themes_array = themes_list | split: '|' | sort %}
+    {% assign theme_count = 0 %}
+    {% for theme in themes_array %}
+      {% if theme_count < 8 %}
+        {% assign theme_handle = theme | handleize %}
+        <a href="{{ routes.collections_url }}/{{ theme_handle }}" class="mobile-menu-link">{{ theme }}</a>
+        {% assign theme_count = theme_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    {% if total_themes > 8 %}
+      <a href="{{ routes.collections_url }}/personalization" class="mobile-menu-link mobile-menu-link-all">All Personalization</a>
+    {% endif %}
+  {% endif %}
 </div>

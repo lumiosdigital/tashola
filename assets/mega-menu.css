@@ -111,6 +111,17 @@
     opacity: 0.7;
 }
 
+/* Responsive adjustments for different column counts */
+.mega-menu-container:has(.mega-menu-column:nth-child(4):not(.mega-menu-image)) {
+    /* When gifting column is hidden, adjust layout for 3 columns + image */
+    gap: 80px;
+}
+
+.mega-menu-container:has(.mega-menu-column:nth-child(5)) {
+    /* When gifting column is shown, normal layout for 4 columns + image */
+    gap: 60px;
+}
+
 /* Media queries for responsiveness */
 @media (max-width: 1440px) {
     .mega-menu-container {
@@ -127,24 +138,35 @@
         align-items: center;
         justify-content: center;
     }
+
+    /* Adjust gap for fewer columns on smaller screens */
+    .mega-menu-container:has(.mega-menu-column:nth-child(4):not(.mega-menu-image)) {
+        gap: 60px;
+    }
 }
 
 @media (max-width: 1200px) {
     .mega-menu-container {
-            display: flex;
-            max-width: 100%;
-            margin: 0 2rem;
-            justify-content: space-evenly;
-            gap: 60px;
-        }
-    
-    
+        display: flex;
+        max-width: 100%;
+        margin: 0 2rem;
+        justify-content: space-evenly;
+        gap: 60px;
+    }
+
+
     .mega-menu-title {
         font-size: 1.25rem;
     }
 
     .mega-menu-image {
         display: none;
+    }
+
+    /* Reset gap adjustments when image is hidden */
+    .mega-menu-container:has(.mega-menu-column:nth-child(4):not(.mega-menu-image)),
+    .mega-menu-container:has(.mega-menu-column:nth-child(5)) {
+        gap: 60px;
     }
 }
 

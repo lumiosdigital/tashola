@@ -1,211 +1,267 @@
-<div class="nav-container {% if template == 'index' %}home-header{% else %}secondary-header{% endif %} {% if section.settings.sticky_header %}sticky-header{% endif %}"
-    data-mobile-nav-container data-sticky-header="{{ section.settings.sticky_header }}">
-    <div class="nav-flex-wrapper">
+<div
+  class="nav-container {% if template == 'index' %}home-header{% else %}secondary-header{% endif %} {% if section.settings.sticky_header %}sticky-header{% endif %}"
+  data-mobile-nav-container
+  data-sticky-header="{{ section.settings.sticky_header }}">
+  <div class="nav-flex-wrapper">
 
-        <!-- NAVIGATION MENU -->
-        <nav>
-            {% for link in linklists.main-menu.links %}
-            <div class="nav-link-container">
-                <a href="{{ link.url }}" class="navbar-links">{{ link.title }}</a>
-                {% if link.title == 'Catalog' %}
-                {% render 'mega-menu' %}
-                {% endif %}
-            </div>
-            {% endfor %}
-        </nav>
-
-        <!-- LOGO/STORE NAME -->
-        <div class="logo-wrapper">
-            <a href="{{ routes.root_url }}">{% render 'main-logo' %}</a>
+    <!-- NAVIGATION MENU -->
+    <nav>
+      {% for link in linklists.main-menu.links %}
+        <div class="nav-link-container">
+          <a href="{{ link.url }}" class="navbar-links">{{ link.title }}</a>
+          {% if link.title == 'Catalog' %}
+            {% render 'mega-menu' %}
+          {% endif %}
         </div>
+      {% endfor %}
+    </nav>
 
-        <!-- SEARCH, ACCOUNT AND CART -->
-        <div class="nav-icons">
-            <button type="button" class="search-button" aria-label="Search">{% render 'icon-search' %}</button>
-            <div class="account-dropdown-wrapper">
-                <button type="button" class="account-button" aria-label="Account" aria-expanded="false"
-                    aria-controls="account-dropdown">{% render 'icon-account' %}</button>
-                <div class="account-dropdown" id="account-dropdown" aria-hidden="true">
-                    {% if customer %}
-                    <!-- Customer is logged in -->
-                    <a href="{{ routes.account_url }}">My Profile</a>
-                    <a href="#swym-wishlist" class="swym-wishlist">My Favourites</a>
-                    <a href="{{ routes.account_logout_url }}">Logout</a>
-                    {% else %}
-                    <!-- Customer is not logged in -->
-                    <a href="{{ routes.account_login_url }}">Login</a>
-                    <a href="{{ routes.account_register_url }}">Register</a>
-                    {% endif %}
-                </div>
-            </div>
-            <button type="button" class="cart-drawer-trigger" aria-label="Cart with {{ cart.item_count }} items"
-                aria-controls="cart-drawer">
-                {% render 'icon-shopping-bag' %}
-                <span class="cart-count" data-count="{{ cart.item_count }}" aria-hidden="true">{{ cart.item_count
-                    }}</span>
-            </button>
-        </div>
+    <!-- LOGO/STORE NAME -->
+    <div class="logo-wrapper">
+      <a href="{{ routes.root_url }}">{% render 'main-logo' %}</a>
     </div>
+
+    <!-- SEARCH, ACCOUNT AND CART -->
+    <div class="nav-icons">
+      <button
+        type="button"
+        class="search-button"
+        aria-label="Search">{% render 'icon-search' %}</button>
+      <div class="account-dropdown-wrapper">
+        <button
+          type="button"
+          class="account-button"
+          aria-label="Account"
+          aria-expanded="false"
+          aria-controls="account-dropdown">{% render 'icon-account' %}</button>
+        <div
+          class="account-dropdown"
+          id="account-dropdown"
+          aria-hidden="true">
+          {% if customer %}
+            <!-- Customer is logged in -->
+            <a href="{{ routes.account_url }}">My Profile</a>
+            <a href="#swym-wishlist" class="swym-wishlist">My Favourites</a>
+            <a href="{{ routes.account_logout_url }}">Logout</a>
+          {% else %}
+            <!-- Customer is not logged in -->
+            <a href="{{ routes.account_login_url }}">Login</a>
+            <a href="{{ routes.account_register_url }}">Register</a>
+          {% endif %}
+        </div>
+      </div>
+      <button
+        type="button"
+        class="cart-drawer-trigger"
+        aria-label="Cart with {{ cart.item_count }} items"
+        aria-controls="cart-drawer">
+        {% render 'icon-shopping-bag' %}
+        <span
+          class="cart-count"
+          data-count="{{ cart.item_count }}"
+          aria-hidden="true">{{ cart.item_count
+}}</span>
+      </button>
+    </div>
+  </div>
 </div>
 
-{% render 'cart-drawer',
-enable_banner: section.settings.enable_cart_drawer_banner,
-banner_text_1: section.settings.cart_drawer_banner_text_1,
-banner_text_2: section.settings.cart_drawer_banner_text_2,
-banner_background_color: section.settings.cart_drawer_banner_background_color,
-banner_text_color: section.settings.cart_drawer_banner_text_color,
-banner_opacity: section.settings.cart_drawer_banner_opacity,
-banner_auto_slide: false,
-banner_slide_speed: 4
+{% render 'cart-drawer'
+  ,enable_banner: section.settings.enable_cart_drawer_banner
+  , banner_text_1: section.settings.cart_drawer_banner_text_1
+  , banner_text_2: section.settings.cart_drawer_banner_text_2
+  , banner_background_color: section.settings.cart_drawer_banner_background_color
+  , banner_text_color: section.settings.cart_drawer_banner_text_color
+  , banner_opacity: section.settings.cart_drawer_banner_opacity
+  , banner_auto_slide: false
+  , banner_slide_speed: 4
 %}
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const header = document.querySelector('.nav-container');
-        let lastScrollTop = 0;
-        const scrollThreshold = 10; // Minimum amount of pixels to scroll before showing/hiding
+  document.addEventListener('DOMContentLoaded', function () {
+    const header = document.querySelector('.nav-container');
+    let lastScrollTop = 0;
+    const scrollThreshold = 10; // Minimum amount of pixels to scroll before showing/hiding
 
-        // Check if sticky header is enabled
-        const isStickyHeader = header.getAttribute('data-sticky-header') === 'true';
+    // Check if sticky header is enabled
+    const isStickyHeader = header.getAttribute('data-sticky-header') === 'true';
 
-        // Add transition CSS class to header for smooth animations
-        header.classList.add('nav-scrollable');
+    // Add transition CSS class to header for smooth animations
+    header.classList.add('nav-scrollable');
 
-        // Only apply scroll behavior if not using sticky header
-        if (!isStickyHeader) {
-            window.addEventListener('scroll', function () {
-                const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+    // Only apply scroll behavior if not using sticky header
+    if (!isStickyHeader) {
+        window.addEventListener('scroll', function () {
+            const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 
-                // Determine scroll direction and distance
-                if (Math.abs(lastScrollTop - currentScrollTop) <= scrollThreshold) {
-                    return; // Skip if the scroll distance is too small
-                }
+            // Determine scroll direction and distance
+            if (Math.abs(lastScrollTop - currentScrollTop) <= scrollThreshold) {
+                return; // Skip if the scroll distance is too small
+            }
 
-                // Scrolling down & not at the top
-                if (currentScrollTop > lastScrollTop && currentScrollTop > header.offsetHeight) {
-                    header.classList.add('nav-hidden');
-                }
-                // Scrolling up or at the top
-                else {
-                    header.classList.remove('nav-hidden');
-                }
+            // Scrolling down & not at the top
+            if (currentScrollTop > lastScrollTop && currentScrollTop > header.offsetHeight) {
+                header.classList.add('nav-hidden');
+            }
+            // Scrolling up or at the top
+            else {
+                header.classList.remove('nav-hidden');
+            }
 
-                lastScrollTop = currentScrollTop;
-            });
-        }
+            lastScrollTop = currentScrollTop;
+        });
+    }
 
-        // Add cart drawer trigger functionality
-        const cartTrigger = document.querySelector('.cart-drawer-trigger');
-        const cartDrawer = document.getElementById('cart-drawer');
+    // Add cart drawer trigger functionality
+    const cartTrigger = document.querySelector('.cart-drawer-trigger');
+    const cartDrawer = document.getElementById('cart-drawer');
 
-        if (cartTrigger && cartDrawer) {
-            cartTrigger.addEventListener('click', function () {
-                cartDrawer.setAttribute('aria-hidden', 'false');
-                document.body.classList.add('drawer-open');
-            });
-        }
-    });
+    if (cartTrigger && cartDrawer) {
+        cartTrigger.addEventListener('click', function () {
+            cartDrawer.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('drawer-open');
+        });
+    }
+  });
 
-    // Make cart drawer banner settings available globally for JavaScript
-    window.cartDrawerBannerSettings = {
-        enabled: {{ section.settings.enable_cart_drawer_banner | json }},
-    text1: { { section.settings.cart_drawer_banner_text_1 | json } },
-    text2: { { section.settings.cart_drawer_banner_text_2 | json } },
-    backgroundColor: { { section.settings.cart_drawer_banner_background_color | json } },
-    textColor: { { section.settings.cart_drawer_banner_text_color | json } },
-    opacity: { { section.settings.cart_drawer_banner_opacity | json } },
+  // Make cart drawer banner settings available globally for JavaScript
+  window.cartDrawerBannerSettings = {
+    enabled: {{ section.settings.enable_cart_drawer_banner | json }},
+    text1: {{ section.settings.cart_drawer_banner_text_1 | json }},
+    text2: {{ section.settings.cart_drawer_banner_text_2 | json }},
+    backgroundColor: {{ section.settings.cart_drawer_banner_background_color | json }},
+    textColor: {{ section.settings.cart_drawer_banner_text_color | json }},
+    opacity: {{ section.settings.cart_drawer_banner_opacity | json }},
     autoSlide: false,
-        slideSpeed: 4
-};
+    slideSpeed: 4
+  };
 </script>
 
 {% schema %}
-{
-"name": "Header",
-"settings": [
-{
-"type": "header",
-"content": "Navigation Behavior"
-},
-{
-"type": "checkbox",
-"id": "sticky_header",
-"label": "Always visible header",
-"default": false,
-"info": "When enabled, the header will always be visible. When disabled, it will hide when scrolling down."
-},
-{
-"type": "image_picker",
-"id": "mega_menu_image",
-"label": "Mega Menu Image",
-"info": "Featured image displayed in the mega menu dropdown"
-},
-{
-"type": "url",
-"id": "mega_menu_image_link",
-"label": "Mega Menu Image Link",
-"info": "Select a link for the featured mega menu image"
-},
-{
-"type": "header",
-"content": "Cart Drawer Banner Settings"
-},
-{
-"type": "paragraph",
-"content": "Configure the banner that appears at the top of the sliding cart drawer."
-},
-{
-"type": "checkbox",
-"id": "enable_cart_drawer_banner",
-"label": "Enable Cart Drawer Banner",
-"default": false
-},
-{
-"type": "text",
-"id": "cart_drawer_banner_text_1",
-"label": "Banner Text 1",
-"default": "Free Delivery for purchases over $200 in USA and abroad"
-},
-{
-"type": "text",
-"id": "cart_drawer_banner_text_2",
-"label": "Banner Text 2 (optional)",
-"default": "Free Returns within 30 days"
-},
-{
-"type": "color",
-"id": "cart_drawer_banner_background_color",
-"label": "Banner Background Color",
-"default": "#FFA38B"
-},
-{
-"type": "select",
-"id": "cart_drawer_banner_opacity",
-"label": "Banner Background Opacity",
-"options": [
-{ "value": "5", "label": "5%" },
-{ "value": "10", "label": "10%" },
-{ "value": "13", "label": "13%" },
-{ "value": "15", "label": "15%" },
-{ "value": "20", "label": "20%" },
-{ "value": "25", "label": "25%" },
-{ "value": "30", "label": "30%" },
-{ "value": "40", "label": "40%" },
-{ "value": "50", "label": "50%" },
-{ "value": "60", "label": "60%" },
-{ "value": "70", "label": "70%" },
-{ "value": "80", "label": "80%" },
-{ "value": "90", "label": "90%" },
-{ "value": "100", "label": "100%" }
-],
-"default": "13"
-},
-{
-"type": "color",
-"id": "cart_drawer_banner_text_color",
-"label": "Banner Text Color",
-"default": "#373736"
-}
-]
-}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Navigation Behavior"
+      },
+      {
+        "type": "checkbox",
+        "id": "sticky_header",
+        "label": "Always visible header",
+        "default": false,
+        "info": "When enabled, the header will always be visible. When disabled, it will hide when scrolling down."
+      },
+      {
+        "type": "header",
+        "content": "Mega Menu Settings"
+      },
+      {
+        "type": "collection",
+        "id": "featured_category",
+        "label": "Featured Category (Top of Jewelry List)",
+        "info": "Select the category collection you want to appear first in the Jewelry section. Only collections with 'category' type will be effective."
+      }, {
+        "type": "checkbox",
+        "id": "show_gifting_column",
+        "label": "Show Gifting Column",
+        "default": true,
+        "info": "Toggle to show or hide the Gifting column in the mega menu"
+      }, {
+        "type": "image_picker",
+        "id": "mega_menu_image",
+        "label": "Mega Menu Image",
+        "info": "Featured image displayed in the mega menu dropdown"
+      }, {
+        "type": "url",
+        "id": "mega_menu_image_link",
+        "label": "Mega Menu Image Link",
+        "info": "Select a link for the featured mega menu image"
+      }, {
+        "type": "header",
+        "content": "Cart Drawer Banner Settings"
+      }, {
+        "type": "paragraph",
+        "content": "Configure the banner that appears at the top of the sliding cart drawer."
+      }, {
+        "type": "checkbox",
+        "id": "enable_cart_drawer_banner",
+        "label": "Enable Cart Drawer Banner",
+        "default": false
+      }, {
+        "type": "text",
+        "id": "cart_drawer_banner_text_1",
+        "label": "Banner Text 1",
+        "default": "Free Delivery for purchases over $200 in USA and abroad"
+      }, {
+        "type": "text",
+        "id": "cart_drawer_banner_text_2",
+        "label": "Banner Text 2 (optional)",
+        "default": "Free Returns within 30 days"
+      }, {
+        "type": "color",
+        "id": "cart_drawer_banner_background_color",
+        "label": "Banner Background Color",
+        "default": "#FFA38B"
+      }, {
+        "type": "select",
+        "id": "cart_drawer_banner_opacity",
+        "label": "Banner Background Opacity",
+        "options": [
+          {
+            "value": "5",
+            "label": "5%"
+          },
+          {
+            "value": "10",
+            "label": "10%"
+          },
+          {
+            "value": "13",
+            "label": "13%"
+          },
+          {
+            "value": "15",
+            "label": "15%"
+          }, {
+            "value": "20",
+            "label": "20%"
+          }, {
+            "value": "25",
+            "label": "25%"
+          }, {
+            "value": "30",
+            "label": "30%"
+          }, {
+            "value": "40",
+            "label": "40%"
+          }, {
+            "value": "50",
+            "label": "50%"
+          }, {
+            "value": "60",
+            "label": "60%"
+          }, {
+            "value": "70",
+            "label": "70%"
+          }, {
+            "value": "80",
+            "label": "80%"
+          }, {
+            "value": "90",
+            "label": "90%"
+          }, {
+            "value": "100",
+            "label": "100%"
+          }
+        ],
+        "default": "13"
+      }, {
+        "type": "color",
+        "id": "cart_drawer_banner_text_color",
+        "label": "Banner Text Color",
+        "default": "#373736"
+      }
+    ]
+  }
 {% endschema %}
