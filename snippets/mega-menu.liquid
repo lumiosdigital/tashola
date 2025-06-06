@@ -52,8 +52,8 @@ collection.title }}</a>
           {% endif %}
         {% endfor %}
       {% comment %} {% if total_collections > 8 %}
-                            <li><a href="/collections" class="mega-menu-link mega-menu-link-all">See All Collections</a></li>
-                          {% endif %} {% endcomment %}
+                                    <li><a href="/collections" class="mega-menu-link mega-menu-link-all">See All Collections</a></li>
+                                {% endif %} {% endcomment %}
       </ul>
     </div>
 
@@ -68,31 +68,40 @@ collection.title }}</a>
           {% if product.metafields.custom.personalization_themes %}
           {% assign theme_value = product.metafields.custom.personalization_themes | strip %}
 
-            {% comment %} Remove JSON formatting {% endcomment %}
-          {% assign clean_theme = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
+            {% comment %} Remove JSON formatting and split by comma {% endcomment %}
+            {% assign clean_theme_string = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
+            {% assign individual_themes = clean_theme_string | split: ',' %}
 
-            {% comment %} Check for duplicates using lowercase comparison {% endcomment %}
-            {% assign already_exists = false %}
-            {% assign clean_theme_lower = clean_theme | downcase %}
-            {% if themes_list != '' %}
-              {% assign existing_themes = themes_list | split: '|' %}
-              {% for existing_theme in existing_themes %}
-                {% assign existing_theme_lower = existing_theme | downcase %}
-                {% if existing_theme_lower == clean_theme_lower %}
-                  {% assign already_exists = true %}
-                  {% break %}
+            {% comment %} Process each individual theme {% endcomment %}
+            {% for individual_theme in individual_themes %}
+              {% assign clean_theme = individual_theme | strip %}
+
+              {% comment %} Skip empty themes {% endcomment %}
+              {% unless clean_theme == blank %}
+                {% comment %} Check for duplicates using lowercase comparison {% endcomment %}
+                {% assign already_exists = false %}
+                {% assign clean_theme_lower = clean_theme | downcase %}
+                {% if themes_list != '' %}
+                  {% assign existing_themes = themes_list | split: '|' %}
+                  {% for existing_theme in existing_themes %}
+                    {% assign existing_theme_lower = existing_theme | downcase %}
+                    {% if existing_theme_lower == clean_theme_lower %}
+                      {% assign already_exists = true %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
                 {% endif %}
-              {% endfor %}
-            {% endif %}
 
-            {% unless already_exists %}
-              {% assign total_themes = total_themes | plus: 1 %}
-              {% if themes_list == '' %}
-                {% assign themes_list = clean_theme %}
-              {% else %}
-                {% assign themes_list = themes_list | append: '|' | append: clean_theme %}
-              {% endif %}
-            {% endunless %}
+                {% unless already_exists %}
+                  {% assign total_themes = total_themes | plus: 1 %}
+                  {% if themes_list == '' %}
+                    {% assign themes_list = clean_theme %}
+                  {% else %}
+                    {% assign themes_list = themes_list | append: '|' | append: clean_theme %}
+                  {% endif %}
+                {% endunless %}
+              {% endunless %}
+            {% endfor %}
           {% endif %}
         {% endfor %}
 
@@ -110,8 +119,8 @@ collection.title }}</a>
           {% endfor %}
           {% if total_themes > 8 %}
             <li>
-              <a href="{{ routes.collections_url }}/personalization" class="mega-menu-link mega-menu-link-all">See All 
-                    Personalization</a>
+              <a href="{{ routes.collections_url }}/personalization" class="mega-menu-link mega-menu-link-all">See All  
+                Personalization</a>
             </li>
           {% endif %}
         {% endif %}
@@ -127,7 +136,7 @@ collection.title }}</a>
             <a href="{{ routes.collections_url }}/gifts-for-her" class="mega-menu-link">Gifts For Her</a>
           </li>
           <li>
-            <a href="{{ routes.collections_url }}/jewelry-gift-sets" class="mega-menu-link">Jewelry Gift 
+            <a href="{{ routes.collections_url }}/jewelry-gift-sets" class="mega-menu-link">Jewelry Gift  
                         Sets</a>
           </li>
           <li>
@@ -140,7 +149,7 @@ collection.title }}</a>
             <a href="{{ routes.collections_url }}/premium-gifting" class="mega-menu-link">Premium Gifting</a>
           </li>
           <li>
-            <a href="{{ routes.collections_url }}/gifting-under-20-pounds" class="mega-menu-link">Gifts under 
+            <a href="{{ routes.collections_url }}/gifting-under-20-pounds" class="mega-menu-link">Gifts under  
                         20 Pounds</a>
           </li>
         </ul>

@@ -55,31 +55,40 @@
     {% if product.metafields.custom.personalization_themes %}
     {% assign theme_value = product.metafields.custom.personalization_themes | strip %}
 
-      {% comment %} Remove JSON formatting {% endcomment %}
-    {% assign clean_theme = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
+      {% comment %} Remove JSON formatting and split by comma {% endcomment %}
+      {% assign clean_theme_string = theme_value | remove: '[' | remove: ']' | remove: '"' | strip %}
+      {% assign individual_themes = clean_theme_string | split: ',' %}
 
-      {% comment %} Check for duplicates using lowercase comparison {% endcomment %}
-      {% assign already_exists = false %}
-      {% assign clean_theme_lower = clean_theme | downcase %}
-      {% if themes_list != '' %}
-        {% assign existing_themes = themes_list | split: '|' %}
-        {% for existing_theme in existing_themes %}
-          {% assign existing_theme_lower = existing_theme | downcase %}
-          {% if existing_theme_lower == clean_theme_lower %}
-            {% assign already_exists = true %}
-            {% break %}
+      {% comment %} Process each individual theme {% endcomment %}
+      {% for individual_theme in individual_themes %}
+        {% assign clean_theme = individual_theme | strip %}
+
+        {% comment %} Skip empty themes {% endcomment %}
+        {% unless clean_theme == blank %}
+          {% comment %} Check for duplicates using lowercase comparison {% endcomment %}
+          {% assign already_exists = false %}
+          {% assign clean_theme_lower = clean_theme | downcase %}
+          {% if themes_list != '' %}
+            {% assign existing_themes = themes_list | split: '|' %}
+            {% for existing_theme in existing_themes %}
+              {% assign existing_theme_lower = existing_theme | downcase %}
+              {% if existing_theme_lower == clean_theme_lower %}
+                {% assign already_exists = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
           {% endif %}
-        {% endfor %}
-      {% endif %}
 
-      {% unless already_exists %}
-        {% assign total_themes = total_themes | plus: 1 %}
-        {% if themes_list == '' %}
-          {% assign themes_list = clean_theme %}
-        {% else %}
-          {% assign themes_list = themes_list | append: '|' | append: clean_theme %}
-        {% endif %}
-      {% endunless %}
+          {% unless already_exists %}
+            {% assign total_themes = total_themes | plus: 1 %}
+            {% if themes_list == '' %}
+              {% assign themes_list = clean_theme %}
+            {% else %}
+              {% assign themes_list = themes_list | append: '|' | append: clean_theme %}
+            {% endif %}
+          {% endunless %}
+        {% endunless %}
+      {% endfor %}
     {% endif %}
   {% endfor %}
 
