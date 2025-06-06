@@ -16,7 +16,7 @@
           "type": "hero_banner",
           "settings": {
             "background_type": "image",
-            "text_color": "black",
+            "text_color": "white",
             "image": "shopify://shop_images/Shot_15_0109.png",
             "mobile_image": "shopify://shop_images/Shot_12_0026.png",
             "overlay_opacity": 0.4,
@@ -125,9 +125,9 @@
             "image": "shopify://shop_images/Shot_10_0004.png",
             "mobile_image": "shopify://shop_images/Shot_01_037.png",
             "overlay_opacity": 0.3,
-            "heading": "Discover our jewellery",
+            "heading": "",
             "subheading": "",
-            "button_text": "SHOP NOW",
+            "button_text": "",
             "button_link": ""
           }
         }
