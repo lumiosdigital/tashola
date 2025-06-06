@@ -12,8 +12,7 @@
     "main": {
       "type": "main-catalogue",
       "settings": {
-        "products_per_page": 20,
-        "banner_1_image": "shopify://shop_images/WhatsApp_Image_2025-05-13_at_13.18.19_5.jpg",
+        "banner_1_image": "shopify://shop_images/Shot_05_0114_f518b0f0-2eef-4dd3-9d4e-5bc790bc68b2.png",
         "banner_1_title": "Deia Collection",
         "banner_1_text": "Classic earrings to embody timeless elegance",
         "banner_1_link": "",
