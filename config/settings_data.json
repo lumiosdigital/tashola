@@ -14,8 +14,16 @@
         "type": "header",
         "settings": {
           "sticky_header": true,
-          "mega_menu_image": "shopify://shop_images/Screenshot_2025-05-13_at_13.39.50.png",
-          "mega_menu_image_link": ""
+          "featured_category": "",
+          "show_gifting_column": true,
+          "mega_menu_image": "shopify://shop_images/Screenshot_2025-06-06_at_16.11.58.png",
+          "mega_menu_image_link": "",
+          "enable_cart_drawer_banner": false,
+          "cart_drawer_banner_text_1": "Free Delivery for purchases over $200 in USA and abroad",
+          "cart_drawer_banner_text_2": "Free Returns within 30 days",
+          "cart_drawer_banner_background_color": "#ffa38b",
+          "cart_drawer_banner_opacity": "13",
+          "cart_drawer_banner_text_color": "#373736"
         }
       },
       "footer": {
@@ -36,7 +44,8 @@
           "copyright_text": "© 2025 Tashola. All rights reserved.",
           "facebook_link": "",
           "instagram_link": "https://instagram.com",
-          "pinterest_link": ""
+          "pinterest_link": "",
+          "tiktok_link": ""
         }
       },
       "showroom-content": {
@@ -61,7 +70,7 @@
               "section_label": "OUR STORY",
               "heading": "Timeless Craftsmanship, Modern Elegance",
               "content": "<p>At Tashola, we believe that jewelry is more than just an accessory—it's a reflection of your story. With a focus on refined design and exceptional quality, we create timeless pieces that blend classic elegance with contemporary style.</p>",
-              "image": "shopify://shop_images/lady_about_us.png",
+              "image": "shopify://shop_images/Shot_11_0041_1.png",
               "layout": "image_right"
             }
           },
@@ -71,7 +80,7 @@
               "section_label": "OUR CRAFT",
               "heading": "Precision, Passion, Perfection",
               "content": "<p>Each piece is thoughtfully designed and expertly crafted using high-quality materials like sterling silver, 18K gold plating, and natural gemstones. Our commitment to detail ensures that every creation is made to be cherished for years to come.</p>",
-              "image": "shopify://shop_images/Elegant_Hand_and_Ring_Close-up_1.png",
+              "image": "shopify://shop_images/Shot_05_0159.png",
               "layout": "image_left"
             }
           },
@@ -81,7 +90,7 @@
               "section_label": "OUR PHILOSOPHY",
               "heading": "Jewelry That Speaks to You",
               "content": "<p>We design with intention, creating pieces that inspire confidence and self-expression. Whether for everyday wear or life's special moments, Tashola jewelry is meant to be a part of your journey, elevating every look with effortless sophistication.</p>",
-              "image": "shopify://shop_images/jewelry.png",
+              "image": "shopify://shop_images/Shot_02_0059.png",
               "layout": "image_right"
             }
           },
@@ -103,7 +112,7 @@
           "main_heading": "About Us",
           "main_description": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>",
           "additional_content": "",
-          "bottom_image": "shopify://shop_images/bottom-image.png"
+          "bottom_image": "shopify://shop_images/Shot_18_0009.png"
         }
       },
       "returns-faq": {
