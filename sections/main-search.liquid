@@ -1,175 +1,288 @@
 <!-- sections/main-search.liquid -->
 <div class="search-results-container">
-    <div class="breadcrumbs-container">
-        {% render 'breadcrumbs' %}
+  <div class="breadcrumbs-container">
+    {% render 'breadcrumbs' %}
+  </div>
+
+  <div class="search-page-content">
+    <div class="search-page-header">
+      <h1 class="search-title">
+        {% if search.performed %}
+          {% if search.results_count == 0 %}
+            No results found for "{{ search.terms }}"
+          {% else %}
+            Search results for "{{ search.terms }}" ({{ search.results_count }}
+            {% if search.results_count == 1 %}result{% else %}results{% endif %})
+          {% endif %}
+        {% else %}
+          Search our store
+        {% endif %}
+      </h1>
+      <div class="search-form-wrapper">
+        <form
+          action="{{ routes.search_url }}"
+          method="get"
+          role="search"
+          class="search-page-form">
+          <div class="search-input-wrapper">
+            <input
+              type="search"
+              name="q"
+              id="search-page-input"
+              class="search-input"
+              placeholder="Search for products..."
+              aria-label="Search"
+              value="{{ search.terms | escape }}"
+              autocomplete="off">
+            <button
+              type="submit"
+              class="search-submit"
+              aria-label="Submit search">
+              <svg
+                width="26"
+                height="25"
+                viewBox="0 0 26 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M24.6229 24.125L16.3828 15.8849"
+                  stroke="#373736"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M10.158 18.441C15.0087 18.441 18.941 14.5087 18.941 9.65801C18.941 4.80729 15.0087 0.875 10.158 0.875C5.30729 0.875 1.375 4.80729 1.375 9.65801C1.375 14.5087 5.30729 18.441 10.158 18.441Z"
+                  stroke="#373736"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Sort dropdown - only show if there are search results -->
+      {% if search.performed and search.results_count > 0 %}
+        <div class="search-controls">
+          <div class="sort-dropdown-wrapper">
+            <button
+              class="sort-button"
+              aria-label="Sort products"
+              data-sort-trigger
+              aria-expanded="false"
+              aria-controls="search-sort-dropdown">
+              <span>
+                {% if search.sort_by %}
+                  {% case search.sort_by %}
+                    {% when 'price-ascending' %}
+                      Sort: Price, low to high
+                    {% when 'price-descending' %}
+                      Sort: Price, high to low
+                    {% when 'best-selling' %}
+                      Sort: Best selling
+                    {% when 'created-descending' %}
+                      Sort: Newest
+                    {% else %}
+                      Sort By
+                  {% endcase %}
+                {% else %}
+                  Sort By
+                {% endif %}
+              </span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6 9L12 15L18 9"
+                  stroke="#373736"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div
+              class="sort-dropdown"
+              id="search-sort-dropdown"
+              aria-hidden="true">
+              <button class="sort-option {% if search.sort_by == 'price-ascending' %}active{% endif %}" data-sort-value="price-ascending">Price, low to high</button>
+              <button class="sort-option {% if search.sort_by == 'price-descending' %}active{% endif %}" data-sort-value="price-descending">Price, high to low</button>
+              <button class="sort-option {% if search.sort_by == 'best-selling' %}active{% endif %}" data-sort-value="best-selling">Best selling</button>
+              <button class="sort-option {% if search.sort_by == 'created-descending' %}active{% endif %}" data-sort-value="created-descending">Newest</button>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
 
-    <div class="search-page-content">
-        <div class="search-page-header">
-            <h1 class="search-title">
-                {% if search.performed %}
-                {% if search.results_count == 0 %}
-                No results found for "{{ search.terms }}"
-                {% else %}
-                Search results for "{{ search.terms }}"
-                {% endif %}
-                {% else %}
-                Search our store
-                {% endif %}
-            </h1>
+    <div class="search-results">
+      {% if search.performed %}
+        {% if search.results_count == 0 %}
+          <div class="search-no-results">
+            <p>No results found for "{{ search.terms }}". Please try a different search term or browse our      
+                    featured selections below.</p>
 
-            <div class="search-form-wrapper">
-                <form action="{{ routes.search_url }}" method="get" role="search" class="search-page-form">
-                    <div class="search-input-wrapper">
-                        <input type="search" name="q" id="search-page-input" class="search-input"
-                            placeholder="Search for products..." aria-label="Search" value="{{ search.terms | escape }}"
-                            autocomplete="off">
-                        <button type="submit" class="search-submit" aria-label="Submit search">
-                            <svg width="26" height="25" viewBox="0 0 26 25" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24.6229 24.125L16.3828 15.8849" stroke="#373736" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M10.158 18.441C15.0087 18.441 18.941 14.5087 18.941 9.65801C18.941 4.80729 15.0087 0.875 10.158 0.875C5.30729 0.875 1.375 4.80729 1.375 9.65801C1.375 14.5087 5.30729 18.441 10.158 18.441Z"
-                                    stroke="#373736" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    {% if section.settings.enable_filter_by_type %}
-                    <div class="search-filter-wrapper">
-                        <label for="search-filter" class="search-filter-label">Filter by:</label>
-                        <select name="type" id="search-filter" class="search-filter">
-                            <option value="product" {% if search.types contains 'product' %}selected{% endif %}>Products
-                            </option>
-                            <option value="article" {% if search.types contains 'article' %}selected{% endif %}>Articles
-                            </option>
-                            <option value="page" {% if search.types contains 'page' %}selected{% endif %}>Pages</option>
-                        </select>
-                    </div>
+            <div class="search-no-results-banners">
+              <div class="search-banners-grid">
+                <!-- Search Banner 1 -->
+                <a href="{{ section.settings.search_banner_1_link | default: routes.collections_url }}" class="search-banner-card">
+                  <div class="search-banner-image-container">
+                    {% if section.settings.search_banner_1_image %}
+                      <img
+                        src="{{ section.settings.search_banner_1_image | img_url: 'master' }}"
+                        alt="{{ section.settings.search_banner_1_title }}"
+                        class="search-banner-image">
+                    {% else %}
+                      <div class="search-banner-image-placeholder">{{ section.settings.search_banner_1_title | slice: 0, 1 }}</div>
                     {% endif %}
-                </form>
-            </div>
-        </div>
-
-        <div class="search-results">
-            {% if search.performed %}
-            {% if search.results_count == 0 %}
-            <div class="search-no-results">
-                <p>No results found for "{{ search.terms }}". Please try a different search term or browse our
-                    collections below.</p>
-
-                <div class="search-no-results-collections">
-                    <h2>Browse our collections</h2>
-                    <div class="search-collections-grid">
-                        {% for collection in collections limit: 4 %}
-                        {% if collection.all_products_count > 0 %}
-                        <a href="{{ collection.url }}" class="search-collection-card">
-                            <div class="search-collection-image-container">
-                                {% if collection.image %}
-                                <img src="{{ collection.image | img_url: 'master' }}"
-                                    alt="{{ collection.title | escape }}" class="search-collection-image">
-                                {% else %}
-                                <div class="search-collection-image-placeholder">{{ collection.title | slice: 0, 1 }}
-                                </div>
-                                {% endif %}
-                            </div>
-                            <h3 class="search-collection-title">{{ collection.title }}</h3>
-                        </a>
+                    <div class="search-banner-content" data-text-color="{{ section.settings.search_banner_1_text_color | default: 'white' }}">
+                      <h3 class="search-banner-title">
+                        {% if section.settings.search_banner_1_title contains 'Collection' %}
+                          {% assign title_parts = section.settings.search_banner_1_title | split: ' Collection' %}
+                          {{ title_parts[0] }}
+                          <em>Collection</em>
+                        {% else %}
+                          {{ section.settings.search_banner_1_title }}
                         {% endif %}
-                        {% endfor %}
+                      </h3>
+                      <p class="search-banner-text">{{ section.settings.search_banner_1_text }}</p>
                     </div>
-                </div>
+                  </div>
+                </a>
+
+                <!-- Search Banner 2 -->
+                <a href="{{ section.settings.search_banner_2_link | default: routes.collections_url }}" class="search-banner-card">
+                  <div class="search-banner-image-container">
+                    {% if section.settings.search_banner_2_image %}
+                      <img
+                        src="{{ section.settings.search_banner_2_image | img_url: 'master' }}"
+                        alt="{{ section.settings.search_banner_2_title }}"
+                        class="search-banner-image">
+                    {% else %}
+                      <div class="search-banner-image-placeholder">{{ section.settings.search_banner_2_title | slice: 0, 1 }}</div>
+                    {% endif %}
+                    <div class="search-banner-content" data-text-color="{{ section.settings.search_banner_2_text_color | default: 'white' }}">
+                      <h3 class="search-banner-title">
+                        {% if section.settings.search_banner_2_title contains 'Collection' %}
+                          {% assign title_parts = section.settings.search_banner_2_title | split: ' Collection' %}
+                          {{ title_parts[0] }}
+                          <em>Collection</em>
+                        {% else %}
+                          {{ section.settings.search_banner_2_title }}
+                        {% endif %}
+                      </h3>
+                      <p class="search-banner-text">{{ section.settings.search_banner_2_text }}</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
             </div>
-            {% else %}
+          </div>
+        {% else %}
+          {% paginate search.results by 20 %}
             <div class="search-results-grid" id="search-results-grid">
-                {% for item in search.results %}
+              {% for item in search.results %}
                 {% case item.object_type %}
-                {% when 'product' %}
-                <div class="search-product-card">
-                    <a href="{{ item.url }}">
+                  {% when 'product' %}
+                    <div class="search-product-card">
+                      <a href="{{ item.url }}">
                         <div class="search-product-image-container">
-                            {% if item.featured_image %}
-                            <img src="{{ item.featured_image | img_url: 'master' }}"
-                                alt="{{ item.title | escape }}" class="search-product-image">
-                            {% else %}
+                          {% if item.featured_image %}
+                            <img
+                              src="{{ item.featured_image | img_url: 'master' }}"
+                              alt="{{ item.title | escape }}"
+                              class="search-product-image">
+                          {% else %}
                             <div class="search-product-image-placeholder">{{ item.title | slice: 0, 1 }}</div>
-                            {% endif %}
+                          {% endif %}
                         </div>
                         <div class="search-product-info">
-                            <h3 class="search-product-title">{{ item.title }}</h3>
-                            <div class="search-product-price">
-                                {% if item.compare_at_price > item.price %}
-                                <span class="search-sale-price">{{ item.price | money }}</span>
-                                <s>{{ item.compare_at_price | money }}</s>
-                                {% else %}
-                                <span>{{ item.price | money }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                {% when 'article' %}
-                <div class="search-article-card">
-                    <a href="{{ item.url }}">
-                        <div class="search-article-image-container">
-                            {% if item.image %}
-                            <img src="{{ item.image | img_url: '400x400', crop: 'center' }}"
-                                alt="{{ item.title | escape }}" class="search-article-image">
+                          <h3 class="search-product-title">{{ item.title }}</h3>
+                          <div class="search-product-price">
+                            {% if item.compare_at_price > item.price %}
+                              <span class="search-sale-price">{{ item.price | money }}</span>
+                              <s>{{ item.compare_at_price | money }}</s>
                             {% else %}
-                            <div class="search-article-image-placeholder">{{ item.title | slice: 0, 1 }}</div>
+                              <span>{{ item.price | money }}</span>
                             {% endif %}
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  {% when 'article' %}
+                    <div class="search-article-card">
+                      <a href="{{ item.url }}">
+                        <div class="search-article-image-container">
+                          {% if item.image %}
+                            <img
+                              src="{{ item.image | img_url: '400x400', crop: 'center' }}"
+                              alt="{{ item.title | escape }}"
+                              class="search-article-image">
+                          {% else %}
+                            <div class="search-article-image-placeholder">{{ item.title | slice: 0, 1 }}</div>
+                          {% endif %}
                         </div>
                         <div class="search-article-info">
-                            <h3 class="search-article-title">{{ item.title }}</h3>
-                            <p class="search-article-excerpt">{{ item.excerpt_or_content | strip_html | truncatewords:
-                                15 }}</p>
+                          <h3 class="search-article-title">{{ item.title }}</h3>
+                          <p class="search-article-excerpt">{{ item.excerpt_or_content | strip_html | truncatewords: 15 }}</p>
                         </div>
-                    </a>
-                </div>
-                {% when 'page' %}
-                <div class="search-page-card">
-                    <a href="{{ item.url }}">
+                      </a>
+                    </div>
+                  {% when 'page' %}
+                    <div class="search-page-card">
+                      <a href="{{ item.url }}">
                         <div class="search-page-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M20 14.5385V11.5769C20 10.5671 19.6207 9.59856 18.9456 8.88448C18.2705 8.1704 17.3548 7.76923 16.4 7.76923H14.8C14.4817 7.76923 14.1765 7.63551 13.9515 7.39748C13.7264 7.15945 13.6 6.83662 13.6 6.5V4.80769C13.6 3.79783 13.2207 2.82933 12.5456 2.11525C11.8705 1.40117 10.9548 1 10 1H8M8 15.3846H16M8 18.7692H12M10.4 1H5.2C4.5376 1 4 1.56862 4 2.26923V21.7308C4 22.4314 4.5376 23 5.2 23H18.8C19.4624 23 20 22.4314 20 21.7308V11.1538C20 8.46088 18.9886 5.87821 17.1882 3.97399C15.3879 2.06978 12.9461 1 10.4 1Z"
-                                    stroke="#373736" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M20 14.5385V11.5769C20 10.5671 19.6207 9.59856 18.9456 8.88448C18.2705 8.1704 17.3548 7.76923 16.4 7.76923H14.8C14.4817 7.76923 14.1765 7.63551 13.9515 7.39748C13.7264 7.15945 13.6 6.83662 13.6 6.5V4.80769C13.6 3.79783 13.2207 2.82933 12.5456 2.11525C11.8705 1.40117 10.9548 1 10 1H8M8 15.3846H16M8 18.7692H12M10.4 1H5.2C4.5376 1 4 1.56862 4 2.26923V21.7308C4 22.4314 4.5376 23 5.2 23H18.8C19.4624 23 20 22.4314 20 21.7308V11.1538C20 8.46088 18.9886 5.87821 17.1882 3.97399C15.3879 2.06978 12.9461 1 10.4 1Z"
+                              stroke="#373736"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round" />
+                          </svg>
                         </div>
                         <div class="search-page-info">
-                            <h3 class="search-page-title">{{ item.title }}</h3>
+                          <h3 class="search-page-title">{{ item.title }}</h3>
                         </div>
-                    </a>
-                </div>
+                      </a>
+                    </div>
                 {% endcase %}
-                {% endfor %}
+              {% endfor %}
             </div>
 
-            {% if paginate.pages > 1 %}
-            <div class="search-pagination">
-                {% render 'pagination', paginate: paginate %}
-            </div>
-            {% endif %}
-            {% endif %}
-            {% endif %}
-        </div>
+          {% endpaginate %}
+
+          <!-- Loading indicator for infinite scroll -->
+          <div
+            class="search-loading"
+            id="search-loading-indicator"
+            style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Loading more results...</p>
+          </div>
+        {% endif %}
+      {% endif %}
     </div>
+  </div>
 </div>
 
 <style>
-    .breadcrumbs {
-        margin: 0 auto;
-        padding: 0 !important;
-        margin-top: var(--header-height);
-        background-color: #F6F4F3;
-        font-family: var(--font-body);
-        font-size: 0.875rem;
-        color: var(--color-text);
-    }
+  .breadcrumbs {
+    margin: var(--header-height) auto 0 !important;
+    padding: 0 !important;
+    background-color: #F6F4F3;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
 
   /* Search page styles */
   .search-results-container {
@@ -219,13 +332,13 @@
     border-radius: 30px;
     font-family: var(--font-body);
     font-size: 1rem;
-    background-color: #F6F4F3;
+    background-color: white;
   }
 
   .search-input:focus {
     outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 1px var(--color-accent);
+    /* border-color: var(--color-accent); */
+    /* box-shadow: 0 0 0 1px var(--color-accent); */
   }
 
   .search-submit {
@@ -251,411 +364,844 @@
     stroke: var(--color-accent);
   }
 
-  .search-filter-wrapper {
+  /* Search controls - copied from catalogue */
+  .search-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  .sort-dropdown-wrapper {
+    position: relative;
+  }
+
+  .sort-button {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-
-  .search-filter-label {
+    justify-content: space-between;
+    background-color: transparent;
+    border: 1px solid transparent;
+    /* border-radius: 4px; */
+    padding: 0.75rem 1rem;
     font-family: var(--font-body);
     font-size: 0.875rem;
     color: var(--color-text);
+    cursor: pointer;
+    /* min-width: 200px; */
+    transition: border-color 0.2s ease;
   }
 
-  .search-filter {
-    padding: 0.5rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    background-color: #F6F4F3;
-  }
+  .sort-button:hover {
+  ;
+  /* border-color: var(--color-accent); */
+}
 
-  /* No results section */
-  .search-no-results {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-  }
+.sort-button svg {
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+}
 
-  .search-no-results p {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    color: var(--color-text);
-    margin-bottom: 2.5rem;
-  }
+.sort-button[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
 
-  .search-no-results-collections h2 {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    color: var(--color-text);
-    margin-bottom: 1.5rem;
-  }
+.sort-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid transparent;
+  border-top: none;
+  /* border-radius: 0 0 4px 4px; */
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease
+  , visibility 0.2s ease
+  , transform 0.2s ease;
+}
 
-  .search-collections-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
+.sort-dropdown[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
-  /* Search results grid - Updated to 4 cards per row */
-  .search-results-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    row-gap: 30px;
-    column-gap: 10px;
-    width: 100%;
-  }
+.sort-option {
+  display: block;
+  /* width: 100%; */
+  padding: 0.75rem 1rem;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
-  /* Product card styles */
-  .search-product-card {
-    text-decoration: none;
-    color: var(--color-text);
-    width: 100%;
-  }
+.sort-option:hover {
+  background-color: rgba(255, 163, 139, 0.1);
+}
 
-  .search-product-card a {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: var(--color-text);
+.sort-option.active {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* No results section */
+.search-no-results {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-no-results p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: 2.5rem;
+}
+
+.search-no-results-banners {
+  margin-top: 2rem;
+}
+
+.search-banners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* Search Banner Card Styles - text overlay on image */
+.search-banner-card {
+  display: block;
+  text-decoration: none;
+  color: var(--color-text);
+  /* border-radius: 8px; */
+  overflow: hidden;
+  transition: transform 0.3s ease
+  , box-shadow 0.3s ease;
+}
+
+.search-banner-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.search-banner-image-container {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+
+.search-banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.search-banner-card:hover .search-banner-image {
+  transform: scale(1.05);
+}
+
+.search-banner-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: var(--color-text);
+}
+
+.search-banner-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 1.5rem 1.5rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  text-align: left;
+}
+
+.search-banner-content[data-text-color="white"] {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+.search-banner-content[data-text-color="black"] {
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.8));
+}
+
+.search-banner-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.search-banner-content[data-text-color="white"] .search-banner-title {
+  color: white;
+}
+
+.search-banner-content[data-text-color="black"] .search-banner-title {
+  color: #333;
+}
+
+.search-banner-title em {
+  font-style: italic;
+  color: white;
+}
+
+.search-banner-text {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.search-banner-content[data-text-color="white"] .search-banner-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.search-banner-content[data-text-color="black"] .search-banner-text {
+  color: #555;
+}
+
+/* Search results grid - Updated to 4 cards per row */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 30px;
+  column-gap: 10px;
+  width: 100%;
+}
+
+/* Product card styles */
+.search-product-card {
+  text-decoration: none;
+  color: var(--color-text);
+  width: 100%;
+}
+
+.search-product-card a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.search-product-image-container {
+  width: 23vw;
+  height: 60vh;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.search-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease;
+}
+
+.search-product-image:hover {
+  transform: scale(1.05);
+}
+
+.search-product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-text);
+}
+
+.search-product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-product-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+.search-product-price {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.search-sale-price {
+  color: var(--color-accent);
+  margin-right: 0.5rem;
+}
+
+.search-product-price s {
+  color: #777;
+  font-size: 0.875rem;
+}
+
+/* Collection card styles - keeping for reference */
+.search-collection-card {
+  text-decoration: none;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.search-collection-image-container {
+  width: 100%;
+  aspect-ratio: 1 / 1.3;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.search-collection-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease;
+}
+
+.search-collection-card:hover .search-collection-image {
+  transform: scale(1.05);
+}
+
+.search-collection-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-text);
+}
+
+.search-collection-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--color-text);
+  margin: 0;
+  text-align: center;
+}
+
+/* Article and Page card styles - keeping for any future content */
+.search-article-card {
+  text-decoration: none;
+  color: var(--color-text);
+  width: 100%;
+}
+
+.search-article-card a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.search-article-image-container {
+  width: 100%;
+  aspect-ratio: 16 / 12;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.search-article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease;
+}
+
+.search-article-card:hover .search-article-image {
+  transform: scale(1.05);
+}
+
+.search-article-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-text);
+}
+
+.search-article-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-article-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-text);
+  margin: 0 0 0.5rem;
+  font-weight: 400;
+}
+
+.search-article-excerpt {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.search-page-card {
+  text-decoration: none;
+  color: var(--color-text);
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  /* border-radius: 4px; */
+  background-color: white;
+  transition: box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.search-page-card a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.search-page-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.search-page-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.search-page-info {
+  flex: 1;
+}
+
+.search-page-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-text);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Pagination */
+.search-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+/* Loading indicator for infinite scroll */
+.search-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.search-loading .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid var(--color-accent, #FFA38B);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.search-loading p {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .search-results-container {
+    padding: 2rem 2rem 4rem;
   }
 
   .search-product-image-container {
-    width: 23vw;
-    height: 60vh;
-    /* aspect-ratio: 1 / 1.3; */
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-
-  .search-product-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s ease;
+    height: 50vh;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .search-results-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  /* Apply the scale effect only to the image, not the card */
-   .search-product-image:hover {
-    transform: scale(1.05);
-  }
-
-  .search-product-image-placeholder {
+  .search-product-image-container {
     width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #e0e0e0;
-    font-family: var(--font-heading);
+    height: 50vh;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .search-results-container {
+    padding: 2rem 2rem 4rem;
+  }
+
+  .search-title {
     font-size: 2rem;
-    color: var(--color-text);
   }
 
-  .search-product-info {
-    display: flex;
-    flex-direction: column;
+  .search-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
-  .search-product-title {
-    font-family: var(--font-heading);
+  .search-product-image-container {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .search-collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .search-banners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .search-banner-image-container {
+    height: 250px;
+  }
+
+  .search-banner-title {
     font-size: 1.25rem;
-    color: var(--color-text);
-    /* margin: 0 0 0.5rem; */
-    font-weight: 400;
   }
+}
 
-  .search-product-price {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: var(--color-text);
+@media screen and (max-width: 768px) {
+  .search-results-container {
+    padding: 1.5rem 1.5rem 3rem;
+    margin-top: 6rem;
   }
-
-  .search-sale-price {
-    color: var(--color-accent);
-    margin-right: 0.5rem;
-  }
-
-  .search-product-price s {
-    color: #777;
-    font-size: 0.875rem;
-  }
-  
-  /* Collection card styles */
-  .search-collection-card {
-    text-decoration: none;
-    color: var(--color-text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .search-product-image-container {
     width: 100%;
+    height: 50vh;
+  }
+  .search-title {
+    font-size: 1.75rem;
   }
 
-  .search-collection-image-container {
-    width: 100%;
-    aspect-ratio: 1 / 1.3;
-    overflow: hidden;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-  }
-  
-  .search-collection-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s ease;
-  }
-  
-  .search-collection-card:hover .search-collection-image {
-    transform: scale(1.05);
-  }
-
-  .search-collection-image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #e0e0e0;
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    color: var(--color-text);
-  }
-
-  .search-collection-title {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    color: var(--color-text);
-    margin: 0;
-    text-align: center;
-  }
-
-  /* Article card styles */
-  .search-article-card {
-    text-decoration: none;
-    color: var(--color-text);
-    width: 100%;
-  }
-
-  .search-article-card a {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: var(--color-text);
-  }
-
-  .search-article-image-container {
-    width: 100%;
-    aspect-ratio: 16 / 12;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-
-  .search-article-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s ease;
-  }
-
-  .search-article-card:hover .search-article-image {
-    transform: scale(1.05);
-  }
-
-  .search-article-image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #e0e0e0;
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    color: var(--color-text);
-  }
-
-  .search-article-info {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .search-article-title {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    color: var(--color-text);
-    margin: 0 0 0.5rem;
-    font-weight: 400;
-  }
-
-  .search-article-excerpt {
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    color: var(--color-text);
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  /* Page card styles */
-  .search-page-card {
-    text-decoration: none;
-    color: var(--color-text);
-    padding: 1.5rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    background-color: white;
-    transition: box-shadow 0.2s ease;
-    width: 100%;
-  }
-
-  .search-page-card a {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    text-decoration: none;
-    color: var(--color-text);
-  }
-
-  .search-page-card:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  }
-
-  .search-page-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-  }
-
-  .search-page-info {
-    flex: 1;
-  }
-
+  .search-product-title,
+  .search-article-title,
   .search-page-title {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    color: var(--color-text);
-    margin: 0;
-    font-weight: 400;
+    font-size: 1.125rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .search-results-container {
+    padding: 1rem 1rem 2rem;
+    margin-top: 6rem;
   }
 
-  /* Pagination */
-  .search-pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
+  .search-title {
+    font-size: 1.5rem;
+  }
+  .search-product-image-container {
+    width: 100%;
+    height: 30vh;
   }
 
-  @media screen and (max-width: 1400px) {
-    .search-results-container {
-      padding: 2rem 2rem 4rem;
-    }
-    
-    .search-product-image-container {
-      width: 100%;
-      height: 50vh;
-    }
-  }
-  /* Responsive styles */
-  @media screen and (max-width: 1200px) {
-    .search-results-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .search-product-image-container {
-      width: 100%;
-      height: 50vh;
-    }
+  .search-results-grid,
+  .search-banners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
   }
 
-  @media screen and (max-width: 992px) {
-    .search-results-container {
-      padding: 2rem 2rem 4rem;
-    }
-
-    .search-title {
-      font-size: 2rem;
-    }
-
-    .search-results-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-
-    .search-product-image-container {
-      width: 100%;
-      height: 50vh;
-    }
-
-    .search-collections-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .search-banners-grid {
+    gap: 1rem;
   }
 
-  @media screen and (max-width: 768px) {
-    .search-results-container {
-      padding: 1.5rem 1.5rem 3rem;
-      margin-top: 6rem;
-    }
-    .search-product-image-container {
-      width: 100%;
-      height: 50vh;
-    }
-    .search-title {
-      font-size: 1.75rem;
-    }
-
-    .search-product-title,
-    .search-article-title,
-    .search-page-title {
-      font-size: 1.125rem;
-    }
+  .search-banner-image-container {
+    height: 200px;
   }
 
-  @media screen and (max-width: 576px) {
-    .search-results-container {
-      padding: 1rem 1rem 2rem;
-      margin-top: 6rem;
-    }
-
-    .search-title {
-      font-size: 1.5rem;
-    }
-    .search-product-image-container {
-      width: 100%;
-      height: 30vh;
-    }
-
-    .search-results-grid,
-    .search-collections-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
-    }
+  .search-banner-content {
+    padding: 1.5rem 1rem 1rem;
   }
+
+  .search-banner-title {
+    font-size: 1.1rem;
+  }
+
+  .search-banner-text {
+    font-size: 0.85rem;
+  }
+
+  .sort-button {
+    min-width: 150px;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
 </style>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Search sort functionality
+  const sortButton = document.querySelector('[data-sort-trigger]');
+  const sortDropdown = document.getElementById('search-sort-dropdown');
+  const sortOptions = document.querySelectorAll('.sort-option');
+
+  if (sortButton && sortDropdown) {
+    // Toggle sort dropdown
+    sortButton.addEventListener('click', function() {
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !isExpanded);
+      sortDropdown.setAttribute('aria-hidden', isExpanded);
+    });
+
+    // Handle sort option selection
+    sortOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        const sortValue = this.getAttribute('data-sort-value');
+        const currentUrl = new URL(window.location);
+        
+        // Keep the search term from the current URL
+        const searchTerm = currentUrl.searchParams.get('q');
+        
+        // Clear all parameters and rebuild
+        currentUrl.search = '';
+        
+        if (searchTerm) {
+          currentUrl.searchParams.set('q', searchTerm);
+        }
+        
+        if (sortValue) {
+          currentUrl.searchParams.set('sort_by', sortValue);
+        }
+        
+        window.location.href = currentUrl.toString();
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!sortButton.contains(e.target) && !sortDropdown.contains(e.target)) {
+        sortButton.setAttribute('aria-expanded', 'false');
+        sortDropdown.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  // Infinite scroll functionality for search results
+  const searchGrid = document.getElementById('search-results-grid');
+  const loadingIndicator = document.getElementById('search-loading-indicator');
+  const paginationInfo = document.getElementById('search-pagination-info');
+  
+  if (searchGrid && paginationInfo && loadingIndicator) {
+    let isLoading = false;
+    let hasMorePages = true;
+    
+    function loadMoreResults() {
+      if (isLoading || !hasMorePages) return;
+      
+      const nextUrl = paginationInfo.getAttribute('data-next-url');
+      if (!nextUrl) {
+        hasMorePages = false;
+        return;
+      }
+      
+      isLoading = true;
+      loadingIndicator.style.display = 'flex';
+      
+      fetch(nextUrl)
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          
+          // Get new search results
+          const newResults = doc.querySelectorAll('#search-results-grid > *');
+          newResults.forEach(result => {
+            searchGrid.appendChild(result);
+          });
+          
+          // Update pagination info
+          const newPaginationInfo = doc.getElementById('search-pagination-info');
+          if (newPaginationInfo) {
+            const newNextUrl = newPaginationInfo.getAttribute('data-next-url');
+            const newCurrentPage = newPaginationInfo.getAttribute('data-current-page');
+            const totalPages = newPaginationInfo.getAttribute('data-total-pages');
+            
+            paginationInfo.setAttribute('data-next-url', newNextUrl || '');
+            paginationInfo.setAttribute('data-current-page', newCurrentPage);
+            
+            if (!newNextUrl || parseInt(newCurrentPage) >= parseInt(totalPages)) {
+              hasMorePages = false;
+              paginationInfo.remove();
+            }
+          } else {
+            hasMorePages = false;
+            paginationInfo.remove();
+          }
+          
+          isLoading = false;
+          loadingIndicator.style.display = 'none';
+        })
+        .catch(error => {
+          console.error('Error loading more results:', error);
+          isLoading = false;
+          loadingIndicator.style.display = 'none';
+        });
+    }
+    
+    // Scroll event listener
+    function handleScroll() {
+      if (isLoading || !hasMorePages) return;
+      
+      const scrollTop = window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      
+      if (scrollTop + windowHeight >= docHeight - 1000) {
+        loadMoreResults();
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial check in case the page is short
+    setTimeout(() => {
+      if (window.innerHeight >= document.documentElement.scrollHeight) {
+        loadMoreResults();
+      }
+    }, 100);
+  }
+  });
+</script>
+
 {% schema %}
-{
-"name": "Search Page",
-"tag": "section",
-"class": "search-section",
-"settings": [
-{
-"type": "checkbox",
-"id": "enable_filter_by_type",
-"label": "Enable filtering by content type",
-"default": true,
-"info": "Allow customers to filter search results by products, articles, or pages"
-}
-],
-"presets": [
-{
-"name": "Search Page"
-}
-]
-}
+  {
+    "name": "Search Page",
+    "tag": "section",
+    "class": "search-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "No Results Banners"
+      },
+      {
+        "type": "image_picker",
+        "id": "search_banner_1_image",
+        "label": "Search Banner 1 Image"
+      },
+      {
+        "type": "text",
+        "id": "search_banner_1_title",
+        "label": "Search Banner 1 Title",
+        "default": "Deia Collection"
+      },
+      {
+        "type": "text",
+        "id": "search_banner_1_text",
+        "label": "Search Banner 1 Text",
+        "default": "Classic earrings to embody timeless elegance"
+      }, {
+        "type": "select",
+        "id": "search_banner_1_text_color",
+        "label": "Search Banner 1 Text Color",
+        "options": [
+          {
+            "value": "white",
+            "label": "White"
+          }, {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
+        "default": "white"
+      }, {
+        "type": "url",
+        "id": "search_banner_1_link",
+        "label": "Search Banner 1 Link"
+      }, {
+        "type": "image_picker",
+        "id": "search_banner_2_image",
+        "label": "Search Banner 2 Image"
+      }, {
+        "type": "text",
+        "id": "search_banner_2_title",
+        "label": "Search Banner 2 Title",
+        "default": "Stellar Collection"
+      }, {
+        "type": "text",
+        "id": "search_banner_2_text",
+        "label": "Search Banner 2 Text",
+        "default": "Embrace the celestial beauty"
+      }, {
+        "type": "select",
+        "id": "search_banner_2_text_color",
+        "label": "Search Banner 2 Text Color",
+        "options": [
+          {
+            "value": "white",
+            "label": "White"
+          }, {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
+        "default": "white"
+      }, {
+        "type": "url",
+        "id": "search_banner_2_link",
+        "label": "Search Banner 2 Link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Search Page"
+      }
+    ]
+  }
 {% endschema %}
