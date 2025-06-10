@@ -16,6 +16,11 @@
   <!-- Help Cards -->
   {% if section.blocks.size > 0 %}
     <div class="page-404__cards">
+      {% if section.settings.cards_heading != blank %}
+        <div class="page-404__cards-header">
+          <h2 class="page-404__cards-title">{{ section.settings.cards_heading }}</h2>
+        </div>
+      {% endif %}
       <div class="page-404__cards-container">
         {% for block in section.blocks %}
           {% if block.type == 'help_card' %}
@@ -24,16 +29,13 @@
                 <a href="{{ block.settings.link }}" class="help-card__link">
               {% endif %}
 
-              {% if block.settings.image != blank %}
-                <div class="help-card__image-wrapper">
-                  <img
-                    src="{{ block.settings.image | img_url: '400x300' }}"
-                    alt="{{ block.settings.image.alt | default: block.settings.title }}"
-                    class="help-card__image">
-                </div>
-              {% endif %}
+              <div
+                class="help-card__background"
+                {% if block.settings.image != blank %}
+                style="background-image: url('{{ block.settings.image | img_url: '600x400' }}');"
+                {% endif %}></div>
 
-              <div class="help-card__content">
+              <div class="help-card__content help-card__content--{{ block.settings.text_color | default: 'white' }}">
                 {% if block.settings.title != blank %}
                   <h3 class="help-card__title">{{ block.settings.title }}</h3>
                 {% endif %}
@@ -124,6 +126,25 @@
     padding: 3rem 0;
   }
 
+  .page-404__cards-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2rem;
+  }
+
+  .page-404__cards-title {
+    font-family: "adobe-caslon-pro"
+    , serif;
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: #373736;
+    margin: 0;
+    line-height: 1.2;
+  }
+
   .page-404__cards-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -136,51 +157,75 @@
   .help-card {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
-    transition: transform 0.3s ease
-    , box-shadow 0.3s ease;
     overflow: hidden;
     width: 100%;
     height: 400px;
     display: flex;
     flex-direction: column;
-  }
-
-  .help-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
   }
 
   .help-card__link {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     text-decoration: none;
     color: inherit;
-  }
-
-  .help-card__image-wrapper {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
     position: relative;
   }
 
-  .help-card__image {
+  .help-card__background {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f5f3ef;
+    transition: transform 1s ease;
   }
 
-  .help-card:hover .help-card__image {
+  .help-card:hover .help-card__background {
     transform: scale(1.05);
+    cursor: pointer;
   }
 
   .help-card__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 1.5rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    z-index: 2;
+  }
+
+  .help-card__content--white {
+    color: #ffffff;
+  }
+
+  .help-card__content--white .help-card__title {
+    color: #ffffff;
+  }
+
+  .help-card__content--white .help-card__text {
+    color: #ffffff;
+  }
+
+  .help-card__content--black {
+    color: #373736;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.9));
+  }
+
+  .help-card__content--black .help-card__title {
+    color: #373736;
+  }
+
+  .help-card__content--black .help-card__text {
+    color: #373736;
   }
 
   .help-card__title {
@@ -188,7 +233,6 @@
     , serif;
     font-size: 1.25rem;
     font-weight: 600;
-    color: #373736;
     margin-bottom: 0.75rem;
     line-height: 1.3;
   }
@@ -197,10 +241,8 @@
     font-family: "Inter"
     , sans-serif;
     font-size: 0.875rem;
-    color: #373736;
     line-height: 1.5;
     margin: 0;
-    flex: 1;
   }
 
   /* Mobile styles */
@@ -228,8 +270,13 @@
       padding: 2rem 0;
     }
 
-    .help-card__image-wrapper {
-      height: 180px;
+    .page-404__cards-header {
+      margin-bottom: 2rem;
+      padding: 0 1.25rem;
+    }
+
+    .page-404__cards-title {
+      font-size: 2rem;
     }
   }
 
@@ -256,8 +303,8 @@
       font-size: 1.125rem;
     }
 
-    .help-card__image-wrapper {
-      height: 160px;
+    .page-404__cards-title {
+      font-size: 1.75rem;
     }
   }
 </style>
@@ -271,21 +318,30 @@
         "id": "title",
         "label": "Page Title",
         "default": "Page Not Found"
-      }, {
+      },
+      {
         "type": "textarea",
         "id": "message",
         "label": "Message",
         "default": "Sorry, the page you're looking for doesn't exist. Here are some helpful links to get you back on track."
-      }, {
+      },
+      {
         "type": "text",
         "id": "button_text",
         "label": "Button Text",
         "default": "BACK TO HOME"
-      }, {
+      },
+      {
         "type": "url",
         "id": "button_link",
         "label": "Button Link",
         "default": "/"
+      }, {
+        "type": "text",
+        "id": "cards_heading",
+        "label": "Cards Section Heading",
+        "default": "Browse Our Collections",
+        "info": "Heading that appears above the help cards"
       }
     ],
     "blocks": [
@@ -297,12 +353,29 @@
             "type": "image_picker",
             "id": "image",
             "label": "Card Image"
-          }, {
+          },
+          {
+            "type": "select",
+            "id": "text_color",
+            "label": "Text Color",
+            "options": [
+              {
+                "value": "white",
+                "label": "White"
+              }, {
+                "value": "black",
+                "label": "Black"
+              }
+            ],
+            "default": "white"
+          },
+          {
             "type": "text",
             "id": "title",
             "label": "Card Title",
             "default": "Browse Collections"
-          }, {
+          },
+          {
             "type": "textarea",
             "id": "text",
             "label": "Card Text",
@@ -324,21 +397,24 @@
             "settings": {
               "title": "Browse Collections",
               "text": "Discover our curated collections of beautiful jewelry pieces.",
-              "link": "/collections"
+              "link": "/collections",
+              "text_color": "white"
             }
           }, {
             "type": "help_card",
             "settings": {
               "title": "Customer Support",
               "text": "Need help? Our customer service team is here to assist you.",
-              "link": "/pages/contact"
+              "link": "/pages/contact",
+              "text_color": "white"
             }
           }, {
             "type": "help_card",
             "settings": {
               "title": "Search Products",
               "text": "Use our search to find exactly what you're looking for.",
-              "link": "/search"
+              "link": "/search",
+              "text_color": "white"
             }
           }
         ]
