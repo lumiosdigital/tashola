@@ -20,8 +20,9 @@
                             src="{{ product.images[image_index] | img_url: 'master' }}"
                             alt="{{ product.images[image_index].alt | escape }}" class="grid-image"
                             data-image-index="{{ image_index }}"
-                            data-variant-id="{{ product.selected_or_first_available_variant.id }}" {% if forloop.first
-                            %}data-main-image{% endif %}>
+                            data-variant-id="{{ product.selected_or_first_available_variant.id }}" 
+                            data-lightbox-trigger
+                            {% if forloop.first %}data-main-image{% endif %}>
                             {% endif %}
                     </div>
                     {% endfor %}
@@ -35,7 +36,10 @@
                         {% assign image_index = i | minus: 1 %}
                         {% if image_index < image_count %} <div class="swiper-slide">
                             <img src="{{ product.images[image_index] | img_url: '800x' }}"
-                                alt="{{ product.images[image_index].alt | escape }}" class="swiper-image">
+                                alt="{{ product.images[image_index].alt | escape }}" 
+                                class="swiper-image"
+                                data-image-index="{{ image_index }}"
+                                data-lightbox-trigger>
                     </div>
                     {% endif %}
                     {% endfor %}
@@ -224,6 +228,33 @@
 </div>
 </div>
 
+<!-- Image Lightbox Modal -->
+<div class="lightbox-overlay" id="lightbox-overlay" style="display: none;">
+    <div class="lightbox-container">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+        
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        
+        <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        
+        <div class="lightbox-image-container">
+            <img class="lightbox-image" id="lightbox-image" src="" alt="">
+        </div>
+        
+        <div class="lightbox-counter" id="lightbox-counter">
+            <span id="current-image">1</span> / <span id="total-images">1</span>
+        </div>
+    </div>
+</div>
+
 {% if section.settings.show_related_products and section.settings.related_products_limit > 0 %}
 <div class="related-products-section">
     <h2 class="related-products-title">{{ section.settings.related_products_title }}</h2>
@@ -288,6 +319,9 @@
 
         // Initialize buy now functionality
         initBuyNowFunctionality();
+
+        // Initialize lightbox functionality
+        initLightbox();
 
         // Initialize Swiper separately
         // Slight delay to ensure DOM is fully processed
@@ -624,6 +658,154 @@
                         alert('There was an error processing your checkout. Please try again.');
                     });
             });
+        }
+
+        function initLightbox() {
+            const lightboxTriggers = document.querySelectorAll('[data-lightbox-trigger]');
+            const lightboxOverlay = document.getElementById('lightbox-overlay');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const currentImageSpan = document.getElementById('current-image');
+            const totalImagesSpan = document.getElementById('total-images');
+            
+            let currentImageIndex = 0;
+            let images = [];
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            // Collect all product images
+            function collectImages() {
+                images = [];
+                product.images.forEach((image, index) => {
+                    images.push({
+                        src: image,
+                        alt: `Product image ${index + 1}`,
+                        index: index
+                    });
+                });
+                totalImagesSpan.textContent = images.length;
+            }
+
+            // Open lightbox
+            function openLightbox(imageIndex) {
+                if (images.length === 0) return;
+                
+                currentImageIndex = imageIndex;
+                updateLightboxImage();
+                lightboxOverlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // Add keyboard listener
+                document.addEventListener('keydown', handleKeyDown);
+            }
+
+            // Close lightbox
+            function closeLightbox() {
+                lightboxOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', handleKeyDown);
+            }
+
+            // Update lightbox image
+            function updateLightboxImage() {
+                if (images[currentImageIndex]) {
+                    const imageUrl = images[currentImageIndex].src + '?width=1200';
+                    lightboxImage.src = imageUrl;
+                    lightboxImage.alt = images[currentImageIndex].alt;
+                    currentImageSpan.textContent = currentImageIndex + 1;
+                    
+                    // Update navigation button visibility
+                    lightboxPrev.style.display = currentImageIndex > 0 ? 'flex' : 'none';
+                    lightboxNext.style.display = currentImageIndex < images.length - 1 ? 'flex' : 'none';
+                }
+            }
+
+            // Navigate to previous image
+            function prevImage() {
+                if (currentImageIndex > 0) {
+                    currentImageIndex--;
+                    updateLightboxImage();
+                }
+            }
+
+            // Navigate to next image
+            function nextImage() {
+                if (currentImageIndex < images.length - 1) {
+                    currentImageIndex++;
+                    updateLightboxImage();
+                }
+            }
+
+            // Handle keyboard navigation
+            function handleKeyDown(e) {
+                switch(e.key) {
+                    case 'Escape':
+                        closeLightbox();
+                        break;
+                    case 'ArrowLeft':
+                        prevImage();
+                        break;
+                    case 'ArrowRight':
+                        nextImage();
+                        break;
+                }
+            }
+
+            // Handle touch events for mobile swiping
+            function handleTouchStart(e) {
+                touchStartX = e.touches[0].clientX;
+            }
+
+            function handleTouchMove(e) {
+                e.preventDefault(); // Prevent scrolling
+            }
+
+            function handleTouchEnd(e) {
+                touchEndX = e.changedTouches[0].clientX;
+                handleSwipe();
+            }
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const swipeDistance = touchStartX - touchEndX;
+
+                if (Math.abs(swipeDistance) > swipeThreshold) {
+                    if (swipeDistance > 0) {
+                        nextImage(); // Swipe left = next image
+                    } else {
+                        prevImage(); // Swipe right = previous image
+                    }
+                }
+            }
+
+            // Initialize
+            collectImages();
+
+            // Add click handlers to image triggers
+            lightboxTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const imageIndex = parseInt(trigger.getAttribute('data-image-index'));
+                    openLightbox(imageIndex);
+                });
+            });
+
+            // Add event listeners
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxOverlay.addEventListener('click', (e) => {
+                if (e.target === lightboxOverlay) {
+                    closeLightbox();
+                }
+            });
+            lightboxPrev.addEventListener('click', prevImage);
+            lightboxNext.addEventListener('click', nextImage);
+
+            // Touch events for mobile swipe
+            lightboxImage.addEventListener('touchstart', handleTouchStart, { passive: true });
+            lightboxImage.addEventListener('touchmove', handleTouchMove, { passive: false });
+            lightboxImage.addEventListener('touchend', handleTouchEnd, { passive: true });
         }
 
         // Initialize Swiper on mobile
@@ -1141,6 +1323,132 @@
         color: var(--color-text);
     }
 
+    /* Lightbox styles */
+    .lightbox-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        animation: fadeIn 0.3s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    .lightbox-container {
+        position: relative;
+        width: 90%;
+        height: 90%;
+        max-width: 1200px;
+        max-height: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lightbox-image-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .lightbox-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: -50px;
+        right: 0;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 10001;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.2s ease;
+    }
+
+    .lightbox-close:hover {
+        opacity: 0.7;
+    }
+
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        cursor: pointer;
+        z-index: 10001;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .lightbox-nav:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .lightbox-prev {
+        left: -70px;
+    }
+
+    .lightbox-next {
+        right: -70px;
+    }
+
+    .lightbox-counter {
+        position: absolute;
+        bottom: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-family: var(--font-body);
+        font-size: 14px;
+        z-index: 10001;
+    }
+
+    /* Add cursor pointer to lightbox triggers */
+    [data-lightbox-trigger] {
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+    }
+
+    [data-lightbox-trigger]:hover {
+        opacity: 0.9;
+    }
+
     /* Related products */
     .related-products-section {
         display: flex;
@@ -1332,6 +1640,37 @@
             width: 100%;
             height: 100%;
         }
+
+        /* Mobile lightbox adjustments */
+        .lightbox-container {
+            width: 95%;
+            height: 85%;
+        }
+
+        .lightbox-close {
+            top: -40px;
+            font-size: 24px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .lightbox-nav {
+            width: 40px;
+            height: 40px;
+        }
+
+        .lightbox-prev {
+            left: -50px;
+        }
+
+        .lightbox-next {
+            right: -50px;
+        }
+
+        .lightbox-counter {
+            bottom: -40px;
+            font-size: 12px;
+        }
     }
 
     @media screen and (max-width: 576px) {
@@ -1424,6 +1763,35 @@
 
         .related-products-grid {
             grid-template-columns: 1fr;
+        }
+
+        /* Extra small mobile lightbox adjustments */
+        .lightbox-container {
+            width: 98%;
+            height: 80%;
+        }
+
+        .lightbox-close {
+            top: 10px;
+            right: 10px;
+        }
+
+        .lightbox-nav {
+            width: 35px;
+            height: 35px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-prev {
+            left: 10px;
+        }
+
+        .lightbox-next {
+            right: 10px;
+        }
+
+        .lightbox-counter {
+            bottom: 10px;
         }
     }
 </style>
