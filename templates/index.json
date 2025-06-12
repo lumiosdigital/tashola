@@ -17,6 +17,8 @@
           "settings": {
             "background_type": "image",
             "text_color": "white",
+            "desktop_vertical_position": "center",
+            "mobile_vertical_position": "bottom",
             "image": "shopify://shop_images/Shot_15_0109.png",
             "mobile_image": "shopify://shop_images/Shot_12_0026.png",
             "overlay_opacity": 0.4,
@@ -69,7 +71,7 @@
             "layout_direction": "banner-left",
             "text_color": "white",
             "selected_collection": "earrings",
-            "featured_collection": "image-test",
+            "featured_collection": "rings",
             "collection_banner_image": "shopify://shop_images/Shot_12_0122.png"
           }
         },
@@ -122,6 +124,8 @@
           "settings": {
             "background_type": "image",
             "text_color": "white",
+            "desktop_vertical_position": "center",
+            "mobile_vertical_position": "center",
             "image": "shopify://shop_images/Shot_10_0004.png",
             "mobile_image": "shopify://shop_images/Shot_01_037.png",
             "overlay_opacity": 0.3,
