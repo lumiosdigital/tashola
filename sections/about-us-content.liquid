@@ -1,551 +1,525 @@
 {% schema %}
-{
-"name": "About Us Content",
-"settings": [
-{
-"type": "text",
-"id": "main_heading",
-"label": "Main Heading",
-"default": "About Us"
-},
-{
-"type": "richtext",
-"id": "main_description",
-"label": "Main Description",
-"default": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>"
-},
-{
-"type": "richtext",
-"id": "additional_content",
-"label": "Additional Content (optional)",
-"default": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn’t exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon emissions isn’t enough in a world facing an environmental crisis. That’s why we’re committed to understanding and actively reducing our impact at every step.</p>"
-},
-{
-"type": "image_picker",
-"id": "bottom_image",
-"label": "Bottom Image"
-}
-],
-"blocks": [
-{
-"type": "text_image",
-"name": "Text and Image",
-"settings": [
-{
-"type": "text",
-"id": "section_label",
-"label": "Section Label",
-"default": "OUR STORY"
-},
-{
-"type": "text",
-"id": "heading",
-"label": "Heading",
-"default": "Timeless Craftsmanship, Modern Elegance"
-},
-{
-"type": "richtext",
-"id": "content",
-"label": "Content",
-"default": "<p>At Tashola, we believe that jewelry is more than just an accessory—it's a reflection of your story. With a focus on refined design and exceptional quality, we create timeless pieces that blend classic elegance with contemporary style.</p>"
-},
-{
-"type": "image_picker",
-"id": "image",
-"label": "Image"
-},
-{
-"type": "select",
-"id": "layout",
-"label": "Layout",
-"options": [
-{
-"value": "image_right",
-"label": "Text left, Image right"
-},
-{
-"value": "image_left",
-"label": "Image left, Text right"
-}
-],
-"default": "image_right"
-}
-]
-},
-{
-"type": "large_text_image",
-"name": "Large Text and Image",
-"settings": [
-{
-"type": "text",
-"id": "section_label",
-"label": "Section Label",
-"default": "OUR PHILOSOPHY"
-},
-{
-"type": "text",
-"id": "heading",
-"label": "Heading",
-"default": "Jewelry That Speaks to You"
-},
-{
-"type": "richtext",
-"id": "content",
-"label": "Content",
-"default": "<p>We design with intention, creating pieces that inspire confidence and self-expression. Whether for everyday wear or life's special moments, Tashola jewelry is meant to be a part of your journey, elevating every look with effortless sophistication.</p>"
-},
-{
-"type": "image_picker",
-"id": "image",
-"label": "Image"
-},
-{
-"type": "select",
-"id": "layout",
-"label": "Layout",
-"options": [
-{
-"value": "image_right",
-"label": "Text left, Image right"
-},
-{
-"value": "image_left",
-"label": "Image left, Text right"
-}
-],
-"default": "image_right"
-}
-]
-},
-{
-"type": "quote",
-"name": "Quote Block",
-"limit": 1,
-"settings": [
-{
-"type": "text",
-"id": "heading",
-"label": "Quote Heading",
-"default": "Our Sustainability Principles"
-},
-{
-"type": "richtext",
-"id": "quote_text",
-"label": "Quote Content",
-"default": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn't exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon isn't enough for us. We're committed to building a brand with true environmental understanding and actively reducing our impact at every step.</p>"
-}
-]
-}
-],
-"presets": [
-{
-"name": "About Us Content"
-}
-]
-}
+  {
+    "name": "About Us Content",
+    "settings": [
+      {
+        "type": "text",
+        "id": "main_heading",
+        "label": "Main Heading",
+        "default": "About Us"
+      }, {
+        "type": "richtext",
+        "id": "main_description",
+        "label": "Main Description",
+        "default": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>"
+      }, {
+        "type": "richtext",
+        "id": "additional_content",
+        "label": "Additional Content (optional)",
+        "default": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn’t exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon emissions isn’t enough in a world facing an environmental crisis. That’s why we’re committed to understanding and actively reducing our impact at every step.</p>"
+      }, {
+        "type": "image_picker",
+        "id": "bottom_image",
+        "label": "Bottom Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text_image",
+        "name": "Text and Image",
+        "settings": [
+          {
+            "type": "text",
+            "id": "section_label",
+            "label": "Section Label",
+            "default": "OUR STORY"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Timeless Craftsmanship, Modern Elegance"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>At Tashola, we believe that jewelry is more than just an accessory—it's a reflection of your story. With a focus on refined design and exceptional quality, we create timeless pieces that blend classic elegance with contemporary style.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }, {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+              {
+                "value": "image_right",
+                "label": "Text left, Image right"
+              }, {
+                "value": "image_left",
+                "label": "Image left, Text right"
+              }
+            ],
+            "default": "image_right"
+          }
+        ]
+      }, {
+        "type": "large_text_image",
+        "name": "Large Text and Image",
+        "settings": [
+          {
+            "type": "text",
+            "id": "section_label",
+            "label": "Section Label",
+            "default": "OUR PHILOSOPHY"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Jewelry That Speaks to You"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>We design with intention, creating pieces that inspire confidence and self-expression. Whether for everyday wear or life's special moments, Tashola jewelry is meant to be a part of your journey, elevating every look with effortless sophistication.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }, {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+              {
+                "value": "image_right",
+                "label": "Text left, Image right"
+              }, {
+                "value": "image_left",
+                "label": "Image left, Text right"
+              }
+            ],
+            "default": "image_right"
+          }
+        ]
+      }, {
+        "type": "quote",
+        "name": "Quote Block",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Quote Heading",
+            "default": "Our Sustainability Principles"
+          }, {
+            "type": "richtext",
+            "id": "quote_text",
+            "label": "Quote Content",
+            "default": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn't exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon isn't enough for us. We're committed to building a brand with true environmental understanding and actively reducing our impact at every step.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "About Us Content"
+      }
+    ]
+  }
 {% endschema %}
 
 <div class="breadcrumbs-container">
-    {% render 'breadcrumbs' %}
+  {% render 'breadcrumbs' %}
 </div>
 
 <div class="about-us-container">
-    <!-- Main Heading Section -->
-    <div class="about-us-header">
-        <h1 class="about-us-main-heading">{{ section.settings.main_heading }}</h1>
-        <div class="about-us-main-description">
-            {{ section.settings.main_description }}
-        </div>
+  <!-- Main Heading Section -->
+  <div class="about-us-header">
+    <h1 class="about-us-main-heading">{{ section.settings.main_heading }}</h1>
+    <div class="about-us-main-description">
+      {{ section.settings.main_description }}
     </div>
+  </div>
 
-    <!-- Grid Content Blocks -->
-    <div class="about-us-grid">
-        {% for block in section.blocks %}
-        {% case block.type %}
+  <!-- Grid Content Blocks -->
+  <div class="about-us-grid">
+    {% for block in section.blocks %}
+      {% case block.type %}
         {% when 'text_image' %}
-        <div class="about-us-grid-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}"
-            {{ block.shopify_attributes }}>
+          <div class="about-us-grid-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}" {{ block.shopify_attributes }}>
             <div class="grid-text-content">
-                <div class="section-organizer">
-                    <div class="section-label">{{ block.settings.section_label }}</div>
-                    <h2 class="section-heading">{{ block.settings.heading }}</h2>
-                    <div class="section-content">
-                        {{ block.settings.content }}
-                    </div>                    
+              <div class="section-organizer">
+                <div class="section-label">{{ block.settings.section_label }}</div>
+                <h2 class="section-heading">{{ block.settings.heading }}</h2>
+                <div class="section-content">
+                  {{ block.settings.content }}
                 </div>
+              </div>
 
             </div>
             <div class="grid-image-container">
-                {% if block.settings.image %}
-                <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.heading }}"
-                    class="grid-image">
-                {% else %}
+              {% if block.settings.image %}
+                <img
+                  src="{{ block.settings.image | img_url: 'master' }}"
+                  alt="{{ block.settings.heading }}"
+                  class="grid-image">
+              {% else %}
                 <div class="grid-image-placeholder">
-                    <span>Image</span>
+                  <span>Image</span>
                 </div>
-                {% endif %}
+              {% endif %}
             </div>
-        </div>
+          </div>
 
         {% when 'large_text_image' %}
-        <div class="about-us-grid-item large-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}"
-            {{ block.shopify_attributes }}>
+          <div class="about-us-grid-item large-item {% if block.settings.layout == 'image_left' %}image-left{% else %}image-right{% endif %}" {{ block.shopify_attributes }}>
             <div class="grid-text-content">
-                <div class="section-organizer">
-                    <div class="section-label">{{ block.settings.section_label }}</div>
-                    <h2 class="section-heading">{{ block.settings.heading }}</h2>
-                    <div class="section-content">
-                        {{ block.settings.content }}
-                    </div>                    
+              <div class="section-organizer">
+                <div class="section-label">{{ block.settings.section_label }}</div>
+                <h2 class="section-heading">{{ block.settings.heading }}</h2>
+                <div class="section-content">
+                  {{ block.settings.content }}
                 </div>
+              </div>
 
             </div>
             <div class="grid-image-container">
-                {% if block.settings.image %}
-                <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.heading }}"
-                    class="grid-image">
-                {% else %}
+              {% if block.settings.image %}
+                <img
+                  src="{{ block.settings.image | img_url: 'master' }}"
+                  alt="{{ block.settings.heading }}"
+                  class="grid-image">
+              {% else %}
                 <div class="grid-image-placeholder large-placeholder">
-                    <span>Image</span>
+                  <span>Image</span>
                 </div>
-                {% endif %}
+              {% endif %}
             </div>
-        </div>
+          </div>
 
         {% when 'quote' %}
-        <div class="about-us-quote-container" {{ block.shopify_attributes }}>
+          <div class="about-us-quote-container" {{ block.shopify_attributes }}>
             <div class="quote-inner">
-                <h3 class="quote-heading">{{ block.settings.heading }}</h3>
-                <div class="quote-content">
-                    {{ block.settings.quote_text }}
-                </div>
+              <h3 class="quote-heading">{{ block.settings.heading }}</h3>
+              <div class="quote-content">
+                {{ block.settings.quote_text }}
+              </div>
             </div>
-        </div>
-        {% endcase %}
-        {% endfor %}
-    </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
 
-    <!-- Additional Content Section (Optional) -->
-    {% if section.settings.additional_content != blank %}
+  <!-- Additional Content Section (Optional) -->
+  {% if section.settings.additional_content != blank %}
     <div class="about-us-additional-content">
-        {{ section.settings.additional_content }}
+      {{ section.settings.additional_content }}
     </div>
-    {% endif %}
+  {% endif %}
 
-    <!-- Bottom Image -->
-    {% if section.settings.bottom_image %}
+  <!-- Bottom Image -->
+  {% if section.settings.bottom_image %}
     <div class="about-us-bottom-image">
-        <img src="{{ section.settings.bottom_image | img_url: 'master' }}" alt="Tashola Jewelry" class="bottom-image">
+      <img
+        src="{{ section.settings.bottom_image | img_url: 'master' }}"
+        alt="Tashola Jewelry"
+        class="bottom-image">
     </div>
-    {% endif %}
+  {% endif %}
 </div>
 
 <style>
-    .breadcrumbs-container {
-        /* max-width: 1200px; */
-        /* margin: 0 auto; */
-        /* padding: 2.5rem 3.75rem 0; */
-        /* margin-top: var(--header-height); */
-        background-color: #F6F4F3;
-    }
+  .breadcrumbs-container {
+    background-color: #F6F4F3;
+  }
 
-    .about-us-container {
-        /* max-width: 1200px; */
-        margin: 0 auto;
-        padding: 2.5rem 3.75rem 6.5rem;
-        background-color: #F6F4F3;
-    }
+  .about-us-container {
+    margin: 0 auto;
+    padding: 2.5rem 3.75rem 6.5rem;
+    background-color: #F6F4F3;
+  }
 
-    /* Header Section */
-    .about-us-header {
-        margin-bottom: 4.5rem;
-        max-width: 100%;
-        text-align: center;
-    }
+  /* Header Section */
+  .about-us-header {
+    margin-bottom: 4.5rem;
+    max-width: 100%;
+    text-align: center;
+  }
 
-    .about-us-main-heading {
-        font-family: var(--font-heading);
-        font-size: 2.75rem;
-        color: var(--color-text);
-        margin: 0 0 1.5rem;
-        font-weight: 600;
-    }
+  .about-us-main-heading {
+    font-family: var(--font-heading);
+    font-size: 2.75rem;
+    color: var(--color-text);
+    margin: 0 0 1.5rem;
+    font-weight: 600;
+  }
 
-    .about-us-main-description {
-        text-align: left;
-        font-family: var(--font-heading);
-        font-size: 1.125rem;
-        line-height: 1.6;
-        color: var(--color-text);
-        max-width: 900px;
-        margin: 0 auto;
-    }
+  .about-us-main-description {
+    text-align: left;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    max-width: 900px;
+    margin: 0 auto;
+  }
 
-    /* Grid Layout */
-    .about-us-grid {
-        display: flex;
-        flex-direction: column;
-        /* Removed gap here to eliminate space between grid items */
-    }
+  /* Grid Layout */
+  .about-us-grid {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .about-us-grid-item {
-        display: flex;
-        /* gap: 4rem; */
-        align-items: center;
-        /* padding: 3rem 0; */
-        /* Added padding instead of margin to maintain spacing but eliminate gaps */
-    }
+  .about-us-grid-item {
+    display: flex;
+    align-items: center;
+  }
 
-    /* Large grid item - taller than regular items */
-    .about-us-grid-item.large-item {
-        /* padding: 5rem 0; */
-        /* Increased padding for more height */
-    }
+  .about-us-grid-item.large-item {}
 
-    .image-right {
-        flex-direction: row;
-    }
+.image-right {
+  flex-direction: row;
+}
 
-    .image-left {
-        flex-direction: row-reverse;
-    }
+.image-left {
+  flex-direction: row-reverse;
+}
 
-    .grid-text-content {
-        display: flex;
-        flex-direction: column;
-        /* justify-content: flex-start; */
-        align-items: center;
-        width: 50%; 
-    }
+.grid-text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
 
-    .grid-image-container {
-        width: 50%;
-    }
+.grid-image-container {
+  width: 50%;
+}
 
-    /* Adjust the image container for the large grid item */
-    .large-item .grid-image-container {
-        /* More height for larger images */
-        min-height: 450px;
-        display: flex;
-        align-items: center;
-    }
+.large-item .grid-image-container {
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+}
 
-    .large-placeholder {
-        padding-bottom: 150% !important;
-        /* Make placeholder taller for large items */
-    }
+.large-placeholder {
+  padding-bottom: 150% !important;
+}
 
-    .section-organizer {
-        display: flex;
-        flex-direction: column;
-    }
+.section-organizer {
+  display: flex;
+  flex-direction: column;
+}
 
 
-    .section-label {
-        font-family: var(--font-heading);
-        font-size: 0.875rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: var(--color-text);
-        margin-bottom: 0.75rem;
-    }
+.section-label {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+}
 
-    .section-heading {
-        font-family: var(--font-heading);
-        font-size: 2rem;
-        color: var(--color-text);
-        margin: 0 0 1.25rem;
-        font-weight: 600;
-    }
+.section-heading {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-text);
+  margin: 0 0 1.25rem;
+  font-weight: 600;
+}
 
-    .section-content {
-        font-family: var(--font-heading);
-        font-size: 1.125rem;
-        line-height: 1.6;
-        color: var(--color-text);
-        max-width: 528px;
-    }
+.section-content {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  max-width: 528px;
+}
 
-    .grid-image {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
+.grid-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-    .grid-image-placeholder {
-        width: 100%;
-        height: 0;
-        padding-bottom: 100%;
-        background-color: #E0E0E0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-heading);
-        color: #666;
-    }
+.grid-image-placeholder {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background-color: #E0E0E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  color: #666;
+}
 
-    /* Quote Section */
-    .about-us-quote-container {
-        display: flex;
-        justify-content: center;
-        margin: 4rem 0;
-        /* text-align: center; */
-        }
+.about-us-quote-container {
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0;
+}
 
-    .quote-inner {
-        display: flex;
-        flex-direction: column;
-        justify-items: center;
-        align-items: center;
-        max-width: 900px;
-        /* margin: 0 auto; */
-        /* position: relative; */
-        padding: 80px 50px 50px 50px;
-        border-top: 1px solid rgba(55, 55, 54, 0.1);
-        border-bottom: 1px solid rgba(55, 55, 54, 0.1);
-        border-left: 1px solid rgba(55, 55, 54, 0.1);
-        border-right: 1px solid rgba(55, 55, 54, 0.1);
-    }
+.quote-inner {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  max-width: 900px;
+  padding: 80px 50px 50px;
+  border-top: 1px solid rgba(55, 55, 54, 0.1);
+  border-bottom: 1px solid rgba(55, 55, 54, 0.1);
+  border-left: 1px solid rgba(55, 55, 54, 0.1);
+  border-right: 1px solid rgba(55, 55, 54, 0.1);
+}
 
-    .quote-heading {
-        font-family: var(--font-heading);
-        font-size: 1.875rem;
-        color: var(--color-text);
-        margin: 0 0 1.5rem;
-        font-weight: 600;
-    }
+.quote-heading {
+  font-family: var(--font-heading);
+  font-size: 1.875rem;
+  color: var(--color-text);
+  margin: 0 0 1.5rem;
+  font-weight: 600;
+}
 
-    .quote-content {
-        font-family: var(--font-heading);
-        font-size: 1.125rem;
-        line-height: 1.6;
-        color: var(--color-text);
-    }
+.quote-content {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-text);
+}
 
-    /* Additional Content */
-    .about-us-additional-content {
-        margin: 4rem 0;
-        font-family: var(--font-heading);
-        font-size: 1.125rem;
-        line-height: 1.6;
-        color: var(--color-text);
-    }
+/* Additional Content */
+.about-us-additional-content {
+  margin: 4rem 0;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-text);
+}
 
-    /* Bottom Image */
-    .about-us-bottom-image {
-        margin-top: 3rem;
-        width: 100%;
-    }
+/* Bottom Image */
+.about-us-bottom-image {
+  margin-top: 3rem;
+  width: 100%;
+}
 
-    .bottom-image {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
+.bottom-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-    /* Responsive Styles */
-    @media screen and (max-width: 992px) {
-        .breadcrumbs-container {
-            padding: 0 2rem;
-        }
+/* Responsive Styles */
+@media screen and (max-width: 992px) {
+  .breadcrumbs-container {
+    padding: 0 2rem;
+  }
 
-        .about-us-container {
-            padding: 2rem 2rem 4rem;
-        }
+  .about-us-container {
+    padding: 2rem 2rem 4rem;
+  }
 
-        .about-us-grid-item {
-            gap: 3rem;
-        }
+  .about-us-grid-item {
+    gap: 3rem;
+  }
 
-        .about-us-main-heading {
-            font-size: 2.25rem;
-        }
+  .about-us-main-heading {
+    font-size: 2.25rem;
+  }
 
-        .section-heading {
-            font-size: 1.75rem;
-        }
-    }
+  .section-heading {
+    font-size: 1.75rem;
+  }
+}
 
-    @media screen and (max-width: 768px) {
-        .breadcrumbs-container {
-            padding: 0 1.5rem;
-        }
+@media screen and (max-width: 768px) {
+  .breadcrumbs-container {
+    padding: 0 1.5rem;
+  }
 
-        .about-us-container {
-            padding: 1.5rem 1.5rem 3rem;
-        }
+  .about-us-container {
+    padding: 1.5rem 1.5rem 3rem;
+  }
 
-        .about-us-grid-item {
-            flex-direction: column;
-            gap: 2rem;
-            padding: 2.5rem 0;
-            /* Reduced padding on mobile */
-        }
+  .about-us-grid-item {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    /* Reduced padding on mobile */
+  }
 
-        .about-us-grid-item.large-item {
-            padding: 3.5rem 0;
-            /* Still larger than regular items but reduced for mobile */
-        }
+  .about-us-grid-item.large-item {
+    padding: 3.5rem 0;
+    /* Still larger than regular items but reduced for mobile */
+  }
 
-        .grid-text-content,
-        .grid-image-container {
-            width: 100%;
-        }
+  .grid-text-content,
+  .grid-image-container {
+    width: 100%;
+  }
 
-        .large-item .grid-image-container {
-            min-height: 350px;
-            /* Slightly smaller on mobile but still larger than regular items */
-        }
+  .large-item .grid-image-container {
+    min-height: 350px;
+    /* Slightly smaller on mobile but still larger than regular items */
+  }
 
-        .about-us-main-heading {
-            font-size: 2rem;
-        }
+  .about-us-main-heading {
+    font-size: 2rem;
+  }
 
-        .about-us-main-description {
-            font-size: 1rem;
-        }
+  .about-us-main-description {
+    font-size: 1rem;
+  }
 
-        .quote-heading {
-            font-size: 1.5rem;
-        }
+  .quote-heading {
+    font-size: 1.5rem;
+  }
 
-        .quote-content {
-            font-size: 1rem;
-        }
+  .quote-content {
+    font-size: 1rem;
+  }
 
-        .section-heading {
-            font-size: 1.5rem;
-        }
-    }
+  .section-heading {
+    font-size: 1.5rem;
+  }
+}
 
-    @media screen and (max-width: 576px) {
-        .breadcrumbs-container {
-            padding: 0 1rem;
-        }
+@media screen and (max-width: 576px) {
+  .breadcrumbs-container {
+    padding: 0 1rem;
+  }
 
-        .about-us-container {
-            margin-top: 5rem;
-            padding: 1rem 1rem 2rem;
-        }
+  .about-us-container {
+    margin-top: 5rem;
+    padding: 1rem 1rem 2rem;
+  }
 
-        .about-us-main-heading {
-            font-size: 1.75rem;
-        }
+  .about-us-main-heading {
+    font-size: 1.75rem;
+  }
 
-        .section-heading {
-            font-size: 1.375rem;
-        }
+  .section-heading {
+    font-size: 1.375rem;
+  }
 
-        .about-us-header {
-            margin-bottom: 3rem;
-        }
+  .about-us-header {
+    margin-bottom: 3rem;
+  }
 
-        .about-us-grid {
-            gap: 3rem;
-        }
+  .about-us-grid {
+    gap: 3rem;
+  }
 
-        .about-us-quote-container {
-            padding: 2rem 0;
-        }
-    }
+  .about-us-quote-container {
+    padding: 2rem 0;
+  }
+}
 </style>

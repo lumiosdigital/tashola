@@ -1,4 +1,3 @@
-// mega-menu.js - Desktop mega menu functionality
 document.addEventListener("DOMContentLoaded", function() {
   // Only initialize on desktop
   if (window.innerWidth > 768) {

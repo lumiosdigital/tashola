@@ -1,4 +1,3 @@
-// search-overlay.js
 document.addEventListener('DOMContentLoaded', function() {
   const searchButton = document.querySelector('.search-button');
   const searchOverlay = document.getElementById('search-overlay');

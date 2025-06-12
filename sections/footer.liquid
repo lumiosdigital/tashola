@@ -64,13 +64,6 @@
   <div class="footer-container">
     <!-- Logo and Copyright Section -->
     <div class="footer-branding">
-      {% comment %} <a href="{{ routes.root_url }}" class="footer-logo-link">
-                                                                                                                                        {% if section.settings.logo %}
-                                                                                                                                          {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'footer-logo', loading: 'lazy' }}
-                                                                                                                                        {% else %}
-                                                                                                                                          <h2 class="h2 footer-logo-text">{{ shop.name }}</h2>
-                                                                                                                                        {% endif %}
-                                                                                                      </a> {% endcomment %}
       <div class="footer-logo-link">
         <a href="{{ routes.root_url }}">{% render 'main-logo' %}</a>
       </div>
@@ -123,7 +116,7 @@
             <a href="{{ routes.pages_url }}/pages/delivery" class="footer-menu-link">Delivery</a>
           </li>
           <li>
-            <a href="{{ routes.pages_url }}/pages/terms-and-conditions" class="footer-menu-link">Terms &                 
+            <a href="{{ routes.pages_url }}/pages/terms-and-conditions" class="footer-menu-link">Terms &                     
               Conditions</a>
           </li>
           <li>
@@ -231,7 +224,6 @@
     position: relative;
     margin-left: 3.5rem;
     margin-right: 3.5rem;
-    /* max-width: 100vw; */
   }
 
   .lumios-tag {
@@ -240,7 +232,6 @@
     justify-content: end;
     font-size: small;
     color: #bdbab9;
-    /* margin-right: 10.5rem; */
     gap: 3px;
   }
 
@@ -255,9 +246,6 @@
   }
 
   .footer-container {
-    /* max-width: 1200px; */
-    /* margin: 0 auto; */
-    /* padding: 0 1rem; */
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     gap: 10rem;
@@ -348,7 +336,6 @@
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    /* background-color: #f8d4c8; */
     color: #fff;
     transition: background-color 0.2s ease;
   }
@@ -357,20 +344,12 @@
     transform: scale(1.1);
   }
 
-
-  /*
-   .social-icon-link:hover {
-   background-color: #f0b09b;
-   }
-*/
-
   .social-icon-link svg {
     width: 1.5rem;
     height: 1.5rem;
     fill: currentColor;
   }
 
-  /* Payment Methods Section - Repositioned */
   .payment-methods-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -500,8 +479,6 @@
       margin-top: 2rem;
       display: flex;
       flex-direction: column;
-      /* justify-content: center; */
-      /* align-self: center; */
       text-align: center;
       width: 100%;
     }

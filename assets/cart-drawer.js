@@ -1,4 +1,3 @@
-// Modified Cart Script with Swym Wishlist Plus Integration
 document.addEventListener('DOMContentLoaded', function() {
   // Debug mode
   const DEBUG = true;
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   log('Script loaded');
   
-  // IMPORTANT: Set this to match your section file name (without .liquid)
   const CART_SECTION_ID = 'cart-drawer-section';
   
   // Track add to cart buttons to prevent double binding
@@ -20,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const cartDrawer = document.getElementById('cart-drawer') || 
                      document.querySelector('.cart-drawer');
   
-  // Backdrop element - get a reference but don't modify it
+  // Backdrop element
   const getBackdrop = () => document.querySelector('.cart-drawer-backdrop');
   
   if (!cartDrawer) {
@@ -56,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSwymEventListeners();
   }
   
-  // Banner slider functionality - AUTOSLIDE DISABLED BY DEFAULT
+  // Banner slider functionality
   function initBannerSlider() {
     const bannerContainer = document.querySelector('.cart-banner-container');
     if (!bannerContainer) {

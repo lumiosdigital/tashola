@@ -1,248 +1,241 @@
 {% schema %}
-{
-"name": "Showroom Content",
-"settings": [
-{
-"type": "image_picker",
-"id": "showroom_image",
-"label": "Showroom Image"
-},
-{
-"type": "text",
-"id": "heading",
-"label": "Heading",
-"default": "Finding Us"
-},
-{
-"type": "richtext",
-"id": "description",
-"label": "Brand Description",
-"default": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>"
-},
-{
-"type": "text",
-"id": "location_name",
-"label": "Location Name",
-"default": "Tashola Showroom"
-},
-{
-"type": "text",
-"id": "address",
-"label": "Address",
-"default": "123 Oxford Street, London, W1D 1LT, United Kingdom"
-},
-{
-"type": "text",
-"id": "hours_weekday",
-"label": "Weekday Hours",
-"default": "Monday – Friday: 10:00 AM – 7:00 PM"
-},
-{
-"type": "text",
-"id": "hours_saturday",
-"label": "Saturday Hours",
-"default": "Saturday: 11:00 AM – 6:00 PM"
-},
-{
-"type": "text",
-"id": "hours_sunday",
-"label": "Sunday Hours",
-"default": "Sunday: Closed"
-}
-],
-"presets": [
-{
-"name": "Showroom Content"
-}
-]
-}
+  {
+    "name": "Showroom Content",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "showroom_image",
+        "label": "Showroom Image"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Finding Us"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Brand Description",
+        "default": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>"
+      },
+      {
+        "type": "text",
+        "id": "location_name",
+        "label": "Location Name",
+        "default": "Tashola Showroom"
+      }, {
+        "type": "text",
+        "id": "address",
+        "label": "Address",
+        "default": "123 Oxford Street, London, W1D 1LT, United Kingdom"
+      }, {
+        "type": "text",
+        "id": "hours_weekday",
+        "label": "Weekday Hours",
+        "default": "Monday – Friday: 10:00 AM – 7:00 PM"
+      }, {
+        "type": "text",
+        "id": "hours_saturday",
+        "label": "Saturday Hours",
+        "default": "Saturday: 11:00 AM – 6:00 PM"
+      }, {
+        "type": "text",
+        "id": "hours_sunday",
+        "label": "Sunday Hours",
+        "default": "Sunday: Closed"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Showroom Content"
+      }
+    ]
+  }
 {% endschema %}
 
 <div class="breadcrumbs-container">
-    {% render 'breadcrumbs' %}
+  {% render 'breadcrumbs' %}
 </div>
 
 <div class="showroom-page-container">
-    <div class="showroom-image-container">
-        {% if section.settings.showroom_image %}
-        <img src="{{ section.settings.showroom_image | img_url: 'master' }}" alt="Tashola Showroom"
-            class="showroom-image">
-        {% else %}
-        <div class="showroom-image-placeholder">
-            <span>Showroom Image</span>
-        </div>
-        {% endif %}
+  <div class="showroom-image-container">
+    {% if section.settings.showroom_image %}
+      <img
+        src="{{ section.settings.showroom_image | img_url: 'master' }}"
+        alt="Tashola Showroom"
+        class="showroom-image">
+    {% else %}
+      <div class="showroom-image-placeholder">
+        <span>Showroom Image</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="showroom-content">
+    <h1 class="showroom-heading">{{ section.settings.heading }}</h1>
+
+    <div class="showroom-description">
+      {{ section.settings.description }}
     </div>
 
-    <div class="showroom-content">
-        <h1 class="showroom-heading">{{ section.settings.heading }}</h1>
-
-        <div class="showroom-description">
-            {{ section.settings.description }}
-        </div>
-
-        <div class="showroom-location">
-            {% render 'icon-location-pink' %}
-            <div class="showroom-location-text">
-                <p class="showroom-name">{{ section.settings.location_name }}</p>
-                <p class="showroom-address">{{ section.settings.address }}</p>
-            </div>
-        </div>
-
-        <div class="showroom-hours">
-            {% render 'icon-clock' %}
-            <div class="showroom-hours-text">
-                <p>{{ section.settings.hours_weekday }}</p>
-                <p>{{ section.settings.hours_saturday }}</p>
-                <p>{{ section.settings.hours_sunday }}</p>
-            </div>
-        </div>
+    <div class="showroom-location">
+      {% render 'icon-location-pink' %}
+      <div class="showroom-location-text">
+        <p class="showroom-name">{{ section.settings.location_name }}</p>
+        <p class="showroom-address">{{ section.settings.address }}</p>
+      </div>
     </div>
+
+    <div class="showroom-hours">
+      {% render 'icon-clock' %}
+      <div class="showroom-hours-text">
+        <p>{{ section.settings.hours_weekday }}</p>
+        <p>{{ section.settings.hours_saturday }}</p>
+        <p>{{ section.settings.hours_sunday }}</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
+  .breadcrumbs-container {
+    background-color: #F6F4F3;
+  }
+
+  .showroom-page-container {
+    display: flex;
+    margin: 5rem auto 0;
+    padding: 2.5rem 3.75rem 6.5rem;
+    gap: 3.75rem;
+    background-color: #F6F4F3;
+  }
+
+  .showroom-image-container {
+    flex: 1;
+    max-width: 56%;
+  }
+
+  .showroom-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .showroom-image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background-color: #E0E0E0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    color: #666;
+  }
+
+  .showroom-content {
+    flex: 1;
+    max-width: 44%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+  }
+
+  .showroom-heading {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+  }
+
+  .showroom-description {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    line-height: 140%;
+    letter-spacing: -1% !important;
+    color: var(--color-text);
+    max-width: 550px;
+  }
+
+  .showroom-location,
+  .showroom-hours {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .showroom-name {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    margin: 0 0 0.25rem;
+    font-size: 1.125rem;
+    line-height: 140%;
+  }
+
+  .showroom-address {
+    font-family: var(--font-heading);
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 140%;
+  }
+
+  .showroom-hours-text p {
+    font-family: var(--font-heading);
+    margin: 0 0 0.25rem;
+    font-size: 1.125rem;
+    line-height: 140%;
+    letter-spacing: -1%;
+  }
+
+  .showroom-hours-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 992px) {
     .breadcrumbs-container {
-        /* max-width: 1200px; */
-        /* margin: 0 auto; */
-        /* padding: 2.5rem 3.75rem; */
-        /* margin-top: var(--header-height); */
-        background-color: #F6F4F3;
+      padding: 0 2rem;
     }
 
     .showroom-page-container {
-        display: flex;
-        /* max-width: 1200px; */
-        margin: 5rem auto 0;
-        padding: 2.5rem 3.75rem 6.5rem;
-        gap: 3.75rem;
-        background-color: #F6F4F3;
+      padding: 3.75rem 2rem;
+      gap: 2.5rem;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .breadcrumbs-container {
+      padding: 0 1.5rem;
     }
 
-    .showroom-image-container {
-        flex: 1;
-        max-width: 56%;
+    .showroom-page-container {
+      flex-direction: column;
+      padding: 2.5rem 1.5rem;
     }
 
-    .showroom-image {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .showroom-image-placeholder {
-        width: 100%;
-        height: 100%;
-        min-height: 400px;
-        background-color: #E0E0E0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-heading);
-        color: #666;
-    }
-
+    .showroom-image-container,
     .showroom-content {
-        flex: 1;
-        max-width: 44%;
-        display: flex;
-        flex-direction: column;
-        gap: 1.875rem;
+      max-width: 100%;
     }
 
     .showroom-heading {
-        font-family: var(--font-heading);
-        font-size: 2.25rem;
-        color: var(--color-text);
-        margin: 0 0 0.5rem;
-        font-weight: 600;
+      font-size: 1.875rem;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .breadcrumbs-container {
+      padding: 0 1rem;
     }
 
-    .showroom-description {
-        font-family: var(--font-heading);
-        font-size: 1.125rem;
-        line-height: 140%;
-        letter-spacing: -1% !important;
-        color: var(--color-text);
-        max-width: 550px;
+    .showroom-page-container {
+      padding: 2rem 1rem;
     }
 
-    .showroom-location,
-    .showroom-hours {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
+    .showroom-heading {
+      font-size: 1.5rem;
     }
-
-    .showroom-name {
-        font-family: var(--font-heading);
-        font-weight: 500;
-        margin: 0 0 0.25rem;
-        font-size: 1.125rem;
-        line-height: 140%;
-    }
-
-    .showroom-address {
-        font-family: var(--font-heading);
-        margin: 0;
-        font-size: 1.125rem;
-        line-height: 140%;
-    }
-
-    .showroom-hours-text p {
-        font-family: var(--font-heading);
-        margin: 0 0 0.25rem;
-        font-size: 1.125rem;
-        line-height: 140%;
-        letter-spacing: -1%;
-    }
-
-    .showroom-hours-text p:last-child {
-        margin-bottom: 0;
-    }
-
-    @media screen and (max-width: 992px) {
-        .breadcrumbs-container {
-            padding: 0 2rem;
-        }
-
-        .showroom-page-container {
-            padding: 3.75rem 2rem;
-            gap: 2.5rem;
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-        .breadcrumbs-container {
-            padding: 0 1.5rem;
-        }
-
-        .showroom-page-container {
-            flex-direction: column;
-            padding: 2.5rem 1.5rem;
-        }
-
-        .showroom-image-container,
-        .showroom-content {
-            max-width: 100%;
-        }
-
-        .showroom-heading {
-            font-size: 1.875rem;
-        }
-    }
-
-    @media screen and (max-width: 576px) {
-        .breadcrumbs-container {
-            padding: 0 1rem;
-        }
-
-        .showroom-page-container {
-            padding: 2rem 1rem;
-        }
-
-        .showroom-heading {
-            font-size: 1.5rem;
-        }
-    }
+  }
 </style>

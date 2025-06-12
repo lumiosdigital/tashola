@@ -1,4 +1,3 @@
-// mobile-nav.js - With dynamic collections and personalization
 document.addEventListener("DOMContentLoaded", function() {
   // Create mobile menu toggle button if it doesn't exist
   if (!document.querySelector('.mobile-menu-toggle')) {
