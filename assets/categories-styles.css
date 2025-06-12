@@ -485,11 +485,19 @@ button:focus {
     }
 }
 
+
 /* Responsive styles */
 @media (max-width: 1200px) {
     .category-grid {
         grid-auto-rows: 35rem;
     }
+}
+
+
+@media (max-width: 1024px) {
+    .category-grid {
+            grid-auto-rows: 52.965rem;
+        }
 }
 
 @media (max-width: 992px) {
