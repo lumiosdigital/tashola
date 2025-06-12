@@ -18,7 +18,7 @@
             "background_type": "image",
             "text_color": "black",
             "desktop_vertical_position": "center",
-            "mobile_vertical_position": "center",
+            "mobile_vertical_position": "bottom",
             "image": "shopify://shop_images/Shot_15_0109.png",
             "mobile_image": "shopify://shop_images/Shot_02_0059.png",
             "overlay_opacity": 0.4,
