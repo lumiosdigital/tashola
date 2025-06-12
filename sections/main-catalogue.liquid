@@ -73,57 +73,62 @@ console.log('First product primary category:', '{{ collection.products.first.met
                 <span>Filters</span>
             </button>
         </div>
-<!-- Dynamic Design Filter Pills -->
-<div class="design-filters">
-    {% comment %} Check if this is a collection type that needs product type filters {% endcomment %}
-    {% assign collection_type = collection.metafields.custom.collection_type | default: 'category' %}
-    
-    {% if collection_type == 'collection' %}
-        {% comment %} Product type filters will be created dynamically by JavaScript {% endcomment %}
-        {% comment %} Create a placeholder "All" button that will be replaced {% endcomment %}
-        <button class="design-filter-button active" data-filter-value="all" data-filter-param="">All</button>
-    {% else %}
-        {% comment %} Original design filter logic {% endcomment %}
-        {% comment %} Always show "All" button first {% endcomment %}
-        <button class="design-filter-button active" data-filter-value="all" data-filter-param="">All</button>
 
-        {% comment %} Determine which design filter to show based on collection {% endcomment %}
-        {% assign design_filter = null %}
-        {% assign collection_handle = collection.handle | downcase %}
+        <!-- Wrap design filters in a container for scroll indicators -->
+        <div class="design-filters-container">
+            <div class="design-filters">
+                {% comment %} Check if this is a collection type that needs product type filters {% endcomment %}
+                {% assign collection_type = collection.metafields.custom.collection_type | default: 'category' %}
+                
+                {% if collection_type == 'collection' %}
+                    {% comment %} Product type filters will be created dynamically by JavaScript {% endcomment %}
+                    {% comment %} Create a placeholder "All" button that will be replaced {% endcomment %}
+                    <button class="design-filter-button active" data-filter-value="all" data-filter-param="">All</button>
+                {% else %}
+                    {% comment %} Original design filter logic {% endcomment %}
+                    {% comment %} Always show "All" button first {% endcomment %}
+                    <button class="design-filter-button active" data-filter-value="all" data-filter-param="">All</button>
 
-        {% comment %} Check collection handle to determine design type {% endcomment %}
-        {% if collection_handle contains 'earring' %}
-        {% assign design_metafield = 'earring-design' %}
-        {% elsif collection_handle contains 'ring' %}
-        {% assign design_metafield = 'ring-design' %}
-        {% elsif collection_handle contains 'necklace' %}
-        {% assign design_metafield = 'necklace-design' %}
-        {% elsif collection_handle contains 'bracelet' %}
-        {% assign design_metafield = 'bracelet-design' %}
-        {% endif %}
+                    {% comment %} Determine which design filter to show based on collection {% endcomment %}
+                    {% assign design_filter = null %}
+                    {% assign collection_handle = collection.handle | downcase %}
 
-        {% comment %} Find the appropriate design filter {% endcomment %}
-        {% if design_metafield %}
-        {% for filter in collection.filters %}
-        {% if filter.param_name contains design_metafield %}
-        {% assign design_filter = filter %}
-        {% break %}
-        {% endif %}
-        {% endfor %}
-        {% endif %}
+                    {% comment %} Check collection handle to determine design type {% endcomment %}
+                    {% if collection_handle contains 'earring' %}
+                    {% assign design_metafield = 'earring-design' %}
+                    {% elsif collection_handle contains 'ring' %}
+                    {% assign design_metafield = 'ring-design' %}
+                    {% elsif collection_handle contains 'necklace' %}
+                    {% assign design_metafield = 'necklace-design' %}
+                    {% elsif collection_handle contains 'bracelet' %}
+                    {% assign design_metafield = 'bracelet-design' %}
+                    {% endif %}
 
-        {% comment %} Display design options if found {% endcomment %}
-        {% if design_filter %}
-        {% assign sorted_values = design_filter.values | sort: 'label' %}
-        {% for value in sorted_values %}
-        <button class="design-filter-button {% if value.active %}active{% endif %}" data-filter-value="{{ value.value }}"
-            data-filter-param="{{ design_filter.param_name }}">
-            {{ value.label }}
-        </button>
-        {% endfor %}
-        {% endif %}
-    {% endif %}
-</div>
+                    {% comment %} Find the appropriate design filter {% endcomment %}
+                    {% if design_metafield %}
+                    {% for filter in collection.filters %}
+                    {% if filter.param_name contains design_metafield %}
+                    {% assign design_filter = filter %}
+                    {% break %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+
+                    {% comment %} Display design options if found {% endcomment %}
+                    {% if design_filter %}
+                    {% assign sorted_values = design_filter.values | sort: 'label' %}
+                    {% for value in sorted_values %}
+                    <button class="design-filter-button {% if value.active %}active{% endif %}" data-filter-value="{{ value.value }}"
+                        data-filter-param="{{ design_filter.param_name }}">
+                        {{ value.label }}
+                    </button>
+                    {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
+            <!-- Scroll indicators will be added dynamically by JavaScript -->
+        </div>
+
         <!-- Sort dropdown -->
         <div class="sort-dropdown-wrapper">
             <button class="sort-button" aria-label="Sort products" data-sort-trigger aria-expanded="false"

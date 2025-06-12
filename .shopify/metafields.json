@@ -122,16 +122,6 @@
       }
     },
     {
-      "key": "color_variants",
-      "namespace": "custom",
-      "name": "Color Variant",
-      "description": "This will be used to link products with \"sibling\" products of different colours.",
-      "type": {
-        "name": "list.product_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
       "key": "product_content",
       "namespace": "custom",
       "name": "Product Content",
@@ -159,6 +149,26 @@
       "type": {
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "color-variants",
+      "namespace": "custom",
+      "name": "Variant",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "product_group",
+      "namespace": "custom",
+      "name": "Product Group",
+      "description": "This will link products in order to show their variant.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     }
   ],

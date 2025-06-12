@@ -626,20 +626,36 @@ document.addEventListener('DOMContentLoaded', function() {
       window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
     }
     
-    // Initialize scroll indicators for design filters
+    // Updated JavaScript for responsive scroll indicators
     function initScrollIndicators() {
       const designFiltersContainer = document.querySelector('.design-filters');
       if (!designFiltersContainer) return;
       
       const buttons = designFiltersContainer.querySelectorAll('.design-filter-button');
       
-      // Only show indicators if there are more than 6 buttons
-      if (buttons.length <= 6) return;
+      // Only show indicators if there are more than 6 buttons and we're not on mobile/tablet
+      const isMobileOrTablet = window.matchMedia('(max-width: 768px)').matches;
+      if (buttons.length <= 6 || isMobileOrTablet) return;
       
-      // Find the parent container to position chevrons relative to it
-      const parentContainer = designFiltersContainer.parentElement;
+      // Find or create the parent container wrapper
+      let parentContainer = designFiltersContainer.parentElement;
       
-      // Create left chevron (positioned relative to parent, not the scrolling container)
+      // Create a wrapper if it doesn't exist
+      if (!parentContainer.classList.contains('design-filters-container')) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'design-filters-container';
+        designFiltersContainer.parentNode.insertBefore(wrapper, designFiltersContainer);
+        wrapper.appendChild(designFiltersContainer);
+        parentContainer = wrapper;
+      }
+      
+      // Remove any existing scroll indicators
+      const existingLeft = parentContainer.querySelector('.scroll-indicator-left');
+      const existingRight = parentContainer.querySelector('.scroll-indicator-right');
+      if (existingLeft) existingLeft.remove();
+      if (existingRight) existingRight.remove();
+      
+      // Create left chevron
       const leftChevron = document.createElement('button');
       leftChevron.className = 'scroll-indicator scroll-indicator-left';
       leftChevron.setAttribute('aria-label', 'Scroll left');
@@ -648,9 +664,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <path d="M15 18L9 12L15 6" stroke="#373736" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       `;
-      leftChevron.style.display = 'none';
       
-      // Create right chevron (positioned relative to parent, not the scrolling container)
+      // Create right chevron
       const rightChevron = document.createElement('button');
       rightChevron.className = 'scroll-indicator scroll-indicator-right';
       rightChevron.setAttribute('aria-label', 'Scroll right');
@@ -660,7 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </svg>
       `;
       
-      // Add chevrons to the parent container, not the scrolling container
+      // Add chevrons to the container
       parentContainer.appendChild(leftChevron);
       parentContainer.appendChild(rightChevron);
       
@@ -668,30 +683,26 @@ document.addEventListener('DOMContentLoaded', function() {
       setupScrollFunctionality(designFiltersContainer, leftChevron, rightChevron);
     }
     
-    // Setup scroll functionality for design filters
     function setupScrollFunctionality(container, leftChevron, rightChevron) {
       const scrollAmount = 120; // Amount to scroll per click
       let scrollInterval;
       
-      // Position the right chevron dynamically based on container width
-      function positionRightChevron() {
-        const containerRect = container.getBoundingClientRect();
-        const parentRect = container.parentElement.getBoundingClientRect();
-        const rightPosition = containerRect.right - parentRect.left - 28; // 28px is chevron width
-        rightChevron.style.left = rightPosition + 'px';
-      }
-      
-      // Update chevron visibility based on scroll position
+      // Update chevron visibility and positioning based on scroll position
       function updateChevronVisibility() {
         const isAtStart = container.scrollLeft <= 0;
         const isAtEnd = container.scrollLeft >= (container.scrollWidth - container.clientWidth - 5);
         
-        leftChevron.style.display = isAtStart ? 'none' : 'flex';
-        rightChevron.style.display = isAtEnd ? 'none' : 'flex';
+        // Show/hide chevrons based on scroll position
+        if (isAtStart) {
+          leftChevron.style.display = 'none';
+        } else {
+          leftChevron.style.display = 'flex';
+        }
         
-        // Update right chevron position
-        if (!isAtEnd) {
-          positionRightChevron();
+        if (isAtEnd) {
+          rightChevron.style.display = 'none';
+        } else {
+          rightChevron.style.display = 'flex';
         }
       }
       
@@ -740,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
         smoothScroll('right');
       });
       
-      // Touch support for mobile
+      // Touch support for mobile (though these should be hidden on mobile)
       leftChevron.addEventListener('touchstart', (e) => {
         e.preventDefault();
         startContinuousScroll('left');
@@ -758,16 +769,20 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Initial setup
       setTimeout(() => {
-        positionRightChevron();
         updateChevronVisibility();
       }, 100);
       
       // Update on window resize
       window.addEventListener('resize', () => {
-        setTimeout(() => {
-          positionRightChevron();
-          updateChevronVisibility();
-        }, 100);
+        const isMobileOrTablet = window.matchMedia('(max-width: 768px)').matches;
+        if (isMobileOrTablet) {
+          leftChevron.style.display = 'none';
+          rightChevron.style.display = 'none';
+        } else {
+          setTimeout(() => {
+            updateChevronVisibility();
+          }, 100);
+        }
       });
     }
     
