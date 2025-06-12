@@ -65,12 +65,12 @@
     <!-- Logo and Copyright Section -->
     <div class="footer-branding">
       {% comment %} <a href="{{ routes.root_url }}" class="footer-logo-link">
-                                                                                {% if section.settings.logo %}
-                                                                                  {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'footer-logo', loading: 'lazy' }}
-                                                                                {% else %}
-                                                                                  <h2 class="h2 footer-logo-text">{{ shop.name }}</h2>
-                                                                                {% endif %}
-                                                            </a> {% endcomment %}
+                                                                                                                                {% if section.settings.logo %}
+                                                                                                                                  {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'footer-logo', loading: 'lazy' }}
+                                                                                                                                {% else %}
+                                                                                                                                  <h2 class="h2 footer-logo-text">{{ shop.name }}</h2>
+                                                                                                                                {% endif %}
+                                                                                                </a> {% endcomment %}
       <div class="footer-logo-link">
         <a href="{{ routes.root_url }}">{% render 'main-logo' %}</a>
       </div>
@@ -123,7 +123,7 @@
             <a href="{{ routes.pages_url }}/pages/delivery" class="footer-menu-link">Delivery</a>
           </li>
           <li>
-            <a href="{{ routes.pages_url }}/pages/terms-and-conditions" class="footer-menu-link">Terms &          
+            <a href="{{ routes.pages_url }}/pages/terms-and-conditions" class="footer-menu-link">Terms &                
               Conditions</a>
           </li>
           <li>
@@ -471,9 +471,12 @@
     }
 
     .lumios-tag {
-      margin-top: 1rem;
+      margin-top: 2rem;
       display: flex;
       flex-direction: column;
+      /* justify-content: center; */
+      /* align-self: center; */
+      text-align: center;
       width: 100%;
     }
   }
