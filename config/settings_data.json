@@ -89,7 +89,7 @@
             "settings": {
               "section_label": "OUR PHILOSOPHY",
               "heading": "Jewelry That Speaks to You",
-              "content": "<p>We design with intention, creating pieces that inspire confidence and self-expression. Whether for everyday wear or life's special moments, Tashola jewelry is meant to be a part of your journey, elevating every look with effortless sophistication.</p>",
+              "content": "<p>Our designs are crafted with purpose, celebrating confidence and authentic self-expression. From daily wear to memorable occasions, Tashola jewellery is made to accompany you through it all, adding a touch of timeless style to every moment.</p>",
               "image": "shopify://shop_images/Shot_02_0059.png",
               "layout": "image_right"
             }
@@ -121,14 +121,14 @@
           "text_block_YPrjrQ": {
             "type": "text_block",
             "settings": {
-              "description": "<h3><strong>Ready to return your jewelry? Start here.</strong></h3><p>You have <strong>28 days</strong> from the date you receive your order to return it to us.<br/>To begin your return, please send us an email : </p><p><strong>Please note:</strong> We do not currently offer exchanges. If you'd like a different piece, simply return your item for a refund and place a new order at your convenience.</p>"
+              "description": "<h3><strong>Ready to return your jewelry? Start here.</strong></h3><p>You have <strong>28 days</strong> from the date you receive your order to return it to us.<br/>To begin your return, please send us an email : customer-service@tashola.com</p><p><strong>Please note:</strong> We do not currently offer exchanges. If you'd like a different piece, simply return your item for a refund and place a new order at your convenience.</p>"
             }
           },
           "faq_item_XNjM3G": {
             "type": "faq_item",
             "settings": {
               "question": "When can I return my jewelry?",
-              "answer": "<p>Please send back your jewelry within 28 days of receiving your order</p>",
+              "answer": "<p>Please send back your jewelry within 28 days of receiving your order. </p>",
               "expanded_by_default": false
             }
           },
