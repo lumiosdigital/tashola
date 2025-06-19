@@ -217,14 +217,14 @@
           "text_block_kWYmaJ": {
             "type": "text_block",
             "settings": {
-              "description": "<p>Our Frequently Asked Questions (FAQ)<strong> </strong>section is designed to provide quick answers to common customer inquiries. Whether you need help with orders, returns, shipping, payments, or general policies, this resource offers clear and straightforward solutions to save you time. If you don’t find the answer you’re looking for, our customer service team is happy to assist you further.</p>"
+              "description": ""
             }
           },
           "faq_item_MQXVJh": {
             "type": "faq_item",
             "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks. </p>",
+              "question": "How can I pay for my order?",
+              "answer": "<p>We accept the following payment methods through Shopify Payments:<br/></p><ul><li>Credit & Debit Cards: Visa, MasterCard, American Express, Maestro</li><li>Apple Pay</li><li>Google Pay</li><li>Shop Pay</li></ul><p></p><p>All payments are 100% secure and processed through Shopify’s encrypted payment system.<br/><br/>Your card will be charged at the time of checkout. You will receive an order confirmation by email once your payment has been approved.<br/><br/>If you experience any issues during checkout, feel free to contact our customer service team for assistance.</p>",
               "expanded_by_default": false
             }
           }
