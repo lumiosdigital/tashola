@@ -136,7 +136,7 @@
             "type": "faq_item",
             "settings": {
               "question": "What condition should the jewelry be in?",
-              "answer": "<p>All pieces must be returned unworn, undamaged, and in their original packaging. We carefully inspect each return—any items that show signs of wear or damage will be sent back to you. If your order arrived with any issues (e.g. missing, incorrect, or faulty items), please get in touch with us within 5 working days of delivery.</p>",
+              "answer": "<p>All pieces must be returned unworn, undamaged, and in their original packaging. We carefully inspect each return, any items that show signs of wear or damage will be sent back to you. </p><p>If your order arrived with any issues (e.g. missing, incorrect, or faulty items), please get in touch with us within 5 working days of delivery.</p><p></p><p>Important:<br/>Earrings cannot be returned or exchanged for hygiene reasons, even if unworn.</p>",
               "expanded_by_default": false
             }
           },
