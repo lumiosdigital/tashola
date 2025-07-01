@@ -71,7 +71,7 @@
             "layout_direction": "banner-left",
             "text_color": "white",
             "selected_collection": "earrings",
-            "featured_collection": "rings",
+            "featured_collection": "product-display-2",
             "collection_banner_image": "shopify://shop_images/Shot_12_0122.png"
           }
         },
