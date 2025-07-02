@@ -7,9 +7,10 @@
     <!-- NAVIGATION MENU -->
     <nav>
       {% for link in linklists.main-menu.links %}
-        <div class="nav-link-container">
+        <div class="nav-link-container{% if forloop.first %} has-mega-menu{% endif %}">
           <a href="{{ link.url }}" class="navbar-links">{{ link.title }}</a>
-          {% if link.title == 'Catalog' %}
+          {% comment %} Render mega menu only for the first navigation item {% endcomment %}
+          {% if forloop.first %}
             {% render 'mega-menu' %}
           {% endif %}
         </div>
@@ -72,7 +73,7 @@
 </div>
 
 {% render 'cart-drawer'
-  ,enable_banner: section.settings.enable_cart_drawer_banner
+  , enable_banner: section.settings.enable_cart_drawer_banner
   , banner_text_1: section.settings.cart_drawer_banner_text_1
   , banner_text_2: section.settings.cart_drawer_banner_text_2
   , banner_background_color: section.settings.cart_drawer_banner_background_color
@@ -162,6 +163,9 @@
         "content": "Mega Menu Settings"
       },
       {
+        "type": "paragraph",
+        "content": "The mega menu will automatically appear when hovering over the first item in your main navigation menu. You can change the text of this menu item to anything you want (Shop, Catalog, Products, etc.) and the mega menu will continue to work."
+      }, {
         "type": "collection",
         "id": "featured_category",
         "label": "Featured Category (Top of Jewelry List)",

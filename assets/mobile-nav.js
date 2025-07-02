@@ -53,20 +53,20 @@ document.addEventListener("DOMContentLoaded", function() {
         <path d="M6 6L18 18" stroke="#373736" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>`;
       
-      // Add only About Us and Showroom links to mobile menu (remove Catalog)
+      // Add navigation links to mobile menu, excluding the first item (which has the mega menu)
       const mainLinks = mobileMenu.querySelector('.mobile-menu-main-links');
-      const navLinksHtml = navLinks.innerHTML;
       
-      // Filter out the Catalog link and keep only About Us and Showroom
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = navLinksHtml;
-      const allLinks = tempDiv.querySelectorAll('.navbar-links');
-      
+      // Get all navigation link containers, excluding the first one
+      const allNavContainers = navLinks.querySelectorAll('.nav-link-container');
       let filteredLinksHtml = '';
-      allLinks.forEach(link => {
-        const linkText = link.textContent.trim().toLowerCase();
-        if (linkText === 'about us' || linkText === 'showroom') {
-          filteredLinksHtml += link.outerHTML;
+      
+      allNavContainers.forEach((container, index) => {
+        // Exclude the first navigation item (index 0) since it has the mega menu
+        if (index > 0) {
+          const link = container.querySelector('.navbar-links');
+          if (link) {
+            filteredLinksHtml += link.outerHTML;
+          }
         }
       });
       

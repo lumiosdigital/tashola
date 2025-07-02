@@ -68,10 +68,6 @@ a {
     transition: transform 1s ease;
 }
 
-.category-image:hover .category-image-inner {
-    transform: scale(1.05);
-}
-
 .category-title {
     font-size: 2.25rem;
     text-align: center;
@@ -194,10 +190,6 @@ h3.collection-dynamic-title {
     background-size: cover;
     background-position: center;
     transition: transform 1s ease;
-}
-
-.category-image-container:hover .category-image {
-    transform: scale(1.05);
 }
 
 .collection-subtitle {
@@ -496,8 +488,8 @@ button:focus {
 
 @media (max-width: 1024px) {
     .category-grid {
-            grid-auto-rows: 52.965rem;
-        }
+        grid-auto-rows: 52.965rem;
+    }
 }
 
 @media (max-width: 992px) {
@@ -520,9 +512,9 @@ button:focus {
     }
 
     .category-item {
-        width: 50%;
+        width: 100%;
         height: 50vh;
-        float: left;
+        display: block;
     }
 
     .collection-display-row,

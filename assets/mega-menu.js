@@ -12,26 +12,35 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   
   function initMegaMenu() {
-    // Find the Catalog link specifically
-    const catalogContainer = Array.from(document.querySelectorAll('.nav-link-container')).find(container => {
+    // Get the mega menu item name from the global settings
+    const megaMenuItem = window.megaMenuSettings?.menuItem || 'Catalog';
+    
+    // Find the navigation container with the specified menu item
+    const megaMenuContainer = Array.from(document.querySelectorAll('.nav-link-container')).find(container => {
       const link = container.querySelector('.navbar-links');
-      return link && link.textContent.trim() === 'Catalog';
+      return link && link.textContent.trim() === megaMenuItem;
     });
     
-    if (!catalogContainer) return;
+    if (!megaMenuContainer) {
+      console.warn(`Mega menu: Could not find navigation item "${megaMenuItem}". Please check that the "Mega Menu Navigation Item" setting matches your navigation menu exactly.`);
+      return;
+    }
     
-    const megaMenu = catalogContainer.querySelector('.mega-menu-wrapper');
-    if (!megaMenu) return;
+    const megaMenu = megaMenuContainer.querySelector('.mega-menu-wrapper');
+    if (!megaMenu) {
+      console.warn(`Mega menu: Found navigation item "${megaMenuItem}" but no mega-menu-wrapper found.`);
+      return;
+    }
     
     // Let's ensure the mega menu is setup correctly
     let timeout;
     
-    catalogContainer.addEventListener('mouseenter', function() {
+    megaMenuContainer.addEventListener('mouseenter', function() {
       clearTimeout(timeout);
       megaMenu.classList.add('active');
     });
     
-    catalogContainer.addEventListener('mouseleave', function() {
+    megaMenuContainer.addEventListener('mouseleave', function() {
       timeout = setTimeout(function() {
         megaMenu.classList.remove('active');
       }, 200);
@@ -50,28 +59,28 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     // Add accessibility for keyboard navigation
-    const catalogLink = catalogContainer.querySelector('.navbar-links');
+    const megaMenuLink = megaMenuContainer.querySelector('.navbar-links');
     
-    // Prevent the Catalog link from navigating when clicked
-    catalogLink.addEventListener('click', function(e) {
+    // Prevent the mega menu link from navigating when clicked
+    megaMenuLink.addEventListener('click', function(e) {
       e.preventDefault();
     });
     
-    catalogLink.addEventListener('focus', function() {
+    megaMenuLink.addEventListener('focus', function() {
       megaMenu.classList.add('active');
     });
     
     // Handle focus out events
-    catalogContainer.addEventListener('focusout', function(e) {
+    megaMenuContainer.addEventListener('focusout', function(e) {
       // Check if the new focus target is still within this container
-      if (!catalogContainer.contains(e.relatedTarget)) {
+      if (!megaMenuContainer.contains(e.relatedTarget)) {
         megaMenu.classList.remove('active');
       }
     });
     
     // Close mega menu when clicking outside
     document.addEventListener('click', function(e) {
-      if (!catalogContainer.contains(e.target)) {
+      if (!megaMenuContainer.contains(e.target)) {
         megaMenu.classList.remove('active');
       }
     });
@@ -80,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && megaMenu.classList.contains('active')) {
         megaMenu.classList.remove('active');
-        catalogLink.focus();
+        megaMenuLink.focus();
       }
     });
   }
