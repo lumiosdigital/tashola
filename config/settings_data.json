@@ -54,11 +54,11 @@
           "showroom_image": "shopify://shop_images/showroom-page-image.png",
           "heading": "Finding Us",
           "description": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>",
-          "location_name": "Tashola Showroom",
-          "address": "123 Oxford Street, London, W1D 1LT, United Kingdom",
-          "hours_weekday": "Monday – Friday: 10:00 AM – 7:00 PM",
-          "hours_saturday": "Saturday: 11:00 AM – 6:00 PM",
-          "hours_sunday": "Sunday: Closed"
+          "location_name": "Westfield London",
+          "address": "Ariel Way, 1st floor   London W12 7GF",
+          "hours_weekday": "Monday – Friday: 10:00 AM – 9:00 PM",
+          "hours_saturday": "Saturday: 10:00 AM – 9:00 PM",
+          "hours_sunday": "Sunday: 12:00 AM – 6:00 PM"
         }
       },
       "about-us-content": {
