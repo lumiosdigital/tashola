@@ -283,8 +283,8 @@
           "faq_item_CCgUti": {
             "type": "faq_item",
             "settings": {
-              "question": "4. How we use your personal data",
-              "answer": "<p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:<br/>Where we need to perform the contract we are about to enter into or have entered into with you.<br/>Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests.<br/>Where we need to comply with a legal or regulatory obligation.<br/>Where you have consented for us to do so.<br/>Purposes for which we will use your personal data. <br/> </p>",
+              "question": "5. Disclosures of your personal data",
+              "answer": "<p>We may have to share your personal data with external third<br/>parties for the purposes set out in the table in paragraph 4 above.</p><p>We require all third parties to respect the security of your<br/>personal data and to treat it in accordance with the law. We do not allow our<br/>third-party service providers to use your personal data for their own purposes<br/>and only permit them to process your personal data for specified purposes and<br/>in accordance with our instructions.</p>",
               "expanded_by_default": false
             }
           }
