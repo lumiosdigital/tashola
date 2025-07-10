@@ -276,6 +276,14 @@
             "type": "faq_item",
             "settings": {
               "question": "4. How we use your personal data",
+              "answer": "<p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:<br/>Where we need to perform the contract we are about to enter into or have entered into with you.<br/>Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests.<br/>Where we need to comply with a legal or regulatory obligation.<br/>Where you have consented for us to do so.<br/>Purposes for which we will use your personal data. </p><p>Marketing <br/> <br/>We strive to provide you with choices regarding certain personal data uses, particularly around marketing and advertising. <br/> <br/>Promotional offers from us <br/> <br/>We may use your Identity, Contact, Technical, Usage and Profile Data to form a view on what we think you may want or need, or what may be of interest to you. This is how we decide which products, services and offers may be relevant for you (we call this marketing). <br/> <br/>You will receive marketing communications from us if you have requested information from us or purchased goods or services from us or if you provided us with your details when you entered a competition or registered for a promotion and, in each case, you have not opted out of receiving that marketing.<br/> <br/>Opting out<br/> <br/>You can ask us to stop sending you marketing messages by clicking on the ‘opt-out’ button in any marketing message sent to you or by contacting us at care@Tasholalondon.com at any time. <br/> <br/>Where you opt out of receiving these marketing messages, this will not apply to personal data provided to us as a result of a product purchase.<br/> <br/>Cookies<br/> <br/>You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of our website may become inaccessible or not function properly. For more information about the cookies we use, please see our cookie policy.<br/> <br/>Change of purpose <br/> <br/>We will only use your personal data for the purposes for which we collected it, unless we reasonably consider that we need to use it for another reason and that reason is compatible with the original purpose. If you wish to get an explanation as to how the processing for the new purpose is compatible with the original purpose, please contact us at care@Tasholalondon.com. <br/> <br/>If we need to use your personal data for an unrelated purpose, we will notify you and we will explain the legal basis which allows us to do so.<br/>Please note that we may process your personal data without your knowledge or consent, in compliance with the above rules, where this is required or permitted by law.<br/><br/> </p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_CCgUti": {
+            "type": "faq_item",
+            "settings": {
+              "question": "4. How we use your personal data",
               "answer": "<p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:<br/>Where we need to perform the contract we are about to enter into or have entered into with you.<br/>Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests.<br/>Where we need to comply with a legal or regulatory obligation.<br/>Where you have consented for us to do so.<br/>Purposes for which we will use your personal data. <br/> </p>",
               "expanded_by_default": false
             }
@@ -286,7 +294,8 @@
           "faq_item_k77HKY",
           "faq_item_JUG8F3",
           "faq_item_p6GyPF",
-          "faq_item_jL3BEi"
+          "faq_item_jL3BEi",
+          "faq_item_CCgUti"
         ],
         "settings": {
           "page_title": "Privacy Policy"
