@@ -287,6 +287,14 @@
               "answer": "<p>We may have to share your personal data with external third<br/>parties for the purposes set out in the table in paragraph 4 above.</p><p>We require all third parties to respect the security of your<br/>personal data and to treat it in accordance with the law. We do not allow our<br/>third-party service providers to use your personal data for their own purposes<br/>and only permit them to process your personal data for specified purposes and<br/>in accordance with our instructions.</p>",
               "expanded_by_default": false
             }
+          },
+          "faq_item_yth4WV": {
+            "type": "faq_item",
+            "settings": {
+              "question": "6. Data security",
+              "answer": "<p>We have put in place appropriate security measures to<br/>prevent your personal data from being accidentally lost, used or accessed in an<br/>unauthorised way, altered or disclosed. In addition, we limit access to your<br/>personal data to those employees, agents, contractors and other third parties<br/>who have a business need to know. They will only process your personal data on<br/>our instructions and they are subject to a duty of confidentiality. </p>",
+              "expanded_by_default": false
+            }
           }
         },
         "block_order": [
@@ -295,7 +303,8 @@
           "faq_item_JUG8F3",
           "faq_item_p6GyPF",
           "faq_item_jL3BEi",
-          "faq_item_CCgUti"
+          "faq_item_CCgUti",
+          "faq_item_yth4WV"
         ],
         "settings": {
           "page_title": "Privacy Policy"
