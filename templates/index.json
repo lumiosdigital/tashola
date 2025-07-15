@@ -50,7 +50,7 @@
             "text_color": "white",
             "category_title": "Rings",
             "category_image": "shopify://shop_images/Shot_07_0024.png",
-            "collection": "",
+            "collection": "rings",
             "collection_handle": "all"
           }
         },
@@ -60,7 +60,7 @@
             "text_color": "white",
             "category_title": "Bracelets",
             "category_image": "shopify://shop_images/Shot_13_0066.png",
-            "collection": "",
+            "collection": "bracelets",
             "collection_handle": "all"
           }
         },
