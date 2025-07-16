@@ -53,7 +53,7 @@
         "settings": {
           "showroom_image": "shopify://shop_images/showroom-page-image.png",
           "heading": "Finding Us",
-          "description": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>",
+          "description": "",
           "location_name": "Westfield London",
           "address": "Ariel Way, 1st floor   London W12 7GF",
           "hours_weekday": "Monday – Friday: 10:00 AM – 9:00 PM",
@@ -93,21 +93,12 @@
               "image": "shopify://shop_images/Shot_02_0059.png",
               "layout": "image_right"
             }
-          },
-          "quote_wpXNGT": {
-            "type": "quote",
-            "disabled": true,
-            "settings": {
-              "heading": "Our Sustainability Principles",
-              "quote_text": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn't exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon isn't enough for us. We're committed to building a brand with true environmental understanding and actively reducing our impact at every step.</p>"
-            }
           }
         },
         "block_order": [
           "text_image_8Qc6db",
           "text_image_9aDint",
-          "large_text_image_73xAaP",
-          "quote_wpXNGT"
+          "large_text_image_73xAaP"
         ],
         "settings": {
           "main_heading": "About Us",
