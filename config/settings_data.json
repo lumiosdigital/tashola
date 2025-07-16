@@ -96,6 +96,7 @@
           },
           "quote_wpXNGT": {
             "type": "quote",
+            "disabled": true,
             "settings": {
               "heading": "Our Sustainability Principles",
               "quote_text": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn't exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon isn't enough for us. We're committed to building a brand with true environmental understanding and actively reducing our impact at every step.</p>"
