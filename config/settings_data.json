@@ -93,12 +93,20 @@
               "image": "shopify://shop_images/Shot_02_0059.png",
               "layout": "image_right"
             }
+          },
+          "quote_hm6Tbp": {
+            "type": "quote",
+            "settings": {
+              "heading": "Quality",
+              "quote_text": "<p>Central to the Tashola brand is a commitment to quality. We use only premium materials, Sterling silver, brass, and stainless steel, ensuring lasting beauty and due ability. Every piece is crafted with care to deliver a premium look and feel at an accessible price. Our high street presence doesn't compromise on excellence, it defines it.</p>"
+            }
           }
         },
         "block_order": [
           "text_image_8Qc6db",
           "text_image_9aDint",
-          "large_text_image_73xAaP"
+          "large_text_image_73xAaP",
+          "quote_hm6Tbp"
         ],
         "settings": {
           "main_heading": "About Us",
