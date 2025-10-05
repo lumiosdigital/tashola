@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const searchIcon = searchButton ? searchButton.querySelector('svg') : null;
     const cartIcon = cartButton ? cartButton.querySelector('svg') : null;
     
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
       // Resize container elements
       if (searchButton) {
         searchButton.style.width = '24px';
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const closeButton = document.querySelector('.mobile-menu-close');
     
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 1024) {
       // Desktop view
       if (mobileMenu) {
         mobileMenu.classList.remove('active');

@@ -176,7 +176,7 @@
 }
 
 /* Hide on mobile */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .mega-menu-wrapper {
         display: none;
     }

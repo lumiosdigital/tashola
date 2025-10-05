@@ -110,7 +110,7 @@
       background-position: center;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       .category-image-{{ block.id }} {
         background-image: url('{% if block.settings.category_mobile_image %}{{ block.settings.category_mobile_image | img_url: 'master' }}{% elsif block.settings.category_image %}{{ block.settings.category_image | img_url: 'master' }}{% else %}{{ block.settings.collection_handle | append: '-category.png' | asset_url }}{% endif %}');
       }
@@ -123,7 +123,7 @@
     background-position: center;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .collection-banner-{{ block.id }} {
       background-image: url('{% if block.settings.collection_banner_mobile_image %}{{ block.settings.collection_banner_mobile_image | img_url: 'master' }}{% elsif block.settings.collection_banner_image %}{{ block.settings.collection_banner_image | img_url: 'master' }}{% elsif block.settings.selected_collection.featured_image %}{{ block.settings.selected_collection.featured_image | img_url: 'master' }}{% endif %}');
     }
@@ -319,7 +319,7 @@
 
         // Initialize Swiper for mobile devices
         function initMobileSwiper() {
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth <= 1024) {
                 const productGrids = document.querySelectorAll('.product-grid');
 
                 productGrids.forEach(productGrid => {
