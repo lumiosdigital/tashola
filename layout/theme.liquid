@@ -53,6 +53,18 @@
 
     <!-- Alpine.js -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+
+    <!-- GA4 Base Code -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SEY4KGRC4H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SEY4KGRC4H');
+    </script>
+
+
   </head>
 
   <body class="{% if customer %}customer-logged-in{% endif %}">

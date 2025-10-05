@@ -9,12 +9,13 @@
  */
 {
   "current": {
+    "favicon": "shopify://shop_images/WhatsApp_Image_2025-06-13_at_12.44.45.jpg",
     "sections": {
       "header": {
         "type": "header",
         "settings": {
           "sticky_header": false,
-          "featured_category": "earrings",
+          "featured_category": "shop-all",
           "show_gifting_column": false,
           "mega_menu_image": "shopify://shop_images/Screenshot_2025-06-06_at_16.11.58.png",
           "mega_menu_image_link": "",
@@ -53,12 +54,12 @@
         "settings": {
           "showroom_image": "shopify://shop_images/showroom-page-image.png",
           "heading": "Finding Us",
-          "description": "<p>Tashola is a jewelry brand dedicated to timeless elegance and modern craftsmanship. Inspired by beauty in simplicity, our pieces are designed to complement every moment, from everyday wear to special occasions. Using high-quality materials like sterling silver, 18K gold plating, and natural gemstones, we create jewelry that is both refined and meaningful.</p>",
-          "location_name": "Tashola Showroom",
-          "address": "123 Oxford Street, London, W1D 1LT, United Kingdom",
-          "hours_weekday": "Monday – Friday: 10:00 AM – 7:00 PM",
-          "hours_saturday": "Saturday: 11:00 AM – 6:00 PM",
-          "hours_sunday": "Sunday: Closed"
+          "description": "",
+          "location_name": "Westfield London",
+          "address": "Ariel Way, 1st floor   London W12 7GF",
+          "hours_weekday": "Monday – Friday: 10:00 AM – 9:00 PM",
+          "hours_saturday": "Saturday: 10:00 AM – 9:00 PM",
+          "hours_sunday": "Sunday: 12:00 AM – 6:00 PM"
         }
       },
       "about-us-content": {
@@ -94,11 +95,11 @@
               "layout": "image_right"
             }
           },
-          "quote_wpXNGT": {
+          "quote_hm6Tbp": {
             "type": "quote",
             "settings": {
-              "heading": "Our Sustainability Principles",
-              "quote_text": "<p>At Tashola, we acknowledge that truly 100% sustainable jewelry doesn't exist. Instead of making empty claims, we take a transparent and responsible approach to our sustainability journey. Simply offsetting carbon isn't enough for us. We're committed to building a brand with true environmental understanding and actively reducing our impact at every step.</p>"
+              "heading": "Quality",
+              "quote_text": "<p>Central to the Tashola brand is a commitment to quality. We use only premium materials, Sterling silver, brass, and stainless steel, ensuring lasting beauty and durability. Every piece is crafted with care to deliver a premium look and feel at an accessible price. Our high street presence doesn't compromise on excellence, it defines it.</p>"
             }
           }
         },
@@ -106,7 +107,7 @@
           "text_image_8Qc6db",
           "text_image_9aDint",
           "large_text_image_73xAaP",
-          "quote_wpXNGT"
+          "quote_hm6Tbp"
         ],
         "settings": {
           "main_heading": "About Us",
@@ -165,21 +166,75 @@
           "text_block_F4d8Ap": {
             "type": "text_block",
             "settings": {
-              "description": "<p>Our Frequently Asked Questions (FAQ)<strong> </strong>section is designed to provide quick answers to common customer inquiries. Whether you need help with orders, returns, shipping, payments, or general policies, this resource offers clear and straightforward solutions to save you time. If you don’t find the answer you’re looking for, our customer service team is happy to assist you further.</p>"
+              "description": "<p>We operate the website www.Tashola.com (the \"website\"). We are LFG Limited, a company registered in the United Kingdom under company number 16067506 and with our registered office and main trading address at 3rd Floor 9 Hatton Street, London, England, NW8 8PL. Our VAT number is 480 8352 77  (\"we\", \"our\", \"us\" or \"Tashola\").</p>"
             }
           },
           "faq_item_AiF9jB": {
             "type": "faq_item",
             "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
+              "question": "1.Introduction",
+              "answer": "<p><strong>1.1</strong> We operate the website www.Tashola.com (the \"website\"). We are LFG<br/>Limited, a company registered in the United Kingdom under company number 16067506<br/>and with our registered office and main trading address at 3rd Floor 9 Hatton<br/>Street, London, England, NW8 8PL. Our VAT number is 480 8352 77<br/> (\"we\", \"our\", \"us\" or \"Tashola\").</p><p><strong>1.2</strong> If you wish to contact us, including because you have any complaints, you can<br/>contact us by e-mailing our Customer Care team at customer-service@tashola.com </p><p><strong>1.3</strong> If you are a consumer then references in these terms and conditions (the<br/>\"Terms\") to \"you\" are to the individual using our website and purchasing the products detailed on our website (\"Products\") for<br/>private and non-commercial purposes. If you are a business, references in these<br/>Terms to \"you\" are to the business that you have the authority to bind in accordance with section 2.</p><p><strong>1.4</strong> These Terms (together with our Privacy and Terms of Use) tell you information about us and the legal terms and conditions on which we sell the Products to you.  The Terms, Privacy Policy and Terms of<br/>Website Use are together the \"Agreement\".</p><p><strong>1.5</strong> Please read these Terms carefully and make sure that you understand them, before<br/>ordering any Products.  Please note that by ordering any of our Products in accordance with section 3, you agree to be bound by these Terms and the other documents expressly referred to in them.</p><p><strong>1.6</strong> You should print a copy of these Terms or save them to your computer for future<br/>reference.</p><p><strong>1.7</strong> We amend these Terms from time to time as set out in section 15. Every time you wish to order Products, please check these Terms to ensure you understand the terms which will apply at that time. These Terms were most recently updated in July 2025</p><p><strong>1.8</strong> In these Terms:</p><p><strong>1.8.1</strong> “Customer Account” means a customer account which has been opened by you through our website in respect of the Products and is identified by way of an allocated account number generated by us;</p><p><strong>1.8.2</strong> \"Order\" shall have the meaning set out in section 3.1.5;</p><p><strong>1.8.3</strong> \"VAT\" means Value Added Tax;</p><p><strong>1.8.4</strong>  a person includes a natural person, corporate or unincorporated body (whether or not having separate legal personality);</p><p><strong>1.8.5</strong>  a reference to a party includes its successors or permitted assigns;</p><p><strong>1.8.6</strong>  a reference to a statute or statutory provision is a reference to such statute or<br/>statutory provision as amended or re-enacted. A reference to a statute or statutory provision includes any subordinate legislation made under that statute or statutory provision, as amended or re-enacted;</p><p><strong>1.8.7</strong>  any phrase introduced by the terms including, include, in particular or any similar<br/>expression, shall be construed as illustrative and shall not limit the sense of the words preceding those terms; and</p><p><strong>1.8.8</strong>  a reference to writing or written includes e-mails.     </p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_DcQLPX": {
+            "type": "faq_item",
+            "settings": {
+              "question": "2. If you are a business customer",
+              "answer": "<p>This section 2 only applies if you are a business.<br/>2.1 If you are not a consumer, you confirm that you have authority to bind any business on whose behalf you use the Products under an Order.<br/>2.2 The Agreement constitutes the entire agreement between you and us and supersedes and extinguishes all previous agreements, promises, assurances, warranties, representations and understandings between you and us, whether written or oral, relating to its subject matter.<br/>2.3 You acknowledge that in entering into the Agreement you do not rely on any statement, representation, assurance or warranty (whether made innocently or negligently) that is not set out in the Agreement. You and we agree that neither party shall have any claim for innocent or negligent misrepresentation based on any statement in the Agreement.<br/>2.4 Nothing in this section shall exclude liability for either party's fraudulent misrepresentation<br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_JjJrLH": {
+            "type": "faq_item",
+            "settings": {
+              "question": "3. The Order Process",
+              "answer": "<p>3.1  Our shopping pages will guide you through the steps you need to take to place an order with us but this is summarised below:<br/>3.1.1 you will be asked to open a Customer Account by providing your name, email address and date of birth;<br/>3.1.2 once you have opened a Customer Account you shall be issued with a username and password as part of the registration process to open your Customer Account.  You must use all reasonable steps to keep your username and password confidential, and must inform us if you suspect or discover that your username or password have become known to someone else;<br/>3.1.3 you shall use your Customer Account to place an order for the Products in accordance with the process outlined on our website, including by inputting your delivery address and payment details at this stage (an \"Enquiry\");<br/>3.1.4 our order process allows you to check and amend any errors before submitting your order to us.  Please take the time to review and check your order at each stage of the order process;<br/>3.1.5 we will confirm our acceptance of your Enquiry by sending you an email confirming the information you included in your Enquiry and providing an estimated delivery date, including details of our delivery partner (the \"Confirmation Email\", at which point your Enquiry will become an \"Order\");<br/>3.1.6 This Agreement together with the Order will become legally binding on you and us when we send you the Confirmation Email and each Order shall incorporate the Terms and shall be a new and separate contract between you and us;<br/>3.1.7 If you change your mind about your Order within the 30 minutes immediately after you have received the Confirmation Email, you can cancel by contacting Customer Care using customer-service@tashola.com. If you want to cancel after this time you will need to return your Products, once you have received them, in accordance with clause 6 below;<br/>3.1.8 Once we have dispatched your Order for delivery, we shall contact you on the email address provided in your Customer Account/Enquiry;<br/>3.1.9 If we are unable to supply you with a Product, for example because that Product is not in stock or no longer available or because we cannot meet your requested delivery date or because of an error in the price on our site, we will inform you of this by e-mail and we will not process your Order for that Product. If you have ordered other Products as part of the same Order, which we are able to process, then we will continue to process your Order for those Products. If you have already paid for the unavailable Product, we will refund you the full amount as soon as possible.<br/>3.1.10 We reserve the right not to accept your Order in the event, for example, that we are unable to obtain authorisation for payment, if we reasonably believe a transaction is fraudulent, that shipping restrictions apply to a particular Product, that the Product ordered is out of stock or does not satisfy our quality control standards and is withdrawn, or that you do not meet the eligibility criteria set out within these Terms.<br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_fR73ie": {
+            "type": "faq_item",
+            "settings": {
+              "question": "4. THE PRODUCTS AND PRICING",
+              "answer": "<p><br/>4.1 All Products are subject to availability.<br/>4.2  The images of the Products on our site are for illustrative purposes only. Although we have made every effort to display the colours accurately, we cannot guarantee that your computer's display of the colours accurately reflect the colour of the Products. Your Products may vary slightly from those images. The packaging of the Products may vary from that shown on images on our site.<br/>4.3  The prices and Products displayed on the website are subject to change and we reserve the right to change these at any time and without notice to you provided that if you place an order for Products through the website the price you will pay for the Product(s) will be the price displayed at the time you place your Enquiry, except for where the price displayed was incorrect and that pricing error was obvious and unmistakable. The prices displayed on the website at any moment are only valid at that moment.<br/>4.4 Prices shown on the UK and Ireland website are in GBP and are inclusive of VAT at the applicable rate unless you have selected an alternative country where VAT is not chargeable, in which case prices shown on the website will be displayed in the relevant currency and are inclusive of all other taxes imposed by the applicable governmental authority.<br/>4.5 The price of a Product does not include delivery charges. Our delivery charges are as advised to you during the check-out process before you confirm your Enquiry. Please see section 5 below for more information on delivery.<br/>4.6 You agree to cooperate fully with us and provide all reasonable assistance in the event we recall any product(s), at our sole expense.<br/>4.7 For International Delivery Destinations, the issuing bank might leverage cross-border surcharges which are outside of our control and for which we are not liable.<br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_rHPXb8": {
+            "type": "faq_item",
+            "settings": {
+              "question": "5. DELIVERY OF THE PRODUCTS",
+              "answer": "<p>5.1 Delivery charges and times by country can be consulted on our Shipping page.<br/>5.2 Shipping costs may apply to your Order for Orders below the amounts stated above and additional costs may apply for certain premium delivery services. If these costs apply they will be displayed prior to checkout. Any other charges applicable to your order will also be displayed at checkout.<br/>5.3 We will contact you with an estimated delivery date. Occasionally our delivery to you may be affected by an Event Outside Our Control, please see clause 20 for further details of Events Outside Our Control. Dates and times given for delivery are estimates only and we shall not be liable for any delay in delivery.<br/>5.4 We deliver to addresses in the United Kingdom. <br/>5.5 You must comply with all applicable laws and regulations of the country for which the Products are destined. We will not be liable or responsible if you break any such law.<br/>5.6 You shall be responsible for providing us with your up-to-date contact details in your Customer Account and/or Enquiry.<br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_kMfWEe": {
+            "type": "faq_item",
+            "settings": {
+              "question": "6. Right to cancel and returns",
+              "answer": "<p><br/>6.1 You may cancel an Order at any time if you have changed your mind in the 30 minutes immediately after you have received the Confirmation Email.  In addition, if, before or after you have received your Product(s), you are not happy with what you ordered for any reason, and wish to cancel the order and/or return the Product(s), you may do so in accordance with clause 6.2 below.<br/>6.2 If you are based in the European Union, you may cancel your Order within 14 days of your date of receipt of the Product(s) and all items should be returned unworn, in their original packaging and in saleable condition within 14 days of such cancellation. We will refund you the total amount you paid for the Product(s) you are returning within 14 days of our receipt of the returned Product(s) or, if earlier, the day on which you provide us with evidence that you have sent the Product back to us.Returns can be sent using the freepost label with Royal Mail - for more details, please contact our customer service. <br/>6.3 Earrings should be handled with care and kept in their original packaging if you wish to return them. For hygiene reasons, we are unable to accept returns on earrings that have been worn or are not in their original packaging.<br/>6.6 We may make a deduction from the reimbursement to you of the diminished value of the goods if the Product(s) are not returned in a saleable condition.  <br/>6.7 For further information on returns, including the process to follow to return your Product(s) please see the Shipping & Returns page on our website.<br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_Ek3wba": {
+            "type": "faq_item",
+            "settings": {
+              "question": "7. Defective Goods",
+              "answer": "<p>7.1 For Product(s) that are defective, we will either offer you a refund (including the purchase price, original delivery costs and any other costs you may incur in returning the defective Product(s), repair the defective Product(s) or provide you with replacement Product(s) at no cost to you.<br/>7.2  As a consumer, you have legal rights in relation to Products that are faulty or not as described. These legal rights are not affected by your right of return and refund in this clause 7 or anything else in these Terms. Advice about your legal rights is available from your local Citizens' Advice Bureau or Trading Standards office.<br/></p>",
               "expanded_by_default": false
             }
           }
         },
         "block_order": [
           "text_block_F4d8Ap",
-          "faq_item_AiF9jB"
+          "faq_item_AiF9jB",
+          "faq_item_DcQLPX",
+          "faq_item_JjJrLH",
+          "faq_item_fR73ie",
+          "faq_item_rHPXb8",
+          "faq_item_kMfWEe",
+          "faq_item_Ek3wba"
         ],
         "settings": {
           "page_title": "Terms & Conditions"
@@ -191,21 +246,84 @@
           "text_block_NwzFLi": {
             "type": "text_block",
             "settings": {
-              "description": "<p>Our Frequently Asked Questions (FAQ)<strong> </strong>section is designed to provide quick answers to common customer inquiries. Whether you need help with orders, returns, shipping, payments, or general policies, this resource offers clear and straightforward solutions to save you time. If you don’t find the answer you’re looking for, our customer service team is happy to assist you further.</p>"
+              "description": "<p><strong>Welcome to the Tashola privacy notice.</strong></p><p>Tashola respects your privacy and is committed to protecting your personal data. This privacy notice will inform you as to how we look after your personal data when you interact with us and tell you about your privacy rights and how the law protects you. </p>"
             }
           },
           "faq_item_k77HKY": {
             "type": "faq_item",
             "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
+              "question": "1. Important information and who we are",
+              "answer": "<p>Purpose of this privacy notice<br/> <br/>This privacy notice aims to give you information on how Tashola collects and processes your personal data when you interact with us, including any data you may provide to us. <br/> <br/>Our website is not intended for children and we do not knowingly collect data relating to children.<br/> <br/>It is important that you read this privacy notice together with any other privacy notice or fair processing notice we may provide on specific occasions when we are collecting or processing personal data about you so that you are fully aware of how and why we are using your data. This privacy notice supplements the other notices and is not intended to override them. <br/> <br/>Controller<br/> <br/>Tashola is the controller and responsible for your personal data (also referred to as \"we\", \"us\" or \"our\" in this privacy notice).<br/>We have appointed a data privacy manager who is responsible for overseeing questions in relation to this privacy notice. If you have any questions about this privacy notice, including any requests to exercise your legal rights, please contact the data privacy manager using the details set out below. <br/> <br/>Contact details<br/> <br/>Our full details are:<br/> <br/>Full name of legal entity: LFG Limited, a company registered in the United Kingdom under company number 08937123 and with our registered office at 3rd Floor 9 Hatton Street, London, England, NW8 8PL.<br/> <br/>Email address: care@Tasholalondon.com<br/> <br/>Postal address: 3rd Floor 9 Hatton Street, London, England, NW8 8PL.<br/> <br/>You have the right to make a complaint at any time to the Information Commissioner's Office (ICO), the UK supervisory authority for data protection issues (www.ico.org.uk). We would, however, appreciate the chance to deal with your concerns before you approach the ICO so please contact us in the first instance. <br/> <br/>Your duty to inform us of changes<br/> <br/>It is important that the personal data we hold about you is accurate and current. Please keep us informed if your personal data changes during your relationship with us.<br/> <br/>If you have an account with us, you may review, correct, update or change your personal information at any time by logging into the \"My Account\" section on our website.<br/> <br/>Third-party links<br/> <br/>Our website may include links to third-party websites, plug-ins and applications. Clicking on those links or enabling those connections may allow third parties to collect or share data about you. We do not control these third-party websites and are not responsible for their privacy statements. When you leave our website, we encourage you to read the privacy notice of every website you visit.<br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_JUG8F3": {
+            "type": "faq_item",
+            "settings": {
+              "question": "2. The data we collect about you",
+              "answer": "<p>Personal data, or personal information, means any information about an individual from which that person can be identified. It does not include data where the identity has been removed (anonymous data).<br/> <br/>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together follows:<br/> <br/>Identity Data includes first name, maiden name, last name, username or similar identifier, marital status, title, date of birth and gender.<br/>Contact Data includes billing address, delivery address, email address and telephone numbers.<br/>Transaction Data includes details about payments to and from you and other details of products and services you have purchased from us.<br/>Technical Data includes internet protocol (IP) address, your login data, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform and other technology on the devices you use to access our website. <br/>Profile Data includes your username and password, purchases or orders made by you, your interests, preferences, feedback and survey responses.  <br/>Usage Data includes information about how you use our website, products and services. <br/>Marketing and Communications Data includes your preferences in receiving marketing from us and our third parties and your communication preferences.<br/>We also collect, use and share Aggregated Data such as statistical or demographic data for any purpose. Aggregated Data may be derived from your personal data but is not considered personal data in law as this data does not directly or indirectly reveal your identity. For example, we may aggregate your Usage Data to calculate the percentage of users accessing a specific website feature. However, if we combine or connect Aggregated Data with your personal data so that it can directly or indirectly identify you, we treat the combined data as personal data which will be used in accordance with this privacy notice.<br/> <br/>We do not collect any Special Categories of Personal Data about you (this includes details about your race or ethnicity, religious or philosophical beliefs, sex life, sexual orientation, political opinions, trade union membership, information about your health and genetic and biometric data). Nor do we collect any information about criminal convictions and offences.<br/> <br/>If you fail to provide personal data<br/> <br/>Where we need to collect personal data by law, or under the terms of a contract we have with you and you fail to provide that data when requested, we may not be able to perform the contract we have or are trying to enter into with you (for example, to provide you with goods). In this case, we may have to cancel a product or service you have with us but we will notify you if this is the case at the time. <br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_p6GyPF": {
+            "type": "faq_item",
+            "settings": {
+              "question": "3. How is your personal data collected?",
+              "answer": "<p>We use different methods to collect data from and about you including through:<br/>Direct interactions. You may give us your Identity, Contact and Financial Data by filling in forms or by corresponding with us by post, phone, email or otherwise. This includes personal data you provide when you:<br/>Create an account on our website;<br/>Purchase a product without opening an account;<br/>Register your credit card;<br/>Subscribe to our newsletter; <br/>Request marketing to be sent to you;<br/>Enter a competition, promotion or survey;<br/>Interact with us on social media; or<br/>Give us some feedback. <br/>Automated technologies or interactions. As you interact with our website, we may automatically collect Technical Data about your equipment, browsing actions and patterns. We collect this personal data by using cookies, server logs and other similar technologies. We may also receive Technical Data about you if you visit other websites employing our cookies. Please see our cookie policy for further details.<br/>Third parties or publicly available sources. We may receive personal data about you from various third parties and public sources as set out below: <br/>Technical Data from the following parties:<br/>Analytics providers;  <br/>Advertising networks; and<br/>Search information providers.<br/>Contact, Financial and Transaction Data from providers of technical, payment and delivery services.<br/>Identity and Contact Data from data brokers or aggregators.<br/></p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_jL3BEi": {
+            "type": "faq_item",
+            "settings": {
+              "question": "4. How we use your personal data",
+              "answer": "<p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:<br/>Where we need to perform the contract we are about to enter into or have entered into with you.<br/>Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests.<br/>Where we need to comply with a legal or regulatory obligation.<br/>Where you have consented for us to do so.<br/>Purposes for which we will use your personal data. </p><p>Marketing <br/> <br/>We strive to provide you with choices regarding certain personal data uses, particularly around marketing and advertising. <br/> <br/>Promotional offers from us <br/> <br/>We may use your Identity, Contact, Technical, Usage and Profile Data to form a view on what we think you may want or need, or what may be of interest to you. This is how we decide which products, services and offers may be relevant for you (we call this marketing). <br/> <br/>You will receive marketing communications from us if you have requested information from us or purchased goods or services from us or if you provided us with your details when you entered a competition or registered for a promotion and, in each case, you have not opted out of receiving that marketing.<br/> <br/>Opting out<br/> <br/>You can ask us to stop sending you marketing messages by clicking on the ‘opt-out’ button in any marketing message sent to you or by contacting us at care@Tasholalondon.com at any time. <br/> <br/>Where you opt out of receiving these marketing messages, this will not apply to personal data provided to us as a result of a product purchase.<br/> <br/>Cookies<br/> <br/>You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of our website may become inaccessible or not function properly. For more information about the cookies we use, please see our cookie policy.<br/> <br/>Change of purpose <br/> <br/>We will only use your personal data for the purposes for which we collected it, unless we reasonably consider that we need to use it for another reason and that reason is compatible with the original purpose. If you wish to get an explanation as to how the processing for the new purpose is compatible with the original purpose, please contact us at care@Tasholalondon.com. <br/> <br/>If we need to use your personal data for an unrelated purpose, we will notify you and we will explain the legal basis which allows us to do so.<br/>Please note that we may process your personal data without your knowledge or consent, in compliance with the above rules, where this is required or permitted by law.<br/><br/> </p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_CCgUti": {
+            "type": "faq_item",
+            "settings": {
+              "question": "5. Disclosures of your personal data",
+              "answer": "<p>We may have to share your personal data with external third<br/>parties for the purposes set out in the table in paragraph 4 above.</p><p>We require all third parties to respect the security of your<br/>personal data and to treat it in accordance with the law. We do not allow our<br/>third-party service providers to use your personal data for their own purposes<br/>and only permit them to process your personal data for specified purposes and<br/>in accordance with our instructions.</p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_yth4WV": {
+            "type": "faq_item",
+            "settings": {
+              "question": "6. Data security",
+              "answer": "<p>We have put in place appropriate security measures to<br/>prevent your personal data from being accidentally lost, used or accessed in an<br/>unauthorised way, altered or disclosed. In addition, we limit access to your<br/>personal data to those employees, agents, contractors and other third parties<br/>who have a business need to know. They will only process your personal data on<br/>our instructions and they are subject to a duty of confidentiality. </p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_xdcYiG": {
+            "type": "faq_item",
+            "settings": {
+              "question": "7. Data retention",
+              "answer": "<p>How long will you use my personal data for?</p><p> We will only retain your personal data for as long as<br/>necessary to fulfil the purposes we collected it for, including for the<br/>purposes of satisfying any legal, accounting, or reporting requirements. </p><p>To determine the appropriate retention period for personal data, we consider the amount, nature, and sensitivity of the personal data, the potential risk of harm from unauthorised use or disclosure of your personal data, the purposes for which we process your personal data and whether we can<br/>achieve those purposes through other means, and the applicable legal<br/>requirements.</p><p> </p><p>Details of retention periods for different aspects of your<br/>personal data are available in our retention policy which you can request from<br/>us by contacting us at customer-service@tashola.com</p><p>In some circumstances we may anonymise your personal data (so that it can no longer be associated with you) for research or statistical purposes in which case we may use this information indefinitely without further notice to you. </p>",
+              "expanded_by_default": false
+            }
+          },
+          "faq_item_xMMWLB": {
+            "type": "faq_item",
+            "settings": {
+              "question": "8. Your legal rights",
+              "answer": "<p>You have the right to:<br/> <br/>Request access to your personal data (commonly known as a \"data subject access request\"). This enables you to receive a copy of the personal data we hold about you and to check that we are lawfully processing it.<br/> <br/>Request correction of the personal data that we hold about you. This enables you to have any incomplete or inaccurate data we hold about you corrected, though we may need to verify the accuracy of the new data you provide to us.<br/> <br/>Request erasure of your personal data. This enables you to ask us to delete or remove personal data where there is no good reason for us continuing to process it. You also have the right to ask us to delete or remove your personal data where you have successfully exercised your right to object to processing (see below), where we may have processed your information unlawfully or where we are required to erase your personal data to comply with local law. Note, however, that we may not always be able to comply with your request of erasure for specific legal reasons which will be notified to you, if applicable, at the time of your request. <br/> <br/>Object to processing of your personal data where we are relying on a legitimate interest (or those of a third party) and there is something about your particular situation which makes you want to object to processing on this ground as you feel it impacts on your fundamental rights and freedoms. You also have the right to object where we are processing your personal data for direct marketing purposes. In some cases, we may demonstrate that we have compelling legitimate grounds to process your information which override your rights and freedoms.<br/>Request restriction of processing of your personal data. This enables you to ask us to suspend the processing of your personal data in the following scenarios: (a) if you want us to establish the data's accuracy; (b) where our use of the data is unlawful but you do not want us to erase it; (c) where you need us to hold the data even if we no longer require it as you need it to establish, exercise or defend legal claims; or (d) you have objected to our use of your data but we need to verify whether we have overriding legitimate grounds to use it. <br/> <br/>Request the transfer of your personal data to you or to a third party. We will provide to you, or a third party you have chosen, your personal data in a structured, commonly used, machine-readable format. Note that this right only applies to automated information which you initially provided consent for us to use or where we used the information to perform a contract with you. <br/> <br/>Withdraw consent at any time where we are relying on consent to process your personal data. However, this will not affect the lawfulness of any processing carried out before you withdraw your consent. If you withdraw your consent, we may not be able to provide certain products or services to you. We will advise you if this is the case at the time you withdraw your consent.<br/> <br/>No fee usually required<br/> <br/>You will not have to pay a fee to access your personal data (or to exercise any of the other rights). However, we may charge a reasonable fee if your request is clearly unfounded, repetitive or excessive. Alternatively, we may refuse to comply with your request in these circumstances.<br/>What we may need from you<br/> <br/>We may need to request specific information from you to help us confirm your identity and ensure your right to access your personal data (or to exercise any of your other rights). This is a security measure to ensure that personal data is not disclosed to any person who has no right to receive it. We may also contact you to ask you for further information in relation to your request to speed up our response.<br/> <br/>Time limit to respond<br/> <br/>We try to respond to all legitimate requests within one month. Occasionally it may take us longer than a month if your request is particularly complex or you have made a number of requests. In this case, we will notify you and keep you updated. <br/></p>",
               "expanded_by_default": false
             }
           }
         },
         "block_order": [
           "text_block_NwzFLi",
-          "faq_item_k77HKY"
+          "faq_item_k77HKY",
+          "faq_item_JUG8F3",
+          "faq_item_p6GyPF",
+          "faq_item_jL3BEi",
+          "faq_item_CCgUti",
+          "faq_item_yth4WV",
+          "faq_item_xdcYiG",
+          "faq_item_xMMWLB"
         ],
         "settings": {
           "page_title": "Privacy Policy"
@@ -314,30 +432,12 @@
           "text_block_WV9Ern": {
             "type": "text_block",
             "settings": {
-              "description": "<p>Our Frequently Asked Questions (FAQ)<strong> </strong>section is designed to provide quick answers to common customer inquiries. Whether you need help with orders, returns, shipping, payments, or general policies, this resource offers clear and straightforward solutions to save you time. If you don’t find the answer you’re looking for, our customer service team is happy to assist you further.</p>"
-            }
-          },
-          "faq_item_6YD3BX": {
-            "type": "faq_item",
-            "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
-              "expanded_by_default": false
-            }
-          },
-          "faq_item_bBVbc7": {
-            "type": "faq_item",
-            "settings": {
-              "question": "What is pay after delivery and how does it work?",
-              "answer": "<p>Pay after Delivery is a payment method Finery is pleased to offer in conjunction with Klarna. Finery and Klarna’s vision is to simplify the buying experience with an easy and quick checkout which allows customers to pay for their orders in full up to 30 days later or split the cost into 3 interest-free monthly instalments.  Customers are now able to try on their new Finery at home, make a return and only pay for what they've kept!If you choose the Pay After Delivery option at checkout, Klarna will email you an invoice with payment instructions as soon as your order has been shipped. You then have 30 days to settle the payment with Klarna with a credit card or bank transfer. For further information, please click here.Finery also offers the option of paying by Clearpay.  Choose Clearpay at checkout and pay in 4 interest-free instalments - make your first payment on purchase and the rest over 6 weeks.</p>",
-              "expanded_by_default": false
+              "description": "<p>Have a question or need assistance? </p><p>Our team is here to help! Whether you’d like advice on your order, need help with a return, or just want to know more about our products, don’t hesitate to reach out. </p><p>Contact us via email : </p><p>customer-service@tashola.com </p><p>We’ll get back to you as soon as possible.</p>"
             }
           }
         },
         "block_order": [
-          "text_block_WV9Ern",
-          "faq_item_6YD3BX",
-          "faq_item_bBVbc7"
+          "text_block_WV9Ern"
         ],
         "settings": {
           "page_title": "Contact Us"
@@ -365,6 +465,11 @@
           "storefront_layout_drawer_width": 400,
           "storefront_layout_as_section_page": ""
         }
+      },
+      "13768625480086291342": {
+        "type": "shopify://apps/forms/blocks/forms/8744a304-fcb1-4347-b211-bb6b4759a76a",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
