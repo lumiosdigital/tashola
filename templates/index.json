@@ -42,7 +42,7 @@
           "settings": {
             "text": "<p>∗ Exclusions apply. See full Terms & Conditions for details.</p>",
             "text_alignment": "right",
-            "font_size": 14,
+            "font_size": 16,
             "font_weight": "400",
             "line_height": 1.5,
             "max_width": 1000,
