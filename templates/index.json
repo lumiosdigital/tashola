@@ -34,6 +34,32 @@
       ],
       "settings": {}
     },
+    "1759834238c037cde2": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_adfde00_Ndj4bW": {
+          "type": "ai_gen_block_adfde00",
+          "settings": {
+            "text": "<p>∗ Exclusions apply. See full Terms & Conditions for details.</p>",
+            "text_alignment": "right",
+            "font_size": 14,
+            "font_weight": "300",
+            "line_height": 1.5,
+            "max_width": 1200,
+            "padding_top": 5,
+            "padding_bottom": 5,
+            "padding_horizontal": 10,
+            "background_color": "#f6f4f3",
+            "text_color": "#373736"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_adfde00_Ndj4bW"
+      ],
+      "settings": {}
+    },
     "product-display": {
       "type": "product-display",
       "settings": {
@@ -144,6 +170,7 @@
   },
   "order": [
     "hero-banner",
+    "1759834238c037cde2",
     "product-display",
     "categories",
     "showroom-section",
