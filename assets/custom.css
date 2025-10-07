@@ -887,7 +887,7 @@ body.mobile-menu-active {
 
 /* Targeting the H2 (Buy 2 Get 1 Free) on Desktop */
 .hero-banner_content h2 {
-  font-size: 36px !important; 
+  font-size: 60px !important; 
   line-height: 1.2 !important; 
 }
 
