@@ -403,7 +403,7 @@
             "type": "faq_item",
             "settings": {
               "question": "When will my jewellery be delivered?",
-              "answer": "<p>Here are a few things to keep in mind about our delivery process:</p><p>- Orders under £55 ship for £1.99. Get free delivery on all orders over £55.<br/>- Standard delivery within the UK takes 3-5 business days. Delivery times are estimated and begin from the moment your order is shipped—not when the order is placed. <br/>- We aim to dispatch all orders placed before 4pm GMT, Monday to Saturday, on the same day—but please note this is not guaranteed.<br/>- All our jewellery is shipped from the UK.<br/>- We do not deliver on Sundays or public holidays, so please allow an extra working day during those periods.<br/><br/></p>",
+              "answer": "<p>Here are a few things to keep in mind about our delivery process:</p><ul><li>Orders under £55 ship for £1.99. Get free delivery on all orders over £55.</li><li>Standard delivery within the UK takes 3-5 business days. Delivery times are estimated and begin from the moment your order is shipped—not when the order is placed. </li><li>We aim to dispatch all orders placed before 4pm GMT, Monday to Saturday, on the same day—but please note this is not guaranteed.</li><li>All our jewellery is shipped from the UK.</li><li>We do not deliver on Sundays or public holidays, so please allow an extra working day during those periods.<br/><br/></li></ul>",
               "expanded_by_default": true
             }
           },
