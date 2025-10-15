@@ -122,21 +122,21 @@
           "text_block_YPrjrQ": {
             "type": "text_block",
             "settings": {
-              "description": "<h3><strong>Ready to return your jewelry? Start here.</strong></h3><p>You have <strong>28 days</strong> from the date you receive your order to return it to us.<br/>To begin your return, please send us an email : customer-service@tashola.com</p><p><strong>Please note:</strong> We do not currently offer exchanges. If you'd like a different piece, simply return your item for a refund and place a new order at your convenience.</p>"
+              "description": "<h3><strong>Ready to return your jewellery? Start here.</strong></h3><p>You have <strong>28 days</strong> from the date you receive your order to return it to us.<br/>To begin your return, please send us an email : customer-service@tashola.com</p><p><strong>Please note:</strong> We do not currently offer exchanges. If you'd like a different piece, simply return your item for a refund and place a new order at your convenience.</p>"
             }
           },
           "faq_item_XNjM3G": {
             "type": "faq_item",
             "settings": {
-              "question": "When can I return my jewelry?",
-              "answer": "<p>Please send back your jewelry within 28 days of receiving your order. </p>",
+              "question": "When can I return my jewellery?",
+              "answer": "<p>Please send back your jewellery within 28 days of receiving your order. </p>",
               "expanded_by_default": false
             }
           },
           "faq_item_baXBjj": {
             "type": "faq_item",
             "settings": {
-              "question": "What condition should the jewelry be in?",
+              "question": "What condition should the jewellery be in?",
               "answer": "<p>All pieces must be returned unworn, undamaged, and in their original packaging. We carefully inspect each return, any items that show signs of wear or damage will be sent back to you. </p><p>If your order arrived with any issues (e.g. missing, incorrect, or faulty items), please get in touch with us within 5 working days of delivery.</p><p></p><p>Important:<br/>Earrings cannot be returned or exchanged for hygiene reasons, even if unworn.</p>",
               "expanded_by_default": false
             }
