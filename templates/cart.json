@@ -11,7 +11,11 @@
   "sections": {
     "main": {
       "type": "main-cart",
-      "settings": {}
+      "settings": {
+        "shipping_text": "<ul><li>Orders under £55 ship for £1.99. Get free delivery on all orders over £55.</li><li>Standard delivery within the UK takes 3-5 business days. </li></ul>",
+        "contact_text": "<p>Email us at info@tashola.com<br/>Customer Service Hours: Monday to Friday 9am - 6pm EST</p>",
+        "returns_text": "<p>Item purchased from tashola.com can be returned for a refund at no charge, online or in store within 14 days from original ship date.</p>"
+      }
     }
   },
   "order": [
