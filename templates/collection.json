@@ -9,6 +9,47 @@
  */
 {
   "sections": {
+    "176175303627f83a83": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_b3212e9_Qe3yYP": {
+          "type": "ai_gen_block_b3212e9",
+          "settings": {
+            "slide_interval": 2,
+            "heading_1": "",
+            "text_1": "<p>Buy 2 & Get 1 Free</p>",
+            "heading_2": "",
+            "text_2": "<p>Free shipping on all orders over £55</p>",
+            "heading_3": "",
+            "text_3": "",
+            "text_alignment": "center",
+            "max_width": 1200,
+            "padding_top": 150,
+            "padding_bottom": 50,
+            "padding_horizontal": 25,
+            "heading_font": "sans_serif_n4",
+            "heading_size": 32,
+            "heading_letter_spacing": 0,
+            "heading_spacing": 16,
+            "text_font": "sans_serif_n4",
+            "text_size": 16,
+            "text_letter_spacing": 0,
+            "background_color": "#ffffff",
+            "heading_color": "#000000",
+            "text_color": "#333333"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_b3212e9_Qe3yYP"
+      ],
+      "settings": {}
+    },
+    "1761752747e8f673cf": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "main": {
       "type": "main-catalogue",
       "settings": {
@@ -24,6 +65,8 @@
     }
   },
   "order": [
+    "176175303627f83a83",
+    "1761752747e8f673cf",
     "main"
   ]
 }
