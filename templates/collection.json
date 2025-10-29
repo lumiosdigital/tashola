@@ -9,11 +9,40 @@
  */
 {
   "sections": {
+    "17617542805487fb1a": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_67202e7_7hk6rg": {
+          "type": "ai_gen_block_67202e7",
+          "disabled": true,
+          "settings": {
+            "message_1": "Free shipping on orders over £50",
+            "message_2": "New arrivals just landed",
+            "message_3": "Shop now and save 15%",
+            "rotation_speed": 2,
+            "text_font": "assistant_n4",
+            "font_size": 14,
+            "letter_spacing": 0,
+            "text_alignment": "center",
+            "background_color": "#000000",
+            "text_color": "#ffffff",
+            "padding_top": 12,
+            "padding_bottom": 12
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_67202e7_7hk6rg"
+      ],
+      "settings": {}
+    },
     "176175303627f83a83": {
       "type": "_blocks",
       "blocks": {
         "ai_gen_block_b3212e9_dRc3M8": {
           "type": "ai_gen_block_b3212e9",
+          "disabled": true,
           "settings": {
             "slide_interval": 2,
             "heading_1": "",
@@ -65,6 +94,7 @@
     }
   },
   "order": [
+    "17617542805487fb1a",
     "176175303627f83a83",
     "1761752747e8f673cf",
     "main"
