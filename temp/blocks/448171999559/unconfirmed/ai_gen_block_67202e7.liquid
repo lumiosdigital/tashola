@@ -1,6 +1,260 @@
+{% doc %}
+  @prompt
+    please add a pure text block under header - and make sure any part of it will NEVER be covered by the header and visible to customers, please enable to change the font of text, please also enable to edit the letter spacing of text
+    Also can you make it a carousel style that we can input 2-3 messages and it will change every 1-2 seconds
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-text-carousel-{{ ai_gen_id }} {
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_top }}px 20px {{ block.settings.padding_bottom }}px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .ai-text-carousel-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: {{ block.settings.text_alignment }};
+    position: relative;
+    min-height: 40px;
+  }
+
+  .ai-text-carousel-message-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};
+    font-weight: {{ block.settings.text_font.weight }};
+    font-style: {{ block.settings.text_font.style }};
+    font-size: {{ block.settings.font_size }}px;
+    letter-spacing: {{ block.settings.letter_spacing }}px;
+    line-height: 1.4;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .ai-text-carousel-message-{{ ai_gen_id }}.active {
+    opacity: 1;
+    position: relative;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-text-carousel-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_top | times: 0.7 }}px 16px {{ block.settings.padding_bottom | times: 0.7 }}px;
+    }
+
+    .ai-text-carousel-message-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<text-carousel-{{ ai_gen_id }} class="ai-text-carousel-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-text-carousel-container-{{ ai_gen_id }}">
+    {% if block.settings.message_1 != blank %}
+      <p class="ai-text-carousel-message-{{ ai_gen_id }} active" data-message="1">
+        {{ block.settings.message_1 }}
+      </p>
+    {% endif %}
+
+    {% if block.settings.message_2 != blank %}
+      <p class="ai-text-carousel-message-{{ ai_gen_id }}" data-message="2">
+        {{ block.settings.message_2 }}
+      </p>
+    {% endif %}
+
+    {% if block.settings.message_3 != blank %}
+      <p class="ai-text-carousel-message-{{ ai_gen_id }}" data-message="3">
+        {{ block.settings.message_3 }}
+      </p>
+    {% endif %}
+  </div>
+</text-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class TextCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+        this.messages = [];
+        this.intervalId = null;
+      }
+
+      connectedCallback() {
+        this.messages = Array.from(this.querySelectorAll('.ai-text-carousel-message-{{ ai_gen_id }}'));
+        
+        if (this.messages.length > 1) {
+          this.startCarousel();
+        }
+      }
+
+      startCarousel() {
+        const interval = {{ block.settings.rotation_speed }} * 1000;
+        
+        this.intervalId = setInterval(() => {
+          this.messages[this.currentIndex].classList.remove('active');
+          
+          this.currentIndex = (this.currentIndex + 1) % this.messages.length;
+          
+          this.messages[this.currentIndex].classList.add('active');
+        }, interval);
+      }
+
+      disconnectedCallback() {
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+        }
+      }
+    }
+
+    customElements.define('text-carousel-{{ ai_gen_id }}', TextCarousel{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Text carousel",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Messages"
+    },
+    {
+      "type": "text",
+      "id": "message_1",
+      "label": "Message 1",
+      "default": "Free shipping on orders over £50"
+    },
+    {
+      "type": "text",
+      "id": "message_2",
+      "label": "Message 2",
+      "default": "New arrivals just landed"
+    },
+    {
+      "type": "text",
+      "id": "message_3",
+      "label": "Message 3",
+      "default": "Shop now and save 15%"
+    },
+    {
+      "type": "header",
+      "content": "Carousel settings"
+    },
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "s",
+      "label": "Rotation speed",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Letter spacing",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text carousel"
+    }
+  ]
+}
 {% endschema %}
