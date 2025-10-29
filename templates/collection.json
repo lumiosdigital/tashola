@@ -27,16 +27,16 @@
             "padding_top": 150,
             "padding_bottom": 50,
             "padding_horizontal": 25,
-            "heading_font": "sans_serif_n4",
-            "heading_size": 32,
+            "heading_font": "serif",
+            "heading_size": 16,
             "heading_letter_spacing": 0,
             "heading_spacing": 16,
-            "text_font": "sans_serif_n4",
-            "text_size": 16,
+            "text_font": "serif",
+            "text_size": 15,
             "text_letter_spacing": 0,
-            "background_color": "#ffffff",
+            "background_color": "#ffa38b",
             "heading_color": "#000000",
-            "text_color": "#333333"
+            "text_color": "#f6f4f3"
           },
           "blocks": {}
         }
