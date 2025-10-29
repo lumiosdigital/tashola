@@ -1,6 +1,403 @@
+{% doc %}
+  @prompt
+    please add a pure text block under header - and make sure any part of it will not be covered by the header, please enable to change the font of text, please also enable to edit the letter spacing of text
+    Also can you make it a carousel style that we can input 2-3 messages and it will change every 1-2 seconds
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-text-carousel-{{ ai_gen_id }} {
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-left: {{ block.settings.padding_horizontal }}px;
+    padding-right: {{ block.settings.padding_horizontal }}px;
+    background-color: {{ block.settings.background_color }};
+    text-align: {{ block.settings.text_alignment }};
+    overflow: hidden;
+  }
+
+  .ai-text-carousel__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .ai-text-carousel__slides-{{ ai_gen_id }} {
+    position: relative;
+    min-height: 50px;
+  }
+
+  .ai-text-carousel__slide-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+
+  .ai-text-carousel__slide-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+  }
+
+  .ai-text-carousel__heading-{{ ai_gen_id }} {
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_size }}px;
+    font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};
+    font-weight: {{ block.settings.heading_font.weight }};
+    font-style: {{ block.settings.heading_font.style }};
+    letter-spacing: {{ block.settings.heading_letter_spacing }}px;
+    margin: 0 0 {{ block.settings.heading_spacing }}px 0;
+    line-height: 1.2;
+  }
+
+  .ai-text-carousel__content-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.text_size }}px;
+    font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};
+    font-weight: {{ block.settings.text_font.weight }};
+    font-style: {{ block.settings.text_font.style }};
+    letter-spacing: {{ block.settings.text_letter_spacing }}px;
+    line-height: 1.6;
+  }
+
+  .ai-text-carousel__content-{{ ai_gen_id }} p {
+    margin: 0 0 1em 0;
+  }
+
+  .ai-text-carousel__content-{{ ai_gen_id }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-text-carousel-{{ ai_gen_id }} {
+      padding-top: {{ block.settings.padding_top | times: 0.7 | round }}px;
+      padding-bottom: {{ block.settings.padding_bottom | times: 0.7 | round }}px;
+      padding-left: {{ block.settings.padding_horizontal | times: 0.7 | round }}px;
+      padding-right: {{ block.settings.padding_horizontal | times: 0.7 | round }}px;
+    }
+
+    .ai-text-carousel__heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.8 | round }}px;
+    }
+
+    .ai-text-carousel__content-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 | round }}px;
+    }
+  }
+{% endstyle %}
+
+<text-carousel-{{ ai_gen_id }}
+  class="ai-text-carousel-{{ ai_gen_id }}"
+  data-interval="{{ block.settings.slide_interval }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-text-carousel__container-{{ ai_gen_id }}">
+    <div class="ai-text-carousel__slides-{{ ai_gen_id }}">
+      {% if block.settings.heading_1 != blank or block.settings.text_1 != blank %}
+        <div class="ai-text-carousel__slide-{{ ai_gen_id }} active" data-slide="1">
+          {% if block.settings.heading_1 != blank %}
+            <h2 class="ai-text-carousel__heading-{{ ai_gen_id }}">{{ block.settings.heading_1 }}</h2>
+          {% endif %}
+          {% if block.settings.text_1 != blank %}
+            <div class="ai-text-carousel__content-{{ ai_gen_id }}">
+              {{ block.settings.text_1 }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.heading_2 != blank or block.settings.text_2 != blank %}
+        <div class="ai-text-carousel__slide-{{ ai_gen_id }}" data-slide="2">
+          {% if block.settings.heading_2 != blank %}
+            <h2 class="ai-text-carousel__heading-{{ ai_gen_id }}">{{ block.settings.heading_2 }}</h2>
+          {% endif %}
+          {% if block.settings.text_2 != blank %}
+            <div class="ai-text-carousel__content-{{ ai_gen_id }}">
+              {{ block.settings.text_2 }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.heading_3 != blank or block.settings.text_3 != blank %}
+        <div class="ai-text-carousel__slide-{{ ai_gen_id }}" data-slide="3">
+          {% if block.settings.heading_3 != blank %}
+            <h2 class="ai-text-carousel__heading-{{ ai_gen_id }}">{{ block.settings.heading_3 }}</h2>
+          {% endif %}
+          {% if block.settings.text_3 != blank %}
+            <div class="ai-text-carousel__content-{{ ai_gen_id }}">
+              {{ block.settings.text_3 }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</text-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class TextCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentSlide = 0;
+        this.slides = [];
+        this.interval = null;
+      }
+
+      connectedCallback() {
+        this.slides = Array.from(this.querySelectorAll('.ai-text-carousel__slide-{{ ai_gen_id }}'));
+        
+        if (this.slides.length > 1) {
+          const intervalTime = parseInt(this.dataset.interval) * 1000;
+          this.startCarousel(intervalTime);
+        }
+      }
+
+      startCarousel(intervalTime) {
+        this.interval = setInterval(() => {
+          this.nextSlide();
+        }, intervalTime);
+      }
+
+      nextSlide() {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.slides[this.currentSlide].classList.add('active');
+      }
+
+      disconnectedCallback() {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+      }
+    }
+
+    customElements.define('text-carousel-{{ ai_gen_id }}', TextCarousel{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Text carousel",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Carousel settings"
+    },
+    {
+      "type": "range",
+      "id": "slide_interval",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Slide interval",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Message 1"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_1",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text_1",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Message 2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_2",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text_2",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Message 3"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_3",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text_3",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "min": -2,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Heading letter spacing",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading spacing",
+      "default": 16
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Text font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_letter_spacing",
+      "min": -2,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Text letter spacing",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#333333"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text carousel"
+    }
+  ]
+}
 {% endschema %}
