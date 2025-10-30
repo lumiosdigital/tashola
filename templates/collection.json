@@ -39,72 +39,6 @@
       ],
       "settings": {}
     },
-    "17617542805487fb1a": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_67202e7_7hk6rg": {
-          "type": "ai_gen_block_67202e7",
-          "disabled": true,
-          "settings": {
-            "message_1": "Free shipping on all orders over £55",
-            "message_2": "New arrivals just landed",
-            "message_3": "Shop now and save 15%",
-            "rotation_speed": 2,
-            "text_font": "serif",
-            "font_size": 30,
-            "letter_spacing": 0,
-            "text_alignment": "center",
-            "background_color": "#ffa38b",
-            "text_color": "#f6f4f3",
-            "padding_top": 50,
-            "padding_bottom": 12
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_67202e7_7hk6rg"
-      ],
-      "settings": {}
-    },
-    "176175303627f83a83": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_b3212e9_dRc3M8": {
-          "type": "ai_gen_block_b3212e9",
-          "disabled": true,
-          "settings": {
-            "slide_interval": 2,
-            "heading_1": "",
-            "text_1": "<p>Buy 2 & Get 1 Free *</p>",
-            "heading_2": "",
-            "text_2": "<p>Free shipping on all orders over £55</p>",
-            "heading_3": "",
-            "text_3": "",
-            "text_alignment": "center",
-            "max_width": 1200,
-            "padding_top": 150,
-            "padding_bottom": 50,
-            "padding_horizontal": 25,
-            "heading_font": "serif",
-            "heading_size": 16,
-            "heading_letter_spacing": 0,
-            "heading_spacing": 16,
-            "text_font": "serif",
-            "text_size": 15,
-            "text_letter_spacing": 0,
-            "background_color": "#ffa38b",
-            "heading_color": "#000000",
-            "text_color": "#f6f4f3"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_b3212e9_dRc3M8"
-      ],
-      "settings": {}
-    },
     "1761752747e8f673cf": {
       "type": "_blocks",
       "settings": {}
@@ -125,8 +59,6 @@
   },
   "order": [
     "1761755017612c05b6",
-    "17617542805487fb1a",
-    "176175303627f83a83",
     "1761752747e8f673cf",
     "main"
   ]
