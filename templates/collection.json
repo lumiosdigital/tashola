@@ -9,6 +9,36 @@
  */
 {
   "sections": {
+    "1761755017612c05b6": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_8caf53f_cyVFQL": {
+          "type": "ai_gen_block_8caf53f",
+          "disabled": true,
+          "settings": {
+            "message_1": "Free shipping on orders over £50",
+            "message_2": "New arrivals now in stock",
+            "message_3": "Shop our latest collection",
+            "rotation_speed": 3,
+            "text_font": "sans_serif_n4",
+            "font_size": 14,
+            "font_size_mobile": 12,
+            "letter_spacing": 0,
+            "text_alignment": "center",
+            "background_color": "#f4f4f4",
+            "text_color": "#000000",
+            "top_padding": 100,
+            "vertical_padding": 15,
+            "horizontal_padding": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_8caf53f_cyVFQL"
+      ],
+      "settings": {}
+    },
     "17617542805487fb1a": {
       "type": "_blocks",
       "blocks": {
@@ -16,17 +46,17 @@
           "type": "ai_gen_block_67202e7",
           "disabled": true,
           "settings": {
-            "message_1": "Free shipping on orders over £50",
+            "message_1": "Free shipping on all orders over £55",
             "message_2": "New arrivals just landed",
             "message_3": "Shop now and save 15%",
             "rotation_speed": 2,
-            "text_font": "assistant_n4",
-            "font_size": 14,
+            "text_font": "serif",
+            "font_size": 30,
             "letter_spacing": 0,
             "text_alignment": "center",
-            "background_color": "#000000",
-            "text_color": "#ffffff",
-            "padding_top": 12,
+            "background_color": "#ffa38b",
+            "text_color": "#f6f4f3",
+            "padding_top": 50,
             "padding_bottom": 12
           },
           "blocks": {}
@@ -94,6 +124,7 @@
     }
   },
   "order": [
+    "1761755017612c05b6",
     "17617542805487fb1a",
     "176175303627f83a83",
     "1761752747e8f673cf",
