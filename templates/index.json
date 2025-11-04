@@ -11,26 +11,6 @@
   "sections": {
     "1762261231e68e8f6f": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_4f9e203_pLtnfi": {
-          "type": "ai_gen_block_4f9e203",
-          "settings": {
-            "announcement_text": "<p>Free shipping on orders over £50!</p>",
-            "show_close_button": true,
-            "text_alignment": "center",
-            "padding_vertical": 12,
-            "font_size": 14,
-            "background_color": "#f34343",
-            "text_color": "#000000",
-            "link_color": "#ffffff",
-            "link_hover_color": "#cccccc"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_4f9e203_pLtnfi"
-      ],
       "settings": {}
     },
     "hero-banner": {
