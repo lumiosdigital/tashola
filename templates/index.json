@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "1762261231e68e8f6f": {
-      "type": "_blocks",
-      "settings": {}
-    },
     "hero-banner": {
       "type": "hero-banner",
       "blocks": {
@@ -174,7 +170,6 @@
     }
   },
   "order": [
-    "1762261231e68e8f6f",
     "hero-banner",
     "1759834238c037cde2",
     "product-display",
