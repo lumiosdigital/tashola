@@ -21,9 +21,55 @@
         "related_products_collection": "shop-all",
         "related_products_limit": 4
       }
+    },
+    "176235415987c4c3da": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_c74880e_CT4c8y": {
+          "type": "ai_gen_block_c74880e",
+          "settings": {
+            "title": "Jewellery Boxes",
+            "subtitle": "",
+            "collection": "jewellery-boxes",
+            "products_limit": 4,
+            "columns_desktop": 4,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "grid_gap": 20,
+            "container_width": 1200,
+            "text_alignment": "center",
+            "title_font": "serif",
+            "title_size": 36,
+            "title_color": "#373736",
+            "title_spacing": 12,
+            "subtitle_font": "sans_serif_n4",
+            "subtitle_size": 16,
+            "subtitle_color": "#666666",
+            "header_spacing": 40,
+            "product_text_alignment": "left",
+            "product_title_font": "sans_serif_n4",
+            "product_title_size": 16,
+            "product_title_color": "#000000",
+            "product_price_font": "sans_serif_n4",
+            "product_price_size": 14,
+            "product_price_color": "#000000",
+            "image_border_radius": 8,
+            "background_color": "#f6f4f3",
+            "section_padding_top": 50,
+            "section_padding_bottom": 50
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_c74880e_CT4c8y"
+      ],
+      "disabled": true,
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "176235415987c4c3da"
   ]
 }
