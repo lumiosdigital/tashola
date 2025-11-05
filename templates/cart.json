@@ -16,9 +16,44 @@
         "contact_text": "<p>Email us at info@tashola.com<br/>Customer Service Hours: Monday to Friday 9am - 6pm EST</p>",
         "returns_text": "<p>You have <strong>14 days</strong> from the date you receive your order to return it to us. All earrings are non-returnable due to hygiene reasons. All other items can be returned if returned unopened in their original packaging.</p><p>To begin your return, please send us an email: customer-service@tashola.com</p>"
       }
+    },
+    "1762355629d65fb279": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_0e676e2_9LHhLT": {
+          "type": "ai_gen_block_0e676e2",
+          "settings": {
+            "button_text": "View Products",
+            "button_font_size": 16,
+            "button_padding_vertical": 12,
+            "button_padding_horizontal": 24,
+            "button_border_radius": 6,
+            "button_bg_color": "#000000",
+            "button_text_color": "#ffffff",
+            "button_hover_bg_color": "#333333",
+            "collection": "",
+            "products_limit": 12,
+            "modal_title": "",
+            "modal_title_size": 28,
+            "modal_border_radius": 8,
+            "modal_bg_color": "#ffffff",
+            "modal_text_color": "#000000",
+            "view_product_text": "View Product",
+            "card_border_radius": 8,
+            "card_bg_color": "#f9f9f9"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_0e676e2_9LHhLT"
+      ],
+      "disabled": true,
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "1762355629d65fb279"
   ]
 }
