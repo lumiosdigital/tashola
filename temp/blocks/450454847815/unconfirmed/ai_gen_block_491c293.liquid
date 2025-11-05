@@ -1,6 +1,606 @@
+{% doc %}
+  @prompt
+    add a button with a customizable name and customer can click into this button and show a carousel of products from a collection I can choose
+    this button can choose right/left/central align, and i can adjust the space/distance to the border when I choose left/right-aligned
+    also the font and all colours can be amended, boarder radius need to be added please, Horizontal and vertical padding please add
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-carousel-button-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    {% if block.settings.button_alignment == 'left' %}
+      justify-content: flex-start;
+      padding-left: {{ block.settings.button_spacing }}px;
+    {% elsif block.settings.button_alignment == 'right' %}
+      justify-content: flex-end;
+      padding-right: {{ block.settings.button_spacing }}px;
+    {% else %}
+      justify-content: center;
+    {% endif %}
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .ai-carousel-button-{{ ai_gen_id }} {
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border: 2px solid {{ block.settings.button_border_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-family: {{ block.settings.button_font.family }}, {{ block.settings.button_font.fallback_families }};
+    font-weight: {{ block.settings.button_font.weight }};
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .ai-carousel-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.button_hover_border_color }};
+  }
+
+  .ai-carousel-modal-{{ ai_gen_id }} {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-carousel-modal-{{ ai_gen_id }}.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .ai-carousel-modal-content-{{ ai_gen_id }} {
+    background-color: {{ block.settings.modal_bg_color }};
+    border-radius: {{ block.settings.modal_border_radius }}px;
+    padding: 40px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+    width: 1000px;
+  }
+
+  .ai-carousel-modal-close-{{ ai_gen_id }} {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: {{ block.settings.modal_text_color }};
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-carousel-modal-close-{{ ai_gen_id }}:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-carousel-container-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .ai-carousel-track-{{ ai_gen_id }} {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease;
+  }
+
+  .ai-carousel-product-{{ ai_gen_id }} {
+    flex: 0 0 calc(33.333% - 14px);
+    min-width: calc(33.333% - 14px);
+    text-align: center;
+  }
+
+  .ai-carousel-product-image-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: {{ block.settings.product_image_border_radius }}px;
+    margin-bottom: 12px;
+  }
+
+  .ai-carousel-product-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #f4f4f4;
+    border-radius: {{ block.settings.product_image_border_radius }}px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-carousel-product-image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+  }
+
+  .ai-carousel-product-title-{{ ai_gen_id }} {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: {{ block.settings.modal_text_color }};
+  }
+
+  .ai-carousel-product-price-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: {{ block.settings.modal_text_color }};
+    margin-bottom: 12px;
+  }
+
+  .ai-carousel-product-link-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.product_button_border_radius }}px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-carousel-product-link-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: {{ block.settings.modal_bg_color }};
+    border: 2px solid {{ block.settings.modal_text_color }};
+    color: {{ block.settings.modal_text_color }};
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border-color: {{ block.settings.button_bg_color }};
+  }
+
+  .ai-carousel-nav-prev-{{ ai_gen_id }} {
+    left: -25px;
+  }
+
+  .ai-carousel-nav-next-{{ ai_gen_id }} {
+    right: -25px;
+  }
+
+  .ai-carousel-empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 40px;
+    color: {{ block.settings.modal_text_color }};
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-carousel-product-{{ ai_gen_id }} {
+      flex: 0 0 calc(50% - 10px);
+      min-width: calc(50% - 10px);
+    }
+
+    .ai-carousel-modal-content-{{ ai_gen_id }} {
+      padding: 20px;
+    }
+
+    .ai-carousel-nav-{{ ai_gen_id }} {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .ai-carousel-product-{{ ai_gen_id }} {
+      flex: 0 0 100%;
+      min-width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-carousel-button-wrapper-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <button class="ai-carousel-button-{{ ai_gen_id }}" aria-label="{{ block.settings.button_text }}">
+    {{ block.settings.button_text }}
+  </button>
+</div>
+
+<product-carousel-modal-{{ ai_gen_id }} class="ai-carousel-modal-{{ ai_gen_id }}">
+  <div class="ai-carousel-modal-content-{{ ai_gen_id }}">
+    <button class="ai-carousel-modal-close-{{ ai_gen_id }}" aria-label="Close modal">
+      &times;
+    </button>
+
+    {% if block.settings.collection != blank %}
+      {% assign collection = block.settings.collection %}
+      {% if collection.products.size > 0 %}
+        <div class="ai-carousel-container-{{ ai_gen_id }}">
+          <button class="ai-carousel-nav-{{ ai_gen_id }} ai-carousel-nav-prev-{{ ai_gen_id }}" aria-label="Previous products">
+            &#8249;
+          </button>
+          <div class="ai-carousel-track-{{ ai_gen_id }}">
+            {% for product in collection.products %}
+              <div class="ai-carousel-product-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 400 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-carousel-product-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  >
+                {% else %}
+                  <div class="ai-carousel-product-image-placeholder-{{ ai_gen_id }}">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+                <h3 class="ai-carousel-product-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-carousel-product-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+                <a href="{{ product.url }}" class="ai-carousel-product-link-{{ ai_gen_id }}">View Product</a>
+              </div>
+            {% endfor %}
+          </div>
+          <button class="ai-carousel-nav-{{ ai_gen_id }} ai-carousel-nav-next-{{ ai_gen_id }}" aria-label="Next products">
+            &#8250;
+          </button>
+        </div>
+      {% else %}
+        <div class="ai-carousel-empty-{{ ai_gen_id }}">
+          This collection has no products yet.
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="ai-carousel-empty-{{ ai_gen_id }}">
+        Please select a collection to display products.
+      </div>
+    {% endif %}
+  </div>
+</product-carousel-modal-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductCarouselModal{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+        this.itemsPerView = 3;
+      }
+
+      connectedCallback() {
+        this.button = document.querySelector('.ai-carousel-button-{{ ai_gen_id }}');
+        this.closeBtn = this.querySelector('.ai-carousel-modal-close-{{ ai_gen_id }}');
+        this.prevBtn = this.querySelector('.ai-carousel-nav-prev-{{ ai_gen_id }}');
+        this.nextBtn = this.querySelector('.ai-carousel-nav-next-{{ ai_gen_id }}');
+        this.track = this.querySelector('.ai-carousel-track-{{ ai_gen_id }}');
+        this.products = this.querySelectorAll('.ai-carousel-product-{{ ai_gen_id }}');
+
+        this.setupEventListeners();
+        this.updateCarousel();
+        this.updateItemsPerView();
+        window.addEventListener('resize', () => this.updateItemsPerView());
+      }
+
+      setupEventListeners() {
+        if (this.button) {
+          this.button.addEventListener('click', () => this.openModal());
+        }
+
+        if (this.closeBtn) {
+          this.closeBtn.addEventListener('click', () => this.closeModal());
+        }
+
+        this.addEventListener('click', (e) => {
+          if (e.target === this) {
+            this.closeModal();
+          }
+        });
+
+        if (this.prevBtn) {
+          this.prevBtn.addEventListener('click', () => this.prev());
+        }
+
+        if (this.nextBtn) {
+          this.nextBtn.addEventListener('click', () => this.next());
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.classList.contains('active')) {
+            this.closeModal();
+          }
+        });
+      }
+
+      updateItemsPerView() {
+        if (window.innerWidth <= 480) {
+          this.itemsPerView = 1;
+        } else if (window.innerWidth <= 768) {
+          this.itemsPerView = 2;
+        } else {
+          this.itemsPerView = 3;
+        }
+        this.updateCarousel();
+      }
+
+      openModal() {
+        this.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      closeModal() {
+        this.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      prev() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.updateCarousel();
+        }
+      }
+
+      next() {
+        const maxIndex = Math.max(0, this.products.length - this.itemsPerView);
+        if (this.currentIndex < maxIndex) {
+          this.currentIndex++;
+          this.updateCarousel();
+        }
+      }
+
+      updateCarousel() {
+        if (!this.track || !this.products.length) return;
+
+        const productWidth = this.products[0].offsetWidth;
+        const gap = 20;
+        const offset = -(this.currentIndex * (productWidth + gap));
+        this.track.style.transform = `translateX(${offset}px)`;
+
+        if (this.prevBtn) {
+          this.prevBtn.style.opacity = this.currentIndex === 0 ? '0.5' : '1';
+          this.prevBtn.style.cursor = this.currentIndex === 0 ? 'not-allowed' : 'pointer';
+        }
+
+        if (this.nextBtn) {
+          const maxIndex = Math.max(0, this.products.length - this.itemsPerView);
+          this.nextBtn.style.opacity = this.currentIndex >= maxIndex ? '0.5' : '1';
+          this.nextBtn.style.cursor = this.currentIndex >= maxIndex ? 'not-allowed' : 'pointer';
+        }
+      }
+    }
+
+    customElements.define('product-carousel-modal-{{ ai_gen_id }}', ProductCarouselModal{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Product carousel button",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button content"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Button layout"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "button_spacing",
+      "label": "Distance from border",
+      "info": "Only applies when left or right aligned",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "font_picker",
+      "id": "button_font",
+      "label": "Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Button colors"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Hover border",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Modal style"
+    },
+    {
+      "type": "range",
+      "id": "modal_border_radius",
+      "label": "Modal border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "product_image_border_radius",
+      "label": "Product image border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "product_button_border_radius",
+      "label": "Product button border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Modal colors"
+    },
+    {
+      "type": "color",
+      "id": "modal_bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "modal_text_color",
+      "label": "Text",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product carousel button"
+    }
+  ]
+}
 {% endschema %}
