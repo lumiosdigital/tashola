@@ -51,7 +51,6 @@
       "block_order": [
         "ai_gen_block_4fb3afc_4qdRFF"
       ],
-      "disabled": true,
       "settings": {}
     },
     "1762426394b5bfb925": {
@@ -70,6 +69,7 @@
       "block_order": [
         "ai_gen_block_a928319_QjGAU7"
       ],
+      "disabled": true,
       "settings": {}
     },
     "hero-banner": {
