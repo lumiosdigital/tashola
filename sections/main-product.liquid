@@ -23,13 +23,14 @@
                             data-variant-id="{{ product.selected_or_first_available_variant.id }}" 
                             data-lightbox-trigger
                             {% if forloop.first %}data-main-image{% endif %}>
-                            {% endif %}
-                            
                              {% if product.metafields.custom.display_badge != blank %}
                                 <span class="generic-badge" style="color: #242222;">
                                 {{ product.metafields.custom.display_badge | metafield_text}}
                                 </span>
                             {% endif %}
+                            {% endif %}
+                            
+                            
                     </div>
                     {% endfor %}
                 </div>
