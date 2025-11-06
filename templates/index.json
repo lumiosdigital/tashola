@@ -9,6 +9,32 @@
  */
 {
   "sections": {
+    "1759834238c037cde2": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_adfde00_Ndj4bW": {
+          "type": "ai_gen_block_adfde00",
+          "settings": {
+            "text": "<p>∗ Exclusions apply. See full Terms & Conditions for details.</p>",
+            "text_alignment": "right",
+            "font_size": 16,
+            "font_weight": "400",
+            "line_height": 1.5,
+            "max_width": 1200,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_horizontal": 100,
+            "background_color": "#f6f4f3",
+            "text_color": "#373736"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_adfde00_Ndj4bW"
+      ],
+      "settings": {}
+    },
     "hero-banner": {
       "type": "hero-banner",
       "blocks": {
@@ -35,30 +61,34 @@
       "custom_css": [],
       "settings": {}
     },
-    "1759834238c037cde2": {
+    "1762424020d6860d9e": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_adfde00_Ndj4bW": {
-          "type": "ai_gen_block_adfde00",
+        "ai_gen_block_4659bb3_8dKUaV": {
+          "type": "ai_gen_block_4659bb3",
           "settings": {
-            "text": "<p>∗ Exclusions apply. See full Terms & Conditions for details.</p>",
-            "text_alignment": "right",
-            "font_size": 16,
-            "font_weight": "400",
-            "line_height": 1.5,
-            "max_width": 1000,
-            "padding_top": 5,
-            "padding_bottom": 5,
-            "padding_horizontal": 10,
-            "background_color": "#f6f4f3",
-            "text_color": "#373736"
+            "banner_image": "shopify://shop_images/Screenshot_2025-11-05_at_13.42.50.png",
+            "banner_height_desktop": 800,
+            "banner_height_mobile": 300,
+            "collection_link": "shop-all",
+            "show_overlay": false,
+            "overlay_color": "#000000",
+            "overlay_opacity": 0.3,
+            "show_text_content": true,
+            "heading": "",
+            "subheading": "",
+            "text_color": "#ffffff",
+            "heading_size": 48,
+            "subheading_size": 18,
+            "content_max_width": 700
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_adfde00_Ndj4bW"
+        "ai_gen_block_4659bb3_8dKUaV"
       ],
+      "disabled": true,
       "settings": {}
     },
     "product-display": {
@@ -172,6 +202,7 @@
   "order": [
     "hero-banner",
     "1759834238c037cde2",
+    "1762424020d6860d9e",
     "product-display",
     "categories",
     "showroom-section",
