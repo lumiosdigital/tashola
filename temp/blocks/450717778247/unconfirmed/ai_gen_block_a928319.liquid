@@ -1,6 +1,168 @@
+{% doc %}
+  @prompt
+    build a hero banner that we can upload images (2520 x 1152 px) and the whole banner is clickable to be linked to a collection page
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-hero-banner-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+  }
+
+  .ai-hero-banner-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 45.71%;
+  }
+
+  .ai-hero-banner-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-hero-banner-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-hero-banner-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-hero-banner-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-hero-banner-wrapper-{{ ai_gen_id }} {
+      padding-bottom: {{ block.settings.mobile_height }}%;
+    }
+  }
+{% endstyle %}
+
+{% if block.settings.collection_link %}
+  <a
+    href="{{ block.settings.collection_link.url }}"
+    class="ai-hero-banner-{{ ai_gen_id }}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="ai-hero-banner-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.hero_image %}
+        <img
+          src="{{ block.settings.hero_image | image_url: width: 2520 }}"
+          alt="{{ block.settings.hero_image.alt | escape }}"
+          loading="lazy"
+          width="2520"
+          height="1152"
+          class="ai-hero-banner-image-{{ ai_gen_id }}"
+        >
+      {% else %}
+        <div class="ai-hero-banner-placeholder-{{ ai_gen_id }}">
+          {{ 'hero-apparel-1' | placeholder_svg_tag }}
+          <div class="ai-hero-banner-empty-state-{{ ai_gen_id }}">
+            Upload a hero image (2520 x 1152 px)
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </a>
+{% else %}
+  <div
+    class="ai-hero-banner-{{ ai_gen_id }}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="ai-hero-banner-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.hero_image %}
+        <img
+          src="{{ block.settings.hero_image | image_url: width: 2520 }}"
+          alt="{{ block.settings.hero_image.alt | escape }}"
+          loading="lazy"
+          width="2520"
+          height="1152"
+          class="ai-hero-banner-image-{{ ai_gen_id }}"
+        >
+      {% else %}
+        <div class="ai-hero-banner-placeholder-{{ ai_gen_id }}">
+          {{ 'hero-apparel-1' | placeholder_svg_tag }}
+          <div class="ai-hero-banner-empty-state-{{ ai_gen_id }}">
+            Upload a hero image (2520 x 1152 px) and select a collection link
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Hero banner",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "Recommended size: 2520 x 1152 px"
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "collection",
+      "id": "collection_link",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Height",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
 {% endschema %}
