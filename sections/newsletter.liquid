@@ -1,0 +1,169 @@
+{% comment %}
+  Newsletter banner section
+  Placement: above footer / anywhere
+{% endcomment %}
+
+<section class="newsletter-banner" {% if section.settings.section_id != blank %}id="{{ section.settings.section_id }}"{% endif %}>
+  <div class="newsletter-banner__inner page-width">
+    {% if section.settings.heading != blank %}
+      <p class="newsletter-banner__heading">{{ section.settings.heading }}</p>
+    {% endif %}
+
+    {% form 'customer', class: 'newsletter-banner__form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label class="visually-hidden" for="Newsletter-email-{{ section.id }}">{{ 'general.newsletter_form.email_placeholder' | t: default: 'Email address' }}</label>
+      <input
+        id="Newsletter-email-{{ section.id }}"
+        type="email"
+        name="contact[email]"
+        class="newsletter-banner__input"
+        value="{{ form.email }}"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="email"
+        placeholder="{{ section.settings.placeholder }}"
+        required
+      >
+      <button type="submit" class="newsletter-banner__button">
+        {{ section.settings.button_label }}
+      </button>
+      {% if form.posted_successfully? %}
+        <p class="newsletter-banner__success">{{ section.settings.success_message }}</p>
+      {% elsif form.errors %}
+        <p class="newsletter-banner__error">{{ form.errors.translated_fields['email'] | default: form.errors.messages['email'] }}</p>
+      {% endif %}
+    {% endform %}
+  </div>
+
+  <style>
+    .newsletter-banner {
+      background: #f1e9e7; /* tweak to match your screenshot */
+      padding: 2.4rem 0;
+    }
+    .newsletter-banner .page-width {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.6rem;
+    }
+    .newsletter-banner__inner {
+      display: flex;
+      gap: 1.6rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .newsletter-banner__heading {
+      font-size: 1.4rem;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+      color: #1d1412;
+      margin: 0;
+      font-weight: 500;
+      flex: 1 1 280px;
+    }
+    .newsletter-banner__form {
+      display: flex;
+      gap: 0;
+      flex: 0 0 auto;
+    }
+    .newsletter-banner__input {
+      border: 1px solid #1d1412;
+      background: #fff;
+      padding: 0.9rem 1.1rem;
+      min-width: 240px;
+      font-size: 1.3rem;
+      line-height: 1.4;
+      border-right: none;
+    }
+    .newsletter-banner__button {
+      background: #3b2523; /* dark brown like the button in the screenshot */
+      color: #fff;
+      border: none;
+      padding: 0 2.8rem;
+      font-size: 1.3rem;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: opacity .2s ease;
+    }
+    .newsletter-banner__button:hover {
+      opacity: .85;
+    }
+    .newsletter-banner__success,
+    .newsletter-banner__error {
+      width: 100%;
+      margin-top: 1rem;
+      font-size: 1.3rem;
+    }
+    .newsletter-banner__success { color: #0a7f43; }
+    .newsletter-banner__error { color: #c01717; }
+
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px; width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 749px) {
+      .newsletter-banner__inner {
+        align-items: flex-start;
+      }
+      .newsletter-banner__form {
+        width: 100%;
+      }
+      .newsletter-banner__input {
+        flex: 1 1 auto;
+        width: 100%;
+      }
+      .newsletter-banner__button {
+        white-space: nowrap;
+      }
+    }
+  </style>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter banner",
+  "tag": "section",
+  "class": "section newsletter-banner-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID (optional)",
+      "default": "newsletter-banner"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Text",
+      "default": "Sign up for early-access sales, exclusive offers, new arrivals and more."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Email Address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Join Now"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for subscribing!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter banner"
+    }
+  ]
+}
+{% endschema %}
