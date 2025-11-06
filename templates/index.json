@@ -53,25 +53,6 @@
       ],
       "settings": {}
     },
-    "1762426394b5bfb925": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_a928319_QjGAU7": {
-          "type": "ai_gen_block_a928319",
-          "settings": {
-            "hero_image": "shopify://shop_images/Hero.jpg",
-            "collection_link": "shop-all",
-            "mobile_height": 60
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_a928319_QjGAU7"
-      ],
-      "disabled": true,
-      "settings": {}
-    },
     "hero-banner": {
       "type": "hero-banner",
       "blocks": {
@@ -210,7 +191,6 @@
   "order": [
     "1759834238c037cde2",
     "17624278951fd868dd",
-    "1762426394b5bfb925",
     "hero-banner",
     "product-display",
     "categories",
