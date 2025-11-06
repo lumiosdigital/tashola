@@ -15,13 +15,13 @@
         "ai_gen_block_adfde00_Ndj4bW": {
           "type": "ai_gen_block_adfde00",
           "settings": {
-            "text": "<p>∗ Exclusions apply. See full Terms & Conditions for details.</p>",
+            "text": "",
             "text_alignment": "right",
             "font_size": 16,
             "font_weight": "400",
-            "line_height": 1.5,
+            "line_height": 2,
             "max_width": 1200,
-            "padding_top": 0,
+            "padding_top": 65,
             "padding_bottom": 0,
             "padding_horizontal": 100,
             "background_color": "#f6f4f3",
@@ -58,6 +58,7 @@
       "block_order": [
         "hero_banner_1"
       ],
+      "disabled": true,
       "custom_css": [],
       "settings": {}
     },
@@ -67,7 +68,7 @@
         "ai_gen_block_4659bb3_8dKUaV": {
           "type": "ai_gen_block_4659bb3",
           "settings": {
-            "banner_image": "shopify://shop_images/Screenshot_2025-11-05_at_13.42.50.png",
+            "banner_image": "shopify://shop_images/Hero.jpg",
             "banner_height_desktop": 800,
             "banner_height_mobile": 300,
             "collection_link": "shop-all",
@@ -88,7 +89,6 @@
       "block_order": [
         "ai_gen_block_4659bb3_8dKUaV"
       ],
-      "disabled": true,
       "settings": {}
     },
     "product-display": {
@@ -200,8 +200,8 @@
     }
   },
   "order": [
-    "hero-banner",
     "1759834238c037cde2",
+    "hero-banner",
     "1762424020d6860d9e",
     "product-display",
     "categories",
