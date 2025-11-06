@@ -164,7 +164,6 @@
         "showroom_link": ""
       }
     },
-   
     "feature-banners": {
       "type": "feature-section",
       "blocks": {
@@ -189,6 +188,17 @@
         "feature_banner_1"
       ],
       "settings": {}
+    },
+    "newsletter_FMMwFp": {
+      "type": "newsletter",
+      "name": "Newsletter banner",
+      "settings": {
+        "section_id": "newsletter",
+        "heading": "Sign up for early-access sales, exclusive offers, new arrivals and more.",
+        "placeholder": "Email Address",
+        "button_label": "Join Now",
+        "success_message": "Thanks for subscribing!"
+      }
     }
   },
   "order": [
@@ -198,6 +208,7 @@
     "product-display",
     "categories",
     "showroom-section",
-    "feature-banners"
+    "feature-banners",
+    "newsletter_FMMwFp"
   ]
 }
