@@ -881,3 +881,28 @@ body.mobile-menu-active {
 
 }
 
+.generic-badge {
+  font-family: "meno-banner", "Serif";
+  font-size: 13px;
+  line-height: 20px;
+  position: absolute !important;
+  bottom: 0px !important;
+  left: 0px;
+  top: unset !important;
+  color: #000000;
+  background: #ffffff;
+  padding: 3px 5px 3px 5px;
+  margin: 7px;
+  border-radius: initial;
+  opacity: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-weight: 500;
+  border-radius: 2px;
+  max-width: 100%;
+  width: fit-content !important;
+  height: 6% !important;
+}
+
