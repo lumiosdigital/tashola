@@ -69,7 +69,7 @@
           "type": "ai_gen_block_4659bb3",
           "settings": {
             "banner_image": "shopify://shop_images/Hero.jpg",
-            "banner_height_desktop": 800,
+            "banner_height_desktop": 700,
             "banner_height_mobile": 300,
             "collection_link": "shop-all",
             "show_overlay": false,
