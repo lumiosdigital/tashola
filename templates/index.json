@@ -80,36 +80,6 @@
       "custom_css": [],
       "settings": {}
     },
-    "1762424020d6860d9e": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_4659bb3_8dKUaV": {
-          "type": "ai_gen_block_4659bb3",
-          "settings": {
-            "banner_image": "shopify://shop_images/Hero.jpg",
-            "banner_height_desktop": 750,
-            "banner_height_mobile": 300,
-            "collection_link": "shop-all",
-            "show_overlay": false,
-            "overlay_color": "#000000",
-            "overlay_opacity": 0.3,
-            "show_text_content": true,
-            "heading": "",
-            "subheading": "",
-            "text_color": "#ffffff",
-            "heading_size": 48,
-            "subheading_size": 18,
-            "content_max_width": 700
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_4659bb3_8dKUaV"
-      ],
-      "disabled": true,
-      "settings": {}
-    },
     "product-display": {
       "type": "product-display",
       "settings": {
@@ -222,7 +192,6 @@
     "1759834238c037cde2",
     "1762426394b5bfb925",
     "hero-banner",
-    "1762424020d6860d9e",
     "product-display",
     "categories",
     "showroom-section",
