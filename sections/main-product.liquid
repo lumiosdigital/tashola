@@ -25,9 +25,9 @@
                             {% if forloop.first %}data-main-image{% endif %}>
                             {% endif %}
                             test
-                             {% if card_product.metafields.custom.display_badge != blank %}
+                             {% if product.metafields.custom.display_badge != blank %}
                                 <span class="generic-badge" style="color: #242222;">
-                                {{ card_product.metafields.custom.display_badge | metafield_text}}
+                                {{ product.metafields.custom.display_badge | metafield_text}}
                                 </span>
                             {% endif %}
                     </div>
