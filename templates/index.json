@@ -51,6 +51,7 @@
       "block_order": [
         "ai_gen_block_4f04b73_G7qATA"
       ],
+      "name": "HERO BANNER - NEW",
       "settings": {}
     },
     "hero-banner": {
@@ -78,6 +79,7 @@
       ],
       "disabled": true,
       "custom_css": [],
+      "name": "Hero Banners - do not use",
       "settings": {}
     },
     "product-display": {
