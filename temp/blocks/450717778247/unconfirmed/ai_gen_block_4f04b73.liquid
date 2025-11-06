@@ -1,6 +1,177 @@
+{% doc %}
+  @prompt
+    build a hero banner that we can upload 2 images (2520 x 1152 px for desktop view and 1170 x 1648 pc for mobile view) and the whole banner is clickable to be linked to one of our collection page, link starting with 'https://www.tashola.com/collections/', now both mobile and desktop images are showing on both view, please make desktop image show on only desktop view and mobile image show only mobile view
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-hero-banner-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+  }
+
+  .ai-hero-banner-{{ ai_gen_id }}:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  .ai-hero-banner__desktop-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .ai-hero-banner__mobile-{{ ai_gen_id }} {
+    display: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .ai-hero-banner__placeholder-desktop-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 2520 / 1152;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-hero-banner__placeholder-desktop-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-hero-banner__placeholder-mobile-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1170 / 1648;
+    background-color: #f4f4f4;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-hero-banner__placeholder-mobile-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-hero-banner__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-hero-banner__desktop-{{ ai_gen_id }} {
+      display: none;
+    }
+
+    .ai-hero-banner__mobile-{{ ai_gen_id }} {
+      display: block;
+    }
+
+    .ai-hero-banner__placeholder-desktop-{{ ai_gen_id }} {
+      display: none;
+    }
+
+    .ai-hero-banner__placeholder-mobile-{{ ai_gen_id }} {
+      display: flex;
+    }
+  }
+{% endstyle %}
+
+<a
+  href="{{ block.settings.collection_link }}"
+  class="ai-hero-banner-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+  {% if block.settings.collection_link == blank %}aria-disabled="true"{% endif %}
+>
+  {% if block.settings.desktop_image %}
+    <img
+      src="{{ block.settings.desktop_image | image_url: width: 2520 }}"
+      alt="{{ block.settings.desktop_image.alt | escape }}"
+      loading="lazy"
+      width="{{ block.settings.desktop_image.width }}"
+      height="{{ block.settings.desktop_image.height }}"
+      class="ai-hero-banner__desktop-{{ ai_gen_id }}"
+    >
+  {% else %}
+    <div class="ai-hero-banner__desktop-{{ ai_gen_id }} ai-hero-banner__placeholder-desktop-{{ ai_gen_id }}">
+      {{ 'hero-apparel-1' | placeholder_svg_tag }}
+      <div class="ai-hero-banner__empty-state-{{ ai_gen_id }}">
+        Add a desktop image (2520 x 1152 px)
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.mobile_image %}
+    <img
+      src="{{ block.settings.mobile_image | image_url: width: 1170 }}"
+      alt="{{ block.settings.mobile_image.alt | escape }}"
+      loading="lazy"
+      width="{{ block.settings.mobile_image.width }}"
+      height="{{ block.settings.mobile_image.height }}"
+      class="ai-hero-banner__mobile-{{ ai_gen_id }}"
+    >
+  {% else %}
+    <div class="ai-hero-banner__mobile-{{ ai_gen_id }} ai-hero-banner__placeholder-mobile-{{ ai_gen_id }}">
+      {{ 'hero-apparel-1' | placeholder_svg_tag }}
+      <div class="ai-hero-banner__empty-state-{{ ai_gen_id }}">
+        Add a mobile image (1170 x 1648 px)
+      </div>
+    </div>
+  {% endif %}
+</a>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Hero banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop image",
+      "info": "Recommended size: 2520 x 1152 px"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Recommended size: 1170 x 1648 px"
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "url",
+      "id": "collection_link",
+      "label": "Collection link",
+      "info": "Link to a collection page (e.g., https://www.tashola.com/collections/your-collection)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
 {% endschema %}
