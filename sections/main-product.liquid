@@ -24,6 +24,11 @@
                             data-lightbox-trigger
                             {% if forloop.first %}data-main-image{% endif %}>
                             {% endif %}
+                             {% if card_product.metafields.custom.display_badge != blank %}
+                                <span class="generic-badge" style="color: #242222;">
+                                {{ card_product.metafields.custom.display_badge | metafield_text}}
+                                </span>
+                            {% endif %}
                     </div>
                     {% endfor %}
                 </div>
