@@ -71,6 +71,8 @@
     {% if request.path == '/collections' %}
       {% render 'metafield-debug' %}
     {% endif %}
+    {% section 'announcement-rotator' %}
+
 
     {% section 'header' %}
     {{ content_for_layout }}
