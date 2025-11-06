@@ -442,6 +442,36 @@
         "settings": {
           "page_title": "Contact Us"
         }
+      },
+      "announcement-rotator": {
+        "type": "announcement-rotator",
+        "blocks": {
+          "message_R8Xic7": {
+            "type": "message",
+            "settings": {
+              "text": "Free shipping on orders over $50",
+              "link": ""
+            }
+          },
+          "message_XYXxz9": {
+            "type": "message",
+            "settings": {
+              "text": "Free shipping on orders over $50",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "message_R8Xic7",
+          "message_XYXxz9"
+        ],
+        "settings": {
+          "full_width": true,
+          "rotation_speed": 4000,
+          "show_close": true,
+          "bg_color": "#000000",
+          "text_color": "#ffffff"
+        }
       }
     },
     "content_for_index": [],
