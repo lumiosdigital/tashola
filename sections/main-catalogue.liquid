@@ -399,6 +399,7 @@ console.log('First product primary category:', '{{ collection.products.first.met
                             {% if product.featured_image %}
                             <img src="{{ product.featured_image | img_url: 'master' }}"
                                 alt="{{ product.title | escape }}" class="product-card-image">
+                                test
                             {% else %}
                             <div class="product-card-image-placeholder">{{ product.title | slice: 0, 1 }}</div>
                             {% endif %}
