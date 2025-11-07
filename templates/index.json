@@ -41,8 +41,8 @@
         "ai_gen_block_4f04b73_G7qATA": {
           "type": "ai_gen_block_4f04b73",
           "settings": {
-            "desktop_image": "shopify://shop_images/Hero.jpg",
-            "mobile_image": "shopify://shop_images/mobArtboard_42.jpg",
+            "desktop_image": "shopify://shop_images/new_hero.jpg",
+            "mobile_image": "shopify://shop_images/newArtboard_42.jpg",
             "collection_link": "shopify://collections/shop-all"
           },
           "blocks": {}
