@@ -445,6 +445,18 @@
       },
       "announcement-rotator": {
         "type": "announcement-rotator",
+        "blocks": {
+          "message_hGUL3Q": {
+            "type": "message",
+            "settings": {
+              "text": "BUY 2, GET YOUR 3RD ITEM FREE",
+              "link": "shopify://collections"
+            }
+          }
+        },
+        "block_order": [
+          "message_hGUL3Q"
+        ],
         "settings": {
           "full_width": true,
           "rotation_speed": 4000,
