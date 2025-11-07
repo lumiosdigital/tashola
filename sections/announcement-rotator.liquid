@@ -1,13 +1,6 @@
-{% comment %}
-  Announcement Rotator Section
-  - Add multiple "message" blocks
-  - Rotates through them with JS
-  - Can be set to full-width or contained
-{% endcomment %}
-
 <section
   id="announcement-rotator-{{ section.id }}"
-  class="announcement-rotator {% if section.settings.full_width %}announcement-rotator--full{% endif %}"
+  class="announcement-rotator shopify-section--announcement-rotator {% if section.settings.full_width %}announcement-rotator--full{% endif %}"
   data-section-id="{{ section.id }}"
   data-rotation-speed="{{ section.settings.rotation_speed | default: 4000 }}"
 >
@@ -43,12 +36,18 @@
 </section>
 
 <style>
+  /* remove default section spacing just for this section */
+  .shopify-section--announcement-rotator {
+    margin: 0 !important;
+  }
+
   #announcement-rotator-{{ section.id }} {
     background: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
     font-size: 0.875rem;
     line-height: 1.4;
     position: relative;
+    border-bottom: 1px solid rgba(0,0,0,.05);
   }
   #announcement-rotator-{{ section.id }} .announcement-rotator__inner {
     display: flex;
@@ -135,7 +134,6 @@
 
     startRotation();
 
-    // Close button
     var closeBtn = sectionEl.querySelector('.announcement-rotator__close');
     if (closeBtn) {
       closeBtn.addEventListener('click', function() {
