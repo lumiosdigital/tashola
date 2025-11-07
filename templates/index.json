@@ -164,6 +164,24 @@
         "showroom_link": ""
       }
     },
+    "1762538707bbba8007": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_eaa7e6b_9d3aUE": {
+          "type": "ai_gen_block_eaa7e6b",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Shot_10_0004_a5264ac7-2074-454e-b762-170e3093a3bc.png",
+            "mobile_image": "shopify://shop_images/Shot_01_037_6fd21b93-55af-48e4-b8c6-cc6b643db3eb.png",
+            "collection_url": "shopify://collections/shop-all"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_eaa7e6b_9d3aUE"
+      ],
+      "settings": {}
+    },
     "feature-banners": {
       "type": "feature-section",
       "blocks": {
@@ -187,6 +205,7 @@
       "block_order": [
         "feature_banner_1"
       ],
+      "disabled": true,
       "settings": {}
     },
     "newsletter_FMMwFp": {
@@ -209,6 +228,7 @@
     "product-display",
     "categories",
     "showroom-section",
+    "1762538707bbba8007",
     "feature-banners",
     "newsletter_FMMwFp"
   ]
