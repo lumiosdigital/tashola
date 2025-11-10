@@ -65,6 +65,37 @@
     </script>
 
 
+    <style>
+  :root {
+    --announcement-h: 0px;
+  }
+
+  /* make the bar stick to very top */
+  .shopify-section--announcement-rotator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    margin: 0 !important;
+    width: 100%;
+  }
+
+  /* move the header under the bar */
+  #shopify-section-header {
+    position: sticky;
+    top: var(--announcement-h);
+    z-index: 1500;
+  }
+
+  /* push the page down so hero isn’t hidden */
+  body {
+    padding-top: var(--announcement-h);
+  }
+</style>
+
+
+
   </head>
 
   <body class="{% if customer %}customer-logged-in{% endif %}">
