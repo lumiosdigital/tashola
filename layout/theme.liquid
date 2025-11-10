@@ -68,10 +68,13 @@
   </head>
 
   <body class="{% if customer %}customer-logged-in{% endif %}">
+
+    {% section 'announcement-rotator' %}
+    
     {% if request.path == '/collections' %}
       {% render 'metafield-debug' %}
     {% endif %}
-    {% section 'announcement-rotator' %}
+    
 
 
     {% section 'header' %}
