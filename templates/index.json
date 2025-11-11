@@ -211,6 +211,7 @@
     },
     "newsletter_FMMwFp": {
       "type": "newsletter",
+      "disabled": true,
       "name": "Newsletter banner",
       "settings": {
         "section_id": "newsletter",
@@ -218,6 +219,16 @@
         "placeholder": "Email Address",
         "button_label": "Join Now",
         "success_message": "Thanks for subscribing!"
+      }
+    },
+    "footer_signup_yh83nm": {
+      "type": "footer-signup",
+      "name": "Footer Signup",
+      "settings": {
+        "heading": "Join our newsletter for early-access and exclusive offers",
+        "placeholder": "Email address",
+        "button_label": "Sign Up",
+        "success_message": "Thank you for subscribing!"
       }
     }
   },
@@ -230,6 +241,7 @@
     "showroom-section",
     "1762538707bbba8007",
     "feature-banners",
-    "newsletter_FMMwFp"
+    "newsletter_FMMwFp",
+    "footer_signup_yh83nm"
   ]
 }
