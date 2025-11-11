@@ -211,7 +211,6 @@
     },
     "newsletter_FMMwFp": {
       "type": "newsletter",
-      "disabled": true,
       "name": "Newsletter banner",
       "settings": {
         "section_id": "newsletter",
