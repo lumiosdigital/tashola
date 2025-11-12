@@ -36,25 +36,31 @@
 </section>
 
 <style>
-  /* remove default section spacing */
-  .shopify-section--announcement-rotator {
+  /* 1) Bar lives above everything and sticks to top */
+  .shopify-section--announcement-rotator{
+    position: sticky;
+    top: 0;
+    z-index: 3000; /* above header */
     margin: 0 !important;
+    width: 100%;
   }
 
-  #announcement-rotator-{{ section.id }} {
+  /* keep your existing visual styles */
+  #announcement-rotator-{{ section.id }}{
     background: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
     font-size: 0.875rem;
     line-height: 1.4;
-    position: relative; /* ✅ was fixed earlier – now just normal */
-    width: 100%;
+    position: relative;
     border-bottom: 1px solid rgba(0,0,0,.05);
   }
 
-  #announcement-rotator-{{ section.id }} .announcement-rotator__inner {
+  /* give the inner a consistent height so we can offset the header */
+  :root{ --announce-h: 40px; } /* default; script below will auto-measure */
+  #announcement-rotator-{{ section.id }} .announcement-rotator__inner{
+    min-height: var(--announce-h);
     display: flex;
     align-items: center;
-    min-height: 40px;
     overflow: hidden;
     {% unless section.settings.full_width %}
       max-width: 1200px;
@@ -64,66 +70,24 @@
       padding: 0 1rem;
     {% endunless %}
   }
-
-  #announcement-rotator-{{ section.id }} .announcement-rotator__item {
-    display: none;
-    white-space: nowrap;
-  }
-  #announcement-rotator-{{ section.id }} .announcement-rotator__item.is-active {
-    display: block;
-    animation: fadeInAnnouncement 0.35s ease;
-  }
-
-  #announcement-rotator-{{ section.id }} .announcement-rotator__link {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  #announcement-rotator-{{ section.id }} .announcement-rotator__close {
-    background: none;
-    border: 0;
-    color: inherit;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-  }
-
-  @keyframes fadeInAnnouncement {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 749px) {
-    #announcement-rotator-{{ section.id }} .announcement-rotator__inner {
-      justify-content: center;
-    }
-    #announcement-rotator-{{ section.id }} .announcement-rotator__item {
-      white-space: normal;
-      text-align: center;
-    }
-  }
-
-  /* Kill default section spacing and keep it normal flow */
-.shopify-section--announcement-rotator { 
-  margin: 0 !important;
-  position: static;
-  z-index: auto;
-  width: 100%;
-}
-
-/* your existing section styles can stay */
-#announcement-rotator-{{ section.id }} { 
-  position: relative; /* NOT fixed */
-  width: 100%;
-  /* background/text colors already from settings */
-}
-
 </style>
+
+<script>
+  /* 2) Auto-measure bar height so wrapping text still works */
+  (function(){
+    var root = document.documentElement;
+    var section = document.getElementById('announcement-rotator-{{ section.id }}');
+    if(!section) return;
+
+    function setH(){
+      var h = section.offsetHeight || 40;
+      root.style.setProperty('--announce-h', h + 'px');
+    }
+    setH();
+    window.addEventListener('resize', setH);
+  })();
+</script>
+
 
 
 
