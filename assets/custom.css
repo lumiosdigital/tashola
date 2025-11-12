@@ -904,3 +904,7 @@ body.mobile-menu-active {
   width: fit-content !important;
 }
 
+/* Ensure header doesn’t add extra gap above */
+#shopify-section-header { margin-top: 0; }
+
+
