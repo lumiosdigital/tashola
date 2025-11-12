@@ -452,10 +452,26 @@
               "text": "BUY 2, GET YOUR 3RD ITEM FREE",
               "link": "shopify://collections"
             }
+          },
+          "message_eFrx8M": {
+            "type": "message",
+            "settings": {
+              "text": "Free shipping on orders over $50",
+              "link": ""
+            }
+          },
+          "message_wfPDbC": {
+            "type": "message",
+            "settings": {
+              "text": "Free shipping on orders over $50",
+              "link": ""
+            }
           }
         },
         "block_order": [
-          "message_hGUL3Q"
+          "message_hGUL3Q",
+          "message_eFrx8M",
+          "message_wfPDbC"
         ],
         "settings": {
           "full_width": true,
