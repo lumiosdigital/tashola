@@ -36,30 +36,33 @@
 </section>
 
 <style>
-  /* remove default section spacing */
-  .shopify-section--announcement-rotator {
-    margin: 0 !important;
+ :root {
+    --announce-h: 40px;   /* fallback */
+    --announce-gap: 8px;  /* space between bar and header */
   }
 
-  #announcement-rotator-{{ section.id }} {
+  .shopify-section--announcement-rotator{
+    position: sticky;
+    top: 0;
+    z-index: 3000;        /* above header */
+    margin: 0 !important;
+    width: 100%;
+  }
+
+  #announcement-rotator-{{ section.id }}{
     background: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
     font-size: 0.875rem;
     line-height: 1.4;
-    position: relative; /* ✅ was fixed earlier – now just normal */
-    width: 100%;
-    border-bottom: 1px solid rgba(0,0,0,.05);
+    position: relative;
+    border-bottom: 1px solid rgba(0,0,0,.06);
   }
 
-  #announcement-rotator-{{ section.id }} .announcement-rotator__inner {
-    display: flex;
-    align-items: center;
-    min-height: 40px;
-    overflow: hidden;
+  #announcement-rotator-{{ section.id }} .announcement-rotator__inner{
+    min-height: var(--announce-h);
+    display: flex; align-items: center; overflow: hidden;
     {% unless section.settings.full_width %}
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
     {% else %}
       padding: 0 1rem;
     {% endunless %}
