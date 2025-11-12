@@ -151,21 +151,29 @@
 
 
 <script>
-  /* 2) Auto-measure bar height so wrapping text still works */
-  (function(){
-    var root = document.documentElement;
-    var section = document.getElementById('announcement-rotator-{{ section.id }}');
-    if(!section) return;
+  (function () {
+    var html = document.documentElement;
+    var bar  = document.getElementById('announcement-rotator-{{ section.id }}');
+    if (!bar) return;
 
-    function setH(){
-      var h = section.offsetHeight || 40;
-      root.style.setProperty('--announce-h', h + 'px');
+    function setHeight(){
+      var h = bar.offsetHeight || 40;
+      html.style.setProperty('--announce-h', h + 'px');
     }
-    setH();
-    window.addEventListener('resize', setH);
+    setHeight();
+    window.addEventListener('resize', setHeight);
+
+    // Make "close" collapse the offset too
+    var closeBtn = bar.querySelector('.announcement-rotator__close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(){
+        bar.style.display = 'none';
+        html.setAttribute('data-announcement-closed','true');
+        html.style.setProperty('--announce-h', '0px');
+      });
+    }
   })();
 </script>
-
 
 <script>
   (function() {
