@@ -450,7 +450,7 @@
             "type": "message",
             "settings": {
               "text": "BUY 2, GET YOUR 3RD ITEM FREE",
-              "link": "shopify://collections"
+              "link": "shopify://collections/shop-all"
             }
           },
           "message_eFrx8M": {
