@@ -904,15 +904,18 @@ body.mobile-menu-active {
   width: fit-content !important;
 }
 
-/* Header should start below the sticky announcement bar */
+/* Header sits just below the announcement bar */
 #shopify-section-header{
-  position: sticky;            /* keep your theme’s sticky behavior */
-  top: var(--announce-h);      /* offset by bar height */
-  z-index: 2000;               /* below the bar’s 3000 */
+  position: sticky;                /* keep theme behavior */
+  top: calc(var(--announce-h) + var(--announce-gap));
+  z-index: 2000;                   /* below bar’s 3000 */
   margin-top: 0;
 }
 
-/* Make sure the page isn’t pushed double by old hacks */
-html, body{
-  padding-top: 0 !important;   /* remove earlier padding if added */
+/* When bar is closed, remove the offset */
+html[data-announcement-closed="true"] #shopify-section-header{
+  top: 0;
 }
+
+/* Clean up any old hacks */
+html, body{ padding-top: 0 !important; }
