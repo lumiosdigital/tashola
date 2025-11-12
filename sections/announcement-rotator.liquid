@@ -107,6 +107,22 @@
       text-align: center;
     }
   }
+
+  /* Kill default section spacing and keep it normal flow */
+.shopify-section--announcement-rotator { 
+  margin: 0 !important;
+  position: static;
+  z-index: auto;
+  width: 100%;
+}
+
+/* your existing section styles can stay */
+#announcement-rotator-{{ section.id }} { 
+  position: relative; /* NOT fixed */
+  width: 100%;
+  /* background/text colors already from settings */
+}
+
 </style>
 
 
