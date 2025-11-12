@@ -457,21 +457,13 @@
             "type": "message",
             "settings": {
               "text": "Free shipping on orders over £55",
-              "link": ""
-            }
-          },
-          "message_wfPDbC": {
-            "type": "message",
-            "settings": {
-              "text": "Free shipping on orders over $50",
-              "link": ""
+              "link": "shopify://pages/delivery"
             }
           }
         },
         "block_order": [
           "message_hGUL3Q",
-          "message_eFrx8M",
-          "message_wfPDbC"
+          "message_eFrx8M"
         ],
         "settings": {
           "full_width": true,
