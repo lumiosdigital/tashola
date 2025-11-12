@@ -61,6 +61,7 @@
   #announcement-rotator-{{ section.id }} .announcement-rotator__inner{
     min-height: var(--announce-h);
     display: flex; align-items: center; overflow: hidden;
+    justify-content: space-around;
     {% unless section.settings.full_width %}
       max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
     {% else %}
