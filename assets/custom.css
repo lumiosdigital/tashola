@@ -91,6 +91,7 @@ button {
 
 .nav-hidden {
     transform: translateY(-100%);
+    top: 90px;
 }
 
 /* Sticky header styles - always visible */
