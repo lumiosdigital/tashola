@@ -224,10 +224,15 @@
       "type": "footer-signup",
       "name": "Footer Signup",
       "settings": {
-        "heading": "Join our newsletter for early-access and exclusive offers",
+        "copy": "Sign up for early-access sales, exclusive offers, new arrivals and more.",
         "placeholder": "Email address",
-        "button_label": "Sign Up",
-        "success_message": "Thank you for subscribing!"
+        "button_label": "Join Now",
+        "success_message": "Thank you for subscribing!",
+        "bg_color": "#f3eeec",
+        "copy_color": "#1d1412",
+        "input_border": "#1d1412",
+        "btn_bg": "#3b2523",
+        "btn_text": "#ffffff"
       }
     }
   },
