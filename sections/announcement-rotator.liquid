@@ -1,299 +1,175 @@
-<section
-  id="announcement-rotator-{{ section.id }}"
-  class="announcement-rotator shopify-section--announcement-rotator {% if section.settings.full_width %}announcement-rotator--full{% endif %}"
-  data-section-id="{{ section.id }}"
-  data-rotation-speed="{{ section.settings.rotation_speed | default: 4000 }}"
->
-  <div class="announcement-rotator__inner">
-    {% if section.blocks.size > 0 %}
-      {% for block in section.blocks %}
-        <div
-          class="announcement-rotator__item{% if forloop.first %} is-active{% endif %}"
-          data-index="{{ forloop.index0 }}"
-          {{ block.shopify_attributes }}
-        >
-          {% if block.settings.link != blank %}
-            <a href="{{ block.settings.link }}" class="announcement-rotator__link">
-              {{ block.settings.text | escape }}
-            </a>
-          {% else %}
-            {{ block.settings.text | escape }}
-          {% endif %}
-        </div>
-      {% endfor %}
-    {% else %}
-      <div class="announcement-rotator__item is-active">
-        Add announcements in the section settings.
-      </div>
+{% comment %}
+  Newsletter banner (Tashola)
+  - Matches screenshot: centered line of copy, input + dark button
+  - Automatically tags contacts as "newsletter" for Shopify Email segments
+{% endcomment %}
+
+<section class="ts-newsletter" role="region" aria-label="Newsletter">
+  <div class="ts-newsletter__wrap page-width">
+    {% if section.settings.copy != blank %}
+      <p class="ts-newsletter__copy">{{ section.settings.copy }}</p>
     {% endif %}
+
+    {% form 'customer', class: 'ts-newsletter__form', id: "NewsletterForm-#{section.id}" %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+
+      <label for="NewsletterEmail-{{ section.id }}" class="visually-hidden">
+        {{ section.settings.placeholder }}
+      </label>
+      <input
+        id="NewsletterEmail-{{ section.id }}"
+        type="email"
+        name="contact[email]"
+        class="ts-newsletter__input"
+        value="{{ form.email }}"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="email"
+        placeholder="{{ section.settings.placeholder }}"
+        required
+      >
+      <button type="submit" class="ts-newsletter__btn">{{ section.settings.button_label }}</button>
+
+      {% if form.posted_successfully? %}
+        <p class="ts-newsletter__msg ts-newsletter__msg--success">{{ section.settings.success_message }}</p>
+      {% elsif form.errors %}
+        <p class="ts-newsletter__msg ts-newsletter__msg--error">
+          {{ form.errors.translated_fields['email'] | default: form.errors.messages['email'] }}
+        </p>
+      {% endif %}
+    {% endform %}
   </div>
 
-  {% if section.settings.show_close %}
-    <button class="announcement-rotator__close" type="button" aria-label="Close">
-      &times;
-    </button>
-  {% endif %}
-</section>
-
-<style>
- :root {
-    --announce-h: 40px;   /* fallback */
-    --announce-gap: 8px;  /* space between bar and header */
-  }
-
-  .shopify-section--announcement-rotator{
-    position: sticky;
-    top: 0;
-    z-index: 3000;        /* above header */
-    margin: 0 !important;
-    width: 100%;
-  }
-
-  #announcement-rotator-{{ section.id }}{
-    background: {{ section.settings.bg_color }};
-    color: {{ section.settings.text_color }};
-    font-size: 0.875rem;
-    line-height: 1.4;
-    position: relative;
-    border-bottom: 1px solid rgba(0,0,0,.06);
-  }
-
-  #announcement-rotator-{{ section.id }} .announcement-rotator__inner{
-    min-height: var(--announce-h);
-    display: flex; align-items: center; overflow: hidden;
-    justify-content: space-around;
-    {% unless section.settings.full_width %}
-      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-    {% else %}
-      padding: 0 1rem;
-    {% endunless %}
-  }
-
-  #announcement-rotator-{{ section.id }} .announcement-rotator__item {
-    display: none;
-    white-space: nowrap;
-  }
-  #announcement-rotator-{{ section.id }} .announcement-rotator__item.is-active {
-    display: block;
-    animation: fadeInAnnouncement 0.35s ease;
-  }
-
-  #announcement-rotator-{{ section.id }} .announcement-rotator__link {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  #announcement-rotator-{{ section.id }} .announcement-rotator__close {
-    background: none;
-    border: 0;
-    color: inherit;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-  }
-
-  @keyframes fadeInAnnouncement {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 749px) {
-    #announcement-rotator-{{ section.id }} .announcement-rotator__inner {
-      justify-content: center;
+  <style>
+    .ts-newsletter {
+      background: {{ section.settings.bg_color }};
+      border-top: 1px solid rgba(0,0,0,.06);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      padding: 22px 0;
     }
-    #announcement-rotator-{{ section.id }} .announcement-rotator__item {
-      white-space: normal;
+    .ts-newsletter .page-width { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+    .ts-newsletter__copy {
+      margin: 0 0 14px;
       text-align: center;
-    }
-  }
-
-  /* 1) Bar lives above everything and sticks to top */
-  .shopify-section--announcement-rotator{
-    position: sticky;
-    top: 0;
-    z-index: 3000; /* above header */
-    margin: 0 !important;
-    width: 100%;
-  }
-
-  /* keep your existing visual styles */
-  #announcement-rotator-{{ section.id }}{
-    background: {{ section.settings.bg_color }};
-    color: {{ section.settings.text_color }};
-    font-size: 0.875rem;
-    line-height: 1.4;
-    position: relative;
-    border-bottom: 1px solid rgba(0,0,0,.05);
-  }
-
-  /* give the inner a consistent height so we can offset the header */
-  :root{ --announce-h: 40px; } /* default; script below will auto-measure */
-  #announcement-rotator-{{ section.id }} .announcement-rotator__inner{
-    min-height: var(--announce-h);
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    {% unless section.settings.full_width %}
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    {% else %}
-      padding: 0 1rem;
-    {% endunless %}
-  }
-
-</style>
-
-
-
-<script>
-  (function () {
-    var html = document.documentElement;
-    var bar  = document.getElementById('announcement-rotator-{{ section.id }}');
-    if (!bar) return;
-
-    function setHeight(){
-      var h = bar.offsetHeight || 40;
-      html.style.setProperty('--announce-h', h + 'px');
-    }
-    setHeight();
-    window.addEventListener('resize', setHeight);
-
-    // Make "close" collapse the offset too
-    var closeBtn = bar.querySelector('.announcement-rotator__close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function(){
-        bar.style.display = 'none';
-        html.setAttribute('data-announcement-closed','true');
-        html.style.setProperty('--announce-h', '0px');
-      });
-    }
-  })();
-</script>
-
-<script>
-  (function() {
-    var sectionEl = document.getElementById('announcement-rotator-{{ section.id }}');
-    if (!sectionEl) return;
-
-    var items = sectionEl.querySelectorAll('.announcement-rotator__item');
-    if (!items.length) return;
-
-    var speed = parseInt(sectionEl.getAttribute('data-rotation-speed'), 10) || 4000;
-    var current = 0;
-    var timer;
-
-    function show(index) {
-      items.forEach(function(item, i) {
-        item.classList.toggle('is-active', i === index);
-      });
-      current = index;
+      font-style: italic;
+      font-size: 16px;
+      line-height: 1.5;
+      color: {{ section.settings.copy_color }};
+      letter-spacing: .2px;
     }
 
-    function startRotation() {
-      if (items.length <= 1) return;
-      timer = setInterval(function() {
-        var next = current + 1;
-        if (next >= items.length) next = 0;
-        show(next);
-      }, speed);
+    .ts-newsletter__form {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 0;
+      flex-wrap: nowrap;
     }
 
-    startRotation();
-
-    var closeBtn = sectionEl.querySelector('.announcement-rotator__close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function() {
-        sectionEl.style.display = 'none';
-        if (timer) clearInterval(timer);
-      });
+    .ts-newsletter__input {
+      background: #fff;
+      border: 1px solid {{ section.settings.input_border }};
+      border-right: none;
+      padding: 12px 14px;
+      min-width: 280px;
+      font-size: 14px;
+      line-height: 1.2;
+      color: #333;
     }
-  })();
-</script>
+
+    .ts-newsletter__btn {
+      background: {{ section.settings.btn_bg }};
+      color: {{ section.settings.btn_text }};
+      border: 1px solid {{ section.settings.btn_bg }};
+      padding: 12px 28px;
+      font-size: 14px;
+      letter-spacing: .2px;
+      cursor: pointer;
+      transition: opacity .2s ease;
+    }
+    .ts-newsletter__btn:hover { opacity: .9; }
+
+    .ts-newsletter__msg { margin: 8px 0 0; text-align: center; font-size: 13px; }
+    .ts-newsletter__msg--success { color: #0a7f43; }
+    .ts-newsletter__msg--error { color: #b71818; }
+
+    .visually-hidden {
+      position: absolute !important; height:1px; width:1px; overflow:hidden;
+      clip: rect(1px,1px,1px,1px); white-space: nowrap;
+    }
+
+    @media (max-width: 749px) {
+      .ts-newsletter__form { flex-wrap: wrap; }
+      .ts-newsletter__input { width: 100%; border-right: 1px solid {{ section.settings.input_border }}; margin-bottom: 8px; }
+      .ts-newsletter__btn { width: 100%; }
+    }
+  </style>
+</section>
 
 {% schema %}
 {
-  "name": "Announcement rotator",
+  "name": "Newsletter banner",
   "tag": "section",
-  "class": "section-announcement-rotator",
+  "class": "section newsletter-banner-section",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "full_width",
-      "label": "Full width",
-      "default": true
+      "type": "text",
+      "id": "copy",
+      "label": "Banner copy",
+      "default": "Sign up for early-access sales, exclusive offers, new arrivals and more."
     },
     {
-      "type": "range",
-      "id": "rotation_speed",
-      "label": "Rotation speed (ms)",
-      "min": 2000,
-      "max": 5000,
-      "step": 500,
-      "default": 4000
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Email Address"
     },
     {
-      "type": "checkbox",
-      "id": "show_close",
-      "label": "Show close button",
-      "default": true
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Join Now"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for subscribing!"
     },
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background color",
-      "default": "#000000"
+      "label": "Band background",
+      "default": "#f3eeec"
     },
     {
       "type": "color",
-      "id": "text_color",
-      "label": "Text color",
+      "id": "copy_color",
+      "label": "Copy color",
+      "default": "#1d1412"
+    },
+    {
+      "type": "color",
+      "id": "input_border",
+      "label": "Input border color",
+      "default": "#1d1412"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button background",
+      "default": "#3b2523"
+    },
+    {
+      "type": "color",
+      "id": "btn_text",
+      "label": "Button text",
       "default": "#ffffff"
     }
   ],
-  "blocks": [
-    {
-      "type": "message",
-      "name": "Message",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Text",
-          "default": "Free shipping on orders over $50"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link (optional)"
-        }
-      ]
-    }
-  ],
-  "max_blocks": 6,
   "presets": [
-    {
-      "name": "Announcement rotator",
-      "blocks": [
-        {
-          "type": "message",
-          "settings": {
-            "text": "New arrivals just dropped!"
-          }
-        },
-        {
-          "type": "message",
-          "settings": {
-            "text": "10% off with code TASHOLA10"
-          }
-        }
-      ]
-    }
+    { "name": "Newsletter banner" }
   ]
 }
 {% endschema %}
