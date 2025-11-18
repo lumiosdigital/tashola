@@ -1728,6 +1728,7 @@
         margin: 0 3.75rem;
         padding: 1rem 0 5rem;
         background-color: var(--color-background);
+        
     }
 
     .related-products-title {
@@ -1741,10 +1742,8 @@
 
     .related-products-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 4rem;
-        /* margin: 0 3.rem; */
-        /* aspect-ratio: 1.2 / 1.5; */
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 2.5rem;
     }
 
     .related-product-card {
