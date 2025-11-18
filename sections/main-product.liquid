@@ -1752,16 +1752,20 @@
     }
 
     .related-product-image-container {
-        width: 20vw;
-        height: 50vh;
-        position: relative;
+         position: relative;
+        width: 100%;
+        aspect-ratio: 3 / 4; /* adjust if you prefer another ratio */
         margin-bottom: 1rem;
         overflow: hidden;
+        background-color: #F6F4F3;
     }
 
     .related-product-image {
+          position: absolute;
+        inset: 0;
         width: 100%;
-        height: 50vh;
+        height: 100%;
+        object-fit: cover;
         display: block;
         transition: transform 1s ease;
     }
