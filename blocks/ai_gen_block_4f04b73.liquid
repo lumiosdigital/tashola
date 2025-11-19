@@ -74,24 +74,34 @@
     text-align: center;
     pointer-events: none;
   }
-
-  @media screen and (max-width: 749px) {
-    .ai-hero-banner__desktop-{{ ai_gen_id }} {
-      display: none;
-    }
-
-    .ai-hero-banner__mobile-{{ ai_gen_id }} {
-      display: block;
-    }
-
-    .ai-hero-banner__placeholder-desktop-{{ ai_gen_id }} {
-      display: none;
-    }
-
-    .ai-hero-banner__placeholder-mobile-{{ ai_gen_id }} {
-      display: flex;
-    }
+@media screen and (max-width: 749px) {
+  /* Limit how tall the whole hero can be on mobile */
+  .ai-hero-banner-{{ ai_gen_id }} {
+    max-height: 90vh;   /* try 88 / 86vh if you want more of the next row */
+    overflow: hidden;
   }
+
+  .ai-hero-banner__desktop-{{ ai_gen_id }} {
+    display: none;
+  }
+
+  /* Make the mobile image fill the capped container and crop nicely */
+  .ai-hero-banner__mobile-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-hero-banner__placeholder-desktop-{{ ai_gen_id }} {
+    display: none;
+  }
+
+  .ai-hero-banner__placeholder-mobile-{{ ai_gen_id }} {
+    display: flex;
+  }
+}
+
 {% endstyle %}
 
 <a
