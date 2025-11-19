@@ -207,19 +207,18 @@
 
 @media (max-width: 1024px) {
   .hero-banner {
-    /* CHANGED: Only add margin-top if this is the first block */
     margin-top: {% if forloop.first %}5rem{% else %}0{% endif %};
-  height: 90vh;
-}
+    height: 88vh; /* was 90vh – shows a bit of the next row */
+  }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
-  font-size: 2.25rem;
-}
+  .hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
+    font-size: 2.25rem;
+  }
 
-.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h2 {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
+  .hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h2 {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
 }
 
 /* Fix for iOS Safari 100vh issue */
