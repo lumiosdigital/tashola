@@ -468,7 +468,7 @@
         "settings": {
           "full_width": true,
           "rotation_speed": 4000,
-          "show_close": true,
+          "show_close": false,
           "bg_color": "#000000",
           "text_color": "#ffffff"
         }
