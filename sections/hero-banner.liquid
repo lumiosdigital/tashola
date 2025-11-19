@@ -163,27 +163,25 @@
 
 @media (max-width: 1024px) {
   .hero-banner {
-    /* top spacing for first block only */
-    margin-top: {% if forloop.first %}5rem{% else %}0{% endif %};
-    height: 88vh;        /* ↓ reduce height so next row peeks through */
-    min-height: 35rem;   /* keep a sensible min height */
+    min-height: 35rem;
   }
 
+  /* Mobile vertical alignment override */
   .hero-banner[data-block-id="{{ block.id }}"] {
     {% assign mobile_position = block.settings.mobile_vertical_position | default: block.settings.desktop_vertical_position | default: 'center' %}
     {% case mobile_position %}
-      {% when 'top' %}
-        align-items: flex-start !important;
-        padding-top: 2rem !important;
-        padding-bottom: 0 !important;
-      {% when 'bottom' %}
-        align-items: flex-end !important;
-        padding-bottom: 2rem !important;
-        padding-top: 0 !important;
-      {% else %}
-        align-items: center !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
+    {% when 'top' %}
+      align-items: flex-start !important;
+      padding-top: 2rem !important;
+      padding-bottom: 0 !important;
+    {% when 'bottom' %}
+      align-items: flex-end !important;
+      padding-bottom: 2rem !important;
+      padding-top: 0 !important;
+    {% else %}
+      align-items: center !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     {% endcase %}
 
     {% if block.settings.background_type == 'image' %}
@@ -197,31 +195,31 @@
   }
 
   .hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
   }
 
   .hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h2 {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
   }
 }
 
-
 @media (max-width: 1024px) {
   .hero-banner {
+    /* CHANGED: Only add margin-top if this is the first block */
     margin-top: {% if forloop.first %}5rem{% else %}0{% endif %};
-    height: 88vh; /* was 90vh – shows a bit of the next row */
-  }
+  height: 90vh;
+}
 
-  .hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
-    font-size: 2.25rem;
-  }
+.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h1 {
+  font-size: 2.25rem;
+}
 
-  .hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h2 {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-  }
+.hero-banner[data-block-id="{{ block.id }}"] .hero-banner__content h2 {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
 }
 
 /* Fix for iOS Safari 100vh issue */
