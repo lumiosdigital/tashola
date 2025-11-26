@@ -1,0 +1,133 @@
+{% if section.settings.show_related_products and section.settings.related_products_limit > 0 %}
+<section
+  id="RelatedProducts-{{ section.id }}"
+  class="related-products-wrapper"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}"
+>
+  {%- comment -%}
+    This inner block is rendered when the section is loaded via the
+    product recommendations endpoint. The JS below will fetch it on PDP.
+  {%- endcomment -%}
+
+  {% if recommendations.performed? and recommendations.products_count > 0 %}
+    <div class="related-products-section">
+      <h2 class="related-products-title">
+        {{ section.settings.related_products_title }}
+      </h2>
+
+      <div class="related-products-grid">
+        {% for related_product in recommendations.products limit: section.settings.related_products_limit %}
+          {% if related_product.id != product.id %}
+            <div class="related-product-card">
+              <a href="{{ related_product.url }}">
+                <div class="related-product-image-container">
+                  {% if related_product.featured_image %}
+                      {% assign image = related_product.featured_image %}
+
+                      <img
+                        src="{{ image | img_url: '600x600', crop: 'center' }}"
+                        srcset="
+                          {{ image | img_url: '300x300', crop: 'center' }} 300w,
+                          {{ image | img_url: '600x600', crop: 'center' }} 600w,
+                          {{ image | img_url: '900x900', crop: 'center' }} 900w
+                        "
+                        sizes="(min-width: 1024px) calc((100vw - 120px) / 4),
+                              (min-width: 768px) calc((100vw - 96px) / 3),
+                              calc((100vw - 48px) / 2)"
+                        alt="{{ image.alt | escape }}"
+                        class="related-product-image"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'related-product-image placeholder-svg' }}
+                    {% endif %}
+                </div>
+
+                <h3 class="related-product-title">
+                  {{ related_product.title }}
+                </h3>
+
+                <div class="related-product-price">
+                  {{ related_product.price | money }}
+                </div>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<script>
+  (function () {
+    var section = document.getElementById('RelatedProducts-{{ section.id }}');
+    if (!section) return;
+
+    var url = section.getAttribute('data-url');
+    if (!url) return;
+
+    // If content is already present (e.g. rendered by the recommendations endpoint),
+    // don't fetch again.
+    if (section.querySelector('.related-products-section')) return;
+
+    fetch(url)
+      .then(function (response) {
+        if (!response.ok) return null;
+        return response.text();
+      })
+      .then(function (htmlText) {
+        if (!htmlText) return;
+
+        var wrapper = document.createElement('div');
+        wrapper.innerHTML = htmlText;
+
+        var newSection = wrapper.querySelector('#RelatedProducts-{{ section.id }}');
+        if (!newSection) return;
+
+        // Replace inner HTML so we keep the same outer <section> element
+        section.innerHTML = newSection.innerHTML;
+      })
+      .catch(function () {
+        // fail silently
+      });
+  })();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "You may also like",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show related products",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_products_title",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "range",
+      "id": "related_products_limit",
+      "label": "Number of products",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "You may also like",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
