@@ -66,10 +66,20 @@
       ],
       "disabled": true,
       "settings": {}
+    },
+    "you_may_also_like_x68z9G": {
+      "type": "you-may-also-like",
+      "name": "You may also like",
+      "settings": {
+        "show_related_products": true,
+        "related_products_title": "You May Also Like",
+        "related_products_limit": 4
+      }
     }
   },
   "order": [
     "main",
-    "176235415987c4c3da"
+    "176235415987c4c3da",
+    "you_may_also_like_x68z9G"
   ]
 }
