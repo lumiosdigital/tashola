@@ -280,6 +280,8 @@
     </div>
 </div>
 
+{% comment %}
+
 {% if section.settings.show_related_products and section.settings.related_products_limit > 0 %}
 <div class="related-products-section">
     <h2 class="related-products-title">{{ section.settings.related_products_title }}</h2>
@@ -313,6 +315,8 @@
     {% endif %}
 </div>
 {% endif %}
+
+{% endcomment %}
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
