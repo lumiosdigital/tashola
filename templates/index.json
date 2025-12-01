@@ -92,14 +92,15 @@
     "categories": {
       "type": "categories",
       "blocks": {
-        "category_row_AC48Ya": {
-          "type": "category_row",
+        "collection_display_JMjN3T": {
+          "type": "collection_display",
           "settings": {
+            "custom_collection_title": "Earrings",
+            "layout_direction": "banner-left",
             "text_color": "white",
-            "category_title": "Rings",
-            "category_image": "shopify://shop_images/Shot_07_0024.png",
-            "collection": "rings",
-            "collection_handle": "all"
+            "selected_collection": "earrings",
+            "featured_collection": "product-display-2",
+            "collection_banner_image": "shopify://shop_images/Shot_12_0122.png"
           }
         },
         "category_row_xgHKCM": {
@@ -112,15 +113,14 @@
             "collection_handle": "all"
           }
         },
-        "collection_display_JMjN3T": {
-          "type": "collection_display",
+        "category_row_AC48Ya": {
+          "type": "category_row",
           "settings": {
-            "custom_collection_title": "Earrings",
-            "layout_direction": "banner-left",
             "text_color": "white",
-            "selected_collection": "earrings",
-            "featured_collection": "product-display-2",
-            "collection_banner_image": "shopify://shop_images/Shot_12_0122.png"
+            "category_title": "Rings",
+            "category_image": "shopify://shop_images/Shot_07_0024.png",
+            "collection": "rings",
+            "collection_handle": "all"
           }
         },
         "category_row_AHCtgE": {
@@ -145,9 +145,9 @@
         }
       },
       "block_order": [
-        "category_row_AC48Ya",
-        "category_row_xgHKCM",
         "collection_display_JMjN3T",
+        "category_row_xgHKCM",
+        "category_row_AC48Ya",
         "category_row_AHCtgE",
         "category_row_6Udekz"
       ],
