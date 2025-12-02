@@ -103,16 +103,6 @@
             "collection_banner_image": "shopify://shop_images/Shot_12_0122.png"
           }
         },
-        "category_row_xgHKCM": {
-          "type": "category_row",
-          "settings": {
-            "text_color": "white",
-            "category_title": "Bracelets",
-            "category_image": "shopify://shop_images/Shot_13_0066.png",
-            "collection": "bracelets",
-            "collection_handle": "all"
-          }
-        },
         "category_row_AC48Ya": {
           "type": "category_row",
           "settings": {
@@ -120,6 +110,16 @@
             "category_title": "Rings",
             "category_image": "shopify://shop_images/Shot_07_0024.png",
             "collection": "rings",
+            "collection_handle": "all"
+          }
+        },
+        "category_row_xgHKCM": {
+          "type": "category_row",
+          "settings": {
+            "text_color": "white",
+            "category_title": "Bracelets",
+            "category_image": "shopify://shop_images/Shot_13_0066.png",
+            "collection": "bracelets",
             "collection_handle": "all"
           }
         },
@@ -146,8 +146,8 @@
       },
       "block_order": [
         "collection_display_JMjN3T",
-        "category_row_xgHKCM",
         "category_row_AC48Ya",
+        "category_row_xgHKCM",
         "category_row_AHCtgE",
         "category_row_6Udekz"
       ],
