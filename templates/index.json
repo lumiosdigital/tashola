@@ -41,8 +41,8 @@
         "ai_gen_block_4f04b73_G7qATA": {
           "type": "ai_gen_block_4f04b73",
           "settings": {
-            "desktop_image": "shopify://shop_images/tash_BF_BANNERSArtboard_32.jpg",
-            "mobile_image": "shopify://shop_images/tash_BF_BANNERSArtboard_42.jpg",
+            "desktop_image": "shopify://shop_images/new_hero.jpg",
+            "mobile_image": "shopify://shop_images/newArtboard_42.jpg",
             "collection_link": "shopify://collections/shop-all"
           },
           "blocks": {}
